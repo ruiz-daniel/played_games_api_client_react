@@ -9,6 +9,7 @@ import NavigationIcon from "@material-ui/icons/Navigation";
 import { Input } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,16 +21,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UploadGame = () => {
+const EditGame = (props) => {
   const classes = useStyles();
-  const [name, setName] = useState("");
-  const [year, setYear] = useState("");
-  const [dev, setDev] = useState("");
-  const [publisher, setPublisher] = useState("");
-  const [genre, setGenre] = useState("");
-  const [rating, setRating] = useState("");
-  const [status, setStatus] = useState("");
-  const [platform, setPlatform] = useState("");
+  const location = useLocation();
+  console.log(location.state.game);
+  const [name, setName] = useState(location.state.game.name);
+  const [year, setYear] = useState(location.state.game.year);
+  const [dev, setDev] = useState(location.state.game.developer);
+  const [publisher, setPublisher] = useState(location.state.game.publisher);
+  const [genre, setGenre] = useState(location.state.game.genre);
+  const [rating, setRating] = useState(location.state.game.score);
+  const [status, setStatus] = useState(location.state.game.status);
+  const [platform, setPlatform] = useState(location.state.game.platform);
+  const [image, setImage] = useState(location.state.game.image);
   const [platformList, setPlatformList] = useState([]);
   const [statusList, setStatusList] = useState([]);
   const [openPlatform, setOpenPlatform] = React.useState(false);
@@ -37,18 +41,6 @@ const UploadGame = () => {
   const loadingPlatforms = openPlatform && platformList.length === 0;
   const loadingStatuses = openStatus && statusList.length === 0;
   const [gameImage, setGameImage] = useState();
-
-  const clear = () => {
-    setName("");
-    setYear("");
-    setDev("");
-    setPublisher("");
-    setGenre("");
-    setRating("");
-    setStatus("");
-    setPlatform("");
-    setGameImage("");
-  };
 
   const [success, setSuccess] = React.useState(false);
   const showSuccess = () => {
@@ -64,8 +56,9 @@ const UploadGame = () => {
   };
 
   const handleSubmit = () => {
-    api.postPlayedGame(
+    api.putPlayedGame(
       {
+        id: location.state.game.id,
         name,
         developer: dev,
         publisher,
@@ -74,18 +67,38 @@ const UploadGame = () => {
         rating,
         platformid: platform.id,
         statusid: status.id,
-        image: gameImage.name,
+        image,
       },
       () => {
-        uploadImage();
         showSuccess();
-        clear();
       }
     );
   };
 
   const uploadImage = async () => {
     await api.uploadImage(gameImage);
+  };
+
+  const uploadGameAndImage = () => {
+    console.log(image);
+    api.putPlayedGame(
+      {
+        id: location.state.game.id,
+        name,
+        developer: dev,
+        publisher,
+        year,
+        genre,
+        rating,
+        platformid: platform.id,
+        statusid: status.id,
+        image: "https://localhost:5001/game_images/" + gameImage.name,
+      },
+      () => {
+        uploadImage();
+        showSuccess();
+      }
+    );
   };
 
   React.useEffect(() => {
@@ -132,7 +145,7 @@ const UploadGame = () => {
 
   return (
     <div className={classes.root}>
-      <h2>Upload New Game</h2>
+      <h2>Edit Game Properties</h2>
       <Grid container spacing={1}>
         <Grid item xs={4}>
           <TextField
@@ -188,7 +201,7 @@ const UploadGame = () => {
       </Grid>
       <Grid container spacing={2} className={classes.section}>
         <Grid item xs={2}></Grid>
-        <Grid item xs={5}>
+        <Grid item xs={4}>
           <Autocomplete
             id="gamePlatform"
             options={platformList}
@@ -209,7 +222,7 @@ const UploadGame = () => {
             renderInput={(params) => <TextField {...params} label="Platform" />}
           />
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={4}>
           <Autocomplete
             id="gameStatus"
             options={statusList}
@@ -230,14 +243,14 @@ const UploadGame = () => {
             renderInput={(params) => <TextField {...params} label="Status" />}
           />
         </Grid>
-      </Grid>
-      <Grid container spacing={2} className={classes.section}>
-        <Grid item xs={12}>
-          <Input
-            type="file"
-            name="image"
-            onChange={(e) => setGameImage(e.target.files[0])}
-          ></Input>
+        <Grid container spacing={2} className={classes.section}>
+          <Grid item xs={12}>
+            <Input
+              type="file"
+              name="image"
+              onChange={(e) => setGameImage(e.target.files[0])}
+            ></Input>
+          </Grid>
         </Grid>
       </Grid>
       <Grid container spacing={2} className={classes.section}>
@@ -250,9 +263,9 @@ const UploadGame = () => {
             <NavigationIcon className={classes.extendedIcon} />
             Upload Game
           </Fab>
-          <Fab variant="extended" onClick={uploadImage}>
+          <Fab variant="extended" onClick={uploadGameAndImage}>
             <NavigationIcon className={classes.extendedIcon} />
-            Upload Just Image
+            Upload Game & Image
           </Fab>
         </Grid>
         <Snackbar open={success} autoHideDuration={6000} onClose={handleClose}>
@@ -265,4 +278,4 @@ const UploadGame = () => {
   );
 };
 
-export default UploadGame;
+export default EditGame;

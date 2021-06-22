@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -14,17 +15,28 @@ const useStyles = makeStyles({
 });
 
 const GameBox = (props) => {
+  const history = useHistory();
+  const editEvent = () => {
+    history.push({
+      pathname: "/editGame",
+      // search: '?update=true',  // query string
+      state: {
+        // location state
+        game: props,
+      },
+    });
+  };
   const classes = useStyles();
   const imageUrl = "https://localhost:5001/game_images/" + props.name + ".jpg";
   return (
     <div>
       <Card className={classes.root}>
-        <CardActionArea>
+        <CardActionArea onClick={editEvent}>
           <CardMedia
             component="img"
             alt="Game Image"
             height="150"
-            image={imageUrl}
+            image={props.image}
             title={props.name}
           />
           <CardContent>

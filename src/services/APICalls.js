@@ -39,6 +39,17 @@ export default {
         callback(response.data);
       });
   },
+  putPlayedGame(game, callback) {
+    apiClient
+      .request({
+        method: "put",
+        url: "PlayedGames/" + game.id,
+        data: game,
+      })
+      .then((response) => {
+        callback(response.data);
+      });
+  },
   getPlatforms(callback) {
     apiClient
       .request({

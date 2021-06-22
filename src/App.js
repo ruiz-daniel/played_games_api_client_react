@@ -6,8 +6,12 @@ import Typography from "@material-ui/core/Typography";
 import PlayedGames from "./components/PlayedGamesList";
 import UploadGame from "./components/UploadGame";
 import PlayedGamesTable from "./components/PlayedGamesListTable";
+import EditGame from "./components/EditGame";
+import GameStats from "./components/GameStats";
 
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+
+import "primereact/resources/primereact.min.css"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +44,9 @@ function App() {
               <Link to="/uploadGame" className={classes.link}>
                 Upload Game
               </Link>
+              <Link to="/stats" className={classes.link}>
+                Games Stats
+              </Link>
             </Toolbar>
           </AppBar>
 
@@ -52,6 +59,12 @@ function App() {
             </Route>
             <Route path="/uploadGame">
               <UploadGame />
+            </Route>
+            <Route path="/editGame">
+              <EditGame />
+            </Route>
+            <Route path="/stats">
+              <GameStats />
             </Route>
           </Switch>
         </div>

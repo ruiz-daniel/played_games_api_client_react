@@ -1,14 +1,13 @@
+/* eslint-disable eqeqeq */
 import React, { useState, useEffect } from "react";
 import api from "../services/APICalls";
 import GameBox from "./GameBox";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
-import IconButton from "@material-ui/core/IconButton";
-import AppsIcon from "@material-ui/icons/Apps";
-import TocIcon from "@material-ui/icons/Toc";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
+
+import { Chart } from "primereact/chart";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,20 +42,47 @@ var gamesBackup = [];
 
 const PlayedGamesList = () => {
   const classes = useStyles();
-  const history = useHistory();
   const [games, setGames] = useState([]);
   const [filtering, setFiltering] = useState(false);
+  const [avgScore, setAvgScore] = useState(0);
 
-  const tableView = () => {
-    history.push("/tableview");
+  // const tableView = () => {
+  //   history.push("/tableview");
+  // };
+  // const gridview = () => {
+  //   history.push("/");
+  // };
+
+  const cleanFilters = () => {
+    filters = {
+      name: "",
+      dev: "",
+      publisher: "",
+      year: "",
+      rating: "",
+      genre: "",
+      platform: "",
+      status: "",
+    };
   };
-  const gridview = () => {
-    history.push("/");
+
+  const compareIgnoreCase = (stringA, stringB) => {
+    return stringA.toUpperCase().includes(stringB.toUpperCase());
+  };
+
+  const getAvgScore = (data) => {
+    let accumulate = 0;
+    data.forEach((element) => {
+      accumulate += element.rating;
+    });
+    setAvgScore(accumulate / data.length);
   };
 
   useEffect(() => {
+    cleanFilters();
     api.getPlayedGames((data) => {
       setGames(data);
+      getAvgScore(data);
       gamesBackup = data;
     });
   }, []);
@@ -66,19 +92,20 @@ const PlayedGamesList = () => {
 
     gamesBackup.forEach((game) => {
       if (
-        game.name.includes(filters.name) &&
-        game.developer.includes(filters.dev) &&
-        game.publisher.includes(filters.publisher) &&
+        compareIgnoreCase(game.name, filters.name) &&
+        compareIgnoreCase(game.developer, filters.dev) &&
+        compareIgnoreCase(game.publisher, filters.publisher) &&
         game.year.includes(filters.year) &&
-        game.genre.includes(filters.genre) &&
+        compareIgnoreCase(game.genre, filters.genre) &&
         (filters.rating == "" || game.rating == filters.rating) &&
-        game.platform.name.includes(filters.platform) &&
-        game.status.name.includes(filters.status)
+        compareIgnoreCase(game.platform.name, filters.platform) &&
+        compareIgnoreCase(game.status.name, filters.status)
       ) {
         filtered.push(game);
       }
     });
     setGames(filtered);
+    getAvgScore(filtered);
     setFiltering(false);
   }, [filtering]);
 
@@ -125,6 +152,9 @@ const PlayedGamesList = () => {
   return (
     <div>
       <h1>Played Games</h1>
+      <h3>Showing: {games.length}</h3>
+      <h3>Avg Score: {avgScore}</h3>
+      <div></div>
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Typography variant="h6">Filter By</Typography>
@@ -197,6 +227,7 @@ const PlayedGamesList = () => {
             <Grid item xs={3} key={game.id}>
               <GameBox
                 key={game.id}
+                id={game.id}
                 name={game.name}
                 developer={game.developer}
                 publisher={game.publisher}
@@ -205,6 +236,7 @@ const PlayedGamesList = () => {
                 status={game.status}
                 genre={game.genre}
                 platform={game.platform}
+                image={game.image}
               ></GameBox>
             </Grid>
           );
