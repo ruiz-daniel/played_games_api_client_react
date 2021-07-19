@@ -9,9 +9,9 @@ import PlayedGamesTable from "./components/PlayedGamesListTable";
 import EditGame from "./components/EditGame";
 import GameStats from "./components/GameStats";
 import Top10Games from "./components/Top10Games";
-import AddTop10Game from "./components/AddTop10Game";
 
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import * as routes from "./routes";
 
 import "primereact/resources/primereact.min.css";
 
@@ -59,6 +59,9 @@ function App() {
             <Route exact path="/">
               <PlayedGames />
             </Route>
+            <Route exact path="/playedgames">
+              <PlayedGames />
+            </Route>
             <Route exact path="/tableview">
               <PlayedGamesTable />
             </Route>
@@ -73,9 +76,6 @@ function App() {
             </Route>
             <Route path="/top10games">
               <Top10Games />
-            </Route>
-            <Route path="/addtop10game">
-              <AddTop10Game />
             </Route>
           </Switch>
         </div>
