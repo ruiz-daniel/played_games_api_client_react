@@ -4,6 +4,7 @@ import GameBox from "./Top10GameBox";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import AddTop10Game from "./AddTop10Game";
+import * as routes from "../routes";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,20 +29,24 @@ const Top10Games = (props) => {
   const [orderedGames, setOrder] = useState([]);
 
   const addGame = (game, position) => {
-    api.postTop10Game({ gameid: game.id, pos: position }, "top10games", () => {
-      api.getTop10Games("top10games", (data) => {
-        setGames(data);
-        splitGames(data);
-      });
-    });
+    api.postTop10Game(
+      { gameid: game.id, pos: position },
+      routes.sr_top10games,
+      () => {
+        api.getTop10Games(routes.sr_top10games, (data) => {
+          setGames(data);
+          splitGames(data);
+        });
+      }
+    );
   };
 
   const moveGame = (game, position) => {
     api.putTop10Game(
       { id: game.id, gameid: game.gameid, pos: position },
-      "top10games",
+      routes.sr_top10games,
       () => {
-        api.getTop10Games("top10games", (data) => {
+        api.getTop10Games(routes.sr_top10games, (data) => {
           setGames(data);
           splitGames(data);
         });
@@ -50,8 +55,8 @@ const Top10Games = (props) => {
   };
 
   const removeGame = (game) => {
-    api.deleteTop10(game.id, "top10games", () => {
-      api.getTop10Games("top10games", (data) => {
+    api.deleteTop10(game.id, routes.sr_top10games, () => {
+      api.getTop10Games(routes.sr_top10games, (data) => {
         setGames(data);
         splitGames(data);
       });
@@ -59,7 +64,7 @@ const Top10Games = (props) => {
   };
 
   useEffect(() => {
-    api.getTop10Games("top10games", (data) => {
+    api.getTop10Games(routes.sr_top10games, (data) => {
       setGames(data);
       splitGames(data);
     });
