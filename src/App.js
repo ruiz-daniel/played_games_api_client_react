@@ -5,7 +5,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import PlayedGames from "./components/PlayedGamesList";
 import UploadGame from "./components/UploadGame";
-import PlayedGamesTable from "./components/PlayedGamesListTable";
 import EditGame from "./components/EditGame";
 import GameStats from "./components/GameStats";
 import Top10Games from "./components/Top10Games";
@@ -62,9 +61,6 @@ function App() {
             </Route>
             <Route exact path={routes.playedgames}>
               <PlayedGames />
-            </Route>
-            <Route exact path={routes.tableview}>
-              <PlayedGamesTable />
             </Route>
             <Route path={routes.uploadgame}>
               <UploadGame />
