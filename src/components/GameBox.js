@@ -22,12 +22,12 @@ const GameBox = (props) => {
       // search: '?update=true',  // query string
       state: {
         // location state
-        game: props,
+        game: props.game,
       },
     });
   };
   const classes = useStyles();
-  const imageUrl = "https://localhost:5001/game_images/" + props.name + ".jpg";
+  // const imageUrl = "https://localhost:5001/game_images/" + props.name + ".jpg";
   return (
     <div>
       <Card className={classes.root}>
@@ -36,26 +36,26 @@ const GameBox = (props) => {
             component="img"
             alt="Game Image"
             height="150"
-            image={props.image}
-            title={props.name}
+            image={props.game.image}
+            title={props.game.name}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              {props.name}
+              {props.game.name}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              Developed by: {props.developer} <br />
-              Published by: {props.publisher}
+              Developed by: {props.game.developer} <br />
+              Published by: {props.game.publisher}
               <br />
-              Year: {props.year} <br />
-              Genre: {props.genre} <br />
-              Platform: {props.platform.name}
+              Year: {props.game.year} <br />
+              Genre: {props.game.genre} <br />
+              Platform: {props.game.platform.name}
             </Typography>
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Typography variant="h6">Score: {props.score}</Typography>
-          <Typography variant="h6">Status: {props.status.name}</Typography>
+          <Typography variant="h6">Score: {props.game.rating}</Typography>
+          <Typography variant="h6">Status: {props.game.status.name}</Typography>
         </CardActions>
       </Card>
     </div>

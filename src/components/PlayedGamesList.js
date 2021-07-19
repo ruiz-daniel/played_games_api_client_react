@@ -2,12 +2,11 @@
 import React, { useState, useEffect } from "react";
 import api from "../services/APICalls";
 import GameBox from "./GameBox";
+import PlayingGames from "./PlayingGames";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-
-import { Chart } from "primereact/chart";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +23,12 @@ const useStyles = makeStyles((theme) => ({
   },
   filterField: {
     marginRight: "1rem",
+  },
+  mainContent: {
+    padding: "3rem",
+  },
+  playinggames: {
+    borderLeft: "solid 3px",
   },
 }));
 
@@ -45,13 +50,6 @@ const PlayedGamesList = () => {
   const [games, setGames] = useState([]);
   const [filtering, setFiltering] = useState(false);
   const [avgScore, setAvgScore] = useState(0);
-
-  // const tableView = () => {
-  //   history.push("/tableview");
-  // };
-  // const gridview = () => {
-  //   history.push("/");
-  // };
 
   const cleanFilters = () => {
     filters = {
@@ -150,99 +148,81 @@ const PlayedGamesList = () => {
   };
 
   return (
-    <div>
-      <h1>Played Games</h1>
-      <h3>Showing: {games.length}</h3>
-      <h3>Avg Score: {avgScore}</h3>
-      <div></div>
-      <Grid container spacing={1}>
-        <Grid item xs={12}>
-          <Typography variant="h6">Filter By</Typography>
-          <TextField
-            className={classes.filterField}
-            label="Name"
-            onChange={(e) => filterName(e.target.value)}
-          />
-          <TextField
-            className={classes.filterField}
-            label="Developer"
-            onChange={(e) => filterDev(e.target.value)}
-          />
-          <TextField
-            className={classes.filterField}
-            label="Publisher"
-            onChange={(e) => filterPublisher(e.target.value)}
-          />
-          <TextField
-            className={classes.filterField}
-            label="Year"
-            onChange={(e) => filterYear(e.target.value)}
-          />
-          <TextField
-            className={classes.filterField}
-            label="Genre"
-            onChange={(e) => filterGenre(e.target.value)}
-          />
-          <TextField
-            className={classes.filterField}
-            label="Rating"
-            type="number"
-            onChange={(e) => filterRating(e.target.value)}
-          />
-          <TextField
-            className={classes.filterField}
-            label="Platform"
-            onChange={(e) => filterPlatform(e.target.value)}
-          />
-          <TextField
-            className={classes.filterField}
-            label="Status"
-            onChange={(e) => filterStatus(e.target.value)}
-          />
+    <Grid container spacing={1}>
+      <Grid item xs={9}>
+        <h1>Played Games</h1>
+        <h3>Showing: {games.length}</h3>
+        <h3>Avg Score: {avgScore}</h3>
+        <div></div>
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <Typography variant="h6">Filter By</Typography>
+            <TextField
+              className={classes.filterField}
+              label="Name"
+              onChange={(e) => filterName(e.target.value)}
+            />
+            <TextField
+              className={classes.filterField}
+              label="Developer"
+              onChange={(e) => filterDev(e.target.value)}
+            />
+            <TextField
+              className={classes.filterField}
+              label="Publisher"
+              onChange={(e) => filterPublisher(e.target.value)}
+            />
+            <TextField
+              className={classes.filterField}
+              label="Year"
+              onChange={(e) => filterYear(e.target.value)}
+            />
+            <TextField
+              className={classes.filterField}
+              label="Genre"
+              onChange={(e) => filterGenre(e.target.value)}
+            />
+            <TextField
+              className={classes.filterField}
+              label="Rating"
+              type="number"
+              onChange={(e) => filterRating(e.target.value)}
+            />
+            <TextField
+              className={classes.filterField}
+              label="Platform"
+              onChange={(e) => filterPlatform(e.target.value)}
+            />
+            <TextField
+              className={classes.filterField}
+              label="Status"
+              onChange={(e) => filterStatus(e.target.value)}
+            />
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          spacing={1}
+          style={{ margin: "2rem", marginTop: "1rem" }}
+        >
+          {games.map((game) => {
+            return (
+              <Grid item xs={3} key={game.id}>
+                <GameBox key={game.id} game={game}></GameBox>
+              </Grid>
+            );
+          })}
         </Grid>
       </Grid>
       <Grid
-        container
-        spacing={1}
-        style={{ margin: "0.2rem", marginTop: "1rem" }}
+        item
+        xs={2}
+        className={classes.playinggames}
+        style={{ paddingLeft: "4rem", paddingTop: "2rem" }}
       >
-        {/* <Grid item xs={12}>
-          <IconButton
-            aria-label="Grid View"
-            fontSize="large"
-            onClick={gridview}
-          >
-            <AppsIcon />
-          </IconButton>
-          <IconButton
-            aria-label="Table View"
-            fontSize="large"
-            onClick={tableView}
-          >
-            <TocIcon />
-          </IconButton>
-        </Grid> */}
-        {games.map((game) => {
-          return (
-            <Grid item xs={3} key={game.id}>
-              <GameBox
-                key={game.id}
-                id={game.id}
-                name={game.name}
-                developer={game.developer}
-                publisher={game.publisher}
-                year={game.year}
-                score={game.rating}
-                status={game.status}
-                genre={game.genre}
-                platform={game.platform}
-                image={game.image}
-              ></GameBox>
-            </Grid>
-          );
-        })}
+        <PlayingGames></PlayingGames>
       </Grid>
-    </div>
+    </Grid>
   );
 };
 

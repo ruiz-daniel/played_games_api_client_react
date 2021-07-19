@@ -50,6 +50,48 @@ export default {
         callback(response.data);
       });
   },
+  getPlayingGames(callback) {
+    apiClient
+      .request({
+        method: "get",
+        url: "PlayedGames/status/3",
+      })
+      .then((response) => {
+        callback(response.data);
+      });
+  },
+  getTop10Games(url, callback) {
+    apiClient
+      .request({
+        method: "get",
+        url: "PlayedGames/" + url,
+      })
+      .then((response) => {
+        callback(response.data);
+      });
+  },
+  postTop10Game(game, url, callback) {
+    apiClient
+      .request({
+        method: "post",
+        url: "PlayedGames/" + url,
+        data: game,
+      })
+      .then((response) => {
+        callback(response.data);
+      });
+  },
+  putTop10Game(game, url, callback) {
+    apiClient
+      .request({
+        method: "put",
+        url: "PlayedGames/" + url + "/" + game.id,
+        data: game,
+      })
+      .then((response) => {
+        callback(response.data);
+      });
+  },
   getPlatforms(callback) {
     apiClient
       .request({
