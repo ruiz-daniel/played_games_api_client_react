@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
 import api from "../services/APICalls";
-import GameBox from "./GameBox";
-import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
-import { useHistory } from "react-router-dom";
-import Typography from "@material-ui/core/Typography";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 
@@ -34,6 +30,8 @@ const AddTop10Game = (props) => {
   const [modGame, modifyGame] = useState();
   const [modPos, modifyPos] = useState();
 
+  const [remove, setRemoveGame] = useState();
+
   useEffect(() => {
     api.getPlayedGames((data) => {
       setGames(data);
@@ -49,6 +47,12 @@ const AddTop10Game = (props) => {
   const moveGame = () => {
     if (modGame) {
       props.moveGame(modGame, modPos);
+    }
+  };
+
+  const removeGame = () => {
+    if (remove) {
+      props.removeGame(remove);
     }
   };
 
@@ -68,14 +72,6 @@ const AddTop10Game = (props) => {
           }}
           getOptionLabel={(option) => option.rating + ": " + option.name}
           style={{ width: 400 }}
-          // open={openPlatform}
-          // onOpen={() => {
-          //   setOpenPlatform(true);
-          // }}
-          // onClose={() => {
-          //   setOpenPlatform(false);
-          // }}
-          // loading={loadingPlatforms}
           renderInput={(params) => <TextField {...params} label="Game" />}
         />
       </div>
@@ -106,14 +102,6 @@ const AddTop10Game = (props) => {
           }}
           getOptionLabel={(option) => option.game.name}
           style={{ width: 400 }}
-          // open={openPlatform}
-          // onOpen={() => {
-          //   setOpenPlatform(true);
-          // }}
-          // onClose={() => {
-          //   setOpenPlatform(false);
-          // }}
-          // loading={loadingPlatforms}
           renderInput={(params) => <TextField {...params} label="Game" />}
         />
       </div>
@@ -121,7 +109,7 @@ const AddTop10Game = (props) => {
         <TextField
           label="Position"
           type="number"
-          value={pos}
+          value={modPos}
           onChange={(e) => modifyPos(e.target.value)}
         />
       </div>
@@ -129,6 +117,28 @@ const AddTop10Game = (props) => {
         <Fab variant="extended" onClick={moveGame}>
           <AddIcon />
           Move Game
+        </Fab>
+      </div>
+
+      <div>
+        <h2>Remove Game</h2>
+      </div>
+      <div className={classes.section}>
+        <Autocomplete
+          options={props.orderedGames}
+          value={modGame}
+          onChange={(event, newValue) => {
+            setRemoveGame(newValue);
+          }}
+          getOptionLabel={(option) => option.game.name}
+          style={{ width: 400 }}
+          renderInput={(params) => <TextField {...params} label="Game" />}
+        />
+      </div>
+      <div className={classes.section} style={{ marginBottom: 50 }}>
+        <Fab variant="extended" onClick={removeGame}>
+          <AddIcon />
+          Remove Game
         </Fab>
       </div>
     </div>

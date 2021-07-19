@@ -3,9 +3,6 @@ import api from "../services/APICalls";
 import GameBox from "./Top10GameBox";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import { ScrollPanel } from "primereact/scrollpanel";
-
-import { useHistory } from "react-router-dom";
 import AddTop10Game from "./AddTop10Game";
 
 const useStyles = makeStyles((theme) => ({
@@ -21,12 +18,11 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "1rem",
   },
   addSection: {
-    marginTop: "6rem",
+    marginTop: "0.1rem",
   },
 }));
 
 const Top10Games = (props) => {
-  const history = useHistory();
   const classes = useStyles();
   const [games, setGames] = useState([]);
   const [orderedGames, setOrder] = useState([]);
@@ -51,6 +47,15 @@ const Top10Games = (props) => {
         });
       }
     );
+  };
+
+  const removeGame = (game) => {
+    api.deleteTop10(game.id, "top10games", () => {
+      api.getTop10Games("top10games", (data) => {
+        setGames(data);
+        splitGames(data);
+      });
+    });
   };
 
   useEffect(() => {
@@ -120,6 +125,7 @@ const Top10Games = (props) => {
           addGame={addGame}
           orderedGames={games}
           moveGame={moveGame}
+          removeGame={removeGame}
         ></AddTop10Game>
       </Grid>
     </Grid>

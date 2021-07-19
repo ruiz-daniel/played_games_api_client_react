@@ -92,6 +92,17 @@ export default {
         callback(response.data);
       });
   },
+  deleteTop10(id, url, callback) {
+    apiClient
+      .request({
+        method: "delete",
+        url: "PlayedGames/" + url + "/" + id,
+        data: { id: id },
+      })
+      .then((response) => {
+        callback(response.data);
+      });
+  },
   getPlatforms(callback) {
     apiClient
       .request({
