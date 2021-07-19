@@ -40,41 +40,41 @@ function App() {
               <Typography edge="start" className={classes.root} variant="h5">
                 DRG API
               </Typography>
-              <Link to="/" className={classes.link}>
+              <Link to={routes.home} className={classes.link}>
                 List Games
               </Link>
-              <Link to="/uploadGame" className={classes.link}>
+              <Link to={routes.uploadgame} className={classes.link}>
                 Upload Game
               </Link>
-              <Link to="/stats" className={classes.link}>
+              <Link to={routes.stats} className={classes.link}>
                 Games Stats
               </Link>
-              <Link to="/top10games" className={classes.link}>
+              <Link to={routes.top10games} className={classes.link}>
                 Top 10 Games
               </Link>
             </Toolbar>
           </AppBar>
 
           <Switch>
-            <Route exact path="/">
+            <Route exact path={routes.home}>
               <PlayedGames />
             </Route>
-            <Route exact path="/playedgames">
+            <Route exact path={routes.playedgames}>
               <PlayedGames />
             </Route>
-            <Route exact path="/tableview">
+            <Route exact path={routes.tableview}>
               <PlayedGamesTable />
             </Route>
-            <Route path="/uploadGame">
+            <Route path={routes.uploadgame}>
               <UploadGame />
             </Route>
-            <Route path="/editGame">
+            <Route path={routes.editgame}>
               <EditGame />
             </Route>
-            <Route path="/stats">
+            <Route path={routes.stats}>
               <GameStats />
             </Route>
-            <Route path="/top10games">
+            <Route path={routes.top10games}>
               <Top10Games />
             </Route>
           </Switch>

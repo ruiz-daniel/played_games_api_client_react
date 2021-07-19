@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import api from "../services/APICalls";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import { Chart } from "primereact/chart";
 
 const useStyles = makeStyles((theme) => ({
