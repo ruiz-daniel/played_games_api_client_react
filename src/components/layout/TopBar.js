@@ -33,14 +33,27 @@ const TopBar = () => {
     <React.Fragment>
       <h2 style={styles.logo}>DRG API</h2>
       <Link to={routes.playedgames}>
-        <span>Played Games</span>
+        <span>
+          <i className="pi pi-home"></i> Played Games
+        </span>
       </Link>
-      <SplitButton
+      <Link to={routes.uploadgame}>
+        <span>
+          <i className="pi pi-upload"></i> Upload Game
+        </span>
+      </Link>
+      <Link to={routes.stats}>
+        <span>
+          {" "}
+          <i className="pi pi-chart-bar"></i> Stats
+        </span>
+      </Link>
+      {/* <SplitButton
         label="Top 10"
         icon="pi pi-check"
         model={top_10_items}
         className="p-button-warning"
-      ></SplitButton>
+      ></SplitButton> */}
     </React.Fragment>
   );
 

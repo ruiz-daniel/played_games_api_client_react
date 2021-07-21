@@ -1,3 +1,10 @@
 .topbar {
   background: $background-purple;
+
+  a {
+    color: $text-color-light;
+    font-size: larger;
+    margin-right: 30px;
+    margin-left: 20px;
+  }
 }
