@@ -18,28 +18,41 @@ const top_10_items = [
   },
 ];
 
-const leftContents = (
-  <React.Fragment>
-    <h2 style={styles.logo}>DRG API</h2>
-    <Link to={routes.playedgames}>
-      <span>Played Games</span>
-    </Link>
-    <SplitButton
-      label="Top 10"
-      icon="pi pi-check"
-      model={top_10_items}
-      className="p-button-warning"
-    ></SplitButton>
-  </React.Fragment>
-);
-
-const rightContents = (
-  <React.Fragment>
-    <Button icon="pi pi-search" className="p-mr-2" />
-  </React.Fragment>
-);
-
 const TopBar = () => {
+  const [darkMode, setDarkMode] = React.useState(false);
+  const darkModeToggle = () => {
+    if (!darkMode) {
+      document.body.classList.add("dark-mode");
+      setDarkMode(true);
+    } else {
+      document.body.classList.remove("dark-mode");
+      setDarkMode(false);
+    }
+  };
+  const leftContents = (
+    <React.Fragment>
+      <h2 style={styles.logo}>DRG API</h2>
+      <Link to={routes.playedgames}>
+        <span>Played Games</span>
+      </Link>
+      <SplitButton
+        label="Top 10"
+        icon="pi pi-check"
+        model={top_10_items}
+        className="p-button-warning"
+      ></SplitButton>
+    </React.Fragment>
+  );
+
+  const rightContents = (
+    <React.Fragment>
+      <Button
+        icon={darkMode ? "pi pi-sun" : "pi pi-moon"}
+        className="p-mr-2"
+        onClick={darkModeToggle}
+      />
+    </React.Fragment>
+  );
   return (
     <div>
       <Toolbar

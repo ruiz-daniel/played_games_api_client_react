@@ -5,3 +5,13 @@ a {
   text-decoration: none;
   margin: 5px;
 }
+
+body {
+  background-color: $background-color-light;
+  //   color: $background-color-dark;
+}
+
+body.dark-mode {
+  background-color: $background-color-dark;
+  //   color: $background-color-light;
+}
