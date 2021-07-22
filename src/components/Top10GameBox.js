@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
-import GameBox from "./GameBox";
+import GameBox from "./utils/GameBox";
 const useStyles = makeStyles({
   root: {},
   paper: {

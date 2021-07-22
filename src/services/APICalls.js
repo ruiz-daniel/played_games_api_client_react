@@ -56,8 +56,15 @@ export default {
         method: "get",
         url: "PlayedGames/status/3",
       })
-      .then((response) => {
-        callback(response.data);
+      .then((response1) => {
+        apiClient
+          .request({
+            method: "get",
+            url: "PlayedGames/status/6",
+          })
+          .then((response2) => {
+            callback(response1.data.concat(response2.data));
+          });
       });
   },
   getTop10Games(url, callback) {

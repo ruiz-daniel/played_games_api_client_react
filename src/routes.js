@@ -9,6 +9,7 @@ export const top10games = "/top10games";
 export const managetop10games = "/managetop10games";
 
 //server routes
+export const sr_images = "https://localhost:5001/game_images/";
 export const sr_top10games = "top10games";
 export const sr_playedgames = "PlayedGames/";
 export const sr_playinggames = "PlayedGames/status/3";

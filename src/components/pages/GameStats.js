@@ -1,6 +1,6 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect } from "react";
-import api from "../services/APICalls";
+import api from "../../services/APICalls";
 import { Chart } from "primereact/chart";
 
 const GameStats = () => {

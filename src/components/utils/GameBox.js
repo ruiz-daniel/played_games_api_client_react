@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
-import * as routes from "../routes";
+import * as routes from "../../routes";
 
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
@@ -23,11 +23,13 @@ const GameBox = (props) => {
   const header = (
     <img
       alt="Game Cover"
-      src={props.game.image}
-      // onError={(e) =>
-      //   (e.target.src =
-      //     "https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png")
-      // }
+      src={
+        props.game.image || "https://localhost:5001/game_images/no-cover.jpg"
+      }
+      onError={(e) =>
+        (e.target.src =
+          "https://localhost:5001/game_images/no-cover.jpg" || props.game.image)
+      }
     />
   );
   return (
@@ -50,7 +52,7 @@ const GameBox = (props) => {
             <Score className="score" score={props.game.rating}></Score>
           </div>
           <span
-            className="pi pi-bars menu"
+            className="pi pi-bars box-menu"
             onClick={(e) => op.current.toggle(e)}
           ></span>
         </div>

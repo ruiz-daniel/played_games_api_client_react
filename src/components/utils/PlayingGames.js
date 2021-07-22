@@ -1,10 +1,11 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect } from "react";
-import api from "../services/APICalls";
+import api from "../../services/APICalls";
 
 import { Carousel } from "primereact/carousel";
 
 import Score from "./score";
+import Status from "./status";
 
 const PlayingGames = () => {
   const [games, setGames] = useState([]);
@@ -42,6 +43,11 @@ const PlayingGames = () => {
           <h2>
             <Score score={game.rating}></Score>
           </h2>
+          {game.status.name === "Replaying" && (
+            <h2>
+              <Status status={game.status.name}></Status>
+            </h2>
+          )}
         </div>
         <div className="p-col-8">
           <img src={game.image} alt="Game Cover"></img>

@@ -1,8 +1,8 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect } from "react";
-import api from "../services/APICalls";
-import GameBox from "./GameBox";
-import PlayingGames from "./PlayingGames";
+import api from "../../services/APICalls";
+import GameBox from "../utils/GameBox";
+import PlayingGames from "../utils/PlayingGames";
 import { Accordion, AccordionTab } from "primereact/accordion";
 import { InputText } from "primereact/inputtext";
 
