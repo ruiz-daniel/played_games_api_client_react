@@ -1,19 +1,11 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import * as routes from "../routes";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 280,
-  },
-});
+import { Card } from "primereact/card";
+import { Button } from "primereact/button";
+import Score from "./score";
+import Status from "./status";
 
 const GameBox = (props) => {
   const history = useHistory();
@@ -26,36 +18,48 @@ const GameBox = (props) => {
       },
     });
   };
-  const classes = useStyles();
+
+  const header = (
+    <img
+      alt="Game Cover"
+      src={props.game.image}
+      // onError={(e) =>
+      //   (e.target.src =
+      //     "https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png")
+      // }
+    />
+  );
+  const footer = (
+    <span>
+      <Button label="Edit" icon="pi pi-pencil" />
+      <Button
+        label="Delete"
+        icon="pi pi-times"
+        className="p-button-secondary p-ml-2"
+      />
+    </span>
+  );
   return (
     <div>
-      <Card className={classes.root}>
-        <CardActionArea onClick={editEvent}>
-          <CardMedia
-            component="img"
-            alt="Game Image"
-            height="150"
-            image={props.game.image}
-            title={props.game.name}
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {props.game.name}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Developed by: {props.game.developer} <br />
-              Published by: {props.game.publisher}
-              <br />
-              Year: {props.game.year} <br />
-              Genre: {props.game.genre} <br />
-              Platform: {props.game.platform.name}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Typography variant="h6">Score: {props.game.rating}</Typography>
-          <Typography variant="h6">Status: {props.game.status.name}</Typography>
-        </CardActions>
+      <Card title={props.game.name} style={{ width: "25em" }} header={header}>
+        <div className="gamebox-details">
+          Developed by: {props.game.developer}
+          <br />
+          Published by: {props.game.publisher}
+          <br />
+          Year: {props.game.year}
+          <br />
+          Genre: {props.game.genre}
+          <br />
+          Platform: {props.game.platform.name}
+        </div>
+        <div className="gamebox-footer">
+          <div className="gamebox-footer-status">
+            <Status status={props.game.status.name}></Status> Score:{" "}
+            <Score className="score" score={props.game.rating}></Score>
+          </div>
+          <span className="pi pi-bars menu"></span>
+        </div>
       </Card>
     </div>
   );

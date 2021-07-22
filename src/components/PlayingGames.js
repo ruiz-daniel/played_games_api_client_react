@@ -1,31 +1,12 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect } from "react";
 import api from "../services/APICalls";
-import GameBox from "./Top10GameBox";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  item: {},
-  section: {
-    marginTop: "1rem",
-    marginBottom: "1rem",
-    // borderTopStyle: "solid",
-    // borderTopWidth: 1,
-    // borderBottomStyle: "solid",
-    // borderBottomWidth: 1,
-  },
-  filterField: {
-    marginRight: "1rem",
-  },
-}));
+import { Carousel } from "primereact/carousel";
+
+import Score from "./score";
 
 const PlayingGames = () => {
-  const classes = useStyles();
   const [games, setGames] = useState([]);
 
   useEffect(() => {
@@ -34,29 +15,56 @@ const PlayingGames = () => {
     });
   }, []);
 
+  const responsiveOptions = [
+    {
+      breakpoint: "1024px",
+      numVisible: 1,
+      numScroll: 1,
+    },
+    {
+      breakpoint: "600px",
+      numVisible: 1,
+      numScroll: 1,
+    },
+    {
+      breakpoint: "480px",
+      numVisible: 1,
+      numScroll: 1,
+    },
+  ];
+
+  const template = (game) => {
+    return (
+      <div className="content p-grid">
+        <div className="details p-col-4">
+          <h1>{game.name}</h1>
+          <h2>Current Score:</h2>
+          <h2>
+            <Score score={game.rating}></Score>
+          </h2>
+        </div>
+        <div className="p-col-8">
+          <img src={game.image}></img>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div>
-      <Grid
-        container
-        spacing={1}
-        style={{ margin: "0.2rem", marginTop: "1rem", position: "relative" }}
-      >
-        <Typography style={{ marginBottom: 30 }} variant="h4">
-          Playing Right Now
-        </Typography>
-        {games.map((game) => {
-          return (
-            <Grid
-              item
-              xs={12}
-              key={game.id}
-              style={{ marginBottom: 20, position: "relative" }}
-            >
-              <GameBox key={game.id} game={game}></GameBox>
-            </Grid>
-          );
-        })}
-      </Grid>
+      <div className="playing-carrousel">
+        <Carousel
+          value={games}
+          numVisible={1}
+          numScroll={1}
+          responsiveOptions={responsiveOptions}
+          className="custom-carousel"
+          circular
+          autoplayInterval={3000}
+          itemTemplate={template}
+          header={<h2>Playing right now</h2>}
+        />
+      </div>
     </div>
   );
 };
