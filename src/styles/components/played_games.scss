@@ -1,0 +1,9 @@
+.playedgames-content {
+  margin-left: 25px;
+  margin-top: 2rem;
+  text-align: center;
+  @media screen and (min-width: 1500px) {
+    margin: 0 auto;
+    width: 80%;
+  }
+}

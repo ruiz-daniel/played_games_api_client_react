@@ -1,10 +1,15 @@
 .topbar {
   background: $background-purple;
+  height: 60px;
 
   a {
     color: $text-color-light;
     font-size: larger;
     margin-right: 30px;
     margin-left: 20px;
+  }
+
+  .logo {
+    color: $text-color-light;
   }
 }

@@ -20,3 +20,10 @@
     }
   }
 }
+
+@mixin crystalBox() {
+  background-color: $background-color-dark2;
+  color: $background-color-light;
+  border: solid 1px;
+  border-color: $background-color-dark;
+}
