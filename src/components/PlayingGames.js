@@ -44,7 +44,7 @@ const PlayingGames = () => {
           </h2>
         </div>
         <div className="p-col-8">
-          <img src={game.image}></img>
+          <img src={game.image} alt="Game Cover"></img>
         </div>
       </div>
     );

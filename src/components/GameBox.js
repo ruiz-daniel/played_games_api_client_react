@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import * as routes from "../routes";
 
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
+import { OverlayPanel } from "primereact/overlaypanel";
 import Score from "./score";
 import Status from "./status";
 
 const GameBox = (props) => {
   const history = useHistory();
+  const op = useRef(null);
   const editEvent = () => {
     history.push({
       pathname: routes.editgame,
@@ -18,7 +20,6 @@ const GameBox = (props) => {
       },
     });
   };
-
   const header = (
     <img
       alt="Game Cover"
@@ -28,16 +29,6 @@ const GameBox = (props) => {
       //     "https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png")
       // }
     />
-  );
-  const footer = (
-    <span>
-      <Button label="Edit" icon="pi pi-pencil" />
-      <Button
-        label="Delete"
-        icon="pi pi-times"
-        className="p-button-secondary p-ml-2"
-      />
-    </span>
   );
   return (
     <div>
@@ -58,8 +49,21 @@ const GameBox = (props) => {
             <Status status={props.game.status.name}></Status> Score:{" "}
             <Score className="score" score={props.game.rating}></Score>
           </div>
-          <span className="pi pi-bars menu"></span>
+          <span
+            className="pi pi-bars menu"
+            onClick={(e) => op.current.toggle(e)}
+          ></span>
         </div>
+        <OverlayPanel
+          ref={op}
+          style={{ width: "100px" }}
+          className="overlaypanel"
+        >
+          <div className="edit-button" onClick={editEvent}>
+            <i className="pi pi-pencil"></i>
+            Edit
+          </div>
+        </OverlayPanel>
       </Card>
     </div>
   );
