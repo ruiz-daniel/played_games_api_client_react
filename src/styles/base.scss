@@ -17,15 +17,12 @@ body.dark-mode {
   p {
     color: $background-color-light;
   }
-  .playing-carrousel {
-    background-color: $background-color-dark2 !important;
-  }
-}
-
-body.light-mode {
   .p-card {
     background-color: $background-color-dark2;
     color: white !important;
+  }
+  .playing-carrousel {
+    background-color: $background-color-dark2 !important;
   }
 }
 
@@ -44,4 +41,17 @@ body.light-mode {
 .score-perfect {
   font-weight: 800;
   color: $text-color-blue !important;
+}
+
+.status-completed {
+  background-color: $status-color-completed;
+  color: white;
+}
+.status-incomplete {
+  background-color: $status-color-incomplete;
+  color: white;
+}
+.status-dropped {
+  background-color: $status-color-dropped;
+  color: white;
 }
