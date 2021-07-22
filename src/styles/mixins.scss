@@ -27,3 +27,10 @@
   border: solid 1px;
   border-color: $background-color-dark;
 }
+
+@mixin centerContent() {
+  @media screen and (min-width: 1500px) {
+    margin: 0 auto;
+    width: 80%;
+  }
+}

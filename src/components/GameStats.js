@@ -1,31 +1,9 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect } from "react";
 import api from "../services/APICalls";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
 import { Chart } from "primereact/chart";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    marginBottom: "2rem",
-  },
-  item: {},
-  section: {
-    marginTop: "1rem",
-    marginBottom: "1rem",
-    // borderTopStyle: "solid",
-    // borderTopWidth: 1,
-    // borderBottomStyle: "solid",
-    // borderBottomWidth: 1,
-  },
-  filterField: {
-    marginRight: "1rem",
-  },
-}));
-
 const GameStats = () => {
-  const classes = useStyles();
   const [games, setGames] = useState([]);
   const [completionChart, setcompletionChart] = useState({
     labels: [],
@@ -433,10 +411,10 @@ const GameStats = () => {
   }, []);
 
   return (
-    <div>
+    <div className="stats-wrapper">
       <h1>Played Games Stats</h1>
-      <Grid container spacing={1} className={classes.root}>
-        <Grid item xs={4}>
+      <div className="p-grid">
+        <div className="p-col-4">
           <h2>Completion Rate</h2>
           <Chart
             type="pie"
@@ -444,21 +422,21 @@ const GameStats = () => {
             options={completionOptions}
             style={{ position: "relative" }}
           />
-        </Grid>
-        <Grid item xs={8}>
+        </div>
+        <div className="p-col-8">
           <Chart type="bar" data={platformChart} options={platformOptions} />
-        </Grid>
-      </Grid>
-      <Grid container spacing={1} className={classes.root}>
-        <Grid item xs={12}>
+        </div>
+      </div>
+      <div className="p-grid">
+        <div className="p-col-12">
           <Chart type="bar" data={yearsChart} options={yearsOptions} />
-        </Grid>
-      </Grid>
-      <Grid container spacing={1} className={classes.root}>
-        <Grid item xs={12}>
+        </div>
+      </div>
+      <div className="p-grid">
+        <div className="p-col-12">
           <Chart type="bar" data={scoresChart} options={scoreOptions} />
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     </div>
   );
 };

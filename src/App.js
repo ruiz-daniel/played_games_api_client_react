@@ -9,7 +9,7 @@ import TopBar from "./components/layout/TopBar";
 import PlayedGames from "./components/PlayedGamesList";
 // import UploadGame from "./components/UploadGame";
 // import EditGame from "./components/EditGame";
-// import GameStats from "./components/GameStats";
+import GameStats from "./components/GameStats";
 // import Top10Games from "./components/Top10Games";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -35,11 +35,11 @@ function App() {
           </Route>
           <Route path={routes.editgame}>
             <EditGame />
-          </Route>
+          </Route> */}
           <Route path={routes.stats}>
             <GameStats />
           </Route>
-          <Route path={routes.top10games}>
+          {/* <Route path={routes.top10games}>
             <Top10Games />
           </Route> */}
         </Switch>
