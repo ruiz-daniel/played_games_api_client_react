@@ -38,7 +38,8 @@ const PlayingGames = () => {
     return (
       <div className="content p-grid">
         <div className="details p-col-4">
-          <h1>{game.name}</h1>
+          <h1>Playing Right Now</h1>
+          <h2>{game.name}</h2>
           <h2>Current Score:</h2>
           <h2>
             <Score score={game.rating}></Score>
@@ -68,7 +69,6 @@ const PlayingGames = () => {
           circular
           autoplayInterval={3000}
           itemTemplate={template}
-          header={<h2>Playing right now</h2>}
         />
       </div>
     </div>
