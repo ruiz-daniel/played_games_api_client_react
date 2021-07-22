@@ -6,21 +6,17 @@ import "primereact/resources/themes/saga-blue/theme.css";
 import "primeflex/primeflex.css";
 
 import TopBar from "./components/layout/TopBar";
-// import PlayedGames from "./components/PlayedGamesList";
+import PlayedGames from "./components/PlayedGamesList";
 // import UploadGame from "./components/UploadGame";
 // import EditGame from "./components/EditGame";
 // import GameStats from "./components/GameStats";
 // import Top10Games from "./components/Top10Games";
 
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import * as routes from "./routes";
-
-import * as styles from "./styles/styles";
 import "./styles/main.scss";
 
 import "nprogress/nprogress.css";
-
-import { Button } from "primereact/button";
 
 function App() {
   return (
@@ -29,13 +25,13 @@ function App() {
         <TopBar></TopBar>
         {
           <Switch>
-            {/* <Route exact path={routes.home}>
-            <PlayedGames />
-          </Route>
-          <Route exact path={routes.playedgames}>
-            <PlayedGames />
-          </Route>
-          <Route path={routes.uploadgame}>
+            <Route exact path={routes.home}>
+              <PlayedGames />
+            </Route>
+            <Route exact path={routes.playedgames}>
+              <PlayedGames />
+            </Route>
+            {/* <Route path={routes.uploadgame}>
             <UploadGame />
           </Route>
           <Route path={routes.editgame}>

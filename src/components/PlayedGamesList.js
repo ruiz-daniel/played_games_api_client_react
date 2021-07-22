@@ -3,34 +3,6 @@ import React, { useState, useEffect } from "react";
 import api from "../services/APICalls";
 import GameBox from "./GameBox";
 import PlayingGames from "./PlayingGames";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  item: {},
-  section: {
-    marginTop: "1rem",
-    marginBottom: "1rem",
-    // borderTopStyle: "solid",
-    // borderTopWidth: 1,
-    // borderBottomStyle: "solid",
-    // borderBottomWidth: 1,
-  },
-  filterField: {
-    marginRight: "1rem",
-  },
-  mainContent: {
-    padding: "3rem",
-  },
-  playinggames: {
-    borderLeft: "solid 3px",
-  },
-}));
 
 var filters = {
   name: "",
@@ -46,7 +18,6 @@ var filters = {
 var gamesBackup = [];
 
 const PlayedGamesList = () => {
-  const classes = useStyles();
   const [games, setGames] = useState([]);
   const [filtering, setFiltering] = useState(false);
   const [avgScore, setAvgScore] = useState(0);
@@ -148,81 +119,101 @@ const PlayedGamesList = () => {
   };
 
   return (
-    <Grid container spacing={1}>
-      <Grid item xs={9}>
-        <h1>Played Games</h1>
-        <h3>Showing: {games.length}</h3>
-        <h3>Avg Score: {avgScore}</h3>
-        <div></div>
-        <Grid container spacing={1}>
-          <Grid item xs={12}>
-            <Typography variant="h6">Filter By</Typography>
-            <TextField
-              className={classes.filterField}
-              label="Name"
-              onChange={(e) => filterName(e.target.value)}
-            />
-            <TextField
-              className={classes.filterField}
-              label="Developer"
-              onChange={(e) => filterDev(e.target.value)}
-            />
-            <TextField
-              className={classes.filterField}
-              label="Publisher"
-              onChange={(e) => filterPublisher(e.target.value)}
-            />
-            <TextField
-              className={classes.filterField}
-              label="Year"
-              onChange={(e) => filterYear(e.target.value)}
-            />
-            <TextField
-              className={classes.filterField}
-              label="Genre"
-              onChange={(e) => filterGenre(e.target.value)}
-            />
-            <TextField
-              className={classes.filterField}
-              label="Rating"
-              type="number"
-              onChange={(e) => filterRating(e.target.value)}
-            />
-            <TextField
-              className={classes.filterField}
-              label="Platform"
-              onChange={(e) => filterPlatform(e.target.value)}
-            />
-            <TextField
-              className={classes.filterField}
-              label="Status"
-              onChange={(e) => filterStatus(e.target.value)}
-            />
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          spacing={1}
-          style={{ margin: "2rem", marginTop: "1rem" }}
-        >
-          {games.map((game) => {
-            return (
-              <Grid item xs={3} key={game.id}>
-                <GameBox key={game.id} game={game}></GameBox>
-              </Grid>
-            );
-          })}
-        </Grid>
-      </Grid>
-      <Grid
-        item
-        xs={2}
-        className={classes.playinggames}
-        style={{ paddingLeft: "4rem", paddingTop: "2rem" }}
-      >
-        <PlayingGames></PlayingGames>
-      </Grid>
-    </Grid>
+    <div className="playedgames-wrapper">
+      {/* <h1>Played Games</h1>
+      <h3>Showing: {games.length}</h3>
+      <h3>Avg Score: {avgScore}</h3> */}
+      <PlayingGames></PlayingGames>
+      <div className="playedgames-content">
+        <h2>Played Games</h2>
+        <div className="p-grid">
+          <div className="p-grid p-col-12">
+            {games.map((game) => {
+              return (
+                <div className="p-col-3" key={game.id}>
+                  <GameBox game={game}></GameBox>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+    // <Grid container spacing={1}>
+    //   <Grid item xs={9}>
+    //     <h1>Played Games</h1>
+    //     <h3>Showing: {games.length}</h3>
+    //     <h3>Avg Score: {avgScore}</h3>
+    //     <div></div>
+    //     <Grid container spacing={1}>
+    //       <Grid item xs={12}>
+    //         <Typography variant="h6">Filter By</Typography>
+    //         <TextField
+    //           className={classes.filterField}
+    //           label="Name"
+    //           onChange={(e) => filterName(e.target.value)}
+    //         />
+    //         <TextField
+    //           className={classes.filterField}
+    //           label="Developer"
+    //           onChange={(e) => filterDev(e.target.value)}
+    //         />
+    //         <TextField
+    //           className={classes.filterField}
+    //           label="Publisher"
+    //           onChange={(e) => filterPublisher(e.target.value)}
+    //         />
+    //         <TextField
+    //           className={classes.filterField}
+    //           label="Year"
+    //           onChange={(e) => filterYear(e.target.value)}
+    //         />
+    //         <TextField
+    //           className={classes.filterField}
+    //           label="Genre"
+    //           onChange={(e) => filterGenre(e.target.value)}
+    //         />
+    //         <TextField
+    //           className={classes.filterField}
+    //           label="Rating"
+    //           type="number"
+    //           onChange={(e) => filterRating(e.target.value)}
+    //         />
+    //         <TextField
+    //           className={classes.filterField}
+    //           label="Platform"
+    //           onChange={(e) => filterPlatform(e.target.value)}
+    //         />
+    //         <TextField
+    //           className={classes.filterField}
+    //           label="Status"
+    //           onChange={(e) => filterStatus(e.target.value)}
+    //         />
+    //       </Grid>
+    //     </Grid>
+    //     <Grid
+    //       container
+    //       spacing={1}
+    //       style={{ margin: "2rem", marginTop: "1rem" }}
+    //     >
+    //       {games.map((game) => {
+    //         return (
+    //           <Grid item xs={3} key={game.id}>
+    //             <GameBox key={game.id} game={game}></GameBox>
+    //           </Grid>
+    //         );
+    //       })}
+    //     </Grid>
+    //   </Grid>
+    //   <Grid
+    //     item
+    //     xs={2}
+    //     className={classes.playinggames}
+    //     style={{ paddingLeft: "4rem", paddingTop: "2rem" }}
+    //   >
+    //     <PlayingGames></PlayingGames>
+    //   </Grid>
+    // </Grid>
   );
 };
 
