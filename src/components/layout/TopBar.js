@@ -1,7 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router";
-
-import * as styles from "../../styles/styles";
 
 import { Toolbar } from "primereact/toolbar";
 import { Button } from "primereact/button";
@@ -78,12 +75,7 @@ const TopBar = () => {
   );
   return (
     <div className="sticky-section">
-      <Toolbar
-        left={leftContents}
-        right={rightContents}
-        style={styles.topbar}
-        className="topbar"
-      />
+      <Toolbar left={leftContents} right={rightContents} className="topbar" />
     </div>
   );
 };
