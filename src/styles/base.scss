@@ -24,6 +24,24 @@ body.dark-mode {
   .playing-carrousel {
     background-color: $background-color-dark2 !important;
   }
+  .p-accordion .p-accordion-header {
+    width: 100px;
+    a {
+      color: $text-color-light !important;
+      background-color: $background-color-dark !important;
+    }
+  }
+  .p-accordion-content {
+    border: none !important;
+    background-color: $background-color-dark2 !important;
+    color: white !important;
+    input {
+      background-color: $background-color-dark2;
+      border: none;
+      border-bottom: solid 1px white;
+      color: white;
+    }
+  }
 }
 
 .score-good {

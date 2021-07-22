@@ -7,3 +7,44 @@
     width: 80%;
   }
 }
+.filters {
+  margin-bottom: 20px;
+}
+
+.p-accordion .p-accordion-header-link {
+  border: none !important;
+  &:focus {
+    outline: none !important;
+    border: none;
+    box-shadow: none !important;
+  }
+}
+.p-accordion .p-accordion-header {
+  width: 100px;
+  a {
+    background-color: $background-gray !important;
+  }
+}
+.p-accordion-content {
+  background-color: $background-gray !important;
+  border: none !important;
+  input {
+    background-color: $background-gray;
+    color: black;
+    font-weight: 600;
+    font-size: large;
+    margin-right: 10px;
+    border-radius: 0px;
+    border: none;
+    border-bottom: solid 1px black;
+
+    &:focus {
+      border: none !important;
+      border-bottom: solid 1px white !important;
+      box-shadow: none !important;
+    }
+  }
+}
+.filters-content {
+  display: flex;
+}

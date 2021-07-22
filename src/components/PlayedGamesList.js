@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import api from "../services/APICalls";
 import GameBox from "./GameBox";
 import PlayingGames from "./PlayingGames";
+import { Accordion, AccordionTab } from "primereact/accordion";
+import { InputText } from "primereact/inputtext";
 
 var filters = {
   name: "",
@@ -21,6 +23,7 @@ const PlayedGamesList = () => {
   const [games, setGames] = useState([]);
   const [filtering, setFiltering] = useState(false);
   const [avgScore, setAvgScore] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(null);
 
   const cleanFilters = () => {
     filters = {
@@ -125,7 +128,72 @@ const PlayedGamesList = () => {
       <h3>Avg Score: {avgScore}</h3> */}
       <PlayingGames></PlayingGames>
       <div className="playedgames-content">
-        <h2>Played Games</h2>
+        <div className="filters">
+          <Accordion>
+            <AccordionTab header="Filters">
+              <div className="filters-content">
+                <span className="p-float-label">
+                  <InputText
+                    id="fname"
+                    onChange={(e) => filterName(e.target.value)}
+                  />
+                  <label htmlFor="fname">Name</label>
+                </span>
+                <span className="p-float-label">
+                  <InputText
+                    id="fdev"
+                    onChange={(e) => filterDev(e.target.value)}
+                  />
+                  <label htmlFor="fdev">Developer</label>
+                </span>
+                <span className="p-float-label">
+                  <InputText
+                    id="fpub"
+                    onChange={(e) => filterPublisher(e.target.value)}
+                  />
+                  <label htmlFor="fpub">Publisher</label>
+                </span>
+                <span className="p-float-label">
+                  <InputText
+                    id="fyear"
+                    onChange={(e) => filterYear(e.target.value)}
+                  />
+                  <label htmlFor="fyear">Year</label>
+                </span>
+                <span className="p-float-label">
+                  <InputText
+                    id="fgenre"
+                    onChange={(e) => filterGenre(e.target.value)}
+                  />
+                  <label htmlFor="fgenre">Genre</label>
+                </span>
+                <span className="p-float-label">
+                  <InputText
+                    id="fplatform"
+                    onChange={(e) => filterPlatform(e.target.value)}
+                  />
+                  <label htmlFor="fplatform">Platform</label>
+                </span>
+              </div>
+              <div className="filters-content">
+                <span className="p-float-label">
+                  <InputText
+                    id="fstatus"
+                    onChange={(e) => filterStatus(e.target.value)}
+                  />
+                  <label htmlFor="fstatus">Status</label>
+                </span>
+                <span className="p-float-label">
+                  <InputText
+                    id="frating"
+                    onChange={(e) => filterRating(e.target.value)}
+                  />
+                  <label htmlFor="frating">Score</label>
+                </span>
+              </div>
+            </AccordionTab>
+          </Accordion>
+        </div>
         <div className="p-grid">
           <div className="p-grid p-col-12">
             {games.map((game) => {
