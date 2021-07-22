@@ -1,6 +1,7 @@
 .topbar {
   background: $background-purple;
   height: 60px;
+  width: 100%;
 
   a {
     color: $text-color-light;
@@ -12,4 +13,11 @@
   .logo {
     color: $text-color-light;
   }
+}
+.sticky-section {
+  overflow: hidden;
+  position: sticky;
+  position: -webkit-sticky;
+  z-index: 1;
+  top: 0px;
 }

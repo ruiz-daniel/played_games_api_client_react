@@ -77,7 +77,7 @@ const TopBar = () => {
     </React.Fragment>
   );
   return (
-    <div>
+    <div className="sticky-section">
       <Toolbar
         left={leftContents}
         right={rightContents}

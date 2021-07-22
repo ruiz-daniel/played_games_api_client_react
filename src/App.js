@@ -20,18 +20,17 @@ import "nprogress/nprogress.css";
 
 function App() {
   return (
-    <div>
-      <Router>
-        <TopBar></TopBar>
-        {
-          <Switch>
-            <Route exact path={routes.home}>
-              <PlayedGames />
-            </Route>
-            <Route exact path={routes.playedgames}>
-              <PlayedGames />
-            </Route>
-            {/* <Route path={routes.uploadgame}>
+    <Router>
+      <TopBar></TopBar>
+      {
+        <Switch>
+          <Route exact path={routes.home}>
+            <PlayedGames />
+          </Route>
+          <Route exact path={routes.playedgames}>
+            <PlayedGames />
+          </Route>
+          {/* <Route path={routes.uploadgame}>
             <UploadGame />
           </Route>
           <Route path={routes.editgame}>
@@ -43,10 +42,9 @@ function App() {
           <Route path={routes.top10games}>
             <Top10Games />
           </Route> */}
-          </Switch>
-        }
-      </Router>
-    </div>
+        </Switch>
+      }
+    </Router>
   );
 }
 
