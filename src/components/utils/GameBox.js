@@ -1,12 +1,13 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { useHistory } from "react-router-dom";
 import * as routes from "../../routes";
 
 import { Card } from "primereact/card";
-import { Button } from "primereact/button";
 import { OverlayPanel } from "primereact/overlaypanel";
+import { confirmDialog } from "primereact/confirmdialog";
 import Score from "./score";
 import Status from "./status";
+import api from "../../services/APICalls";
 
 const GameBox = (props) => {
   const history = useHistory();
@@ -20,6 +21,23 @@ const GameBox = (props) => {
       },
     });
   };
+  const deleteGame = () => {
+    api.deletePlayedGame(props.game, () => {
+      if (props.reload) {
+        props.reload();
+      }
+    });
+  };
+
+  const confirm = () => {
+    confirmDialog({
+      message: "Are you sure you want to delete this game?",
+      header: "Confirmation",
+      icon: "pi pi-exclamation-triangle",
+      accept: () => deleteGame(),
+    });
+  };
+
   const header = (
     <img
       alt="Game Cover"
@@ -58,12 +76,16 @@ const GameBox = (props) => {
         </div>
         <OverlayPanel
           ref={op}
-          style={{ width: "100px" }}
+          style={{ width: "120px" }}
           className="overlaypanel"
         >
           <div className="edit-button" onClick={editEvent}>
             <i className="pi pi-pencil"></i>
             Edit
+          </div>
+          <div className="delete-button" onClick={confirm}>
+            <i className="pi pi-trash"></i>
+            Delete
           </div>
         </OverlayPanel>
       </Card>

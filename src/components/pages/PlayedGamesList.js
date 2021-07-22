@@ -22,8 +22,6 @@ var gamesBackup = [];
 const PlayedGamesList = () => {
   const [games, setGames] = useState([]);
   const [filtering, setFiltering] = useState(false);
-  const [avgScore, setAvgScore] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(null);
 
   const cleanFilters = () => {
     filters = {
@@ -42,19 +40,18 @@ const PlayedGamesList = () => {
     return stringA.toUpperCase().includes(stringB.toUpperCase());
   };
 
-  const getAvgScore = (data) => {
-    let accumulate = 0;
-    data.forEach((element) => {
-      accumulate += element.rating;
-    });
-    setAvgScore(accumulate / data.length);
-  };
+  // const getAvgScore = (data) => {
+  //   let accumulate = 0;
+  //   data.forEach((element) => {
+  //     accumulate += element.rating;
+  //   });
+  //   setAvgScore(accumulate / data.length);
+  // };
 
   useEffect(() => {
     cleanFilters();
     api.getPlayedGames((data) => {
       setGames(data);
-      getAvgScore(data);
       gamesBackup = data;
     });
   }, []);
@@ -77,7 +74,6 @@ const PlayedGamesList = () => {
       }
     });
     setGames(filtered);
-    getAvgScore(filtered);
     setFiltering(false);
   }, [filtering]);
 
@@ -199,7 +195,16 @@ const PlayedGamesList = () => {
             {games.map((game) => {
               return (
                 <div className="p-col-3" key={game.id}>
-                  <GameBox game={game}></GameBox>
+                  <GameBox
+                    game={game}
+                    reload={() => {
+                      cleanFilters();
+                      api.getPlayedGames((data) => {
+                        setGames(data);
+                        gamesBackup = data;
+                      });
+                    }}
+                  ></GameBox>
                 </div>
               );
             })}
@@ -207,81 +212,6 @@ const PlayedGamesList = () => {
         </div>
       </div>
     </div>
-    // <Grid container spacing={1}>
-    //   <Grid item xs={9}>
-    //     <h1>Played Games</h1>
-    //     <h3>Showing: {games.length}</h3>
-    //     <h3>Avg Score: {avgScore}</h3>
-    //     <div></div>
-    //     <Grid container spacing={1}>
-    //       <Grid item xs={12}>
-    //         <Typography variant="h6">Filter By</Typography>
-    //         <TextField
-    //           className={classes.filterField}
-    //           label="Name"
-    //           onChange={(e) => filterName(e.target.value)}
-    //         />
-    //         <TextField
-    //           className={classes.filterField}
-    //           label="Developer"
-    //           onChange={(e) => filterDev(e.target.value)}
-    //         />
-    //         <TextField
-    //           className={classes.filterField}
-    //           label="Publisher"
-    //           onChange={(e) => filterPublisher(e.target.value)}
-    //         />
-    //         <TextField
-    //           className={classes.filterField}
-    //           label="Year"
-    //           onChange={(e) => filterYear(e.target.value)}
-    //         />
-    //         <TextField
-    //           className={classes.filterField}
-    //           label="Genre"
-    //           onChange={(e) => filterGenre(e.target.value)}
-    //         />
-    //         <TextField
-    //           className={classes.filterField}
-    //           label="Rating"
-    //           type="number"
-    //           onChange={(e) => filterRating(e.target.value)}
-    //         />
-    //         <TextField
-    //           className={classes.filterField}
-    //           label="Platform"
-    //           onChange={(e) => filterPlatform(e.target.value)}
-    //         />
-    //         <TextField
-    //           className={classes.filterField}
-    //           label="Status"
-    //           onChange={(e) => filterStatus(e.target.value)}
-    //         />
-    //       </Grid>
-    //     </Grid>
-    //     <Grid
-    //       container
-    //       spacing={1}
-    //       style={{ margin: "2rem", marginTop: "1rem" }}
-    //     >
-    //       {games.map((game) => {
-    //         return (
-    //           <Grid item xs={3} key={game.id}>
-    //             <GameBox key={game.id} game={game}></GameBox>
-    //           </Grid>
-    //         );
-    //       })}
-    //     </Grid>
-    //   </Grid>
-    //   <Grid
-    //     item
-    //     xs={2}
-    //     className={classes.playinggames}
-    //     style={{ paddingLeft: "4rem", paddingTop: "2rem" }}
-    //   >
-    //     <PlayingGames></PlayingGames>
-    //   </Grid>
-    // </Grid>
   );
 };
 

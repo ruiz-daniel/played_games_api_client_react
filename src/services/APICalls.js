@@ -50,6 +50,17 @@ export default {
         callback(response.data);
       });
   },
+  deletePlayedGame(game, callback) {
+    apiClient
+      .request({
+        method: "delete",
+        url: "PlayedGames/" + game.id,
+        data: game,
+      })
+      .then((response) => {
+        callback(response.data);
+      });
+  },
   getPlayingGames(callback) {
     apiClient
       .request({

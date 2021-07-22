@@ -51,6 +51,11 @@ const UploadGame = () => {
       },
       () => {
         clear();
+        toast.current.show({
+          severity: "success",
+          summary: "Game Uploaded Successfully",
+          life: 3000,
+        });
       }
     );
   };
@@ -86,13 +91,21 @@ const UploadGame = () => {
             <label htmlFor="gname" className="p-d-block">
               Name
             </label>
-            <InputText id="gname" onChange={(e) => setName(e.target.value)} />
+            <InputText
+              id="gname"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </span>
           <span className="p-field item">
             <label htmlFor="gdev" className="p-d-block">
               Developer
             </label>
-            <InputText id="gdev" onChange={(e) => setDev(e.target.value)} />
+            <InputText
+              id="gdev"
+              value={dev}
+              onChange={(e) => setDev(e.target.value)}
+            />
           </span>
           <span className="p-field item">
             <label htmlFor="gpub" className="p-d-block">
@@ -100,6 +113,7 @@ const UploadGame = () => {
             </label>
             <InputText
               id="gpub"
+              value={publisher}
               onChange={(e) => setPublisher(e.target.value)}
             />
           </span>
@@ -107,7 +121,11 @@ const UploadGame = () => {
             <label htmlFor="gyear" className="p-d-block">
               Year
             </label>
-            <InputText id="gyear" onChange={(e) => setYear(e.target.value)} />
+            <InputText
+              id="gyear"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+            />
           </span>
         </div>
         <div className="p-col-6 upload-game-field-half">
@@ -115,7 +133,11 @@ const UploadGame = () => {
             <label htmlFor="ggenre" className="p-d-block">
               Genre
             </label>
-            <InputText id="ggenre" onChange={(e) => setGenre(e.target.value)} />
+            <InputText
+              id="ggenre"
+              value={genre}
+              onChange={(e) => setGenre(e.target.value)}
+            />
           </span>
           <span className="p-field item">
             <label htmlFor="gplatform" className="p-d-block">
@@ -147,6 +169,7 @@ const UploadGame = () => {
             </label>
             <InputText
               id="grating"
+              value={rating}
               type="number"
               onChange={(e) => setRating(e.target.value)}
             />
