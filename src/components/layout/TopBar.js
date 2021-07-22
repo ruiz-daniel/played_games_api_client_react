@@ -7,7 +7,7 @@ import { Toolbar } from "primereact/toolbar";
 import { Button } from "primereact/button";
 import { SplitButton } from "primereact/splitbutton";
 
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import * as routes from "../../routes";
 
 const top_10_items = [
@@ -19,19 +19,29 @@ const top_10_items = [
 ];
 
 const TopBar = () => {
-  const [darkMode, setDarkMode] = React.useState(false);
+  const [darkMode, setDarkMode] = React.useState(true);
+  React.useEffect(() => {
+    document.body.classList.add("dark-mode");
+    setDarkMode(true);
+    var elems = document.body.getElementsByTagName("*");
+    for (let index = 0; index < elems.length; index++) {
+      elems[index].classList.add("dark-mode");
+    }
+  }, []);
   const darkModeToggle = () => {
     if (!darkMode) {
       document.body.classList.add("dark-mode");
+      document.body.classList.remove("light-mode");
       setDarkMode(true);
     } else {
       document.body.classList.remove("dark-mode");
+      document.body.classList.add("light-mode");
       setDarkMode(false);
     }
   };
   const leftContents = (
     <React.Fragment>
-      <h2 style={styles.logo}>DRG API</h2>
+      <h2 className="logo">DRG API</h2>
       <Link to={routes.playedgames}>
         <span>
           <i className="pi pi-home"></i> Played Games
