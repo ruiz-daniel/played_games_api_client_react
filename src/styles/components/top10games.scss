@@ -1,7 +1,16 @@
 .top10content {
-  margin-left: 2rem;
-  margin-right: 2rem;
 }
 .top10header {
   text-align: center;
+}
+.top10group {
+  border: solid 2px;
+  border-radius: 10px;
+  margin: 0.5rem;
+}
+
+body.dark-mode {
+  .top10group {
+    border: solid 2px white;
+  }
 }
