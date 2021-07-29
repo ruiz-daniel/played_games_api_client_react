@@ -55,6 +55,12 @@ const TopBar = () => {
           <i className="pi pi-chart-bar"></i> Stats
         </span>
       </Link>
+      <Link to={routes.top10games}>
+        <span>
+          {" "}
+          <i className="pi pi-bar"></i> Top 10 Games
+        </span>
+      </Link>
       {/* <SplitButton
         label="Top 10"
         icon="pi pi-check"

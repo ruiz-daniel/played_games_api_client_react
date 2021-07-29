@@ -1,30 +1,10 @@
 import React, { useState, useEffect } from "react";
-import api from "../services/APICalls";
-import GameBox from "./Top10GameBox";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
-import AddTop10Game from "./AddTop10Game";
-import * as routes from "../routes";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    borderRight: "solid 1px",
-  },
-  container: {
-    margin: "3rem",
-  },
-  item: {},
-  section: {
-    marginTop: "1rem",
-    marginBottom: "1rem",
-  },
-  addSection: {
-    marginTop: "0.1rem",
-  },
-}));
+import api from "../../services/APICalls";
+import GameBox from "../utils/Top10GameBox";
+// import AddTop10Game from "./AddTop10Game";
+import * as routes from "../../routes";
 
 const Top10Games = (props) => {
-  const classes = useStyles();
   const [games, setGames] = useState([]);
   const [orderedGames, setOrder] = useState([]);
 
@@ -87,53 +67,51 @@ const Top10Games = (props) => {
   };
 
   return (
-    <Grid container>
-      <Grid className={classes.root} item xs={9}>
-        <div className={classes.container}>
-          <div className={classes.section}>
+    <div className="p-grid">
+      <div className="p-col-9 top10content">
+        <div className="top10container">
+          <div className="top10header">
             <h1>Top 10 Games</h1>
           </div>
-          <div className={classes.section}>
-            <Grid container spacing={1}>
+          <div className="top10section">
+            <div>
               {orderedGames.map((tier, index) => {
                 return (
-                  <Grid
-                    container
-                    spacing={1}
+                  <div
+                    className="p-grid"
                     style={{ marginBottom: 10, borderBottom: "solid 2px" }}
                   >
-                    <Grid item xs={1}>
+                    <div className="p-col-1" item xs={1}>
                       <h2>{index + 1}</h2>
-                    </Grid>
+                    </div>
                     {tier.map((game) => {
                       return (
-                        <Grid
-                          item
-                          xs={3}
+                        <div
+                          className="p-col-3"
                           key={game.id}
                           style={{ marginBottom: 10 }}
                         >
                           <GameBox key={game.id} game={game.game}></GameBox>
-                        </Grid>
+                        </div>
                       );
                     })}
-                  </Grid>
+                  </div>
                 );
               })}
-            </Grid>
+            </div>
           </div>
         </div>
-      </Grid>
-      <Grid className={classes.addSection} item xs={3}>
-        <AddTop10Game
+      </div>
+      <div className="p-col-3 top10management">
+        {/* <AddTop10Game
           destination={props.destination}
           addGame={addGame}
           orderedGames={games}
           moveGame={moveGame}
           removeGame={removeGame}
-        ></AddTop10Game>
-      </Grid>
-    </Grid>
+        ></AddTop10Game> */}
+      </div>
+    </div>
   );
 };
 

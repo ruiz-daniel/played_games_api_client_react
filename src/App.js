@@ -9,7 +9,7 @@ import PlayedGames from "./components/pages/PlayedGamesList";
 import UploadGame from "./components/pages/UploadGame";
 import EditGame from "./components/pages/EditGame";
 import GameStats from "./components/pages/GameStats";
-// import Top10Games from "./components/Top10Games";
+import Top10Games from "./components/pages/Top10Games";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import * as routes from "./routes";
@@ -39,9 +39,9 @@ function App() {
           <Route path={routes.stats}>
             <GameStats />
           </Route>
-          {/* <Route path={routes.top10games}>
+          <Route path={routes.top10games}>
             <Top10Games />
-          </Route> */}
+          </Route>
         </Switch>
       }
     </Router>
