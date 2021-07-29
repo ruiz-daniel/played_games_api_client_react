@@ -50,14 +50,32 @@ export default {
         callback(response.data);
       });
   },
+  deletePlayedGame(game, callback) {
+    apiClient
+      .request({
+        method: "delete",
+        url: "PlayedGames/" + game.id,
+        data: game,
+      })
+      .then((response) => {
+        callback(response.data);
+      });
+  },
   getPlayingGames(callback) {
     apiClient
       .request({
         method: "get",
         url: "PlayedGames/status/3",
       })
-      .then((response) => {
-        callback(response.data);
+      .then((response1) => {
+        apiClient
+          .request({
+            method: "get",
+            url: "PlayedGames/status/6",
+          })
+          .then((response2) => {
+            callback(response1.data.concat(response2.data));
+          });
       });
   },
   getTop10Games(url, callback) {

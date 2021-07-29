@@ -1,0 +1,22 @@
+.playing-carrousel {
+  text-align: center;
+  position: sticky;
+  @include crystalBox();
+  .content {
+    margin: 0% auto;
+    width: 80%;
+    img {
+      position: relative;
+      right: 5px;
+      top: 15px;
+      height: 280px;
+      border: dashed;
+    }
+    .details {
+      display: inline;
+      position: relative;
+      left: 5rem;
+      top: 20px;
+    }
+  }
+}

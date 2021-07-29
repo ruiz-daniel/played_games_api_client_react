@@ -1,0 +1,44 @@
+.top10header {
+  text-align: center;
+}
+.top10group {
+  border: solid 1px;
+  border-radius: 10px;
+  margin: 0.5rem;
+  background-color: $background-opaque;
+  backdrop-filter: blur(10px);
+}
+.p-overlaypanel .p-overlaypanel-content {
+  padding: 0 !important;
+}
+
+.top10section {
+  text-align: center;
+}
+.top10manage {
+  margin-top: 5rem;
+  .p-dropdown,
+  .p-dropdown-panel,
+  input {
+    width: 250px;
+  }
+}
+body.dark-mode {
+  .top10manage {
+    input,
+    .p-dropdown,
+    .p-dropdown-panel {
+      @include darkInput;
+      .p-dropdown-label {
+        color: white;
+      }
+      .p-dropdown-item {
+        color: white;
+      }
+    }
+    button {
+      background: $background-color-purple !important;
+      border-color: white;
+    }
+  }
+}

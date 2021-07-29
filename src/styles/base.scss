@@ -1,0 +1,63 @@
+a {
+  text-decoration: none;
+  margin: 5px;
+}
+
+body {
+  background-color: $background-color-light;
+  overflow-x: hidden;
+
+  //   color: $background-color-dark;
+}
+
+body.dark-mode {
+  background-color: $background-color-dark;
+  h2,
+  h1,
+  p {
+    color: $background-color-light;
+  }
+  .p-card {
+    @include darkBackground;
+  }
+}
+
+.score-good {
+  font-weight: 800;
+  color: $text-color-green !important;
+}
+.score-mid {
+  font-weight: 800;
+  color: $text-color-yellow !important;
+}
+.score-bad {
+  font-weight: 800;
+  color: $text-color-red !important;
+}
+.score-perfect {
+  font-weight: 800;
+  color: $text-color-blue !important;
+}
+
+.status-completed {
+  background-color: $status-color-completed;
+  color: white;
+}
+.status-incomplete {
+  background-color: $status-color-incomplete;
+  color: white;
+}
+.status-dropped {
+  background-color: $status-color-dropped;
+  color: white;
+}
+
+.pos-1 {
+  color: $text-color-gold;
+}
+.pos-2 {
+  color: $text-color-silver;
+}
+.pos-3 {
+  color: $text-color-bronze;
+}

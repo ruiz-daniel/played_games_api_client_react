@@ -1,0 +1,62 @@
+.p-card {
+  width: 300px !important;
+  max-height: 425px !important;
+  border-radius: 10px !important;
+  text-align: center;
+  img {
+    height: 160px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  .p-card-title {
+    font-size: 1rem !important;
+    height: 45px !important;
+  }
+  .p-card-body {
+    max-height: 50% !important;
+  }
+  .p-card-content {
+    padding: 0 !important;
+  }
+  .gamebox-footer {
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    span {
+      position: relative;
+      margin-left: auto;
+    }
+    .box-menu {
+      font-size: larger;
+      padding-top: 4px;
+      cursor: pointer;
+    }
+    .status {
+      @include paddingX(5px);
+      border-radius: 7px;
+      margin-right: 20px !important;
+    }
+    .score {
+      font-size: larger !important;
+    }
+  }
+}
+.edit-button,
+.delete-button {
+  cursor: pointer !important;
+  width: 100% !important;
+  padding: 5px;
+  font-weight: 500;
+  &:hover {
+    background-color: $pointer-background;
+    border-radius: 10px;
+  }
+  i {
+    margin-right: 10px;
+  }
+}
+.delete-button {
+  &:hover {
+    @include redHover;
+  }
+}

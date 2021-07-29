@@ -1,0 +1,64 @@
+.playedgames-content {
+  margin-left: 25px;
+  margin-top: 2rem;
+  text-align: center;
+  @include centerContent();
+}
+.filters {
+  margin-bottom: 20px;
+}
+
+.p-accordion .p-accordion-header-link {
+  border: none !important;
+  &:focus {
+    @include removeFocusBehavior;
+  }
+}
+.p-accordion .p-accordion-header {
+  width: 100px;
+  a {
+    background-color: $background-gray !important;
+  }
+}
+.p-accordion-content {
+  background-color: $background-gray !important;
+
+  border: none !important;
+  border-radius: 10px !important;
+  input {
+    background-color: $background-gray;
+    color: black;
+    font-weight: 600;
+    font-size: large;
+    margin-right: 10px;
+    border-radius: 0px;
+    @include bottomBorder(black);
+
+    &:focus {
+      @include removeFocusBehavior;
+      border-bottom: solid 1px white !important;
+    }
+  }
+}
+.filters-content {
+  display: flex;
+}
+
+body.dark-mode {
+  .p-accordion .p-accordion-header {
+    width: 100px;
+    a {
+      color: $text-color-light !important;
+      background-color: $background-color-dark !important;
+    }
+  }
+  .p-accordion-content {
+    border: none !important;
+    @include darkBackground;
+    input {
+      @include darkBackground;
+      border: none;
+      border-bottom: solid 1px white;
+    }
+  }
+}

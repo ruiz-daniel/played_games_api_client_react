@@ -1,0 +1,90 @@
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone {
+    @media (max-width: 600px) {
+      @content;
+    }
+  }
+  @if $breakpoint == tab-port {
+    @media (max-width: 840px) {
+      @content;
+    }
+  }
+  @if $breakpoint == tab-land {
+    @media (max-width: 1040px) {
+      @content;
+    }
+  }
+  @if $breakpoint == big-desktop {
+    @media (min-width: 1500px) {
+      @content;
+    }
+  }
+}
+
+@mixin crystalBox() {
+  background-color: $background-color-dark2;
+  color: $background-color-light;
+  border: solid 1px;
+  border-color: $background-color-dark;
+}
+
+@mixin centerContent() {
+  @media screen and (min-width: 1500px) {
+    margin: 0 auto;
+    width: 80%;
+  }
+}
+
+@mixin transition(
+  $for: all,
+  $time-in: 250ms,
+  $type: ease-in-out,
+  $time-out: 0s
+) {
+  transition: $for $time-in $type $time-out;
+  -moz-transition: $for $time-in $type $time-out;
+  -webkit-transition: $for $time-in $type $time-out;
+  -o-transition: $for $time-in $type $time-out;
+}
+
+@mixin paddingX($length) {
+  padding-left: $length;
+  padding-right: $length;
+}
+@mixin paddingY($length) {
+  padding-top: $length;
+  padding-bottom: $length;
+}
+
+@mixin redHover {
+  background-color: red;
+  border-radius: 10px;
+  color: white;
+}
+
+@mixin removeFocusBehavior {
+  outline: none !important;
+  border: none;
+  box-shadow: none !important;
+}
+
+@mixin darkInput {
+  background-color: $background-color-input-dark;
+  border: solid 1px black;
+  color: white;
+}
+
+@mixin darkBackground {
+  background-color: $background-color-dark2 !important;
+  color: white !important;
+}
+
+@mixin bottomBorder($color) {
+  border: none !important;
+  border-bottom: solid 1px $color !important;
+}
+
+@mixin arrowBorderRight {
+  border-bottom-right-radius: 90px;
+  border-top-right-radius: 100px;
+}

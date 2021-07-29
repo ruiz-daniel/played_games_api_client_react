@@ -1,0 +1,80 @@
+.upload-game-wrapper {
+  @include centerContent();
+  display: flex;
+}
+.upload-game-fields {
+  padding: 30px;
+  margin-top: 50px;
+  label {
+    width: 100px;
+    color: $text-color-light-gray;
+    font-size: larger;
+  }
+  input,
+  .p-dropdown,
+  .p-dropdown-panel {
+    color: black;
+    font-weight: 600;
+    font-size: large;
+    margin-right: 10px;
+    border: solid 1px black;
+    border-radius: 6px;
+    margin-bottom: 2rem;
+    width: 230px;
+
+    &:focus {
+      @include bottomBorder(black);
+      box-shadow: none !important;
+    }
+  }
+}
+.upload-game-preview {
+  padding: 30px;
+}
+
+.upload-button {
+  display: grid;
+  width: 200px;
+  border: solid 2px;
+  border-radius: 5px;
+  @include arrowBorderRight;
+  padding: 0.5rem;
+  text-align: center;
+  transition: all 0.5s ease;
+  cursor: pointer;
+
+  &:hover {
+    width: 250px;
+    border-color: $text-color-red;
+    background-color: red;
+    color: white;
+  }
+}
+
+body.dark-mode {
+  .upload-game-fields {
+    input,
+    .p-dropdown,
+    .p-dropdown-panel {
+      background-color: $background-color-input-dark;
+      border: solid 1px black;
+      color: white;
+      .p-dropdown-label {
+        color: white;
+      }
+      &:focus {
+        @include bottomBorder(white);
+        box-shadow: none !important;
+      }
+    }
+    .p-fileupload-buttonbar {
+      background-color: $background-color-dark2;
+
+      span,
+      button {
+        background: $background-color-purple !important;
+        border-color: white;
+      }
+    }
+  }
+}

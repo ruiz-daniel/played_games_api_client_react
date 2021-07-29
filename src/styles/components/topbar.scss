@@ -1,0 +1,27 @@
+.topbar {
+  background: $background-purple;
+  height: 60px;
+  width: 100%;
+  @include paddingY(0);
+  @include paddingX(3rem);
+  a {
+    color: $text-color-light;
+    font-size: larger;
+    margin-right: 30px;
+    margin-left: 20px;
+    &:hover {
+      text-decoration: underline dotted !important;
+    }
+  }
+
+  .logo {
+    color: $text-color-light;
+  }
+}
+.sticky-section {
+  overflow: hidden;
+  position: sticky;
+  position: -webkit-sticky;
+  z-index: 1;
+  top: 0px;
+}
