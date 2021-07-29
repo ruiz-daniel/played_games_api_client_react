@@ -14,5 +14,33 @@
   padding: 0 !important;
 }
 
+.top10section {
+  text-align: center;
+}
+.top10manage {
+  margin-top: 5rem;
+  .p-dropdown,
+  .p-dropdown-panel,
+  input {
+    width: 250px;
+  }
+}
 body.dark-mode {
+  input,
+  .p-dropdown,
+  .p-dropdown-panel {
+    background-color: $background-color-input-dark;
+    border: solid 1px black;
+    color: white;
+    .p-dropdown-label {
+      color: white;
+    }
+    .p-dropdown-item {
+      color: white;
+    }
+  }
+  button {
+    background: $background-color-purple !important;
+    border-color: white;
+  }
 }

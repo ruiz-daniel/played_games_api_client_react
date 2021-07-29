@@ -1,26 +1,10 @@
 import React, { useState, useEffect } from "react";
 import api from "../../services/APICalls";
-import { makeStyles } from "@material-ui/core/styles";
-import AddIcon from "@material-ui/icons/Add";
-import Fab from "@material-ui/core/Fab";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import TextField from "@material-ui/core/TextField";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    padding: 20,
-    display: "inline-grid",
-  },
-  item: {},
-  section: {
-    marginTop: "1rem",
-    marginBottom: "1rem",
-  },
-}));
+import { Dropdown } from "primereact/dropdown";
+import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
 
 const AddTop10Game = (props) => {
-  const classes = useStyles();
   const [games, setGames] = useState([]);
   const [selectedGame, selectGame] = useState({
     name: "No game selected",
@@ -57,89 +41,79 @@ const AddTop10Game = (props) => {
   };
 
   return (
-    <div className={classes.root}>
-      <div className={classes.section}>
+    <div className="p-grid p-justify-center top10manage">
+      <div className="p-col-12 top10section">
         <h2>Add Game</h2>
       </div>
 
-      <div className={classes.section}>
-        <Autocomplete
+      <div className="p-col-10 top10section">
+        <Dropdown
           id="gamePlatform"
           options={games}
           value={selectedGame}
-          onChange={(event, newValue) => {
-            selectGame(newValue);
+          onChange={(e) => {
+            selectGame(e.value);
           }}
-          getOptionLabel={(option) => option.rating + ": " + option.name}
-          style={{ width: 400 }}
-          renderInput={(params) => <TextField {...params} label="Game" />}
+          optionLabel="name"
+          showClear
         />
       </div>
-      <div className={classes.section}>
-        <TextField
+      <div className="p-col-10 top10section">
+        <InputText
           label="Position"
           type="number"
           value={pos}
           onChange={(e) => setPos(e.target.value)}
+          placeholder="position"
         />
       </div>
-      <div className={classes.section} style={{ marginBottom: 50 }}>
-        <Fab variant="extended" onClick={addGame}>
-          <AddIcon />
-          Add Game
-        </Fab>
+      <div className="p-col-10 top10section" style={{ marginBottom: 50 }}>
+        <Button label="Add Game" icon="pi pi-check" onClick={addGame} />
       </div>
 
       <div>
         <h2>Move Game</h2>
       </div>
-      <div className={classes.section}>
-        <Autocomplete
+      <div className="p-col-10 top10section">
+        <Dropdown
           options={props.orderedGames}
           value={modGame}
-          onChange={(event, newValue) => {
-            modifyGame(newValue);
+          onChange={(e) => {
+            modifyGame(e.value);
           }}
-          getOptionLabel={(option) => option.game.name}
-          style={{ width: 400 }}
-          renderInput={(params) => <TextField {...params} label="Game" />}
+          optionLabel="name"
+          showClear
         />
       </div>
-      <div className={classes.section}>
-        <TextField
+      <div className="p-col-10 top10section">
+        <InputText
           label="Position"
           type="number"
           value={modPos}
           onChange={(e) => modifyPos(e.target.value)}
+          placeholder="position"
         />
       </div>
-      <div className={classes.section} style={{ marginBottom: 50 }}>
-        <Fab variant="extended" onClick={moveGame}>
-          <AddIcon />
-          Move Game
-        </Fab>
+      <div className="p-col-10 top10section" style={{ marginBottom: 50 }}>
+        <Button label="Move Game" icon="pi pi-pencil" onClick={moveGame} />
       </div>
 
       <div>
         <h2>Remove Game</h2>
       </div>
-      <div className={classes.section}>
-        <Autocomplete
+      <div className="p-col-10 top10section">
+        <Dropdown
           options={props.orderedGames}
-          value={modGame}
-          onChange={(event, newValue) => {
-            setRemoveGame(newValue);
+          value={remove}
+          onChange={(e) => {
+            setRemoveGame(e.value);
           }}
-          getOptionLabel={(option) => option.game.name}
-          style={{ width: 400 }}
-          renderInput={(params) => <TextField {...params} label="Game" />}
+          optionLabel="name"
+          showClear
         />
       </div>
-      <div className={classes.section} style={{ marginBottom: 50 }}>
-        <Fab variant="extended" onClick={removeGame}>
-          <AddIcon />
-          Remove Game
-        </Fab>
+      <div className="p-col-10 top10section" style={{ marginBottom: 50 }}>
+        <Button label="Remove Game" icon="pi pi-trash" onClick={removeGame} />
       </div>
     </div>
   );

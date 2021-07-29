@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "../../services/APICalls";
 import GameBox from "../utils/Top10GameBox";
 import Position from "../utils/position";
-// import AddTop10Game from "./AddTop10Game";
+import AddTop10Game from "./AddTop10Game";
 import * as routes from "../../routes";
 
 const Top10Games = (props) => {
@@ -54,10 +54,15 @@ const Top10Games = (props) => {
   const splitGames = (games) => {
     let result = [];
     games.forEach((game, index) => {
+      console.log(result);
+      game.name = game.game.name;
       if (index === 0) {
         result.push([game]);
       } else {
-        if (game.pos === games[index - 1].pos) {
+        if (game.pos > games[index - 1].pos + 1) {
+          result.push([]);
+          result.push([game]);
+        } else if (game.pos === games[index - 1].pos) {
           result[game.pos - 1].push(game);
         } else {
           result.push([game]);
@@ -100,13 +105,13 @@ const Top10Games = (props) => {
             })}
           </div>
           <div className="p-col-3 top10management">
-            {/* <AddTop10Game
-          destination={props.destination}
-          addGame={addGame}
-          orderedGames={games}
-          moveGame={moveGame}
-          removeGame={removeGame}
-        ></AddTop10Game> */}
+            <AddTop10Game
+              destination={props.destination}
+              addGame={addGame}
+              orderedGames={games}
+              moveGame={moveGame}
+              removeGame={removeGame}
+            ></AddTop10Game>
           </div>
         </div>
       </div>
