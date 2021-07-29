@@ -2,11 +2,8 @@
   background: $background-purple;
   height: 60px;
   width: 100%;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 3rem;
-  padding-right: 3rem;
-
+  @include paddingY(0);
+  @include paddingX(3rem);
   a {
     color: $text-color-light;
     font-size: larger;

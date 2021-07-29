@@ -18,8 +18,7 @@ body.dark-mode {
     color: $background-color-light;
   }
   .p-card {
-    background-color: $background-color-dark2;
-    color: white !important;
+    @include darkBackground;
   }
 }
 

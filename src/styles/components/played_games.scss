@@ -11,9 +11,7 @@
 .p-accordion .p-accordion-header-link {
   border: none !important;
   &:focus {
-    outline: none !important;
-    border: none;
-    box-shadow: none !important;
+    @include removeFocusBehavior;
   }
 }
 .p-accordion .p-accordion-header {
@@ -34,13 +32,11 @@
     font-size: large;
     margin-right: 10px;
     border-radius: 0px;
-    border: none;
-    border-bottom: solid 1px black;
+    @include bottomBorder(black);
 
     &:focus {
-      border: none !important;
+      @include removeFocusBehavior;
       border-bottom: solid 1px white !important;
-      box-shadow: none !important;
     }
   }
 }
@@ -58,13 +54,11 @@ body.dark-mode {
   }
   .p-accordion-content {
     border: none !important;
-    background-color: $background-color-dark2 !important;
-    color: white !important;
+    @include darkBackground;
     input {
-      background-color: $background-color-dark2;
+      @include darkBackground;
       border: none;
       border-bottom: solid 1px white;
-      color: white;
     }
   }
 }

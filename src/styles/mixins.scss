@@ -46,3 +46,45 @@
   -webkit-transition: $for $time-in $type $time-out;
   -o-transition: $for $time-in $type $time-out;
 }
+
+@mixin paddingX($length) {
+  padding-left: $length;
+  padding-right: $length;
+}
+@mixin paddingY($length) {
+  padding-top: $length;
+  padding-bottom: $length;
+}
+
+@mixin redHover {
+  background-color: red;
+  border-radius: 10px;
+  color: white;
+}
+
+@mixin removeFocusBehavior {
+  outline: none !important;
+  border: none;
+  box-shadow: none !important;
+}
+
+@mixin darkInput {
+  background-color: $background-color-input-dark;
+  border: solid 1px black;
+  color: white;
+}
+
+@mixin darkBackground {
+  background-color: $background-color-dark2 !important;
+  color: white !important;
+}
+
+@mixin bottomBorder($color) {
+  border: none !important;
+  border-bottom: solid 1px $color !important;
+}
+
+@mixin arrowBorderRight {
+  border-bottom-right-radius: 90px;
+  border-top-right-radius: 100px;
+}

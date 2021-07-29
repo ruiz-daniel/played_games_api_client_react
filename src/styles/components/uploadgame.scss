@@ -23,8 +23,7 @@
     width: 230px;
 
     &:focus {
-      border: none !important;
-      border-bottom: solid 1px white !important;
+      @include bottomBorder(black);
       box-shadow: none !important;
     }
   }
@@ -38,8 +37,7 @@
   width: 200px;
   border: solid 2px;
   border-radius: 5px;
-  border-bottom-right-radius: 90px;
-  border-top-right-radius: 100px;
+  @include arrowBorderRight;
   padding: 0.5rem;
   text-align: center;
   transition: all 0.5s ease;
@@ -48,6 +46,8 @@
   &:hover {
     width: 250px;
     border-color: $text-color-red;
+    background-color: red;
+    color: white;
   }
 }
 
@@ -61,6 +61,10 @@ body.dark-mode {
       color: white;
       .p-dropdown-label {
         color: white;
+      }
+      &:focus {
+        @include bottomBorder(white);
+        box-shadow: none !important;
       }
     }
     .p-fileupload-buttonbar {
