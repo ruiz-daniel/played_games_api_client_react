@@ -21,48 +21,6 @@ body.dark-mode {
     background-color: $background-color-dark2;
     color: white !important;
   }
-  .playing-carrousel {
-    background-color: $background-color-dark2 !important;
-  }
-  .p-accordion .p-accordion-header {
-    width: 100px;
-    a {
-      color: $text-color-light !important;
-      background-color: $background-color-dark !important;
-    }
-  }
-  .p-accordion-content {
-    border: none !important;
-    background-color: $background-color-dark2 !important;
-    color: white !important;
-    input {
-      background-color: $background-color-dark2;
-      border: none;
-      border-bottom: solid 1px white;
-      color: white;
-    }
-  }
-  .upload-game-fields {
-    input,
-    .p-dropdown,
-    .p-dropdown-panel {
-      background-color: $background-color-input-dark;
-      border: solid 1px black;
-      color: white;
-      .p-dropdown-label {
-        color: white;
-      }
-    }
-    .p-fileupload-buttonbar {
-      background-color: $background-color-dark2;
-
-      span,
-      button {
-        background: $background-color-purple !important;
-        border-color: white;
-      }
-    }
-  }
 }
 
 .score-good {
@@ -93,4 +51,14 @@ body.dark-mode {
 .status-dropped {
   background-color: $status-color-dropped;
   color: white;
+}
+
+.pos-1 {
+  color: $text-color-gold;
+}
+.pos-2 {
+  color: $text-color-silver;
+}
+.pos-3 {
+  color: $text-color-bronze;
 }

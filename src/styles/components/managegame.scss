@@ -50,3 +50,27 @@
     border-color: $text-color-red;
   }
 }
+
+body.dark-mode {
+  .upload-game-fields {
+    input,
+    .p-dropdown,
+    .p-dropdown-panel {
+      background-color: $background-color-input-dark;
+      border: solid 1px black;
+      color: white;
+      .p-dropdown-label {
+        color: white;
+      }
+    }
+    .p-fileupload-buttonbar {
+      background-color: $background-color-dark2;
+
+      span,
+      button {
+        background: $background-color-purple !important;
+        border-color: white;
+      }
+    }
+  }
+}
