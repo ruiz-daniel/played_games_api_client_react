@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import GameBox from "./GameBox";
+import { OverlayPanel } from "primereact/overlaypanel";
 const classes = {
   root: {},
   paper: {
@@ -21,10 +22,20 @@ const classes = {
 };
 
 const Top10GameBox = (props) => {
+  const op = useRef(null);
   return (
     <div className={classes.root}>
-      <img style={classes.img} src={props.game.image} alt="Game"></img>
+      <img
+        style={classes.img}
+        src={props.game.image}
+        alt="Game"
+        onMouseEnter={(e) => op.current.toggle(e)}
+        onMouseLeave={(e) => op.current.toggle(e)}
+      ></img>
       <div className={classes.details}></div>
+      <OverlayPanel ref={op} className="overlaypanel">
+        <GameBox game={props.game}></GameBox>
+      </OverlayPanel>
     </div>
   );
 };

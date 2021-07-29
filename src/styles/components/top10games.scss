@@ -4,13 +4,15 @@
   text-align: center;
 }
 .top10group {
-  border: solid 2px;
+  border: solid 1px;
   border-radius: 10px;
   margin: 0.5rem;
+  background-color: $background-opaque;
+  backdrop-filter: blur(10px);
+}
+.p-overlaypanel .p-overlaypanel-content {
+  padding: 0 !important;
 }
 
 body.dark-mode {
-  .top10group {
-    border: solid 2px white;
-  }
 }

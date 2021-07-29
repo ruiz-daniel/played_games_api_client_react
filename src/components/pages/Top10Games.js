@@ -70,12 +70,12 @@ const Top10Games = (props) => {
   return (
     <div className="p-grid">
       <div className="p-col-12 top10content">
-        <div className="top10header">
-          <h1>Top 10 Games</h1>
-        </div>
         <div className="p-grid top10container">
           <div className="p-col-2 top10menu"></div>
           <div className="top10content p-col-7 p-grid p-justify-center">
+            <div className="p-col-12 top10header">
+              <h1>Top 10 Games</h1>
+            </div>
             {orderedGames.map((tier, index) => {
               return (
                 <div className="p-grid p-col-4 top10group">
