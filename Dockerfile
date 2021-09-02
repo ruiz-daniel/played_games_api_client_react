@@ -1,5 +1,5 @@
 # pull the official base image
-FROM node:alpine
+FROM node:10.14.1-alpine
 # set working direction
 WORKDIR /app
 # add `/app/node_modules/.bin` to $PATH
@@ -8,9 +8,10 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm i
+RUN npm rebuild node-sass --force
 # add app
 COPY . ./
-RUN npm run build
-EXPOSE 3000
+
 # start app
 CMD ["npm", "start"]
+EXPOSE 3000
