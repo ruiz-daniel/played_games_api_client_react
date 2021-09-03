@@ -3,52 +3,49 @@ import api from "../../services/APICalls";
 import GameBox from "../utils/Top10GameBox";
 import Position from "../utils/position";
 import AddTop10Game from "./AddTop10Game";
-import * as routes from "../../routes";
+import { useLocation } from "react-router-dom";
 
 const Top10Games = (props) => {
+  const location = useLocation();
   const [games, setGames] = useState([]);
   const [orderedGames, setOrder] = useState([]);
+  const [top10name, setTop10Name] = useState(location.state.top10name);
 
   const addGame = (game, position) => {
-    api.postTop10Game(
-      { gameid: game.id, pos: position },
-      routes.sr_top10games,
-      () => {
-        api.getTop10Games(routes.sr_top10games, (data) => {
-          setGames(data);
-          splitGames(data);
-        });
-      }
-    );
+    api.postTop10Game({ gameid: game.id, pos: position }, top10name, () => {
+      getGames();
+    });
+  };
+
+  const getGames = () => {
+    api.getTop10Games(top10name, (data) => {
+      setGames(data);
+      splitGames(data);
+    });
   };
 
   const moveGame = (game, position) => {
     api.putTop10Game(
-      { id: game.id, gameid: game.gameid, pos: position },
-      routes.sr_top10games,
+      {
+        id: game.id,
+        gameid: game.gameid,
+        pos: position,
+        top10nameid: game.top10nameid,
+      },
       () => {
-        api.getTop10Games(routes.sr_top10games, (data) => {
-          setGames(data);
-          splitGames(data);
-        });
+        getGames();
       }
     );
   };
 
   const removeGame = (game) => {
-    api.deleteTop10(game.id, routes.sr_top10games, () => {
-      api.getTop10Games(routes.sr_top10games, (data) => {
-        setGames(data);
-        splitGames(data);
-      });
+    api.deleteTop10Game(game.id, () => {
+      getGames();
     });
   };
 
   useEffect(() => {
-    api.getTop10Games(routes.sr_top10games, (data) => {
-      setGames(data);
-      splitGames(data);
-    });
+    getGames();
   }, []);
 
   const splitGames = (games) => {
@@ -74,10 +71,10 @@ const Top10Games = (props) => {
 
   return (
     <div className="p-grid">
-      <div className="p-col-12 top10content">
-        <div className="p-grid top10container">
+      <div className="p-col-12 ">
+        <div className="p-grid ">
           <div className="p-col-2 top10menu"></div>
-          <div className="top10content p-col-7 p-grid p-justify-center">
+          <div className="p-col-7 p-grid p-justify-center">
             <div className="p-col-12 top10header">
               <h1>Top 10 Games</h1>
             </div>
