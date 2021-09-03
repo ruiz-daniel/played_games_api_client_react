@@ -119,9 +119,6 @@ const PlayedGamesList = () => {
 
   return (
     <div className="playedgames-wrapper">
-      {/* <h1>Played Games</h1>
-      <h3>Showing: {games.length}</h3>
-      <h3>Avg Score: {avgScore}</h3> */}
       <PlayingGames></PlayingGames>
       <div className="playedgames-content">
         <div className="filters">

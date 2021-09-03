@@ -1,0 +1,24 @@
+.top10content {
+  @include centerContent();
+}
+.top10header {
+  text-align: center;
+}
+
+.top10characterbox {
+  width: 153px;
+  height: 380px;
+  margin-right: 10px;
+  border: solid 1px black;
+}
+
+.top10charactersimg {
+  width: 150px;
+  height: 300px;
+}
+
+body.dark-mode {
+  .top10characterbox {
+    border: solid 1px white;
+  }
+}

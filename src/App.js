@@ -16,6 +16,7 @@ import * as routes from "./routes";
 import "./styles/main.scss";
 
 import "nprogress/nprogress.css";
+import Top10Characters from "./components/pages/Top10Characters";
 
 function App() {
   return (
@@ -41,6 +42,9 @@ function App() {
           </Route>
           <Route path={routes.top10games}>
             <Top10Games />
+          </Route>
+          <Route path={routes.top10characters}>
+            <Top10Characters />
           </Route>
         </Switch>
       }

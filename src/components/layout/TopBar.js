@@ -2,18 +2,9 @@ import React from "react";
 
 import { Toolbar } from "primereact/toolbar";
 import { Button } from "primereact/button";
-import { SplitButton } from "primereact/splitbutton";
 
 import { Link } from "react-router-dom";
 import * as routes from "../../routes";
-
-const top_10_items = [
-  {
-    label: "Top 10 Games",
-    icon: "pi pi-bars",
-    command: () => {},
-  },
-];
 
 const TopBar = () => {
   const [darkMode, setDarkMode] = React.useState(true);
@@ -55,10 +46,26 @@ const TopBar = () => {
           <i className="pi pi-chart-bar"></i> Stats
         </span>
       </Link>
-      <Link to={routes.top10games}>
+      <Link
+        to={{
+          pathname: routes.top10games,
+          state: { top10name: "All Time" },
+        }}
+      >
         <span>
           {" "}
           <i className="pi pi-bar"></i> Top 10 Games
+        </span>
+      </Link>
+      <Link
+        to={{
+          pathname: routes.top10characters,
+          state: { top10name: "All Time" },
+        }}
+      >
+        <span>
+          {" "}
+          <i className="pi pi-bar"></i> Top 10 Characters
         </span>
       </Link>
       {/* <SplitButton
