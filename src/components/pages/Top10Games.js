@@ -25,17 +25,10 @@ const Top10Games = (props) => {
   };
 
   const moveGame = (game, position) => {
-    api.putTop10Game(
-      {
-        id: game.id,
-        gameid: game.gameid,
-        pos: position,
-        top10nameid: game.top10nameid,
-      },
-      () => {
-        getGames();
-      }
-    );
+    game.pos = position;
+    api.putTop10Game(game, () => {
+      getGames();
+    });
   };
 
   const removeGame = (game) => {
