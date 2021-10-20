@@ -1,64 +1,57 @@
 .playedgames-content {
-  margin-left: 25px;
-  margin-top: 2rem;
+  padding: 20px;
   text-align: center;
-  @include centerContent();
+  // @include centerContent();
+}
+.played_games_list {
+  padding: 15px;
 }
 .filters {
-  margin-bottom: 20px;
-}
+  margin: 0;
+  border-radius: 10px;
+  width: 100%;
+  background-color: $background-gray;
 
-.p-accordion .p-accordion-header-link {
-  border: none !important;
-  &:focus {
-    @include removeFocusBehavior;
+  h2 {
+    font-family: "Courier New", Courier, monospace;
   }
-}
-.p-accordion .p-accordion-header {
-  width: 100px;
-  a {
-    background-color: $background-gray !important;
-  }
-}
-.p-accordion-content {
-  background-color: $background-gray !important;
 
-  border: none !important;
-  border-radius: 10px !important;
+  .filter_item {
+    margin-bottom: 15px;
+  }
+
   input {
-    background-color: $background-gray;
+    background-color: $background-color-light;
     color: black;
-    font-weight: 600;
-    font-size: large;
+    font-weight: 400;
+    font-size: medium;
     margin-right: 10px;
-    border-radius: 0px;
-    @include bottomBorder(black);
+    border-radius: 5px;
 
     &:focus {
       @include removeFocusBehavior;
-      border-bottom: solid 1px white !important;
     }
   }
 }
+
+.played_games_sidebar {
+  height: 100hv;
+  // background-color: $background-color-dark2;
+}
+
 .filters-content {
   display: flex;
 }
 
 body.dark-mode {
-  .p-accordion .p-accordion-header {
-    width: 100px;
-    a {
-      color: $text-color-light !important;
-      background-color: $background-color-dark !important;
-    }
-  }
-  .p-accordion-content {
-    border: none !important;
-    @include darkBackground;
+  .filters {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    background-color: $background-color-dark2;
+
     input {
-      @include darkBackground;
-      border: none;
-      border-bottom: solid 1px white;
+      background-color: $background-color-light;
+      color: black;
     }
   }
 }

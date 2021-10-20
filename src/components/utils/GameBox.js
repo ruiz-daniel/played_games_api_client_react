@@ -52,7 +52,7 @@ const GameBox = (props) => {
   );
   return (
     <div>
-      <Card title={props.game.name} style={{ width: "25em" }} header={header}>
+      <Card title={props.game.name} header={header}>
         <div className="gamebox-details">
           Developed by: {props.game.developer}
           <br />

@@ -64,7 +64,7 @@
 
 @mixin removeFocusBehavior {
   outline: none !important;
-  border: none;
+  border: solid 1px $text-color-dark-gray !important;
   box-shadow: none !important;
 }
 

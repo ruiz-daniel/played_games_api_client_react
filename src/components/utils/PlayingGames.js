@@ -52,21 +52,19 @@ const PlayingGames = () => {
       <div className="content p-grid">
         <div className="details p-col-6">
           {game.status.id == 3 && (
-            <h1 className="status_tittle">Playing Right Now</h1>
+            <h2 className="status_tittle">Playing Right Now</h2>
           )}
-          {game.status.id == 4 && (
-            <h1 className="status_tittle">Will Continue Eventually</h1>
-          )}
-          {game.status.id == 6 && <h1 className="status_tittle">Replaying</h1>}
-          <h2>{game.name}</h2>
-          <h2>Current Score:</h2>
-          <h2>
+          {game.status.id == 4 && <h2 className="status_tittle">On Hold</h2>}
+          {game.status.id == 6 && <h2 className="status_tittle">Replaying</h2>}
+          <h3>{game.name}</h3>
+          <h3>Current Score:</h3>
+          <h3>
             <Score score={game.rating}></Score>
-          </h2>
+          </h3>
           {game.status.name === "Replaying" && (
-            <h2>
+            <h3>
               <Status status={game.status.name}></Status>
-            </h2>
+            </h3>
           )}
         </div>
         <div className="p-col-6">

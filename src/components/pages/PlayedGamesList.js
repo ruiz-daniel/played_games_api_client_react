@@ -5,6 +5,8 @@ import GameBox from "../utils/GameBox";
 import PlayingGames from "../utils/PlayingGames";
 import { Accordion, AccordionTab } from "primereact/accordion";
 import { InputText } from "primereact/inputtext";
+import { ScrollPanel } from "primereact/scrollpanel";
+import { OverlayPanel } from "primereact/overlaypanel";
 
 var filters = {
   name: "",
@@ -119,93 +121,94 @@ const PlayedGamesList = () => {
 
   return (
     <div className="playedgames-wrapper">
-      <PlayingGames></PlayingGames>
-      <div className="playedgames-content">
-        <div className="filters">
-          <Accordion>
-            <AccordionTab header="Filters">
-              <div className="filters-content">
-                <span className="p-float-label">
+      <div className="p-grid playedgames-content">
+        <div className="p-col-4 played_games_sidebar">
+          <PlayingGames></PlayingGames>
+          <div className="p-grid p-shadow-2 filters">
+            <div className="p-col-6 p-d-block">
+              <h2>Filter by</h2>
+              <ScrollPanel style={{ width: "100%", height: "80%" }}>
+                <div className="filter_item">
                   <InputText
                     id="fname"
+                    placeholder="Name"
                     onChange={(e) => filterName(e.target.value)}
                   />
-                  <label htmlFor="fname">Name</label>
-                </span>
-                <span className="p-float-label">
+                </div>
+                <div className="filter_item">
                   <InputText
                     id="fdev"
+                    placeholder="Developer"
                     onChange={(e) => filterDev(e.target.value)}
                   />
-                  <label htmlFor="fdev">Developer</label>
-                </span>
-                <span className="p-float-label">
+                </div>
+                <div className="filter_item">
                   <InputText
                     id="fpub"
+                    placeholder="Publisher"
                     onChange={(e) => filterPublisher(e.target.value)}
                   />
-                  <label htmlFor="fpub">Publisher</label>
-                </span>
-                <span className="p-float-label">
+                </div>
+                <div className="filter_item">
                   <InputText
                     id="fyear"
+                    placeholder="Year"
                     onChange={(e) => filterYear(e.target.value)}
                   />
-                  <label htmlFor="fyear">Year</label>
-                </span>
-                <span className="p-float-label">
+                </div>
+                <div className="filter_item">
                   <InputText
                     id="fgenre"
+                    placeholder="Genre"
                     onChange={(e) => filterGenre(e.target.value)}
                   />
-                  <label htmlFor="fgenre">Genre</label>
-                </span>
-                <span className="p-float-label">
+                </div>
+                <div className="filter_item">
                   <InputText
                     id="fplatform"
+                    placeholder="Platform"
                     onChange={(e) => filterPlatform(e.target.value)}
                   />
-                  <label htmlFor="fplatform">Platform</label>
-                </span>
-              </div>
-              <div className="filters-content">
-                <span className="p-float-label">
+                </div>
+                <div className="filter_item">
                   <InputText
                     id="fstatus"
+                    placeholder="Status"
                     onChange={(e) => filterStatus(e.target.value)}
                   />
-                  <label htmlFor="fstatus">Status</label>
-                </span>
-                <span className="p-float-label">
+                </div>
+                <div className="filter_item">
                   <InputText
                     id="frating"
+                    placeholder="Rating"
                     onChange={(e) => filterRating(e.target.value)}
                   />
-                  <label htmlFor="frating">Score</label>
-                </span>
-              </div>
-            </AccordionTab>
-          </Accordion>
-        </div>
-        <div className="p-grid">
-          <div className="p-grid p-col-12">
-            {games.map((game) => {
-              return (
-                <div className="p-col-3" key={game.id}>
-                  <GameBox
-                    game={game}
-                    reload={() => {
-                      cleanFilters();
-                      api.getPlayedGames((data) => {
-                        setGames(data);
-                        gamesBackup = data;
-                      });
-                    }}
-                  ></GameBox>
                 </div>
-              );
-            })}
+              </ScrollPanel>
+            </div>
           </div>
+        </div>
+        <div className="p-grid p-col-8 played_games_list">
+          <ScrollPanel style={{ width: "100%", height: "90vh" }}>
+            <div className="p-grid p-col-12">
+              {games.map((game) => {
+                return (
+                  <div className="p-col-3" key={game.id}>
+                    <GameBox
+                      game={game}
+                      reload={() => {
+                        cleanFilters();
+                        api.getPlayedGames((data) => {
+                          setGames(data);
+                          gamesBackup = data;
+                        });
+                      }}
+                    ></GameBox>
+                  </div>
+                );
+              })}
+            </div>
+          </ScrollPanel>
         </div>
       </div>
     </div>

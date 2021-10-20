@@ -1,10 +1,10 @@
 .p-card {
-  width: 260px !important;
+  width: 235px !important;
   max-height: 425px !important;
   border-radius: 10px !important;
   text-align: center;
   img {
-    height: 130px;
+    height: 110px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
   }
@@ -17,6 +17,10 @@
   }
   .p-card-content {
     padding: 0 !important;
+    font-size: small;
+  }
+  .gamebox-details {
+    min-height: 110px;
   }
   .gamebox-footer {
     display: flex;
@@ -34,7 +38,7 @@
     .status {
       @include paddingX(5px);
       border-radius: 7px;
-      margin-right: 20px !important;
+      margin-right: 10px !important;
     }
     .score {
       font-size: larger !important;
