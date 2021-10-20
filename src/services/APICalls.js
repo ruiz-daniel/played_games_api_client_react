@@ -74,7 +74,16 @@ export default {
             url: "PlayedGames/status/6",
           })
           .then((response2) => {
-            callback(response1.data.concat(response2.data));
+            apiClient
+              .request({
+                method: "get",
+                url: "PlayedGames/status/4",
+              })
+              .then((response3) => {
+                callback(
+                  response1.data.concat(response2.data.concat(response3.data))
+                );
+              });
           });
       });
   },
