@@ -21,4 +21,12 @@ body.dark-mode {
   .top10characterbox {
     border: solid 1px white;
   }
+  .p-fileupload-buttonbar {
+    background-color: $background-color-dark2;
+    span,
+    button {
+      background: $background-color-purple !important;
+      border-color: white;
+    }
+  }
 }

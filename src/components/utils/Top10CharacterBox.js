@@ -6,12 +6,13 @@ const Top10CharacterBox = (props) => {
     <div className="top10characterbox">
       <img
         className="top10charactersimg"
-        src="https://localhost:5001/game_images/YoRHa_No.2_Type_B.png" //{props.character.image}
+        src={props.character.character.image}
         // onMouseEnter={(e) => op.current.toggle(e)}
         // onMouseLeave={(e) => op.current.toggle(e)}
-        alt="props.character.name"
+        alt={props.character.name}
       ></img>
-      <h1 className="top10header">1</h1>
+      <h1 className="top10header">{props.character.name}</h1>
+      <h1 className="top10header">{props.character.pos}</h1>
     </div>
   );
 };

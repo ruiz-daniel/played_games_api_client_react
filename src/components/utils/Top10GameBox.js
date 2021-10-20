@@ -29,8 +29,8 @@ const Top10GameBox = (props) => {
         style={classes.img}
         src={props.game.image}
         alt="Game"
-        onMouseEnter={(e) => op.current.toggle(e)}
-        onMouseLeave={(e) => op.current.toggle(e)}
+        onClick={(e) => op.current.toggle(e)}
+        // onMouseLeave={(e) => op.current.toggle(e)}
       ></img>
       <div className={classes.details}></div>
       <OverlayPanel ref={op} className="overlaypanel">
