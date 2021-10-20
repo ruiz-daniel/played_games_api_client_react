@@ -1,13 +1,16 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect } from "react";
 import api from "../../services/APICalls";
+import { useHistory } from "react-router";
 
 import { Carousel } from "primereact/carousel";
 
 import Score from "./score";
 import Status from "./status";
+import * as routes from "../../routes";
 
 const PlayingGames = () => {
+  const history = useHistory();
   const [games, setGames] = useState([]);
 
   useEffect(() => {
@@ -15,6 +18,16 @@ const PlayingGames = () => {
       setGames(data);
     });
   }, []);
+
+  const editEvent = (game) => {
+    history.push({
+      pathname: routes.editgame,
+      state: {
+        // location state
+        game: game,
+      },
+    });
+  };
 
   const responsiveOptions = [
     {
@@ -37,8 +50,14 @@ const PlayingGames = () => {
   const template = (game) => {
     return (
       <div className="content p-grid">
-        <div className="details p-col-4">
-          <h1>Playing Right Now</h1>
+        <div className="details p-col-6">
+          {game.status.id == 3 && (
+            <h1 className="status_tittle">Playing Right Now</h1>
+          )}
+          {game.status.id == 4 && (
+            <h1 className="status_tittle">Will Continue Eventually</h1>
+          )}
+          {game.status.id == 6 && <h1 className="status_tittle">Replaying</h1>}
           <h2>{game.name}</h2>
           <h2>Current Score:</h2>
           <h2>
@@ -50,8 +69,14 @@ const PlayingGames = () => {
             </h2>
           )}
         </div>
-        <div className="p-col-8">
-          <img src={game.image} alt="Game Cover"></img>
+        <div className="p-col-6">
+          <img
+            src={game.image}
+            alt="Game Cover"
+            onClick={() => {
+              editEvent(game);
+            }}
+          ></img>
         </div>
       </div>
     );

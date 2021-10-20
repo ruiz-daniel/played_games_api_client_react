@@ -1,22 +1,26 @@
 .playing-carrousel {
   text-align: center;
-  position: sticky;
+
   @include crystalBox();
   .content {
     margin: 0% auto;
-    width: 80%;
+    width: 95%;
     img {
       position: relative;
       right: 5px;
       top: 15px;
-      height: 280px;
+      height: 220px;
       border: dashed;
+      cursor: pointer;
     }
     .details {
       display: inline;
       position: relative;
       left: 5rem;
-      top: 20px;
+      top: 15px;
+      .status_tittle {
+        color: $text-color-yellow;
+      }
     }
   }
 }
