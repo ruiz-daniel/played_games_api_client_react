@@ -7,15 +7,8 @@ import { Link } from "react-router-dom";
 import * as routes from "../../routes";
 
 const TopBar = () => {
-  const [darkMode, setDarkMode] = React.useState(true);
-  React.useEffect(() => {
-    document.body.classList.add("dark-mode");
-    setDarkMode(true);
-    var elems = document.body.getElementsByTagName("*");
-    for (let index = 0; index < elems.length; index++) {
-      elems[index].classList.add("dark-mode");
-    }
-  }, []);
+  const [darkMode, setDarkMode] = React.useState(false);
+
   const darkModeToggle = () => {
     if (!darkMode) {
       document.body.classList.add("dark-mode");
