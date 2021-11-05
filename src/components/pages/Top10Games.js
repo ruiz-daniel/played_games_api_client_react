@@ -174,19 +174,77 @@ const Top10Games = (props) => {
                   </h2>
                 </div>
                 {tier.map((game) => {
-                  return (
-                    <div
-                      className="p-col-3"
-                      key={game.id}
-                      // style={{ marginBottom: 10 }}
-                      draggable="true"
-                      onDragStart={() => {
-                        drag(game);
-                      }}
-                    >
-                      <GameBox key={game.id} game={game.game}></GameBox>
-                    </div>
-                  );
+                  if (tier.length == 1) {
+                    return (
+                      <div
+                        className="p-col-2"
+                        key={game.id}
+                        // style={{ marginBottom: 10 }}
+                        draggable="true"
+                        onDragStart={() => {
+                          drag(game);
+                        }}
+                      >
+                        <GameBox key={game.id} game={game.game}></GameBox>
+                      </div>
+                    );
+                  } else if (tier.length == 2) {
+                    return (
+                      <div
+                        className="p-col-4"
+                        key={game.id}
+                        // style={{ marginBottom: 10 }}
+                        draggable="true"
+                        onDragStart={() => {
+                          drag(game);
+                        }}
+                      >
+                        <GameBox key={game.id} game={game.game}></GameBox>
+                      </div>
+                    );
+                  } else if (tier.length == 3) {
+                    return (
+                      <div
+                        className="p-col-3"
+                        key={game.id}
+                        // style={{ marginBottom: 10 }}
+                        draggable="true"
+                        onDragStart={() => {
+                          drag(game);
+                        }}
+                      >
+                        <GameBox key={game.id} game={game.game}></GameBox>
+                      </div>
+                    );
+                  } else if (tier.length == 4) {
+                    return (
+                      <div
+                        className="p-col-2"
+                        key={game.id}
+                        // style={{ marginBottom: 10 }}
+                        draggable="true"
+                        onDragStart={() => {
+                          drag(game);
+                        }}
+                      >
+                        <GameBox key={game.id} game={game.game}></GameBox>
+                      </div>
+                    );
+                  } else if (tier.length > 4) {
+                    return (
+                      <div
+                        className="p-col-1"
+                        key={game.id}
+                        // style={{ marginBottom: 10 }}
+                        draggable="true"
+                        onDragStart={() => {
+                          drag(game);
+                        }}
+                      >
+                        <GameBox key={game.id} game={game.game}></GameBox>
+                      </div>
+                    );
+                  }
                 })}
               </div>
             );
