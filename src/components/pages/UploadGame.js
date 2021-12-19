@@ -180,8 +180,8 @@ const UploadGame = () => {
           <FileUpload
             name="gameImage"
             customUpload
+            auto
             uploadHandler={onupload}
-            onUpload={(e) => {}}
             accept="image/*"
             chooseLabel="File"
             emptyTemplate={
