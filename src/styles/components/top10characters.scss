@@ -6,21 +6,28 @@
 }
 
 .top10characterbox {
-  width: 153px;
-  height: 380px;
-  margin-right: 10px;
-  border: solid 1px black;
+  width: 90%;
+  height: 302px;
+  // border: solid 1px black;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 7px;
+  margin-bottom: 5px;
+  a {
+    color: rgb(19, 74, 224);
+  }
 }
 
 .top10charactersimg {
   width: 150px;
   height: 300px;
+  border-radius: 7px;
+}
+
+.top10characterdata {
+  width: 100%;
 }
 
 body.dark-mode {
-  .top10characterbox {
-    border: solid 1px white;
-  }
   .p-fileupload-buttonbar {
     background-color: $background-color-dark2;
     span,

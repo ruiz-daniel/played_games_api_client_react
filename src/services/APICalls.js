@@ -209,7 +209,7 @@ export default {
     apiClient
       .request({
         method: "delete",
-        url: "PlayedGames/top10character/" + id,
+        url: "PlayedGames/top10characters/" + id,
         data: { id: id },
       })
       .then((response) => {
