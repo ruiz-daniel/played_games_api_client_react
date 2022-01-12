@@ -28,6 +28,20 @@
 }
 
 body.dark-mode {
+  input,
+  .p-dropdown,
+  .p-dropdown-panel {
+    background-color: $background-color-input-dark;
+    border: solid 1px black;
+    color: white;
+    .p-dropdown-label {
+      color: white;
+    }
+    &:focus {
+      @include bottomBorder(white);
+      box-shadow: none !important;
+    }
+  }
   .p-fileupload-buttonbar {
     background-color: $background-color-dark2;
     span,

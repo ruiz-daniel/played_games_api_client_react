@@ -19,14 +19,12 @@ const Top10Characters = () => {
 
   const [addCharName, setCharName] = useState();
   const [addCharWikia, setCharWikia] = useState();
-  const [addCharImage, setCharImage] = useState();
   const [addCharGame, setCharGame] = useState();
   const [addCharPos, setCharPos] = useState();
 
   const clearAddCharacter = (event) => {
     setCharGame("");
     setCharName("");
-    setCharImage("");
     setCharPos("");
     setCharWikia("");
     event.options.clear();

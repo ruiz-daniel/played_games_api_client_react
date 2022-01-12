@@ -86,7 +86,7 @@ const UploadGame = () => {
     <div className="upload-game-wrapper p-grid">
       <div className="p-grid p-col-8 upload-game-fields">
         <Toast ref={toast} />
-        <div className="p-col-6 upload-game-field-half">
+        <div className="p-col-6">
           <span className="p-field item">
             <label htmlFor="gname" className="p-d-block">
               Name
@@ -128,7 +128,7 @@ const UploadGame = () => {
             />
           </span>
         </div>
-        <div className="p-col-6 upload-game-field-half">
+        <div className="p-col-6">
           <span className="p-field item">
             <label htmlFor="ggenre" className="p-d-block">
               Genre
