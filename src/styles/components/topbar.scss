@@ -1,12 +1,13 @@
 .topbar {
-  background: $background-purple;
-  height: 60px;
+  // background: $background-purple;
+  background-color: $background-color-dark2;
+  height: 40px;
   width: 100%;
   @include paddingY(0);
   @include paddingX(3rem);
   a {
     color: $text-color-light;
-    font-size: larger;
+    font-size: medium;
     margin-right: 30px;
     margin-left: 20px;
     &:hover {
