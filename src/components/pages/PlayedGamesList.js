@@ -184,23 +184,22 @@ const PlayedGamesList = () => {
   };
 
   return (
-    <div className="p-grid p-col-12 played_games_list">
-      <ScrollPanel style={{ width: "100%", height: "90vh" }}>
-        <div className="p-grid p-col-12">
+    <div className="played_games_list">
+      <ScrollPanel style={{ width: "100%", height: "92vh" }}>
+        <div className="games-container flex flex-wrap justify-content-between">
           {games.map((game) => {
             return (
-              <div className="p-col-2" key={game.id}>
-                <GameBox
-                  game={game}
-                  reload={() => {
-                    cleanFilters();
-                    api.getPlayedGames((data) => {
-                      setGames(data);
-                      gamesBackup = data;
-                    });
-                  }}
-                ></GameBox>
-              </div>
+              <GameBox
+                key={game.id}
+                game={game}
+                reload={() => {
+                  cleanFilters();
+                  api.getPlayedGames((data) => {
+                    setGames(data);
+                    gamesBackup = data;
+                  });
+                }}
+              ></GameBox>
             );
           })}
         </div>

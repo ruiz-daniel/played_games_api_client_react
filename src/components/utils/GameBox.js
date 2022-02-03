@@ -40,37 +40,52 @@ const GameBox = (props) => {
   };
 
   const header = (
-    <Image
-      alt="Game Cover"
-      src={
-        props.game.image || "https://localhost:5001/game_images/no-cover.jpg"
-      }
-      onError={(e) =>
-        (e.target.src =
-          "https://localhost:5001/game_images/no-cover.jpg" || props.game.image)
-      }
-      preview
-    />
+    <>
+      <Image
+        alt="Game Cover"
+        src={
+          props.game.image || "https://localhost:5001/game_images/no-cover.jpg"
+        }
+        onError={(e) =>
+          (e.target.src =
+            "https://localhost:5001/game_images/no-cover.jpg" ||
+            props.game.image)
+        }
+        preview
+      />
+      <Status className="status" status={props.game.status.name}></Status>
+      <Score className="score" score={props.game.rating}></Score>
+    </>
   );
   return (
-    <div>
-      <Card title={props.game.name} header={header}>
-        <div className="gamebox-details">
-          Developed by: {props.game.developer}
-          <br />
-          Published by: {props.game.publisher}
-          <br />
-          Year: {props.game.year}
-          <br />
-          Genre: {props.game.genre}
-          <br />
-          Platform: {props.game.platform.name}
-        </div>
+    <div className="game-box-container">
+      <div className="game-box-img">
+        <Image
+          alt="Game Cover"
+          src={
+            props.game.image ||
+            "https://localhost:5001/game_images/no-cover.jpg"
+          }
+          onError={(e) =>
+            (e.target.src =
+              "https://localhost:5001/game_images/no-cover.jpg" ||
+              props.game.image)
+          }
+          preview
+        />
+        <Status
+          className="status gamebox-footer-status"
+          status={props.game.status.name}
+        ></Status>
+        <Score className="score" score={props.game.rating}></Score>
+      </div>
+
+      <p>{props.game.name}</p>
+
+      {/* <Card title={props.game.name} header={header}>
+        
         <div className="gamebox-footer">
-          <div className="gamebox-footer-status">
-            <Status status={props.game.status.name}></Status> Score:{" "}
-            <Score className="score" score={props.game.rating}></Score>
-          </div>
+          <div className="gamebox-footer-status"></div>
           <span
             className="pi pi-bars box-menu"
             onClick={(e) => op.current.toggle(e)}
@@ -90,7 +105,7 @@ const GameBox = (props) => {
             Delete
           </div>
         </OverlayPanel>
-      </Card>
+      </Card> */}
     </div>
   );
 };

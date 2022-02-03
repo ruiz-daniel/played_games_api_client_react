@@ -9,7 +9,7 @@ a {
 }
 
 body {
-  background: $background-purple2;
+  // background: $background-purple2;
   // background-color: $background-color-light;
   overflow-x: hidden;
 }
@@ -44,7 +44,7 @@ body.dark-mode {
 }
 .score-perfect {
   font-weight: 800;
-  color: $text-color-blue !important;
+  color: $text-color-purple !important;
 }
 
 .status-completed {

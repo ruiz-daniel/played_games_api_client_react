@@ -8,6 +8,7 @@
   display: flex;
   @include centerContent($width: 80%);
 }
+
 .filters {
   margin: 0;
   border-radius: 10px;
