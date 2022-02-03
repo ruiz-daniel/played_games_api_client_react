@@ -2,11 +2,8 @@
 import React, { useState, useEffect } from "react";
 import api from "../../services/APICalls";
 import GameBox from "../utils/GameBox";
-import PlayingGames from "../utils/PlayingGames";
-import { Accordion, AccordionTab } from "primereact/accordion";
 import { InputText } from "primereact/inputtext";
 import { ScrollPanel } from "primereact/scrollpanel";
-import { OverlayPanel } from "primereact/overlaypanel";
 import { Sidebar } from "primereact/sidebar";
 
 var filters = {
