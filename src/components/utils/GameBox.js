@@ -5,6 +5,7 @@ import * as routes from "../../routes";
 import { Card } from "primereact/card";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { confirmDialog } from "primereact/confirmdialog";
+import { Image } from "primereact/image";
 import Score from "./score";
 import Status from "./status";
 import api from "../../services/APICalls";
@@ -39,7 +40,7 @@ const GameBox = (props) => {
   };
 
   const header = (
-    <img
+    <Image
       alt="Game Cover"
       src={
         props.game.image || "https://localhost:5001/game_images/no-cover.jpg"
@@ -48,6 +49,7 @@ const GameBox = (props) => {
         (e.target.src =
           "https://localhost:5001/game_images/no-cover.jpg" || props.game.image)
       }
+      preview
     />
   );
   return (
