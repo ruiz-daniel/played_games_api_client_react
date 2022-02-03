@@ -12,17 +12,18 @@ const TopBar = () => {
   const darkModeToggle = () => {
     if (!darkMode) {
       document.body.classList.add("dark-mode");
-      document.body.classList.remove("light-mode");
       setDarkMode(true);
     } else {
       document.body.classList.remove("dark-mode");
-      document.body.classList.add("light-mode");
       setDarkMode(false);
     }
   };
   const leftContents = (
     <React.Fragment>
-      <h2 className="logo">DRG API</h2>
+      <Link to={routes.home}>
+        <h2 className="logo">DRG API</h2>
+      </Link>
+
       <Link to={routes.playedgames}>
         <span>
           <i className="pi pi-home"></i> Played Games
@@ -61,12 +62,6 @@ const TopBar = () => {
           <i className="pi pi-bar"></i> Top 10 Characters
         </span>
       </Link>
-      {/* <SplitButton
-        label="Top 10"
-        icon="pi pi-check"
-        model={top_10_items}
-        className="p-button-warning"
-      ></SplitButton> */}
     </React.Fragment>
   );
 

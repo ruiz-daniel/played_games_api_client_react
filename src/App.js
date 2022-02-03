@@ -10,13 +10,14 @@ import UploadGame from "./components/pages/UploadGame";
 import EditGame from "./components/pages/EditGame";
 import GameStats from "./components/pages/GameStats";
 import Top10Games from "./components/pages/Top10Games";
+import Top10Characters from "./components/pages/Top10Characters";
+import Home from "./components/pages/Home";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import * as routes from "./routes";
 import "./styles/main.scss";
 
 import "nprogress/nprogress.css";
-import Top10Characters from "./components/pages/Top10Characters";
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
       {
         <Switch>
           <Route exact path={routes.home}>
-            <PlayedGames />
+            <Home />
           </Route>
           <Route exact path={routes.playedgames}>
             <PlayedGames />

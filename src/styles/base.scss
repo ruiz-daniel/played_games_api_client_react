@@ -2,12 +2,16 @@ a {
   text-decoration: none;
   margin: 5px;
 }
+.testhome {
+  div {
+    border: solid 1px;
+  }
+}
 
 body {
-  background-color: $background-color-light;
+  background: $background-purple2;
+  // background-color: $background-color-light;
   overflow-x: hidden;
-
-  //   color: $background-color-dark;
 }
 
 body.dark-mode {
