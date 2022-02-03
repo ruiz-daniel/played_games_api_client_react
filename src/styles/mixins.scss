@@ -28,10 +28,11 @@
   border-color: $background-color-dark;
 }
 
-@mixin centerContent() {
+@mixin centerContent($width: 80%) {
   @media screen and (min-width: 1500px) {
-    margin: 0 auto;
-    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    width: $width;
   }
 }
 
