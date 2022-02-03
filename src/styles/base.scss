@@ -30,6 +30,16 @@ body.dark-mode {
   }
 }
 
+.p-inputtext,
+.p-dropdown {
+  &:focus {
+    @include removeFocusBehavior;
+  }
+  &:hover {
+    @include removeFocusBehavior;
+  }
+}
+
 .score-good {
   font-weight: 800;
   color: $text-color-green !important;

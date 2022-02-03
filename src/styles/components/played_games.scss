@@ -3,9 +3,8 @@
   text-align: center;
   // @include centerContent();
 }
-.played_games_list {
+.played-games-list {
   padding: 15px;
-  display: flex;
   @include centerContent($width: 80%);
 }
 
@@ -37,13 +36,16 @@
   }
 }
 
-.played_games_sidebar {
-  height: 100hv;
-  // background-color: $background-color-dark2;
-}
-
 .filters-content {
   display: flex;
+}
+
+.filters-container {
+  margin-bottom: 15px;
+  width: 99%;
+  .p-inputtext {
+    margin-right: 5px;
+  }
 }
 
 body.dark-mode {

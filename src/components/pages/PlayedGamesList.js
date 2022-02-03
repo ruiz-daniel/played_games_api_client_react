@@ -4,7 +4,6 @@ import api from "../../services/APICalls";
 import GameBox from "../utils/GameBox";
 import { InputText } from "primereact/inputtext";
 import { ScrollPanel } from "primereact/scrollpanel";
-import { Sidebar } from "primereact/sidebar";
 
 var filters = {
   name: "",
@@ -22,7 +21,6 @@ var gamesBackup = [];
 const PlayedGamesList = () => {
   const [games, setGames] = useState([]);
   const [filtering, setFiltering] = useState(false);
-  const [filterbar, toggleFilters] = useState(false);
 
   const cleanFilters = () => {
     filters = {
@@ -110,79 +108,59 @@ const PlayedGamesList = () => {
     setFiltering(true);
   };
 
-  const FilterBar = () => {
-    return (
-      <Sidebar visible={filterbar} onHide={() => toggleFilters(false)}>
-        <div className="p-grid p-shadow-2 filters">
-          <div className="p-col-6 p-d-block">
-            <h2>Filter by</h2>
-            <ScrollPanel style={{ width: "100%", height: "80%" }}>
-              <div className="filter_item">
-                <InputText
-                  id="fname"
-                  placeholder="Name"
-                  onChange={(e) => filterName(e.target.value)}
-                />
-              </div>
-              <div className="filter_item">
-                <InputText
-                  id="fdev"
-                  placeholder="Developer"
-                  onChange={(e) => filterDev(e.target.value)}
-                />
-              </div>
-              <div className="filter_item">
-                <InputText
-                  id="fpub"
-                  placeholder="Publisher"
-                  onChange={(e) => filterPublisher(e.target.value)}
-                />
-              </div>
-              <div className="filter_item">
-                <InputText
-                  id="fyear"
-                  placeholder="Year"
-                  onChange={(e) => filterYear(e.target.value)}
-                />
-              </div>
-              <div className="filter_item">
-                <InputText
-                  id="fgenre"
-                  placeholder="Genre"
-                  onChange={(e) => filterGenre(e.target.value)}
-                />
-              </div>
-              <div className="filter_item">
-                <InputText
-                  id="fplatform"
-                  placeholder="Platform"
-                  onChange={(e) => filterPlatform(e.target.value)}
-                />
-              </div>
-              <div className="filter_item">
-                <InputText
-                  id="fstatus"
-                  placeholder="Status"
-                  onChange={(e) => filterStatus(e.target.value)}
-                />
-              </div>
-              <div className="filter_item">
-                <InputText
-                  id="frating"
-                  placeholder="Rating"
-                  onChange={(e) => filterRating(e.target.value)}
-                />
-              </div>
-            </ScrollPanel>
-          </div>
-        </div>
-      </Sidebar>
-    );
-  };
-
   return (
-    <div className="played_games_list">
-      <ScrollPanel style={{ width: "100%", height: "92vh" }}>
+    <div className="played-games-list">
+      <div className="filters-container flex justify-content-between">
+        <InputText
+          id="fname"
+          placeholder="Name"
+          className="p-inputtext-sm"
+          onChange={(e) => filterName(e.target.value)}
+        />
+        <InputText
+          id="fdev"
+          placeholder="Developer"
+          className="p-inputtext-sm"
+          onChange={(e) => filterDev(e.target.value)}
+        />
+        <InputText
+          id="fpub"
+          placeholder="Publisher"
+          className="p-inputtext-sm"
+          onChange={(e) => filterPublisher(e.target.value)}
+        />
+        <InputText
+          id="fyear"
+          placeholder="Year"
+          className="p-inputtext-sm"
+          onChange={(e) => filterYear(e.target.value)}
+        />
+        <InputText
+          id="fgenre"
+          placeholder="Genre"
+          className="p-inputtext-sm"
+          onChange={(e) => filterGenre(e.target.value)}
+        />
+        <InputText
+          id="fplatform"
+          placeholder="Platform"
+          className="p-inputtext-sm"
+          onChange={(e) => filterPlatform(e.target.value)}
+        />
+        <InputText
+          id="fstatus"
+          placeholder="Status"
+          className="p-inputtext-sm"
+          onChange={(e) => filterStatus(e.target.value)}
+        />
+        <InputText
+          id="frating"
+          placeholder="Rating"
+          className="p-inputtext-sm"
+          onChange={(e) => filterRating(e.target.value)}
+        />
+      </div>
+      <ScrollPanel style={{ width: "100%", height: "87vh" }}>
         <div className="games-container flex flex-wrap justify-content-between">
           {games.map((game) => {
             return (
