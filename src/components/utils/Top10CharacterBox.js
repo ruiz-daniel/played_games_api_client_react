@@ -8,7 +8,7 @@ const Top10CharacterBox = (props) => {
   useEffect(() => {
     axios
       .get(
-        `https://localhost:5001/api/${sr_playedgames}${props.character.character.gameid}`
+        `https://localhost:5001/drgapi/${sr_playedgames}${props.character.character.gameid}`
       )
       .then((response) => {
         setGame(response.data.name);

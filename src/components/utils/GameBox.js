@@ -42,21 +42,14 @@ const GameBox = (props) => {
         <Image
           alt="Game Cover"
           src={
-            props.game.image ||
-            "https://localhost:5001/game_images/no-cover.jpg"
-          }
-          onError={(e) =>
-            (e.target.src =
-              "https://localhost:5001/game_images/no-cover.jpg" ||
-              props.game.image)
+            props.game.image
+              ? props.game.image
+              : "https://localhost:5001/game_images/no-cover.jpg"
           }
           preview
         />
-        <Status
-          className="status gamebox-footer-status"
-          status={props.game.status.name}
-        ></Status>
-        <Score className="score" score={props.game.rating}></Score>
+        <Status status={props.game.status.name}></Status>
+        <Score score={props.game.rating}></Score>
       </div>
 
       <p>{props.game.name}</p>

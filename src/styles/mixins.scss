@@ -57,22 +57,10 @@
   padding-bottom: $length;
 }
 
-@mixin redHover {
-  background-color: red;
-  border-radius: 10px;
-  color: white;
-}
-
 @mixin removeFocusBehavior {
   outline: none !important;
   border: solid 1px $text-color-dark-gray !important;
   box-shadow: none !important;
-}
-
-@mixin darkInput {
-  background-color: $background-color-input-dark;
-  border: solid 1px black;
-  color: white;
 }
 
 @mixin darkBackground {
@@ -83,9 +71,4 @@
 @mixin bottomBorder($color) {
   border: none !important;
   border-bottom: solid 1px $color !important;
-}
-
-@mixin arrowBorderRight {
-  border-bottom-right-radius: 90px;
-  border-top-right-radius: 100px;
 }

@@ -1,16 +1,12 @@
 .upload-game-form {
   @include centerContent(50%);
   text-align: center;
-  // border: solid 1px gray;
   margin: 10px;
-
-  // background-color: $background-color-dark2;
   .p-panel-content {
     background: $background-gray-gradient;
   }
   .p-panel-header {
-    background-color: $background-color-dark2 !important;
-    color: white;
+    @include darkBackground();
   }
   .p-fileupload {
     width: 100%;
@@ -68,9 +64,6 @@
     width: 100% !important;
   }
 }
-.upload-game-preview {
-  padding: 30px;
-}
 
 .upload-button {
   width: 100%;
@@ -88,33 +81,5 @@
       $color: $background-color-purple,
       $amount: 2
     ) !important;
-  }
-}
-
-body.dark-mode {
-  .upload-game-fields {
-    input,
-    .p-dropdown,
-    .p-dropdown-panel {
-      background-color: $background-color-input-dark;
-      border: solid 1px black;
-      color: white;
-      .p-dropdown-label {
-        color: white;
-      }
-      &:focus {
-        @include bottomBorder(white);
-        box-shadow: none !important;
-      }
-    }
-    .p-fileupload-buttonbar {
-      background-color: $background-color-dark2;
-
-      span,
-      button {
-        background: $background-color-purple !important;
-        border-color: white;
-      }
-    }
   }
 }

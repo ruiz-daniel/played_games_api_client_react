@@ -1,43 +1,6 @@
-.playedgames-content {
-  padding: 20px;
-  text-align: center;
-  // @include centerContent();
-}
 .played-games-list {
   padding: 15px;
   @include centerContent($width: 80%);
-}
-
-.filters {
-  margin: 0;
-  border-radius: 10px;
-  width: 100%;
-  background-color: $background-gray;
-
-  h2 {
-    font-family: "Courier New", Courier, monospace;
-  }
-
-  .filter_item {
-    margin-bottom: 15px;
-  }
-
-  input {
-    background-color: $background-color-light;
-    color: black;
-    font-weight: 400;
-    font-size: medium;
-    margin-right: 10px;
-    border-radius: 5px;
-
-    &:focus {
-      @include removeFocusBehavior;
-    }
-  }
-}
-
-.filters-content {
-  display: flex;
 }
 
 .filters-container {
@@ -45,18 +8,5 @@
   width: 99%;
   .p-inputtext {
     margin-right: 5px;
-  }
-}
-
-body.dark-mode {
-  .filters {
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-    background-color: $background-color-dark2;
-
-    input {
-      background-color: $background-color-light;
-      color: black;
-    }
   }
 }

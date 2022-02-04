@@ -1,69 +1,3 @@
-.p-card {
-  width: 300px !important;
-  background-color: rgba(255, 255, 255, 0.1);
-  margin-right: 5px;
-  margin-bottom: 15px;
-
-  .p-card-header {
-    position: relative;
-    .status {
-      position: absolute;
-      left: 5px;
-      bottom: 5px;
-      font-size: large;
-    }
-    .score {
-      position: absolute;
-      right: 5px;
-      top: 5px;
-      font-size: 28px;
-    }
-    .p-image,
-    .p-image-preview-container,
-    img {
-      width: 100%;
-      height: 150px;
-    }
-  }
-  .p-card-title {
-    font-size: 1rem !important;
-    height: 35px !important;
-  }
-  .p-card-body {
-    max-height: 50% !important;
-  }
-  .p-card-content {
-    padding: 0 !important;
-    font-size: small;
-  }
-  .gamebox-details {
-    min-height: 110px;
-  }
-  .gamebox-footer {
-    display: flex;
-
-    width: 100%;
-    margin-top: 10px;
-    span {
-      position: relative;
-      margin-left: auto;
-    }
-    .box-menu {
-      font-size: larger;
-      padding-top: 4px;
-      cursor: pointer;
-    }
-    .status {
-      @include paddingX(5px);
-      border-radius: 7px;
-      margin-right: 10px !important;
-    }
-    .score {
-      font-size: larger !important;
-    }
-  }
-}
-
 .game-box-container {
   .game-box-img {
     width: 300px !important;
@@ -81,7 +15,7 @@
     .score {
       position: absolute;
       right: 5px;
-      top: 5px;
+      top: 1px;
       font-size: 28px;
     }
     .p-image,
@@ -93,25 +27,5 @@
   }
   p {
     max-width: 300px;
-  }
-}
-
-.edit-button,
-.delete-button {
-  cursor: pointer !important;
-  width: 100% !important;
-  padding: 5px;
-  font-weight: 500;
-  &:hover {
-    background-color: $pointer-background;
-    border-radius: 10px;
-  }
-  i {
-    margin-right: 10px;
-  }
-}
-.delete-button {
-  &:hover {
-    @include redHover;
   }
 }
