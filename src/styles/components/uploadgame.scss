@@ -13,7 +13,7 @@
     color: white;
   }
   .p-fileupload {
-    width: 70%;
+    width: 100%;
   }
   .p-fileupload-buttonbar {
     background-color: $background-color-dark2;
@@ -37,7 +37,11 @@
       text-align: center;
     }
     .item-rating {
+      display: block;
       text-align: end;
+    }
+    .error-message {
+      color: red;
     }
   }
   .items-platform-status-rating {
@@ -69,21 +73,21 @@
 }
 
 .upload-button {
-  display: grid;
-  width: 200px;
-  border: solid 2px;
+  width: 100%;
   border-radius: 5px;
-  @include arrowBorderRight;
+  border: none !important;
+  background-color: $background-color-purple !important;
+  // @include arrowBorderRight;
   padding: 0.5rem;
   text-align: center;
-  transition: all 0.5s ease;
-  cursor: pointer;
+  // transition: all 0.5s ease;
+  // cursor: pointer;
 
   &:hover {
-    width: 250px;
-    border-color: $text-color-red;
-    background-color: red;
-    color: white;
+    background-color: lighten(
+      $color: $background-color-purple,
+      $amount: 2
+    ) !important;
   }
 }
 
