@@ -48,7 +48,7 @@ const TopBar = () => {
       >
         <span>
           {" "}
-          <i className="pi pi-bar"></i> Top 10 Games
+          <i className="pi pi-star"></i> Top 10 Games
         </span>
       </Link>
       <Link
@@ -59,7 +59,7 @@ const TopBar = () => {
       >
         <span>
           {" "}
-          <i className="pi pi-bar"></i> Top 10 Characters
+          <i className="pi pi-star"></i> Top 10 Characters
         </span>
       </Link>
     </React.Fragment>
@@ -67,11 +67,11 @@ const TopBar = () => {
 
   const rightContents = (
     <React.Fragment>
-      <Button
+      {/* <Button
         icon={darkMode ? "pi pi-sun" : "pi pi-moon"}
         className="p-mr-2"
         onClick={darkModeToggle}
-      />
+      /> */}
     </React.Fragment>
   );
   return (
