@@ -8,6 +8,11 @@ $background-purple2: linear-gradient(
   rgba(116, 5, 124, 0.3),
   rgba(116, 5, 124, 0.8)
 );
+$background-gray-gradient: radial-gradient(
+  circle,
+  rgba(109, 105, 110, 0.1),
+  rgba(109, 105, 110, 0.5)
+);
 $background-white: #f3f0f7;
 $background-gray: rgba(230, 231, 233, 0.4);
 $background-opaque: rgba(255, 255, 255, 0.1);

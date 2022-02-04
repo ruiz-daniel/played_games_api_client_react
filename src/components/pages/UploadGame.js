@@ -6,6 +6,7 @@ import { Dropdown } from "primereact/dropdown";
 import { FileUpload } from "primereact/fileupload";
 import GameBox from "../utils/GameBox";
 import { sr_images } from "../../routes";
+import { Panel } from "primereact/panel";
 
 import { Toast } from "primereact/toast";
 
@@ -83,66 +84,53 @@ const UploadGame = () => {
   };
 
   return (
-    <div className="upload-game-wrapper p-grid">
-      <div className="p-grid p-col-8 upload-game-fields">
-        <Toast ref={toast} />
-        <div className="p-col-6">
-          <span className="p-field item">
-            <label htmlFor="gname" className="p-d-block">
-              Name
-            </label>
-            <InputText
-              id="gname"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </span>
-          <span className="p-field item">
-            <label htmlFor="gdev" className="p-d-block">
-              Developer
-            </label>
-            <InputText
-              id="gdev"
-              value={dev}
-              onChange={(e) => setDev(e.target.value)}
-            />
-          </span>
-          <span className="p-field item">
-            <label htmlFor="gpub" className="p-d-block">
-              Publisher
-            </label>
-            <InputText
-              id="gpub"
-              value={publisher}
-              onChange={(e) => setPublisher(e.target.value)}
-            />
-          </span>
-          <span className="p-field item">
-            <label htmlFor="gyear" className="p-d-block">
-              Year
-            </label>
-            <InputText
-              id="gyear"
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
-            />
-          </span>
+    <Panel header="New Game" className="upload-game-form">
+      <Toast ref={toast} />
+      <div className="upload-game-fields flex flex-column">
+        <div className="item">
+          <h5>Name</h5>
+          <InputText
+            id="gname"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
         </div>
-        <div className="p-col-6">
-          <span className="p-field item">
-            <label htmlFor="ggenre" className="p-d-block">
-              Genre
-            </label>
-            <InputText
-              id="ggenre"
-              value={genre}
-              onChange={(e) => setGenre(e.target.value)}
-            />
-          </span>
-          <span className="p-field item">
-            <label htmlFor="gplatform" className="p-d-block">
-              Platform
-            </label>
+        <span className="item">
+          <h5>Developer(s)</h5>
+          <InputText
+            id="gdev"
+            value={dev}
+            onChange={(e) => setDev(e.target.value)}
+          />
+        </span>
+        <span className="item">
+          <h5>Publisher(s)</h5>
+          <InputText
+            id="gpub"
+            value={publisher}
+            onChange={(e) => setPublisher(e.target.value)}
+          />
+        </span>
+        <span className="item">
+          <h5>Year</h5>
+          <InputText
+            id="gyear"
+            value={year}
+            onChange={(e) => setYear(e.target.value)}
+          />
+        </span>
+
+        <span className="item">
+          <h5>Genre(s)</h5>
+          <InputText
+            id="ggenre"
+            value={genre}
+            onChange={(e) => setGenre(e.target.value)}
+          />
+        </span>
+        <div className="items-platform-status-rating flex justify-content-between">
+          <span className="item">
+            <h5>Platform</h5>
             <Dropdown
               id="gplatform"
               value={platform}
@@ -152,9 +140,7 @@ const UploadGame = () => {
             />
           </span>
           <span className="p-field item">
-            <label htmlFor="gstatus" className="p-d-block">
-              Status
-            </label>
+            <h5>Status</h5>
             <Dropdown
               id="gstatus"
               value={status}
@@ -163,10 +149,8 @@ const UploadGame = () => {
               optionLabel="name"
             />
           </span>
-          <span className="p-field item">
-            <label htmlFor="grating" className="p-d-block">
-              Rating
-            </label>
+          <span className="item">
+            <h5>Rating</h5>
             <InputText
               id="grating"
               value={rating}
@@ -175,8 +159,9 @@ const UploadGame = () => {
             />
           </span>
         </div>
-        <div className="p-col-12">
-          <h2>Game Image</h2>
+
+        <div className="item">
+          <h5>Game Image</h5>
           <FileUpload
             name="gameImage"
             customUpload
@@ -189,7 +174,7 @@ const UploadGame = () => {
             }
           />
         </div>
-        <div className="p-col">
+        <div className="item">
           <h2 className="upload-button" onClick={handleSubmit}>
             <div>
               <i className="pi pi-check"></i> Upload Game
@@ -197,7 +182,7 @@ const UploadGame = () => {
           </h2>
         </div>
       </div>
-      <div className="p-col-4 upload-game-preview">
+      {/* <div className="p-col-4 upload-game-preview">
         <h2>Preview</h2>
         <GameBox
           game={{
@@ -212,8 +197,8 @@ const UploadGame = () => {
             image: sr_images + gameImage.name,
           }}
         ></GameBox>
-      </div>
-    </div>
+      </div> */}
+    </Panel>
   );
 };
 
