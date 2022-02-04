@@ -4,9 +4,8 @@ import api from "../../services/APICalls";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { FileUpload } from "primereact/fileupload";
-import GameBox from "../utils/GameBox";
-import { sr_images } from "../../routes";
 import { Panel } from "primereact/panel";
+import { InputTextarea } from "primereact/inputtextarea";
 
 import { Toast } from "primereact/toast";
 
@@ -21,6 +20,7 @@ const UploadGame = () => {
   const [platform, setPlatform] = useState({ id: "", name: "" });
   const [platformList, setPlatformList] = useState([]);
   const [statusList, setStatusList] = useState([]);
+  const [descrption, setDescription] = useState("");
   const [gameImage, setGameImage] = useState({ name: "none" });
 
   const toast = useRef(null);
@@ -34,6 +34,7 @@ const UploadGame = () => {
     setRating("");
     setStatus("");
     setPlatform("");
+    setDescription("");
     setGameImage("");
   };
 
@@ -88,7 +89,7 @@ const UploadGame = () => {
       <Toast ref={toast} />
       <div className="upload-game-fields flex flex-column">
         <div className="item">
-          <h5>Name</h5>
+          <h5>Name *</h5>
           <InputText
             id="gname"
             value={name}
@@ -128,9 +129,19 @@ const UploadGame = () => {
             onChange={(e) => setGenre(e.target.value)}
           />
         </span>
+        <span className="item">
+          <h5>Description (Optional)</h5>
+          <InputTextarea
+            rows={5}
+            // cols={document.getElementById("ggenre").clientWidth / 10}
+            value={descrption}
+            onChange={(e) => setDescription(e.target.value)}
+            autoResize
+          />
+        </span>
         <div className="items-platform-status-rating flex justify-content-between">
           <span className="item item-platform">
-            <h5>Platform</h5>
+            <h5>Platform *</h5>
             <Dropdown
               id="gplatform"
               value={platform}
@@ -140,7 +151,7 @@ const UploadGame = () => {
             />
           </span>
           <span className="item item-status">
-            <h5>Status</h5>
+            <h5>Status *</h5>
             <Dropdown
               id="gstatus"
               value={status}
@@ -150,7 +161,7 @@ const UploadGame = () => {
             />
           </span>
           <span className="item item-rating">
-            <h5>Rating</h5>
+            <h5>Rating *</h5>
             <InputText
               id="grating"
               value={rating}
