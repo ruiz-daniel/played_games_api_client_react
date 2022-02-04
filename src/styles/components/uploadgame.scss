@@ -30,15 +30,30 @@
   .items-platform-status-rating {
     text-align: start;
     @include centerContent();
+    .item-platform {
+      text-align: start;
+    }
+    .item-status {
+      text-align: center;
+    }
+    .item-rating {
+      text-align: end;
+    }
   }
-
+  .items-platform-status-rating {
+    input,
+    .p-dropdown {
+      width: 70%;
+    }
+  }
   input,
   .p-dropdown {
     color: black;
     font-weight: 400;
     font-size: large;
     margin-bottom: 1rem;
-    width: 80%;
+    width: 100%;
+    height: 40px;
 
     &:focus {
       // @include bottomBorder(black);

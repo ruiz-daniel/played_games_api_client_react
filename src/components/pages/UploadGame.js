@@ -129,7 +129,7 @@ const UploadGame = () => {
           />
         </span>
         <div className="items-platform-status-rating flex justify-content-between">
-          <span className="item">
+          <span className="item item-platform">
             <h5>Platform</h5>
             <Dropdown
               id="gplatform"
@@ -139,7 +139,7 @@ const UploadGame = () => {
               optionLabel="name"
             />
           </span>
-          <span className="p-field item">
+          <span className="item item-status">
             <h5>Status</h5>
             <Dropdown
               id="gstatus"
@@ -149,7 +149,7 @@ const UploadGame = () => {
               optionLabel="name"
             />
           </span>
-          <span className="item">
+          <span className="item item-rating">
             <h5>Rating</h5>
             <InputText
               id="grating"
