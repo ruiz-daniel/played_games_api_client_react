@@ -246,7 +246,7 @@ export default {
     const formData = new FormData();
 
     formData.append("image", gameImage);
-    return apiClient.post("Image", formData, {
+    return apiClient.post("Images", formData, {
       headers: {
         "content-type": "multipart/form-data",
       },
