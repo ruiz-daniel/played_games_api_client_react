@@ -4,6 +4,7 @@ import api from "../../services/APICalls";
 import GameBox from "../utils/GameBox";
 import { InputText } from "primereact/inputtext";
 import { ScrollPanel } from "primereact/scrollpanel";
+import { ScrollTop } from "primereact/scrolltop";
 
 var filters = {
   name: "",
@@ -178,6 +179,12 @@ const PlayedGamesList = () => {
             );
           })}
         </div>
+        <ScrollTop
+          target="parent"
+          threshold={100}
+          className="custom-scrolltop"
+          icon="pi pi-arrow-up"
+        />
       </ScrollPanel>
     </div>
   );
