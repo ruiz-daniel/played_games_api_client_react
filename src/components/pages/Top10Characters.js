@@ -17,6 +17,7 @@ const Top10Characters = () => {
   const [characters, setCharacters] = useState([]);
   const [top10name, setTop10Name] = useState(location.state.top10name);
   const [games, setGames] = useState();
+  const [selectedCharacter, setSelectedCharacter] = useState();
 
   const [addCharName, setCharName] = useState();
   const [addCharWikia, setCharWikia] = useState();
@@ -114,7 +115,13 @@ const Top10Characters = () => {
       <div className="top10-characters-container flex flex-wrap">
         {characters.map((character, index) => {
           return (
-            <div className="top10-character" key={character.id}>
+            <div
+              className="top10-character"
+              key={character.id}
+              onMouseEnter={() => {
+                setSelectedCharacter(character.character);
+              }}
+            >
               <h2>
                 <Position pos={character.pos}></Position>
               </h2>
@@ -155,6 +162,21 @@ const Top10Characters = () => {
           );
         })}
       </div>
+      {selectedCharacter && (
+        <div className="top10-character-info">
+          <h3>{selectedCharacter.name}</h3>
+          <p>from {selectedCharacter.game.name}</p>
+          <p>
+            <a
+              href={selectedCharacter.wikia_url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {selectedCharacter.wikia_url}
+            </a>
+          </p>
+        </div>
+      )}
       {/* <div className="p-grid p-justify-center p-flex-column">
           <h2>Add Character</h2>
           <div className="p-grid p-col-8">

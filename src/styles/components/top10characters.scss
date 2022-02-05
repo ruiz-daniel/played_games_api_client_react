@@ -7,6 +7,13 @@
 .top10-characters-container {
   @include centerContent(90%);
 }
+.top10-character-info {
+  @include centerContent(90%);
+  margin-top: 50px;
+  a {
+    margin-left: 0 !important;
+  }
+}
 .top10-character {
   text-align: center;
   .p-image,
