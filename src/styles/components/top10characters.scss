@@ -4,25 +4,29 @@
 .top10header {
   text-align: center;
 }
-
-.top10characterbox {
-  width: 90%;
-  height: 302px;
-  // border: solid 1px black;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 7px;
-  margin-bottom: 5px;
-  a {
-    color: rgb(19, 74, 224);
+.top10-characters-container {
+  @include centerContent(90%);
+}
+.top10-character {
+  text-align: center;
+  .p-image,
+  .p-image-preview-container,
+  img {
+    width: 170px !important;
+    height: 300px !important;
   }
-}
-
-.top10charactersimg {
-  width: 150px;
-  height: 300px;
-  border-radius: 7px;
-}
-
-.top10characterdata {
-  width: 100%;
+  .top10-characters-handle {
+    margin-top: 20px;
+    .p-button {
+      background: none;
+      border: none;
+      color: black;
+      width: 20px !important;
+      height: 25px !important;
+      &:hover {
+        background-color: $text-color-dark-gray;
+        color: white;
+      }
+    }
+  }
 }

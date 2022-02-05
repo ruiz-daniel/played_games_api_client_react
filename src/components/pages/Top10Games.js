@@ -11,13 +11,6 @@ import { Button } from "primereact/button";
 var gamesBackup = [];
 var filters = {
   name: "",
-  dev: "",
-  publisher: "",
-  year: "",
-  rating: "",
-  genre: "",
-  platform: "",
-  status: "",
 };
 
 const Top10Games = (props) => {
