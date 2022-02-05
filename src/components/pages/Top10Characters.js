@@ -1,36 +1,22 @@
 import React, { useState, useEffect } from "react";
 import api from "../../services/APICalls";
 import { useLocation } from "react-router-dom";
-import Top10CharacterBox from "../utils/Top10CharacterBox";
+import AddTop10Character from "../utils/AddTop10Character";
 import Position from "../utils/position";
 
-import { ScrollPanel } from "primereact/scrollpanel";
-import { Dropdown } from "primereact/dropdown";
-import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-import { FileUpload } from "primereact/fileupload";
-import { Carousel } from "primereact/carousel";
 import { Image } from "primereact/image";
+import { Sidebar } from "primereact/sidebar";
 
 const Top10Characters = () => {
   const location = useLocation();
   const [characters, setCharacters] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [top10name, setTop10Name] = useState(location.state.top10name);
-  const [games, setGames] = useState();
+
   const [selectedCharacter, setSelectedCharacter] = useState();
 
-  const [addCharName, setCharName] = useState();
-  const [addCharWikia, setCharWikia] = useState();
-  const [addCharGame, setCharGame] = useState();
-  const [addCharPos, setCharPos] = useState();
-
-  const clearAddCharacter = (event) => {
-    setCharGame("");
-    setCharName("");
-    setCharPos("");
-    setCharWikia("");
-    event.options.clear();
-  };
+  const [sidebar, toggleSideBar] = useState(false);
 
   const getCharacters = () => {
     api.getTop10Characters("All Time", (data) => {
@@ -40,34 +26,20 @@ const Top10Characters = () => {
       setCharacters(data);
     });
   };
-  const getGames = () => {
-    api.getPlayedGames((data) => {
-      setGames(data);
-    });
-  };
 
   useEffect(() => {
     getCharacters();
-    getGames();
   }, []);
 
-  const addCharacter = (character, position, event) => {
-    api.postCharacter(character, (data) => {
-      api.postTop10Character(
-        { characterid: data.id, pos: position },
-        top10name,
-        () => {
-          clearAddCharacter(event);
-          characters.forEach((element) => {
-            if (element.pos >= position) {
-              element.pos++;
-            }
-          });
-          updateCharactersList(position - 2);
-        }
-      );
+  const movePositions = (position) => {
+    characters.forEach((element) => {
+      if (element.pos >= position) {
+        element.pos++;
+      }
     });
+    updateCharactersList(position - 2);
   };
+
   const updateCharactersList = (index) => {
     if (index === characters.length) {
       getCharacters();
@@ -83,8 +55,8 @@ const Top10Characters = () => {
         if (element.pos > character.pos) {
           element.pos--;
         }
-        updateCharactersList(character.pos - 1);
       });
+      updateCharactersList(character.pos);
     });
   };
   const switchCharacters = (character1, character2) => {
@@ -93,25 +65,31 @@ const Top10Characters = () => {
     updateCharactersList(character2.pos - 1);
   };
 
-  const onupload = async (e) => {
-    await api.uploadImage(e.files[0]);
-    addCharacter(
-      {
-        name: addCharName,
-        gameid: addCharGame.id,
-        wikia_url: addCharWikia,
-        image: e.files[0].name,
-      },
-      addCharPos,
-      e
-    );
-  };
-
   return (
     <>
       <div className="top10header">
         <h1>Top 10 {top10name} Characters</h1>
       </div>
+      {!sidebar && (
+        <Button
+          className="add-character-button"
+          icon="pi pi-arrow-left"
+          onClick={() => {
+            toggleSideBar(true);
+          }}
+        />
+      )}
+      <Sidebar
+        visible={sidebar}
+        position="right"
+        onHide={() => toggleSideBar(false)}
+        showCloseIcon={false}
+      >
+        <AddTop10Character
+          movePositions={movePositions}
+          top10name={top10name}
+        />
+      </Sidebar>
       <div className="top10-characters-container flex flex-wrap">
         {characters.map((character, index) => {
           return (
@@ -177,59 +155,6 @@ const Top10Characters = () => {
           </p>
         </div>
       )}
-      {/* <div className="p-grid p-justify-center p-flex-column">
-          <h2>Add Character</h2>
-          <div className="p-grid p-col-8">
-            <div className="p-col-6 p-d-flex p-flex-column">
-              <InputText
-                className="p-mb-3"
-                value={addCharName}
-                onChange={(e) => setCharName(e.target.value)}
-                placeholder="Name"
-              />
-              <InputText
-                className="p-mb-3"
-                value={addCharWikia}
-                onChange={(e) => setCharWikia(e.target.value)}
-                placeholder="Wikia URL"
-              />
-            </div>
-            <div className="p-col-6 p-d-flex p-flex-column">
-              <Dropdown
-                className="p-mb-3"
-                options={games}
-                value={addCharGame}
-                onChange={(e) => {
-                  setCharGame(e.value);
-                }}
-                optionLabel="name"
-                placeholder="Game"
-                showClear
-              />
-              <InputText
-                type="number"
-                value={addCharPos}
-                onChange={(e) => setCharPos(e.target.value)}
-                placeholder="Position"
-              />
-            </div>
-            <div className="p-col-12">
-              <FileUpload
-                name="gameImage"
-                customUpload
-                uploadHandler={onupload}
-                onUpload={(e) => {}}
-                accept="image/*"
-                chooseLabel="File"
-                emptyTemplate={
-                  <p className="p-m-0">
-                    Drag and drop files to here to upload.
-                  </p>
-                }
-              />
-            </div>
-          </div>
-        </div> */}
     </>
   );
 };

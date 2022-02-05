@@ -14,6 +14,27 @@
     margin-left: 0 !important;
   }
 }
+.add-character-button {
+  position: absolute;
+  right: 2px;
+  top: 70px;
+  background-color: black;
+  border: none;
+  &:hover {
+    background-color: $background-color-purple !important;
+  }
+}
+.p-sidebar-right {
+  top: 70px;
+  height: 817px;
+}
+.p-sidebar-header {
+  padding: 0 !important;
+}
+.p-sidebar-content {
+  padding: 0 !important;
+  background: $background-gray-gradient;
+}
 .top10-character {
   text-align: center;
   .p-image,
@@ -35,5 +56,34 @@
         color: white;
       }
     }
+  }
+}
+
+.upload-character-form {
+  text-align: center;
+  height: 817px;
+  .p-panel-content {
+    background: $background-gray-gradient;
+  }
+  .p-panel-header {
+    @include darkBackground();
+  }
+  .p-dropdown,
+  input {
+    width: 70%;
+  }
+  .p-fileupload {
+    width: 100%;
+  }
+  .p-fileupload-buttonbar {
+    background-color: $background-color-dark2;
+    span,
+    button {
+      background: $background-color-purple !important;
+      border: none;
+    }
+  }
+  .error-message {
+    color: red;
   }
 }
