@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import api from "../../services/APICalls";
 import GameBox from "../utils/Top10GameBox";
@@ -5,6 +6,7 @@ import Position from "../utils/position";
 import { ScrollPanel } from "primereact/scrollpanel";
 import { useLocation } from "react-router-dom";
 import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
 
 var gamesBackup = [];
 var filters = {
@@ -20,23 +22,17 @@ var filters = {
 
 const Top10Games = (props) => {
   const location = useLocation();
-  const [games, setGames] = useState([]);
   const [allGames, setAllGames] = useState([]);
   const [orderedGames, setOrder] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [top10name, setTop10Name] = useState(location.state.top10name);
   const [movingGame, setMovingGame] = useState(null);
   const [addingGame, setAddingGame] = useState(null);
   const [filtering, setFiltering] = useState(false);
+
   const cleanFilters = () => {
     filters = {
       name: "",
-      dev: "",
-      publisher: "",
-      year: "",
-      rating: "",
-      genre: "",
-      platform: "",
-      status: "",
     };
   };
   const compareIgnoreCase = (stringA, stringB) => {
@@ -46,16 +42,7 @@ const Top10Games = (props) => {
     var filtered = [];
 
     gamesBackup.forEach((game) => {
-      if (
-        compareIgnoreCase(game.name, filters.name) &&
-        compareIgnoreCase(game.developer, filters.dev) &&
-        compareIgnoreCase(game.publisher, filters.publisher) &&
-        game.year.includes(filters.year) &&
-        compareIgnoreCase(game.genre, filters.genre) &&
-        (filters.rating == "" || game.rating == filters.rating) &&
-        compareIgnoreCase(game.platform.name, filters.platform) &&
-        compareIgnoreCase(game.status.name, filters.status)
-      ) {
+      if (compareIgnoreCase(game.name, filters.name)) {
         filtered.push(game);
       }
     });
@@ -68,19 +55,18 @@ const Top10Games = (props) => {
     setFiltering(true);
   };
 
+  const getGames = () => {
+    api.getTop10Games(top10name, (data) => {
+      splitGames(data);
+    });
+  };
+
   const addGame = (game, position) => {
     api.postTop10Game({ gameid: game.id, pos: position }, top10name, () => {
       getGames();
       setAddingGame(null);
       setMovingGame(null);
       cleanFilters();
-    });
-  };
-
-  const getGames = () => {
-    api.getTop10Games(top10name, (data) => {
-      setGames(data);
-      splitGames(data);
     });
   };
 
@@ -151,151 +137,60 @@ const Top10Games = (props) => {
   };
 
   return (
-    <div className="p-grid">
-      <div className="p-grid p-col-10">
-        <div className="p-col-12 top10header p-justify-center">
-          <h1>Top 10 Games</h1>
-        </div>
-        <div className="p-grid p-col-12 top10games">
-          {orderedGames.map((tier, index) => {
-            return (
-              <div
-                className="p-grid p-col-4"
-                onDrop={(ev) => {
-                  drop(ev, index + 1);
-                }}
-                onDragOver={(ev) => {
-                  allowDrop(ev);
-                }}
-              >
-                <div className="p-col-1">
-                  <h2>
-                    <Position pos={index + 1}></Position>
-                  </h2>
-                </div>
-                {tier.map((game) => {
-                  if (tier.length == 1) {
-                    return (
-                      <div
-                        className="p-col-2"
-                        key={game.id}
-                        // style={{ marginBottom: 10 }}
-                        draggable="true"
-                        onDragStart={() => {
-                          drag(game);
-                        }}
-                      >
-                        <GameBox key={game.id} game={game.game}></GameBox>
-                      </div>
-                    );
-                  } else if (tier.length == 2) {
-                    return (
-                      <div
-                        className="p-col-4"
-                        key={game.id}
-                        // style={{ marginBottom: 10 }}
-                        draggable="true"
-                        onDragStart={() => {
-                          drag(game);
-                        }}
-                      >
-                        <GameBox key={game.id} game={game.game}></GameBox>
-                      </div>
-                    );
-                  } else if (tier.length == 3) {
-                    return (
-                      <div
-                        className="p-col-3"
-                        key={game.id}
-                        // style={{ marginBottom: 10 }}
-                        draggable="true"
-                        onDragStart={() => {
-                          drag(game);
-                        }}
-                      >
-                        <GameBox key={game.id} game={game.game}></GameBox>
-                      </div>
-                    );
-                  } else if (tier.length == 4) {
-                    return (
-                      <div
-                        className="p-col-2"
-                        key={game.id}
-                        // style={{ marginBottom: 10 }}
-                        draggable="true"
-                        onDragStart={() => {
-                          drag(game);
-                        }}
-                      >
-                        <GameBox key={game.id} game={game.game}></GameBox>
-                      </div>
-                    );
-                  } else if (tier.length > 4) {
-                    return (
-                      <div
-                        className="p-col-1"
-                        key={game.id}
-                        // style={{ marginBottom: 10 }}
-                        draggable="true"
-                        onDragStart={() => {
-                          drag(game);
-                        }}
-                      >
-                        <GameBox key={game.id} game={game.game}></GameBox>
-                      </div>
-                    );
-                  }
-                })}
-              </div>
-            );
-          })}
-          <div
-            className="p-grid p-col-4"
-            onDrop={(ev) => {
-              drop(ev, orderedGames.length + 1);
-            }}
-            onDragOver={(ev) => {
-              allowDrop(ev);
-            }}
-          >
-            <div className="p-col-1">
+    <>
+      <div className="top10header">
+        <h1>Top 10 Games</h1>
+      </div>
+      <div className="top10games flex flex-wrap flex-justify-between">
+        {orderedGames.map((tier, index) => {
+          return (
+            <div
+              className="top10-item"
+              onDrop={(ev) => {
+                drop(ev, index + 1);
+              }}
+              onDragOver={(ev) => {
+                allowDrop(ev);
+              }}
+            >
               <h2>
-                <i className="pi pi-plus"></i>
+                <Position pos={index + 1}></Position>
               </h2>
+
+              {tier.map((game) => {
+                if (tier.length === 0) {
+                  return <div style={{ width: 190 }}></div>;
+                }
+                return (
+                  <div
+                    key={game.id}
+                    draggable="true"
+                    onDragStart={() => {
+                      drag(game);
+                    }}
+                    onDoubleClick={() => {
+                      moveGame(game, orderedGames.length + 1);
+                    }}
+                  >
+                    <GameBox key={game.id} game={game.game}></GameBox>
+                  </div>
+                );
+              })}
             </div>
-            <div className="p-col-10">
-              <h2> New Position</h2>
-              <p>Drag a game here to add a position</p>
-            </div>
-          </div>
-          <div
-            className="p-grid p-col-4"
-            onDrop={(ev) => {
-              ev.preventDefault();
-              removeGame(movingGame);
-            }}
-            onDragOver={(ev) => {
-              allowDrop(ev);
-            }}
-          >
-            <div className="p-col-1">
-              <h2>
-                <i className="pi pi-trash"></i>
-              </h2>
-            </div>
-            <div className="p-col-10">
-              <h2> Remove</h2>
-              <p>Drag a game here to remove it</p>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
 
-      <div className="p-grid p-col-2">
-        <div className="p-col-12" style={{ paddingLeft: 0, marginBottom: 10 }}>
+      <div className="top10-newgame">
+        <div style={{ paddingLeft: 0, marginBottom: 10 }}>
           <h2>Add Game</h2>
-          <p>Drag a game from here to add it to the list</p>
-          <div className="filter_item">
+          <p>
+            <span style={{ color: "red", fontWeight: 900 }}>Drag </span> a game
+            from here to add it to the list or{" "}
+            <span style={{ color: "red", fontWeight: 900 }}>double click </span>
+            to add it at the end of the list
+          </p>
+          <div>
             <span className="p-input-icon-left">
               <i className="pi pi-search" />
               <InputText
@@ -306,15 +201,17 @@ const Top10Games = (props) => {
             </span>
           </div>
         </div>
-        <ScrollPanel style={{ width: "60%", height: "60vh" }}>
-          <div>
+        <ScrollPanel style={{ width: "100%", height: "12vh" }}>
+          <div className="flex">
             {allGames.map((game) => {
               return (
                 <div
-                  className="p-d-inline"
                   draggable="true"
                   onDragStart={() => {
                     dragNew(game);
+                  }}
+                  onDoubleClick={() => {
+                    addGame(game, orderedGames.length + 1);
                   }}
                 >
                   <GameBox key={game.id} game={game}></GameBox>
@@ -324,7 +221,21 @@ const Top10Games = (props) => {
           </div>
         </ScrollPanel>
       </div>
-    </div>
+      {movingGame && (
+        <Button
+          icon="pi pi-trash"
+          className="p-button-rounded p-button-raised p-button-danger top10-remove-button  z-1"
+          hidden={movingGame == null}
+          onDrop={(ev) => {
+            ev.preventDefault();
+            removeGame(movingGame);
+          }}
+          onDragOver={(ev) => {
+            allowDrop(ev);
+          }}
+        />
+      )}
+    </>
   );
 };
 

@@ -56,6 +56,10 @@
   padding-top: $length;
   padding-bottom: $length;
 }
+@mixin marginX($length) {
+  margin-left: $length;
+  margin-right: $length;
+}
 
 @mixin removeFocusBehavior {
   outline: none !important;
