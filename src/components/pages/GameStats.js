@@ -5,7 +5,17 @@ import { Chart } from "primereact/chart";
 
 const GameStats = () => {
   const [games, setGames] = useState([]);
+  const [total_games, setTotalGames] = useState(0);
+  const [avg_score, setAvgScore] = useState(0);
   const [completionChart, setcompletionChart] = useState({
+    labels: [],
+    datasets: [{}],
+  });
+  const [completionPercent, setcompletionPercent] = useState({
+    labels: [],
+    datasets: [{}],
+  });
+  const [completionDrop, setCompletionDrop] = useState({
     labels: [],
     datasets: [{}],
   });
@@ -83,6 +93,45 @@ const GameStats = () => {
       legend: {
         labels: {
           color: "#495057",
+        },
+      },
+      title: {
+        display: true,
+        text: "Completion nominal",
+        font: {
+          size: 16,
+        },
+      },
+    },
+  };
+  const completionPercentageOptions = {
+    plugins: {
+      legend: {
+        labels: {
+          color: "#495057",
+        },
+      },
+      title: {
+        display: true,
+        text: "Completion percentage",
+        font: {
+          size: 16,
+        },
+      },
+    },
+  };
+  const completionDropOptions = {
+    plugins: {
+      legend: {
+        labels: {
+          color: "#495057",
+        },
+      },
+      title: {
+        display: true,
+        text: "Completed vs Dropped Percentage",
+        font: {
+          size: 16,
         },
       },
     },
@@ -179,6 +228,7 @@ const GameStats = () => {
   };
 
   const getStats = (data) => {
+    setTotalGames(data.length);
     data.forEach((element) => {
       //COMPLETION
       if (element.status.name === "Completed") {
@@ -256,6 +306,23 @@ const GameStats = () => {
       else if (element.rating == 9) sc9++;
       else if (element.rating == 10) sc10++;
     });
+
+    setAvgScore(
+      (sc2 * 2 +
+        sc3 * 3 +
+        sc4 * 4 +
+        sc5 * 5 +
+        sc6 * 6 +
+        sc7 * 7 +
+        sc8 * 8 +
+        sc9 * 9 +
+        sc10 * 10) /
+        total_games
+    );
+  };
+
+  const compareIgnoreCase = (stringA, stringB) => {
+    return stringA.toUpperCase().includes(stringB.toUpperCase());
   };
 
   const getCompletionStats = () => {
@@ -266,6 +333,34 @@ const GameStats = () => {
           data: [completed, played, dropped, onHold],
           backgroundColor: ["#12c941", "#ffff00", "#d71c2f", "#fea604"],
           hoverBackgroundColor: ["#12b13a", "#d4d401", "#c51d2e", "#e39506"],
+        },
+      ],
+    });
+    setcompletionPercent({
+      labels: ["Completed", "Played", "Dropped", "On Hold"],
+      datasets: [
+        {
+          data: [
+            (completed / total_games) * 100,
+            (played / total_games) * 100,
+            (dropped / total_games) * 100,
+            (onHold / total_games) * 100,
+          ],
+          backgroundColor: ["#12c941", "#ffff00", "#d71c2f", "#fea604"],
+          hoverBackgroundColor: ["#12b13a", "#d4d401", "#c51d2e", "#e39506"],
+        },
+      ],
+    });
+    setCompletionDrop({
+      labels: ["Completed", "Dropped"],
+      datasets: [
+        {
+          data: [
+            (completed / (completed + dropped)) * 100,
+            (dropped / (completed + dropped)) * 100,
+          ],
+          backgroundColor: ["#12c941", "#d71c2f"],
+          hoverBackgroundColor: ["#12b13a", "#c51d2e"],
         },
       ],
     });
@@ -393,16 +488,32 @@ const GameStats = () => {
   return (
     <div className="stats-wrapper">
       <h1>Played Games Stats</h1>
-      <div className="stats-item">
-        <h2>Completion Rate</h2>
+      <h3>Completion Rate</h3>
+      <div className="flex justify-content-evenly stats-item">
         <Chart
           type="pie"
           data={completionChart}
           options={completionOptions}
           style={{ position: "relative", width: "20%" }}
         />
+        <Chart
+          type="pie"
+          data={completionPercent}
+          options={completionPercentageOptions}
+          style={{ position: "relative", width: "20%" }}
+        />
+        <Chart
+          type="pie"
+          data={completionDrop}
+          options={completionDropOptions}
+          style={{ position: "relative", width: "20%" }}
+        />
+        <div className="flex-column justify-content-around">
+          <h3>Total played games: {total_games}</h3>
+          <h3>Avg Score: {avg_score}</h3>
+        </div>
       </div>
-      <div className="stats-item">
+      <div className=" stats-item">
         <Chart type="bar" data={platformChart} options={platformOptions} />
       </div>
       <div className="stats-item">
