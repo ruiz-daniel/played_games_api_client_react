@@ -38,16 +38,20 @@ const GameBox = (props) => {
 
   return (
     <div className="game-box-container">
-      <div className="game-box-img">
-        <Image
+      <div className="game-box-img" onClick={editEvent}>
+        <img
           alt="Game Cover"
           src={
             props.game.image
               ? props.game.image
               : "https://localhost:5001/game_images/no-cover.jpg"
           }
-          preview
         />
+        <div class="game-details-panel">
+          <div class="details-icon">
+            <span className="pi pi-eye"></span>
+          </div>
+        </div>
         <Status status={props.game.status.name}></Status>
         <Score score={props.game.rating}></Score>
       </div>
