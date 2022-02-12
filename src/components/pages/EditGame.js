@@ -153,7 +153,7 @@ const EditGame = (props) => {
           <p>
             <Status status={status.name} />{" "}
           </p>
-          {description && description != "" && <p>{description}</p>}
+          {description && description !== "" && <p>{description}</p>}
         </div>
       )}
       {editing && (

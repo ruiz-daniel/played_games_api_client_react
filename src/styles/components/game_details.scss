@@ -49,8 +49,12 @@
 
       span,
       button {
-        background: $background-color-purple !important;
-        border-color: white;
+        background: white !important;
+        border-color: black;
+        color: black;
+        &:hover {
+          border-color: white;
+        }
       }
     }
   }
