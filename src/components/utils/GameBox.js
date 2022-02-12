@@ -2,11 +2,8 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import * as routes from "../../routes";
 
-import { confirmDialog } from "primereact/confirmdialog";
-import { Image } from "primereact/image";
 import Score from "./score";
 import Status from "./status";
-import api from "../../services/APICalls";
 
 const GameBox = (props) => {
   const history = useHistory();
@@ -19,22 +16,22 @@ const GameBox = (props) => {
       },
     });
   };
-  const deleteGame = () => {
-    api.deletePlayedGame(props.game, () => {
-      if (props.reload) {
-        props.reload();
-      }
-    });
-  };
+  // const deleteGame = () => {
+  //   api.deletePlayedGame(props.game, () => {
+  //     if (props.reload) {
+  //       props.reload();
+  //     }
+  //   });
+  // };
 
-  const confirm = () => {
-    confirmDialog({
-      message: "Are you sure you want to delete this game?",
-      header: "Confirmation",
-      icon: "pi pi-exclamation-triangle",
-      accept: () => deleteGame(),
-    });
-  };
+  // const confirm = () => {
+  //   confirmDialog({
+  //     message: "Are you sure you want to delete this game?",
+  //     header: "Confirmation",
+  //     icon: "pi pi-exclamation-triangle",
+  //     accept: () => deleteGame(),
+  //   });
+  // };
 
   return (
     <div className="game-box-container">
@@ -47,8 +44,8 @@ const GameBox = (props) => {
               : "https://localhost:5001/game_images/no-cover.jpg"
           }
         />
-        <div class="game-details-panel">
-          <div class="details-icon">
+        <div className="game-details-panel">
+          <div className="details-icon">
             <span className="pi pi-eye"></span>
           </div>
         </div>

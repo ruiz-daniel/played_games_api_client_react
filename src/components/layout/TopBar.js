@@ -1,23 +1,23 @@
 import React from "react";
 
 import { Toolbar } from "primereact/toolbar";
-import { Button } from "primereact/button";
+// import { Button } from "primereact/button";
 
 import { Link } from "react-router-dom";
 import * as routes from "../../routes";
 
 const TopBar = () => {
-  const [darkMode, setDarkMode] = React.useState(false);
+  // const [darkMode, setDarkMode] = React.useState(false);
 
-  const darkModeToggle = () => {
-    if (!darkMode) {
-      document.body.classList.add("dark-mode");
-      setDarkMode(true);
-    } else {
-      document.body.classList.remove("dark-mode");
-      setDarkMode(false);
-    }
-  };
+  // const darkModeToggle = () => {
+  //   if (!darkMode) {
+  //     document.body.classList.add("dark-mode");
+  //     setDarkMode(true);
+  //   } else {
+  //     document.body.classList.remove("dark-mode");
+  //     setDarkMode(false);
+  //   }
+  // };
   const leftContents = (
     <React.Fragment>
       <Link to={routes.home}>
