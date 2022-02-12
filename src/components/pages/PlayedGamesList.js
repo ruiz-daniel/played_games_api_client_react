@@ -111,6 +111,7 @@ const PlayedGamesList = () => {
 
   return (
     <div className="played-games-list">
+      <h3 className="games-quantity-text">Showing: {games.length}</h3>
       <div className="filters-container flex justify-content-between">
         <InputText
           id="fname"

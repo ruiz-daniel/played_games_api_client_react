@@ -2,6 +2,12 @@
   padding: 15px;
   @include centerContent($width: 80%);
 
+  .games-quantity-text {
+    position: absolute;
+    right: 2%;
+    top: 30px;
+  }
+
   .custom-scrolltop {
     width: 2rem;
     height: 2rem;
