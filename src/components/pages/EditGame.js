@@ -7,6 +7,7 @@ import { FileUpload } from "primereact/fileupload";
 import { Image } from "primereact/image";
 import { Button } from "primereact/button";
 import { confirmDialog } from "primereact/confirmdialog";
+import { InputTextarea } from "primereact/inputtextarea";
 
 import Score from "../utils/score";
 import Status from "../utils/status";
@@ -56,6 +57,7 @@ const EditGame = (props) => {
           summary: "Game Uploaded Successfully",
           life: 3000,
         });
+        setEditing(false);
       }
     );
   };
@@ -112,11 +114,11 @@ const EditGame = (props) => {
         <Image src={image} alt={name} preview />
         <div className="flex justify-content-end mt-2">
           <Button
-            label="Edit"
+            label={editing ? "Cancel Edit" : "Edit"}
             icon="pi pi-pencil"
             className="p-button-outlined edit-button"
             onClick={() => {
-              setEditing(true);
+              setEditing(!editing);
             }}
           />
           <Button
@@ -127,31 +129,124 @@ const EditGame = (props) => {
           />
         </div>
       </div>
-      <div className="game-details-fields flex-column">
-        <h3>{name}</h3>
-        <p>
-          Developed by <span>{dev}</span>
-        </p>
-        <p>
-          Published by <span>{publisher}</span>
-        </p>
-        <p>
-          Year: <span>{year}</span>
-        </p>
-        <p>
-          Genre: <span>{genre}</span>
-        </p>
-        <p>
-          Played On: <span>{platform.name}</span>
-        </p>
-        <p>
-          Score: <Score score={rating} />{" "}
-        </p>
-        <p>
-          <Status status={status.name} />{" "}
-        </p>
-        {description && description != "" && <p>{description}</p>}
-      </div>
+      {!editing && (
+        <div className="game-details-fields flex-column">
+          <h3>{name}</h3>
+          <p>
+            Developed by <span>{dev}</span>
+          </p>
+          <p>
+            Published by <span>{publisher}</span>
+          </p>
+          <p>
+            Year: <span>{year}</span>
+          </p>
+          <p>
+            Genre: <span>{genre}</span>
+          </p>
+          <p>
+            Played On: <span>{platform.name}</span>
+          </p>
+          <p>
+            Score: <Score score={rating} />{" "}
+          </p>
+          <p>
+            <Status status={status.name} />{" "}
+          </p>
+          {description && description != "" && <p>{description}</p>}
+        </div>
+      )}
+      {editing && (
+        <div className="game-details-edit flex flex-wrap">
+          <div className="flex flex-column flex-grow-1">
+            <h4>Name</h4>
+            <InputText
+              id="gname"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <h4>Developer</h4>
+            <InputText
+              id="gdev"
+              value={dev}
+              onChange={(e) => setDev(e.target.value)}
+            />
+            <h4>Publisher</h4>
+            <InputText
+              id="gpub"
+              value={publisher}
+              onChange={(e) => setPublisher(e.target.value)}
+            />
+            <h4>Year</h4>
+            <InputText
+              id="gyear"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+            />
+            <h4>Genre</h4>
+            <InputText
+              id="ggenre"
+              value={genre}
+              onChange={(e) => setGenre(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-column flex-grow-1 ml-5">
+            <h4>Platform</h4>
+            <Dropdown
+              id="gplatform"
+              value={platform}
+              options={platformList}
+              onChange={(e) => setPlatform(e.value)}
+              optionLabel="name"
+            />
+            <h4>Status</h4>
+            <Dropdown
+              id="gstatus"
+              value={status}
+              options={statusList}
+              onChange={(e) => setStatus(e.value)}
+              optionLabel="name"
+            />
+            <h4>Score</h4>
+            <InputText
+              id="grating"
+              value={rating}
+              type="number"
+              onChange={(e) => setRating(e.target.value)}
+            />
+            <h4>Description </h4>
+            <InputTextarea
+              rows={5}
+              autoResize
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-column" style={{ width: "100%" }}>
+            <h4>Image</h4>
+            <FileUpload
+              name="gameImage"
+              customUpload
+              uploadHandler={onupload}
+              onUpload={(e) => {}}
+              accept="image/*"
+              chooseLabel="File"
+              auto
+              emptyTemplate={
+                <p className="p-m-0">Drag and drop files to here to upload.</p>
+              }
+            />
+            <div className="flex justify-content-end mt-2">
+              <Button
+                label="Upload"
+                onClick={handleSubmit}
+                icon="pi pi-upload"
+                className="p-button-outlined edit-button"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
