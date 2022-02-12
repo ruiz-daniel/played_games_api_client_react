@@ -4,8 +4,7 @@ import api from "../../services/APICalls";
 import { Chart } from "primereact/chart";
 
 const GameStats = () => {
-  const [games, setGames] = useState([]);
-  const [total_games, setTotalGames] = useState(0);
+  const [total_games, setTotalGames] = useState();
   const [avg_score, setAvgScore] = useState(0);
   const [completionChart, setcompletionChart] = useState({
     labels: [],
@@ -228,7 +227,6 @@ const GameStats = () => {
   };
 
   const getStats = (data) => {
-    setTotalGames(data.length);
     data.forEach((element) => {
       //COMPLETION
       if (element.status.name === "Completed") {
@@ -317,15 +315,11 @@ const GameStats = () => {
         sc8 * 8 +
         sc9 * 9 +
         sc10 * 10) /
-        total_games
+        data.length
     );
   };
 
-  const compareIgnoreCase = (stringA, stringB) => {
-    return stringA.toUpperCase().includes(stringB.toUpperCase());
-  };
-
-  const getCompletionStats = () => {
+  const getCompletionStats = (total_games) => {
     setcompletionChart({
       labels: ["Completed", "Played", "Dropped", "On Hold"],
       datasets: [
@@ -476,13 +470,14 @@ const GameStats = () => {
 
   useEffect(() => {
     api.getPlayedGames((data) => {
-      setGames(data);
+      setTotalGames(data.length);
       getStats(data);
-      getCompletionStats();
+      getCompletionStats(data.length);
       getPlatformStats();
       getYearsStats();
       getScoreStats();
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
