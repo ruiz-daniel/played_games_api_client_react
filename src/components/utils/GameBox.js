@@ -16,22 +16,6 @@ const GameBox = (props) => {
       },
     });
   };
-  // const deleteGame = () => {
-  //   api.deletePlayedGame(props.game, () => {
-  //     if (props.reload) {
-  //       props.reload();
-  //     }
-  //   });
-  // };
-
-  // const confirm = () => {
-  //   confirmDialog({
-  //     message: "Are you sure you want to delete this game?",
-  //     header: "Confirmation",
-  //     icon: "pi pi-exclamation-triangle",
-  //     accept: () => deleteGame(),
-  //   });
-  // };
 
   return (
     <div className="game-box-container">

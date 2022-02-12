@@ -31,6 +31,18 @@ const GameStats = () => {
     datasets: [{}],
   });
 
+  useEffect(() => {
+    api.getPlayedGames((data) => {
+      setTotalGames(data.length);
+      getStats(data);
+      getCompletionStats(data.length);
+      getPlatformStats();
+      getYearsStats();
+      getScoreStats();
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   //VARIABLES FOR DATA
   var completed = 0;
   var dropped = 0;
@@ -467,18 +479,6 @@ const GameStats = () => {
       ],
     });
   };
-
-  useEffect(() => {
-    api.getPlayedGames((data) => {
-      setTotalGames(data.length);
-      getStats(data);
-      getCompletionStats(data.length);
-      getPlatformStats();
-      getYearsStats();
-      getScoreStats();
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div className="stats-wrapper">

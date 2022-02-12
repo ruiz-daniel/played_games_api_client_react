@@ -4,14 +4,21 @@ import api from "../../services/APICalls";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { FileUpload } from "primereact/fileupload";
-import GameBox from "../utils/GameBox";
-import { useLocation } from "react-router-dom";
-import { sr_images } from "../../routes";
+import { Image } from "primereact/image";
+import { Button } from "primereact/button";
+import { confirmDialog } from "primereact/confirmdialog";
+
+import Score from "../utils/score";
+import Status from "../utils/status";
+
+import { useLocation, useHistory } from "react-router-dom";
+import { sr_images, playedgames } from "../../routes";
 
 import { Toast } from "primereact/toast";
 
 const EditGame = (props) => {
   const location = useLocation();
+  const history = useHistory();
   const [name, setName] = useState(location.state.game.name);
   const [year, setYear] = useState(location.state.game.year);
   const [dev, setDev] = useState(location.state.game.developer);
@@ -20,10 +27,14 @@ const EditGame = (props) => {
   const [rating, setRating] = useState(location.state.game.rating);
   const [status, setStatus] = useState(location.state.game.status);
   const [platform, setPlatform] = useState(location.state.game.platform);
+  const [description, setDescription] = useState(
+    location.state.game.description
+  );
   const [image, setImage] = useState(location.state.game.image);
   const [platformList, setPlatformList] = useState([]);
   const [statusList, setStatusList] = useState([]);
   const toast = useRef(null);
+  const [editing, setEditing] = useState(false);
 
   const handleSubmit = () => {
     api.putPlayedGame(
@@ -49,6 +60,29 @@ const EditGame = (props) => {
     );
   };
 
+  const deleteGame = () => {
+    api.deletePlayedGame(location.state.game, () => {
+      toast.current.show({
+        severity: "error",
+        summary: "Game Deleted Successfully",
+        life: 3000,
+      });
+      setTimeout(function () {
+        history.push(playedgames);
+      }, 3000);
+    });
+  };
+
+  const confirm = () => {
+    confirmDialog({
+      message: "Are you sure you want to delete this game?",
+      header: "Delete Game",
+      icon: "pi pi-exclamation-triangle",
+      acceptClassName: "p-button-danger",
+      accept: () => deleteGame(),
+    });
+  };
+
   React.useEffect(() => {
     (async () => {
       const response = await api.fetchPlatforms();
@@ -72,135 +106,51 @@ const EditGame = (props) => {
   };
 
   return (
-    <div className="upload-game-wrapper p-grid">
-      <div className="p-grid p-col-8 upload-game-fields">
-        <Toast ref={toast} />
-        <div className="p-col-6 upload-game-field-half">
-          <span className="p-field item">
-            <label htmlFor="gname" className="p-d-block">
-              Name
-            </label>
-            <InputText
-              id="gname"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </span>
-          <span className="p-field item">
-            <label htmlFor="gdev" className="p-d-block">
-              Developer
-            </label>
-            <InputText
-              id="gdev"
-              value={dev}
-              onChange={(e) => setDev(e.target.value)}
-            />
-          </span>
-          <span className="p-field item">
-            <label htmlFor="gpub" className="p-d-block">
-              Publisher
-            </label>
-            <InputText
-              id="gpub"
-              value={publisher}
-              onChange={(e) => setPublisher(e.target.value)}
-            />
-          </span>
-          <span className="p-field item">
-            <label htmlFor="gyear" className="p-d-block">
-              Year
-            </label>
-            <InputText
-              id="gyear"
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
-            />
-          </span>
-        </div>
-        <div className="p-col-6 upload-game-field-half">
-          <span className="p-field item">
-            <label htmlFor="ggenre" className="p-d-block">
-              Genre
-            </label>
-            <InputText
-              id="ggenre"
-              value={genre}
-              onChange={(e) => setGenre(e.target.value)}
-            />
-          </span>
-          <span className="p-field item">
-            <label htmlFor="gplatform" className="p-d-block">
-              Platform
-            </label>
-            <Dropdown
-              id="gplatform"
-              value={platform}
-              options={platformList}
-              onChange={(e) => setPlatform(e.value)}
-              optionLabel="name"
-            />
-          </span>
-          <span className="p-field item">
-            <label htmlFor="gstatus" className="p-d-block">
-              Status
-            </label>
-            <Dropdown
-              id="gstatus"
-              value={status}
-              options={statusList}
-              onChange={(e) => setStatus(e.value)}
-              optionLabel="name"
-            />
-          </span>
-          <span className="p-field item">
-            <label htmlFor="grating" className="p-d-block">
-              Rating
-            </label>
-            <InputText
-              id="grating"
-              value={rating}
-              type="number"
-              onChange={(e) => setRating(e.target.value)}
-            />
-          </span>
-        </div>
-        <div className="p-col-12">
-          <h2>Game Image</h2>
-          <FileUpload
-            name="gameImage"
-            customUpload
-            uploadHandler={onupload}
-            onUpload={(e) => {}}
-            accept="image/*"
-            chooseLabel="File"
-            emptyTemplate={
-              <p className="p-m-0">Drag and drop files to here to upload.</p>
-            }
+    <div className="game-details-wrapper flex ">
+      <Toast ref={toast} />
+      <div className="game-details-image">
+        <Image src={image} alt={name} preview />
+        <div className="flex justify-content-end mt-2">
+          <Button
+            label="Edit"
+            icon="pi pi-pencil"
+            className="p-button-outlined edit-button"
+            onClick={() => {
+              setEditing(true);
+            }}
+          />
+          <Button
+            label="Delete"
+            icon="pi pi-trash"
+            className="p-button-outlined p-button-danger ml-3 delete-button"
+            onClick={confirm}
           />
         </div>
-        <div className="p-col">
-          <h2 className="upload-button" onClick={handleSubmit}>
-            <div>
-              <i className="pi pi-check"></i> Upload Game
-            </div>
-          </h2>
-        </div>
       </div>
-      <div className="p-col-4 upload-game-preview">
-        <h2>Preview</h2>
-        <GameBox
-          game={{
-            name,
-            developer: dev,
-            publisher,
-            year,
-            rating,
-            genre,
-            status,
-            platform,
-            image,
-          }}
-        ></GameBox>
+      <div className="game-details-fields flex-column">
+        <h3>{name}</h3>
+        <p>
+          Developed by <span>{dev}</span>
+        </p>
+        <p>
+          Published by <span>{publisher}</span>
+        </p>
+        <p>
+          Year: <span>{year}</span>
+        </p>
+        <p>
+          Genre: <span>{genre}</span>
+        </p>
+        <p>
+          Played On: <span>{platform.name}</span>
+        </p>
+        <p>
+          Score: <Score score={rating} />{" "}
+        </p>
+        <p>
+          <Status status={status.name} />{" "}
+        </p>
+        {description && description != "" && <p>{description}</p>}
       </div>
     </div>
   );

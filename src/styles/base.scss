@@ -52,17 +52,18 @@ body.dark-mode {
   color: $text-color-purple !important;
 }
 
+.status {
+  color: white !important;
+}
+
 .status-completed {
   background-color: $status-color-completed;
-  color: white;
 }
 .status-incomplete {
   background-color: $status-color-incomplete;
-  color: white;
 }
 .status-dropped {
   background-color: $status-color-dropped;
-  color: white;
 }
 
 .pos-1 {
