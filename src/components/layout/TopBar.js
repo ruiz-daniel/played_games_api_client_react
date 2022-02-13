@@ -1,32 +1,20 @@
 import React from "react";
 
 import { Toolbar } from "primereact/toolbar";
-// import { Button } from "primereact/button";
 
 import { Link } from "react-router-dom";
 import * as routes from "../../routes";
 
 const TopBar = () => {
-  // const [darkMode, setDarkMode] = React.useState(false);
-
-  // const darkModeToggle = () => {
-  //   if (!darkMode) {
-  //     document.body.classList.add("dark-mode");
-  //     setDarkMode(true);
-  //   } else {
-  //     document.body.classList.remove("dark-mode");
-  //     setDarkMode(false);
-  //   }
-  // };
   const leftContents = (
     <React.Fragment>
       <Link to={routes.home}>
-        <h2 className="logo">DRG API</h2>
+        <h2 className="logo">Games Collection</h2>
       </Link>
 
       <Link to={routes.playedgames}>
         <span>
-          <i className="pi pi-home"></i> Played Games
+          <i className="pi pi-list"></i> Games List
         </span>
       </Link>
       <Link to={routes.uploadgame}>
@@ -65,15 +53,7 @@ const TopBar = () => {
     </React.Fragment>
   );
 
-  const rightContents = (
-    <React.Fragment>
-      {/* <Button
-        icon={darkMode ? "pi pi-sun" : "pi pi-moon"}
-        className="p-mr-2"
-        onClick={darkModeToggle}
-      /> */}
-    </React.Fragment>
-  );
+  const rightContents = <React.Fragment></React.Fragment>;
   return (
     <div className="sticky-section">
       <Toolbar left={leftContents} right={rightContents} className="topbar" />
