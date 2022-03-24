@@ -9,7 +9,10 @@ const TopBar = () => {
   const leftContents = (
     <React.Fragment>
       <Link to={routes.home}>
-        <h2 className="logo">Games Collection</h2>
+        <h2 className="logo">
+          {" "}
+          <i className="pi pi-book"></i> My Games Shelve
+        </h2>
       </Link>
 
       <Link to={routes.playedgames}>
