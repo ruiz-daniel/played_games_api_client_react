@@ -1,15 +1,18 @@
 .upload-game-form {
-  @include centerContent(50%);
-  text-align: center;
+  @include centerContent(70%);
+  // text-align: center;
   margin: 10px;
+
   .p-panel-content {
-    background: $background-gray-gradient;
+    // background: $background-gray-gradient;
   }
+
   .p-panel-header {
     @include darkBackground();
   }
   .p-fileupload {
-    width: 100%;
+    width: 40%;
+    margin-bottom: 3rem;
   }
   .p-fileupload-buttonbar {
     background-color: $background-color-dark2;
@@ -22,46 +25,41 @@
   }
 }
 .upload-game-fields {
-  .item,
-  .items-platform-status-rating {
-    text-align: start;
-    @include centerContent();
-    .item-platform {
-      text-align: start;
-    }
-    .item-status {
-      text-align: center;
-    }
-    .item-rating {
-      display: block;
-      text-align: end;
-    }
-    .error-message {
-      color: red;
+  .p-steps-item {
+    a {
+      width: 120px;
+      background-color: transparent !important;
     }
   }
-  .items-platform-status-rating {
+  .form-content {
+    margin-top: 3rem;
+    padding-left: 5rem;
+
     input,
     .p-dropdown {
-      width: 70%;
-    }
-  }
-  input,
-  .p-dropdown {
-    color: black;
-    font-weight: 400;
-    font-size: large;
-    margin-bottom: 1rem;
-    width: 100%;
-    height: 40px;
+      color: black;
+      font-weight: 400;
+      font-size: large;
+      width: 40%;
+      height: 40px;
 
-    &:focus {
-      // @include bottomBorder(black);
-      box-shadow: none !important;
+      &:focus {
+        // @include bottomBorder(black);
+        box-shadow: none !important;
+      }
     }
-  }
-  .p-inputtextarea {
-    width: 100% !important;
+    .p-inputtextarea {
+      width: 40% !important;
+    }
+
+    .item {
+      margin-bottom: 3rem;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 5px;
+    }
   }
 }
 

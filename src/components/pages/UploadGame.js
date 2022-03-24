@@ -10,6 +10,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 
 import { Toast } from "primereact/toast";
+import { Steps } from "primereact/steps";
 
 const UploadGame = () => {
   const [platformList, setPlatformList] = useState([]);
@@ -21,7 +22,9 @@ const UploadGame = () => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    name: "Test",
+  });
 
   const toast = useRef(null);
 
@@ -50,6 +53,7 @@ const UploadGame = () => {
     );
   };
 
+  //FETCH PLATFORMS AND STATUSES WHEN THE COMPONENT MOUNTS
   React.useEffect(() => {
     (async () => {
       const response_platforms = await api.fetchPlatforms();
@@ -61,125 +65,194 @@ const UploadGame = () => {
     })();
   }, []);
 
+  //SAVE THE IMAGE TO ITS STATE AFTER SELECTING IT FROM LOCAL FILES
   const onupload = async (e) => {
     setGameImage(e.files[0]);
   };
+
+  //STEPS ITEMS
+  const step_items = [
+    { label: "Info" },
+    { label: "Played" },
+    { label: "Finish" },
+  ];
+  const [activeIndex, setActiveIndex] = useState(0);
 
   return (
     <Panel header="New Game" className="upload-game-form">
       <Toast ref={toast} />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="upload-game-fields flex flex-column">
-          <div className="item">
-            <h5>Name *</h5>
-            <InputText id="gname" {...register("name", { required: true })} />
-            {errors.name && (
-              <span className="error-message">Name is required</span>
-            )}
-          </div>
-          <span className="item">
-            <h5>Developer(s)</h5>
-            <InputText id="gdev" {...register("dev")} />
-          </span>
-          <span className="item">
-            <h5>Publisher(s)</h5>
-            <InputText id="gpub" {...register("publisher")} />
-          </span>
-          <span className="item">
-            <h5>Year</h5>
-            <InputText
-              id="gyear"
-              type="number"
-              {...register("year", { min: 1970, max: 2030 })}
-            />
-            {errors.year && (
-              <span className="error-message">Requires a valid year</span>
-            )}
-          </span>
+        <div className="upload-game-fields">
+          <Steps
+            model={step_items}
+            activeIndex={activeIndex}
+            onSelect={(e) => setActiveIndex(e.index)}
+            readOnly={false}
+            style={{ width: "100%" }}
+          />
 
-          <span className="item">
-            <h5>Genre(s)</h5>
-            <InputText id="ggenre" {...register("genre")} />
-          </span>
-          <span className="item">
-            <h5>Description (Optional)</h5>
-            <InputTextarea rows={5} {...register("description")} autoResize />
-          </span>
-          <div className="items-platform-status-rating flex justify-content-between">
-            <span className="item item-platform">
-              <h5>Platform *</h5>
-              <Controller
-                name="platform"
-                control={control}
-                rules={{ required: "Platform is required" }}
-                render={({ field, fieldState }) => (
-                  <Dropdown
-                    id={field.name}
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.value)}
-                    options={platformList}
-                    optionLabel="name"
-                  />
+          {activeIndex === 0 && (
+            <div className="form-content justify-content-center">
+              <span className="p-float-label item flex flex-column">
+                <InputText
+                  id="gname"
+                  {...register("name", { required: true })}
+                />
+                {errors.name && (
+                  <span className="error-message">Name is required</span>
                 )}
-              />
-              {errors.platform && (
-                <div className="error-message">Platform is required</div>
-              )}
-            </span>
-            <span className="item item-status">
-              <h5>Status *</h5>
-              <Controller
-                name="status"
-                control={control}
-                rules={{ required: "Status is required" }}
-                render={({ field, fieldState }) => (
-                  <Dropdown
-                    id={field.name}
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.value)}
-                    options={statusList}
-                    optionLabel="name"
-                  />
-                )}
-              />
-              {errors.status && (
-                <div className="error-message">Status is required</div>
-              )}
-            </span>
-            <span className="item item-rating">
-              <h5>Rating *</h5>
-              <InputText
-                id="grating"
-                type="number"
-                {...register("rating", { min: 1, max: 10, required: true })}
-              />
-              {errors.rating && (
-                <div className="error-message">Requires a valid rating</div>
-              )}
-            </span>
-          </div>
+                <label htmlFor="gname">Name*</label>
+              </span>
 
-          <div className="item">
-            <h5>Image</h5>
-            <FileUpload
-              name="gameImage"
-              customUpload
-              auto
-              uploadHandler={onupload}
-              accept="image/*"
-              chooseLabel="File"
-              emptyTemplate={
-                <p className="p-m-0">Drag and drop files to here to upload.</p>
-              }
-            />
-          </div>
-          <div className="item mt-4">
-            <Button
-              className="upload-button"
-              label="Upload Game"
-              type="submit"
-            ></Button>
-          </div>
+              <span className="p-float-label item">
+                <InputText id="gdev" {...register("dev")} />
+                <label htmlFor="gdev">Developer</label>
+              </span>
+
+              <span className="p-float-label item">
+                <InputText id="gpub" {...register("publisher")} />
+                <label htmlFor="gpub">Publisher</label>
+              </span>
+
+              <span className="p-float-label item">
+                <InputText
+                  id="gyear"
+                  type="number"
+                  {...register("year", { min: 1970, max: 2030 })}
+                />
+                {errors.year && (
+                  <span className="error-message">Requires a valid year</span>
+                )}
+                <label htmlFor="gyear">Year</label>
+              </span>
+
+              <span className="p-float-label item">
+                <InputText id="ggenre" {...register("genre")} />
+                <label htmlFor="ggenre">Genre</label>
+              </span>
+
+              <span className="flex">
+                <Button
+                  label="Continue"
+                  icon="pi pi-angle-right"
+                  iconPos="right"
+                  onClick={() => {
+                    setActiveIndex(activeIndex + 1);
+                  }}
+                />
+              </span>
+            </div>
+          )}
+
+          {activeIndex === 1 && (
+            <div className="form-content justify-content-center">
+              <span className="p-float-label item">
+                <Controller
+                  name="platform"
+                  control={control}
+                  rules={{ required: "Platform is required" }}
+                  render={({ field, fieldState }) => (
+                    <Dropdown
+                      id={field.name}
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.value)}
+                      options={platformList}
+                      optionLabel="name"
+                    />
+                  )}
+                />
+                {errors.platform && (
+                  <div className="error-message">Platform is required</div>
+                )}
+                <label htmlFor="platform">Platform</label>
+              </span>
+
+              <span className="p-float-label item">
+                <Controller
+                  name="status"
+                  control={control}
+                  rules={{ required: "Status is required" }}
+                  render={({ field, fieldState }) => (
+                    <Dropdown
+                      id={field.name}
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.value)}
+                      options={statusList}
+                      optionLabel="name"
+                    />
+                  )}
+                />
+                {errors.status && (
+                  <div className="error-message">Status is required</div>
+                )}
+                <label htmlFor="status">Status</label>
+              </span>
+
+              <span className="p-float-label item">
+                <InputText
+                  id="grating"
+                  type="number"
+                  {...register("rating", { min: 1, max: 10, required: true })}
+                />
+                {errors.rating && (
+                  <div className="error-message">Requires a valid rating</div>
+                )}
+                <label htmlFor="grating">Rating</label>
+              </span>
+
+              <span className="p-float-label item">
+                <InputTextarea
+                  id="gdesc"
+                  rows={5}
+                  {...register("description")}
+                  autoResize
+                />
+                <label htmlFor="gdesc">Description (optional)</label>
+              </span>
+
+              <span className="flex">
+                <Button
+                  label="Continue"
+                  icon="pi pi-angle-right"
+                  iconPos="right"
+                  onClick={() => {
+                    setActiveIndex(activeIndex + 1);
+                  }}
+                />
+              </span>
+            </div>
+          )}
+
+          {activeIndex === 2 && (
+            <div className="form-content justify-content-center">
+              <h3>Cover Image</h3>
+              <span className="item">
+                <FileUpload
+                  name="gameImage"
+                  customUpload
+                  auto
+                  uploadHandler={onupload}
+                  accept="image/*"
+                  chooseLabel="File"
+                  emptyTemplate={
+                    <p className="p-m-0">
+                      Drag and drop files to here to upload.
+                    </p>
+                  }
+                />
+              </span>
+
+              <span className="flex">
+                <Button
+                  className="upload-button"
+                  label="Upload Game"
+                  type="submit"
+                ></Button>
+              </span>
+            </div>
+          )}
+
+          {activeIndex === 3 && <div className="item mt-4"></div>}
         </div>
       </form>
     </Panel>
