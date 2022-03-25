@@ -60,11 +60,14 @@
       color: red;
       margin-top: 5px;
     }
+    .p-button {
+      margin-right: 10px;
+    }
   }
 }
 
 .upload-button {
-  width: 100%;
+  width: 30%;
   border-radius: 5px;
   border: none !important;
   background-color: $background-color-purple !important;

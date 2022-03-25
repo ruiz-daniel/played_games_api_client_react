@@ -21,10 +21,12 @@ const UploadGame = () => {
     register,
     handleSubmit,
     control,
+    watch,
+    trigger,
+    clearErrors,
     formState: { errors },
-  } = useForm({
-    name: "Test",
-  });
+  } = useForm({});
+  const watchData = watch();
 
   const toast = useRef(null);
 
@@ -78,6 +80,7 @@ const UploadGame = () => {
   ];
   const [activeIndex, setActiveIndex] = useState(0);
 
+  //HTML CODE
   return (
     <Panel header="New Game" className="upload-game-form">
       <Toast ref={toast} />
@@ -87,13 +90,13 @@ const UploadGame = () => {
             model={step_items}
             activeIndex={activeIndex}
             onSelect={(e) => setActiveIndex(e.index)}
-            readOnly={false}
             style={{ width: "100%" }}
           />
 
           {activeIndex === 0 && (
             <div className="form-content justify-content-center">
-              <span className="p-float-label item flex flex-column">
+              <span className="item flex flex-column">
+                <label htmlFor="gname">Name*</label>
                 <InputText
                   id="gname"
                   {...register("name", { required: true })}
@@ -101,20 +104,20 @@ const UploadGame = () => {
                 {errors.name && (
                   <span className="error-message">Name is required</span>
                 )}
-                <label htmlFor="gname">Name*</label>
               </span>
 
-              <span className="p-float-label item">
-                <InputText id="gdev" {...register("dev")} />
+              <span className="item flex flex-column">
                 <label htmlFor="gdev">Developer</label>
+                <InputText id="gdev" {...register("dev")} />
               </span>
 
-              <span className="p-float-label item">
-                <InputText id="gpub" {...register("publisher")} />
+              <span className="item flex flex-column">
                 <label htmlFor="gpub">Publisher</label>
+                <InputText id="gpub" {...register("publisher")} />
               </span>
 
-              <span className="p-float-label item">
+              <span className="item flex flex-column">
+                <label htmlFor="gyear">Year</label>
                 <InputText
                   id="gyear"
                   type="number"
@@ -123,12 +126,11 @@ const UploadGame = () => {
                 {errors.year && (
                   <span className="error-message">Requires a valid year</span>
                 )}
-                <label htmlFor="gyear">Year</label>
               </span>
 
-              <span className="p-float-label item">
-                <InputText id="ggenre" {...register("genre")} />
+              <span className="item flex flex-column">
                 <label htmlFor="ggenre">Genre</label>
+                <InputText id="ggenre" {...register("genre")} />
               </span>
 
               <span className="flex">
@@ -136,8 +138,12 @@ const UploadGame = () => {
                   label="Continue"
                   icon="pi pi-angle-right"
                   iconPos="right"
-                  onClick={() => {
-                    setActiveIndex(activeIndex + 1);
+                  onClick={async () => {
+                    const result = await trigger(["name", "year"]);
+                    if (result) {
+                      setActiveIndex(activeIndex + 1);
+                      clearErrors();
+                    }
                   }}
                 />
               </span>
@@ -146,7 +152,8 @@ const UploadGame = () => {
 
           {activeIndex === 1 && (
             <div className="form-content justify-content-center">
-              <span className="p-float-label item">
+              <span className="item flex flex-column">
+                <label htmlFor="platform">Platform*</label>
                 <Controller
                   name="platform"
                   control={control}
@@ -164,10 +171,10 @@ const UploadGame = () => {
                 {errors.platform && (
                   <div className="error-message">Platform is required</div>
                 )}
-                <label htmlFor="platform">Platform</label>
               </span>
 
-              <span className="p-float-label item">
+              <span className="item flex flex-column">
+                <label htmlFor="status">Status*</label>
                 <Controller
                   name="status"
                   control={control}
@@ -185,10 +192,10 @@ const UploadGame = () => {
                 {errors.status && (
                   <div className="error-message">Status is required</div>
                 )}
-                <label htmlFor="status">Status</label>
               </span>
 
-              <span className="p-float-label item">
+              <span className="item flex flex-column">
+                <label htmlFor="grating">Rating*</label>
                 <InputText
                   id="grating"
                   type="number"
@@ -197,26 +204,41 @@ const UploadGame = () => {
                 {errors.rating && (
                   <div className="error-message">Requires a valid rating</div>
                 )}
-                <label htmlFor="grating">Rating</label>
               </span>
 
-              <span className="p-float-label item">
+              <span className="item flex flex-column">
+                <label htmlFor="gdesc">Description (optional)</label>
                 <InputTextarea
                   id="gdesc"
                   rows={5}
                   {...register("description")}
                   autoResize
                 />
-                <label htmlFor="gdesc">Description (optional)</label>
               </span>
 
               <span className="flex">
                 <Button
+                  label="Back"
+                  icon="pi pi-angle-left"
+                  iconPos="right"
+                  onClick={() => {
+                    setActiveIndex(activeIndex - 1);
+                  }}
+                />
+                <Button
                   label="Continue"
                   icon="pi pi-angle-right"
                   iconPos="right"
-                  onClick={() => {
-                    setActiveIndex(activeIndex + 1);
+                  onClick={async () => {
+                    const result = await trigger([
+                      "platform",
+                      "status",
+                      "rating",
+                    ]);
+                    if (result) {
+                      setActiveIndex(activeIndex + 1);
+                      clearErrors();
+                    }
                   }}
                 />
               </span>
@@ -243,6 +265,14 @@ const UploadGame = () => {
               </span>
 
               <span className="flex">
+                <Button
+                  label="Back"
+                  icon="pi pi-angle-left"
+                  iconPos="right"
+                  onClick={() => {
+                    setActiveIndex(activeIndex - 1);
+                  }}
+                />
                 <Button
                   className="upload-button"
                   label="Upload Game"
