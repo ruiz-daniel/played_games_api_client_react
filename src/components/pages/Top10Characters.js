@@ -5,7 +5,7 @@ import AddTop10Character from "../utils/AddTop10Character";
 import Position from "../utils/position";
 import CharacterBox from "../utils/CharacterBox";
 import { Dialog } from "primereact/dialog";
-
+import { Tooltip } from "primereact/tooltip";
 import { Button } from "primereact/button";
 import { Image } from "primereact/image";
 import { Sidebar } from "primereact/sidebar";
@@ -132,6 +132,8 @@ const Top10Characters = () => {
                     onClick={(e) => {
                       switchCharacters(characters[index - 1], character);
                     }}
+                    tooltip="Move position up"
+                    tooltipOptions={{ position: "top" }}
                   />
                 )}
                 {character.pos < characters.length && (
@@ -141,6 +143,8 @@ const Top10Characters = () => {
                     onClick={(e) => {
                       switchCharacters(character, characters[index + 1]);
                     }}
+                    tooltip="Move position down"
+                    tooltipOptions={{ position: "top" }}
                   />
                 )}
                 <Button
@@ -149,6 +153,8 @@ const Top10Characters = () => {
                   onClick={(e) => {
                     removeCharacter(character);
                   }}
+                  tooltip="Remove"
+                  tooltipOptions={{ position: "top" }}
                 />
               </div>
               <div className="top10-characters-handle flex justify-content-center">
@@ -160,6 +166,8 @@ const Top10Characters = () => {
                     console.log(selectedCharacter);
                     setShowDetails(true);
                   }}
+                  tooltip="View details"
+                  tooltipOptions={{ position: "bottom" }}
                 />
               </div>
             </div>
