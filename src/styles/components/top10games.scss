@@ -2,43 +2,29 @@
   text-align: center;
 }
 .top10games {
-  margin-left: 25px;
+  @include marginX(20px);
+  margin-bottom: 60px;
 }
-.top10group {
-  border: dashed 1px;
-  border-radius: 10px;
+.top10-item {
+  @include marginX(10px);
+}
+.top10-newgame {
+  @include marginX(40px);
+  .p-scrollpanel-bar-x {
+    background-color: $background-color-purple;
+  }
+}
+.top10-remove-button {
+  position: absolute;
+  width: 70px !important;
+  height: 70px !important;
+  bottom: 250px;
+  right: 100px;
+  transition: all 0.5s ease;
+  &::hover {
+    background-color: lighten($color: red, $amount: 2) !important;
+  }
 }
 .p-overlaypanel .p-overlaypanel-content {
   padding: 0 !important;
-}
-
-.top10section {
-  text-align: center;
-}
-.top10manage {
-  margin-top: 5rem;
-  .p-dropdown,
-  .p-dropdown-panel,
-  input {
-    width: 250px;
-  }
-}
-body.dark-mode {
-  .top10manage {
-    input,
-    .p-dropdown,
-    .p-dropdown-panel {
-      @include darkInput;
-      .p-dropdown-label {
-        color: white;
-      }
-      .p-dropdown-item {
-        color: white;
-      }
-    }
-    button {
-      background: $background-color-purple !important;
-      border-color: white;
-    }
-  }
 }

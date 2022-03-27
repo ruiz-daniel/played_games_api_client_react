@@ -2,8 +2,8 @@
 import axios from "axios";
 import NProgress from "nprogress";
 
-const apiClient = axios.create({
-  baseURL: "https://localhost:5001/api/",
+export const apiClient = axios.create({
+  baseURL: "https://localhost:5001/drgapi/",
 });
 
 // Interceptors to initiate and stop progress bar during axios requests
@@ -91,7 +91,7 @@ export default {
     apiClient
       .request({
         method: "get",
-        url: "PlayedGames/characters",
+        url: "Characters",
       })
       .then((response) => {
         callback(response.data);
@@ -101,7 +101,7 @@ export default {
     apiClient
       .request({
         method: "post",
-        url: "PlayedGames/characters",
+        url: "Characters",
         data: character,
       })
       .then((response) => {
@@ -112,7 +112,7 @@ export default {
     apiClient
       .request({
         method: "put",
-        url: "PlayedGames/characters/" + character.id,
+        url: "Characters/" + character.id,
         data: character,
       })
       .then((response) => {
@@ -123,7 +123,7 @@ export default {
     apiClient
       .request({
         method: "delete",
-        url: "PlayedGames/characters/" + character.id,
+        url: "Characters/" + character.id,
         data: character,
       })
       .then((response) => {
@@ -134,7 +134,7 @@ export default {
     apiClient
       .request({
         method: "get",
-        url: "PlayedGames/top10games/" + top10name,
+        url: "Top10Games/" + top10name,
       })
       .then((response) => {
         callback(response.data);
@@ -144,7 +144,7 @@ export default {
     apiClient
       .request({
         method: "post",
-        url: "PlayedGames/top10games/" + top10name,
+        url: "Top10Games/" + top10name,
         data: game,
       })
       .then((response) => {
@@ -155,7 +155,7 @@ export default {
     apiClient
       .request({
         method: "put",
-        url: "PlayedGames/top10games/" + game.id,
+        url: "Top10Games/" + game.id,
         data: game,
       })
       .then((response) => {
@@ -166,7 +166,7 @@ export default {
     apiClient
       .request({
         method: "delete",
-        url: "PlayedGames/top10games/" + id,
+        url: "Top10Games/" + id,
         data: { id: id },
       })
       .then((response) => {
@@ -177,7 +177,7 @@ export default {
     apiClient
       .request({
         method: "get",
-        url: "PlayedGames/top10characters/" + top10name,
+        url: "Top10Characters/" + top10name,
       })
       .then((response) => {
         callback(response.data);
@@ -187,7 +187,7 @@ export default {
     apiClient
       .request({
         method: "post",
-        url: "PlayedGames/top10characters/" + top10name,
+        url: "Top10Characters/" + top10name,
         data: character,
       })
       .then((response) => {
@@ -198,7 +198,7 @@ export default {
     apiClient
       .request({
         method: "put",
-        url: "PlayedGames/top10characters/" + character.id,
+        url: "Top10Characters/" + character.id,
         data: character,
       })
       .then((response) => {
@@ -209,7 +209,7 @@ export default {
     apiClient
       .request({
         method: "delete",
-        url: "PlayedGames/top10characters/" + id,
+        url: "Top10Characters/" + id,
         data: { id: id },
       })
       .then((response) => {
@@ -246,7 +246,7 @@ export default {
     const formData = new FormData();
 
     formData.append("image", gameImage);
-    return apiClient.post("PlayedGames/gameImage", formData, {
+    return apiClient.post("Images", formData, {
       headers: {
         "content-type": "multipart/form-data",
       },

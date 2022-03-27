@@ -1,0 +1,20 @@
+.character-box {
+  padding: 2rem;
+  background: $background-gray-gradient;
+  .character-box-data {
+    padding: 3rem;
+  }
+
+  .p-image,
+  .p-image-preview-container,
+  img {
+    // width: 170px !important;
+    height: 400px !important;
+  }
+
+  .character-data-item {
+    margin: 10px;
+    font-size: large;
+    font-weight: 600;
+  }
+}

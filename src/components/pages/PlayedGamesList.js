@@ -2,11 +2,9 @@
 import React, { useState, useEffect } from "react";
 import api from "../../services/APICalls";
 import GameBox from "../utils/GameBox";
-import PlayingGames from "../utils/PlayingGames";
-import { Accordion, AccordionTab } from "primereact/accordion";
 import { InputText } from "primereact/inputtext";
 import { ScrollPanel } from "primereact/scrollpanel";
-import { OverlayPanel } from "primereact/overlaypanel";
+import { ScrollTop } from "primereact/scrolltop";
 
 var filters = {
   name: "",
@@ -41,14 +39,6 @@ const PlayedGamesList = () => {
   const compareIgnoreCase = (stringA, stringB) => {
     return stringA.toUpperCase().includes(stringB.toUpperCase());
   };
-
-  // const getAvgScore = (data) => {
-  //   let accumulate = 0;
-  //   data.forEach((element) => {
-  //     accumulate += element.rating;
-  //   });
-  //   setAvgScore(accumulate / data.length);
-  // };
 
   useEffect(() => {
     cleanFilters();
@@ -120,97 +110,83 @@ const PlayedGamesList = () => {
   };
 
   return (
-    <div className="playedgames-wrapper">
-      <div className="p-grid playedgames-content">
-        <div className="p-col-4 played_games_sidebar">
-          <PlayingGames></PlayingGames>
-          <div className="p-grid p-shadow-2 filters">
-            <div className="p-col-6 p-d-block">
-              <h2>Filter by</h2>
-              <ScrollPanel style={{ width: "100%", height: "80%" }}>
-                <div className="filter_item">
-                  <InputText
-                    id="fname"
-                    placeholder="Name"
-                    onChange={(e) => filterName(e.target.value)}
-                  />
-                </div>
-                <div className="filter_item">
-                  <InputText
-                    id="fdev"
-                    placeholder="Developer"
-                    onChange={(e) => filterDev(e.target.value)}
-                  />
-                </div>
-                <div className="filter_item">
-                  <InputText
-                    id="fpub"
-                    placeholder="Publisher"
-                    onChange={(e) => filterPublisher(e.target.value)}
-                  />
-                </div>
-                <div className="filter_item">
-                  <InputText
-                    id="fyear"
-                    placeholder="Year"
-                    onChange={(e) => filterYear(e.target.value)}
-                  />
-                </div>
-                <div className="filter_item">
-                  <InputText
-                    id="fgenre"
-                    placeholder="Genre"
-                    onChange={(e) => filterGenre(e.target.value)}
-                  />
-                </div>
-                <div className="filter_item">
-                  <InputText
-                    id="fplatform"
-                    placeholder="Platform"
-                    onChange={(e) => filterPlatform(e.target.value)}
-                  />
-                </div>
-                <div className="filter_item">
-                  <InputText
-                    id="fstatus"
-                    placeholder="Status"
-                    onChange={(e) => filterStatus(e.target.value)}
-                  />
-                </div>
-                <div className="filter_item">
-                  <InputText
-                    id="frating"
-                    placeholder="Rating"
-                    onChange={(e) => filterRating(e.target.value)}
-                  />
-                </div>
-              </ScrollPanel>
-            </div>
-          </div>
-        </div>
-        <div className="p-grid p-col-8 played_games_list">
-          <ScrollPanel style={{ width: "100%", height: "90vh" }}>
-            <div className="p-grid p-col-12">
-              {games.map((game) => {
-                return (
-                  <div className="p-col-3" key={game.id}>
-                    <GameBox
-                      game={game}
-                      reload={() => {
-                        cleanFilters();
-                        api.getPlayedGames((data) => {
-                          setGames(data);
-                          gamesBackup = data;
-                        });
-                      }}
-                    ></GameBox>
-                  </div>
-                );
-              })}
-            </div>
-          </ScrollPanel>
-        </div>
+    <div className="played-games-list">
+      <h3 className="games-quantity-text">Showing: {games.length}</h3>
+      <div className="filters-container flex justify-content-between">
+        <InputText
+          id="fname"
+          placeholder="Name"
+          className="p-inputtext-sm"
+          onChange={(e) => filterName(e.target.value)}
+        />
+        <InputText
+          id="fdev"
+          placeholder="Developer"
+          className="p-inputtext-sm"
+          onChange={(e) => filterDev(e.target.value)}
+        />
+        <InputText
+          id="fpub"
+          placeholder="Publisher"
+          className="p-inputtext-sm"
+          onChange={(e) => filterPublisher(e.target.value)}
+        />
+        <InputText
+          id="fyear"
+          placeholder="Year"
+          className="p-inputtext-sm"
+          onChange={(e) => filterYear(e.target.value)}
+        />
+        <InputText
+          id="fgenre"
+          placeholder="Genre"
+          className="p-inputtext-sm"
+          onChange={(e) => filterGenre(e.target.value)}
+        />
+        <InputText
+          id="fplatform"
+          placeholder="Platform"
+          className="p-inputtext-sm"
+          onChange={(e) => filterPlatform(e.target.value)}
+        />
+        <InputText
+          id="fstatus"
+          placeholder="Status"
+          className="p-inputtext-sm"
+          onChange={(e) => filterStatus(e.target.value)}
+        />
+        <InputText
+          id="frating"
+          placeholder="Rating"
+          className="p-inputtext-sm"
+          onChange={(e) => filterRating(e.target.value)}
+        />
       </div>
+      <ScrollPanel style={{ width: "100%", height: "87vh" }}>
+        <div className="games-container flex flex-wrap justify-content-between">
+          {games.map((game) => {
+            return (
+              <GameBox
+                key={game.id}
+                game={game}
+                reload={() => {
+                  cleanFilters();
+                  api.getPlayedGames((data) => {
+                    setGames(data);
+                    gamesBackup = data;
+                  });
+                }}
+              ></GameBox>
+            );
+          })}
+        </div>
+        <ScrollTop
+          target="parent"
+          threshold={100}
+          className="custom-scrolltop"
+          icon="pi pi-arrow-up"
+        />
+      </ScrollPanel>
     </div>
   );
 };

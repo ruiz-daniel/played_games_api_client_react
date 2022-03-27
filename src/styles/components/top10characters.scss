@@ -4,50 +4,104 @@
 .top10header {
   text-align: center;
 }
-
-.top10characterbox {
-  width: 90%;
-  height: 302px;
-  // border: solid 1px black;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 7px;
-  margin-bottom: 5px;
+.top10-characters-container {
+  @include centerContent(95%);
+}
+.top10-character-info {
+  @include centerContent(90%);
+  margin-top: 50px;
   a {
-    color: rgb(19, 74, 224);
+    margin-left: 0 !important;
+  }
+}
+.add-character-button {
+  position: absolute;
+  right: 2px;
+  top: 70px;
+  background-color: black;
+  border: none;
+  &:hover {
+    background-color: $background-color-purple !important;
+  }
+}
+.p-sidebar-right {
+  top: 70px;
+  height: 817px;
+}
+.p-sidebar-header {
+  padding: 0 !important;
+}
+.p-sidebar-content {
+  padding: 0 !important;
+  background: $background-gray-gradient;
+
+  .upload-button {
+    border-radius: 5px;
+    border: none !important;
+    background-color: $background-color-purple !important;
+    // @include arrowBorderRight;
+    padding: 0.5rem;
+    text-align: center;
+    // transition: all 0.5s ease;
+    // cursor: pointer;
+
+    &:hover {
+      background-color: lighten(
+        $color: $background-color-purple,
+        $amount: 2
+      ) !important;
+    }
+  }
+}
+.top10-character {
+  text-align: center;
+  .p-image,
+  .p-image-preview-container,
+  img {
+    width: 170px !important;
+    height: 300px !important;
+  }
+  .top10-characters-handle {
+    margin-top: 20px;
+    .p-button {
+      background: none;
+      border: none;
+      color: black;
+      width: 20px !important;
+      height: 25px !important;
+      &:hover {
+        background-color: $text-color-dark-gray;
+        color: white;
+      }
+    }
   }
 }
 
-.top10charactersimg {
-  width: 150px;
-  height: 300px;
-  border-radius: 7px;
-}
-
-.top10characterdata {
-  width: 100%;
-}
-
-body.dark-mode {
-  input,
+.upload-character-form {
+  text-align: center;
+  height: 817px;
+  .p-panel-content {
+    background: $background-gray-gradient;
+  }
+  .p-panel-header {
+    @include darkBackground();
+  }
   .p-dropdown,
-  .p-dropdown-panel {
-    background-color: $background-color-input-dark;
-    border: solid 1px black;
-    color: white;
-    .p-dropdown-label {
-      color: white;
-    }
-    &:focus {
-      @include bottomBorder(white);
-      box-shadow: none !important;
-    }
+  input {
+    width: 70%;
+  }
+  .p-fileupload {
+    width: 100%;
   }
   .p-fileupload-buttonbar {
     background-color: $background-color-dark2;
     span,
     button {
       background: $background-color-purple !important;
-      border-color: white;
+      border: none;
     }
+  }
+  .error-message {
+    color: red;
   }
 }

@@ -1,80 +1,96 @@
-.upload-game-wrapper {
-  @include centerContent();
-  display: flex;
-}
-.upload-game-fields {
-  padding: 30px;
-  margin-top: 50px;
-  label {
-    width: 100px;
-    color: $text-color-light-gray;
-    font-size: larger;
-  }
-  input,
-  .p-dropdown,
-  .p-dropdown-panel {
-    color: black;
-    font-weight: 400;
-    font-size: large;
-    margin-right: 10px;
-    border: solid 1px black;
-    border-radius: 6px;
-    margin-bottom: 2rem;
-    width: 230px;
+.upload-game-form {
+  @include centerContent(70%);
+  // text-align: center;
+  margin: 10px;
 
-    &:focus {
-      @include bottomBorder(black);
-      box-shadow: none !important;
+  .p-panel-content {
+    // background: $background-gray-gradient;
+  }
+
+  .p-panel-header {
+    @include darkBackground();
+  }
+  .p-fileupload {
+    width: 40%;
+    margin-bottom: 3rem;
+  }
+  .p-fileupload-buttonbar {
+    background-color: $background-color-dark2;
+
+    span,
+    button {
+      background: $background-color-purple !important;
+      border-color: white;
     }
   }
 }
-.upload-game-preview {
-  padding: 30px;
-}
-
-.upload-button {
-  display: grid;
-  width: 200px;
-  border: solid 2px;
-  border-radius: 5px;
-  @include arrowBorderRight;
-  padding: 0.5rem;
-  text-align: center;
-  transition: all 0.5s ease;
-  cursor: pointer;
-
-  &:hover {
-    width: 250px;
-    border-color: $text-color-red;
-    background-color: red;
-    color: white;
+.upload-game-fields {
+  .p-steps-item {
+    a {
+      width: 120px;
+      background-color: transparent !important;
+    }
   }
-}
+  .form-content {
+    margin-top: 3rem;
+    padding-left: 5rem;
 
-body.dark-mode {
-  .upload-game-fields {
     input,
-    .p-dropdown,
-    .p-dropdown-panel {
-      background-color: $background-color-input-dark;
-      border: solid 1px black;
-      color: white;
-      .p-dropdown-label {
-        color: white;
-      }
+    .p-dropdown {
+      color: black;
+      font-weight: 400;
+      font-size: large;
+      width: 40%;
+      height: 40px;
+
       &:focus {
-        @include bottomBorder(white);
+        // @include bottomBorder(black);
         box-shadow: none !important;
       }
     }
-    .p-fileupload-buttonbar {
-      background-color: $background-color-dark2;
+    .p-inputtextarea {
+      width: 40% !important;
+    }
 
-      span,
-      button {
-        background: $background-color-purple !important;
-        border-color: white;
-      }
+    .item {
+      margin-bottom: 3rem;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 5px;
+    }
+    .p-button {
+      margin-right: 10px;
+    }
+    .watch-data-item {
+      margin: 10px;
+      font-size: large;
+      font-weight: 600;
+    }
+  }
+}
+
+.upload-button-span {
+  padding-left: 5rem;
+  .p-button {
+    margin: 2rem;
+  }
+  .upload-button {
+    border-radius: 5px;
+    border: none !important;
+    background-color: $background-color-purple !important;
+    // @include arrowBorderRight;
+    padding: 0.5rem;
+    text-align: center;
+    // transition: all 0.5s ease;
+    // cursor: pointer;
+
+    &:hover {
+      background-color: lighten(
+        $color: $background-color-purple,
+        $amount: 2
+      ) !important;
     }
   }
 }

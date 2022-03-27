@@ -4,10 +4,9 @@ a {
 }
 
 body {
-  background-color: $background-color-light;
+  // background: $background-purple2;
+  // background-color: $background-color-light;
   overflow-x: hidden;
-
-  //   color: $background-color-dark;
 }
 
 body.dark-mode {
@@ -26,6 +25,16 @@ body.dark-mode {
   }
 }
 
+.p-inputtext,
+.p-dropdown {
+  &:focus {
+    @include removeFocusBehavior;
+  }
+  &:hover {
+    @include removeFocusBehavior;
+  }
+}
+
 .score-good {
   font-weight: 800;
   color: $text-color-green !important;
@@ -40,20 +49,21 @@ body.dark-mode {
 }
 .score-perfect {
   font-weight: 800;
-  color: $text-color-blue !important;
+  color: $text-color-purple !important;
+}
+
+.status {
+  color: white !important;
 }
 
 .status-completed {
   background-color: $status-color-completed;
-  color: white;
 }
 .status-incomplete {
   background-color: $status-color-incomplete;
-  color: white;
 }
 .status-dropped {
   background-color: $status-color-dropped;
-  color: white;
 }
 
 .pos-1 {

@@ -1,31 +1,23 @@
 import React from "react";
 
 import { Toolbar } from "primereact/toolbar";
-import { Button } from "primereact/button";
 
 import { Link } from "react-router-dom";
 import * as routes from "../../routes";
 
 const TopBar = () => {
-  const [darkMode, setDarkMode] = React.useState(false);
-
-  const darkModeToggle = () => {
-    if (!darkMode) {
-      document.body.classList.add("dark-mode");
-      document.body.classList.remove("light-mode");
-      setDarkMode(true);
-    } else {
-      document.body.classList.remove("dark-mode");
-      document.body.classList.add("light-mode");
-      setDarkMode(false);
-    }
-  };
   const leftContents = (
     <React.Fragment>
-      <h2 className="logo">DRG API</h2>
+      <Link to={routes.home}>
+        <h2 className="logo">
+          {" "}
+          <i className="pi pi-book"></i> My Games Shelf
+        </h2>
+      </Link>
+
       <Link to={routes.playedgames}>
         <span>
-          <i className="pi pi-home"></i> Played Games
+          <i className="pi pi-list"></i> Games List
         </span>
       </Link>
       <Link to={routes.uploadgame}>
@@ -47,7 +39,7 @@ const TopBar = () => {
       >
         <span>
           {" "}
-          <i className="pi pi-bar"></i> Top 10 Games
+          <i className="pi pi-star"></i> Top 10 Games
         </span>
       </Link>
       <Link
@@ -58,27 +50,13 @@ const TopBar = () => {
       >
         <span>
           {" "}
-          <i className="pi pi-bar"></i> Top 10 Characters
+          <i className="pi pi-star"></i> Top 10 Characters
         </span>
       </Link>
-      {/* <SplitButton
-        label="Top 10"
-        icon="pi pi-check"
-        model={top_10_items}
-        className="p-button-warning"
-      ></SplitButton> */}
     </React.Fragment>
   );
 
-  const rightContents = (
-    <React.Fragment>
-      <Button
-        icon={darkMode ? "pi pi-sun" : "pi pi-moon"}
-        className="p-mr-2"
-        onClick={darkModeToggle}
-      />
-    </React.Fragment>
-  );
+  const rightContents = <React.Fragment></React.Fragment>;
   return (
     <div className="sticky-section">
       <Toolbar left={leftContents} right={rightContents} className="topbar" />

@@ -1,3 +1,6 @@
 .stats-wrapper {
   @include centerContent();
 }
+.stats-item {
+  margin-bottom: 50px;
+}

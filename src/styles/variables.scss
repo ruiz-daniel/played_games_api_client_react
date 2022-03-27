@@ -1,17 +1,12 @@
-$background-purple: radial-gradient(
+$background-gray-gradient: radial-gradient(
   circle,
-  rgba(116, 5, 124, 1) 44%,
-  rgba(182, 4, 197, 1) 100%
+  rgba(109, 105, 110, 0.1),
+  rgba(109, 105, 110, 0.5)
 );
-
-$background-white: #f3f0f7;
-$background-gray: rgba(230, 231, 233, 0.4);
-$background-opaque: rgba(255, 255, 255, 0.1);
 
 $background-color-dark2: #01060c;
 $background-color-dark: #36393f;
 $background-color-light: #edf1f5;
-$background-color-input-dark: #303339;
 $background-color-purple: rgb(134, 9, 143);
 
 $text-color-light: #fbfaf8;
@@ -24,6 +19,7 @@ $text-color-light-gray: #959699;
 $text-color-gold: #ffd700;
 $text-color-silver: #00cbcb;
 $text-color-bronze: #9a5a26;
+$text-color-purple: #a30a9c;
 
 $status-color-completed: #36b246;
 $status-color-dropped: #ff0042;

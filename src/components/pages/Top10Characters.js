@@ -1,34 +1,26 @@
 import React, { useState, useEffect } from "react";
 import api from "../../services/APICalls";
 import { useLocation } from "react-router-dom";
-import Top10CharacterBox from "../utils/Top10CharacterBox";
+import AddTop10Character from "../utils/AddTop10Character";
 import Position from "../utils/position";
-
-import { ScrollPanel } from "primereact/scrollpanel";
-import { Dropdown } from "primereact/dropdown";
-import { InputText } from "primereact/inputtext";
+import CharacterBox from "../utils/CharacterBox";
+import { Dialog } from "primereact/dialog";
+import { Tooltip } from "primereact/tooltip";
 import { Button } from "primereact/button";
-import { FileUpload } from "primereact/fileupload";
-import { Carousel } from "primereact/carousel";
+import { Image } from "primereact/image";
+import { Sidebar } from "primereact/sidebar";
 
 const Top10Characters = () => {
   const location = useLocation();
   const [characters, setCharacters] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [top10name, setTop10Name] = useState(location.state.top10name);
-  const [games, setGames] = useState();
 
-  const [addCharName, setCharName] = useState();
-  const [addCharWikia, setCharWikia] = useState();
-  const [addCharGame, setCharGame] = useState();
-  const [addCharPos, setCharPos] = useState();
+  const [selectedCharacter, setSelectedCharacter] = useState();
 
-  const clearAddCharacter = (event) => {
-    setCharGame("");
-    setCharName("");
-    setCharPos("");
-    setCharWikia("");
-    event.options.clear();
-  };
+  const [sidebar, toggleSideBar] = useState(false);
+
+  const [showCharacterDetails, setShowDetails] = useState(false);
 
   const getCharacters = () => {
     api.getTop10Characters("All Time", (data) => {
@@ -38,34 +30,20 @@ const Top10Characters = () => {
       setCharacters(data);
     });
   };
-  const getGames = () => {
-    api.getPlayedGames((data) => {
-      setGames(data);
-    });
-  };
 
   useEffect(() => {
     getCharacters();
-    getGames();
   }, []);
 
-  const addCharacter = (character, position, event) => {
-    api.postCharacter(character, (data) => {
-      api.postTop10Character(
-        { characterid: data.id, pos: position },
-        top10name,
-        () => {
-          clearAddCharacter(event);
-          characters.forEach((element) => {
-            if (element.pos >= position) {
-              element.pos++;
-            }
-          });
-          updateCharactersList(position - 2);
-        }
-      );
+  const movePositions = (position) => {
+    characters.forEach((element) => {
+      if (element.pos >= position) {
+        element.pos++;
+      }
     });
+    updateCharactersList(position - 2);
   };
+
   const updateCharactersList = (index) => {
     if (index === characters.length) {
       getCharacters();
@@ -81,8 +59,8 @@ const Top10Characters = () => {
         if (element.pos > character.pos) {
           element.pos--;
         }
-        updateCharactersList(character.pos - 1);
       });
+      updateCharactersList(character.pos);
     });
   };
   const switchCharacters = (character1, character2) => {
@@ -91,157 +69,112 @@ const Top10Characters = () => {
     updateCharactersList(character2.pos - 1);
   };
 
-  const onupload = async (e) => {
-    await api.uploadImage(e.files[0]);
-    addCharacter(
-      {
-        name: addCharName,
-        gameid: addCharGame.id,
-        wikia_url: addCharWikia,
-        image: e.files[0].name,
-      },
-      addCharPos,
-      e
-    );
-  };
-
-  const carrouselTemplate = (character) => {
-    return (
-      <img
-        className="top10charactersimg"
-        src={character.character.image}
-        alt={character.character.name}
-      ></img>
-    );
-  };
-
   return (
-    <div>
-      <div className="p-mx-6">
-        <div className="top10header">
-          <h1>Top 10 {top10name} Characters</h1>
-        </div>
-        <div className="p-grid">
-          <div className="p-col-5">
-            <ScrollPanel style={{ width: "100%", height: "84vh" }}>
-              <div className="p-d-flex-column">
-                {characters.map((character, index) => {
-                  return (
-                    <div key={character.id} className="p-d-flex">
-                      <div className="p-p-5">
-                        <h2>
-                          <Position pos={character.pos}></Position>
-                        </h2>
-                      </div>
-                      <Top10CharacterBox
-                        character={character}
-                      ></Top10CharacterBox>
-                      <div className="p-d-flex p-flex-column">
-                        <Button
-                          icon="pi pi-trash"
-                          className="p-button-rounded p-button-danger p-my-1"
-                          onClick={(e) => {
-                            removeCharacter(character);
-                          }}
-                        />
-                        {character.pos > 1 && (
-                          <Button
-                            icon="pi pi-arrow-up"
-                            className="p-button-rounded p-button-primary p-my-1"
-                            onClick={(e) => {
-                              switchCharacters(
-                                characters[index - 1],
-                                character
-                              );
-                            }}
-                          />
-                        )}
-                        {character.pos < characters.length && (
-                          <Button
-                            icon="pi pi-arrow-down"
-                            className="p-button-rounded p-button-primary p-my-1"
-                            onClick={(e) => {
-                              switchCharacters(
-                                character,
-                                characters[index + 1]
-                              );
-                            }}
-                          />
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </ScrollPanel>
-          </div>
-          <div className="p-col-7 p-pl-4 p-justify-center">
-            <div className="p-my-6">
-              <Carousel
-                value={characters}
-                numVisible={6}
-                numScroll={4}
-                className="custom-carousel"
-                itemTemplate={carrouselTemplate}
-              />
-            </div>
-            <div className="p-grid p-justify-center p-flex-column">
-              <h2>Add Character</h2>
-              <div className="p-grid p-col-8">
-                <div className="p-col-6 p-d-flex p-flex-column">
-                  <InputText
-                    className="p-mb-3"
-                    value={addCharName}
-                    onChange={(e) => setCharName(e.target.value)}
-                    placeholder="Name"
-                  />
-                  <InputText
-                    className="p-mb-3"
-                    value={addCharWikia}
-                    onChange={(e) => setCharWikia(e.target.value)}
-                    placeholder="Wikia URL"
-                  />
-                </div>
-                <div className="p-col-6 p-d-flex p-flex-column">
-                  <Dropdown
-                    className="p-mb-3"
-                    options={games}
-                    value={addCharGame}
-                    onChange={(e) => {
-                      setCharGame(e.value);
-                    }}
-                    optionLabel="name"
-                    placeholder="Game"
-                    showClear
-                  />
-                  <InputText
-                    type="number"
-                    value={addCharPos}
-                    onChange={(e) => setCharPos(e.target.value)}
-                    placeholder="Position"
-                  />
-                </div>
-                <div className="p-col-12">
-                  <FileUpload
-                    name="gameImage"
-                    customUpload
-                    uploadHandler={onupload}
-                    onUpload={(e) => {}}
-                    accept="image/*"
-                    chooseLabel="File"
-                    emptyTemplate={
-                      <p className="p-m-0">
-                        Drag and drop files to here to upload.
-                      </p>
-                    }
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <>
+      <div className="top10header">
+        <h1>Top 10 {top10name} Characters</h1>
       </div>
-    </div>
+      {!sidebar && (
+        <Button
+          className="add-character-button"
+          icon="pi pi-plus"
+          onClick={() => {
+            toggleSideBar(true);
+          }}
+        />
+      )}
+      <Sidebar
+        visible={sidebar}
+        position="right"
+        onHide={() => toggleSideBar(false)}
+        showCloseIcon={false}
+      >
+        <AddTop10Character
+          movePositions={movePositions}
+          top10name={top10name}
+        />
+      </Sidebar>
+      <div className="top10-characters-container flex flex-wrap">
+        <Dialog
+          visible={showCharacterDetails}
+          onHide={() => setShowDetails(false)}
+          breakpoints={{ "960px": "75vw", "640px": "100vw" }}
+          resizable={false}
+          dismissableMask
+          showHeader={false}
+          contentStyle={{ padding: 0 }}
+        >
+          <CharacterBox character={selectedCharacter}></CharacterBox>
+        </Dialog>
+        {characters.map((character, index) => {
+          return (
+            <div
+              className="top10-character"
+              key={character.id}
+              onMouseEnter={() => {
+                setSelectedCharacter(character.character);
+              }}
+            >
+              <h2>
+                <Position pos={character.pos}></Position>
+              </h2>
+
+              <Image
+                alt="Character Art"
+                src={character.character.image}
+                preview
+              />
+              <div className="top10-characters-handle flex justify-content-center">
+                {character.pos > 1 && (
+                  <Button
+                    icon="pi pi-arrow-left"
+                    className=" p-button-primary p-button-sm "
+                    onClick={(e) => {
+                      switchCharacters(characters[index - 1], character);
+                    }}
+                    tooltip="Move position up"
+                    tooltipOptions={{ position: "top" }}
+                  />
+                )}
+                {character.pos < characters.length && (
+                  <Button
+                    icon="pi pi-arrow-right"
+                    className=" p-button-primary p-button-sm "
+                    onClick={(e) => {
+                      switchCharacters(character, characters[index + 1]);
+                    }}
+                    tooltip="Move position down"
+                    tooltipOptions={{ position: "top" }}
+                  />
+                )}
+                <Button
+                  icon="pi pi-trash"
+                  className=" p-button-danger p-button-sm "
+                  onClick={(e) => {
+                    removeCharacter(character);
+                  }}
+                  tooltip="Remove"
+                  tooltipOptions={{ position: "top" }}
+                />
+              </div>
+              <div className="top10-characters-handle flex justify-content-center">
+                <Button
+                  icon="pi pi-eye"
+                  className=" p-button-primary p-button-sm "
+                  onClick={async (e) => {
+                    await setSelectedCharacter(character.character);
+                    console.log(selectedCharacter);
+                    setShowDetails(true);
+                  }}
+                  tooltip="View details"
+                  tooltipOptions={{ position: "bottom" }}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 };
 
