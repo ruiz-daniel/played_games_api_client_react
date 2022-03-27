@@ -27,7 +27,7 @@ function App() {
       {
         <Switch>
           <Route exact path={routes.home}>
-            <Home />
+            <PlayedGames />
           </Route>
           <Route exact path={routes.playedgames}>
             <PlayedGames />

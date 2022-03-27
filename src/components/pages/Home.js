@@ -1,10 +1,12 @@
 import React from "react";
+import PlayingGames from "../utils/PlayingGames";
 
 const Home = () => {
   return (
     <>
-      <div className="testhome">
-        <h4>Home Page in Progress</h4>
+      <div className="home-wrapper">
+        <div className="home-header"></div>
+        <div className="home-playing-carousel"></div>
       </div>
     </>
   );
