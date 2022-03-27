@@ -3,6 +3,8 @@ import api from "../../services/APICalls";
 import { useLocation } from "react-router-dom";
 import AddTop10Character from "../utils/AddTop10Character";
 import Position from "../utils/position";
+import CharacterBox from "../utils/CharacterBox";
+import { Dialog } from "primereact/dialog";
 
 import { Button } from "primereact/button";
 import { Image } from "primereact/image";
@@ -17,6 +19,8 @@ const Top10Characters = () => {
   const [selectedCharacter, setSelectedCharacter] = useState();
 
   const [sidebar, toggleSideBar] = useState(false);
+
+  const [showCharacterDetails, setShowDetails] = useState(false);
 
   const getCharacters = () => {
     api.getTop10Characters("All Time", (data) => {
@@ -73,7 +77,7 @@ const Top10Characters = () => {
       {!sidebar && (
         <Button
           className="add-character-button"
-          icon="pi pi-arrow-left"
+          icon="pi pi-plus"
           onClick={() => {
             toggleSideBar(true);
           }}
@@ -91,6 +95,17 @@ const Top10Characters = () => {
         />
       </Sidebar>
       <div className="top10-characters-container flex flex-wrap">
+        <Dialog
+          visible={showCharacterDetails}
+          onHide={() => setShowDetails(false)}
+          breakpoints={{ "960px": "75vw", "640px": "100vw" }}
+          resizable={false}
+          dismissableMask
+          showHeader={false}
+          contentStyle={{ padding: 0 }}
+        >
+          <CharacterBox character={selectedCharacter}></CharacterBox>
+        </Dialog>
         {characters.map((character, index) => {
           return (
             <div
@@ -136,25 +151,21 @@ const Top10Characters = () => {
                   }}
                 />
               </div>
+              <div className="top10-characters-handle flex justify-content-center">
+                <Button
+                  icon="pi pi-eye"
+                  className=" p-button-primary p-button-sm "
+                  onClick={async (e) => {
+                    await setSelectedCharacter(character.character);
+                    console.log(selectedCharacter);
+                    setShowDetails(true);
+                  }}
+                />
+              </div>
             </div>
           );
         })}
       </div>
-      {selectedCharacter && (
-        <div className="top10-character-info">
-          <h3>{selectedCharacter.name}</h3>
-          <p>from {selectedCharacter.game.name}</p>
-          <p>
-            <a
-              href={selectedCharacter.wikia_url}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {selectedCharacter.wikia_url}
-            </a>
-          </p>
-        </div>
-      )}
     </>
   );
 };

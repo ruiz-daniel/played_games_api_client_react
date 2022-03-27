@@ -110,7 +110,7 @@ const AddTop10Character = (props) => {
           />
           <Button
             className="upload-button mt-4"
-            label="Upload Game"
+            label="Add Character"
             type="submit"
           ></Button>
         </form>
