@@ -30,7 +30,7 @@ const GameBox = (props) => {
         />
         <div className="game-details-panel">
           <div className="details-icon">
-            <span className="pi pi-eye"></span>
+            <span className="pi pi-pencil"></span>
           </div>
         </div>
         <Status status={props.game.status.name}></Status>
