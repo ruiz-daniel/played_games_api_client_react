@@ -76,6 +76,7 @@ const UploadGame = () => {
   const step_items = [
     { label: "Info" },
     { label: "Played" },
+    { label: "Cover" },
     { label: "Finish" },
   ];
   const [activeIndex, setActiveIndex] = useState(0);
@@ -274,15 +275,88 @@ const UploadGame = () => {
                   }}
                 />
                 <Button
-                  className="upload-button"
-                  label="Upload Game"
-                  type="submit"
-                ></Button>
+                  label="Continue"
+                  icon="pi pi-angle-right"
+                  iconPos="right"
+                  onClick={() => {
+                    setActiveIndex(activeIndex + 1);
+                  }}
+                />
               </span>
             </div>
           )}
 
-          {activeIndex === 3 && <div className="item mt-4"></div>}
+          {activeIndex === 3 && (
+            <>
+              <div className="form-content flex">
+                <div className="flex flex-grow-1 flex-column">
+                  <div className="flex">
+                    <p className="watch-data-item">Name</p>
+                    <p className="watch-data-item">{watchData.name}</p>
+                  </div>
+                  <div className="flex">
+                    <p className="watch-data-item">Developer</p>
+                    <p className="watch-data-item">
+                      {watchData.dev || "Not specified"}
+                    </p>
+                  </div>
+                  <div className="flex">
+                    <p className="watch-data-item">Publisher</p>
+                    <p className="watch-data-item">
+                      {watchData.publisher || "Not specified"}
+                    </p>
+                  </div>
+                  <div className="flex">
+                    <p className="watch-data-item">Year</p>
+                    <p className="watch-data-item">
+                      {watchData.year || "Not specified"}
+                    </p>
+                  </div>
+                  <div className="flex">
+                    <p className="watch-data-item">Genre</p>
+                    <p className="watch-data-item">
+                      {watchData.genre || "Not specified"}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-grow-1 flex-column">
+                  <div className="flex">
+                    <p className="watch-data-item">Platform</p>
+                    <p className="watch-data-item">{watchData.platform.name}</p>
+                  </div>
+                  <div className="flex">
+                    <p className="watch-data-item">Status</p>
+                    <p className="watch-data-item">{watchData.status.name}</p>
+                  </div>
+                  <div className="flex">
+                    <p className="watch-data-item">Rating</p>
+                    <p className="watch-data-item">{watchData.rating}</p>
+                  </div>
+                  <div className="flex">
+                    <p className="watch-data-item">Description</p>
+                    <p className="watch-data-item">
+                      {watchData.description || "No description"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-content-end upload-button-span">
+                <Button
+                  label="Back"
+                  icon="pi pi-angle-left"
+                  iconPos="right"
+                  onClick={() => {
+                    setActiveIndex(activeIndex - 1);
+                  }}
+                />
+                <Button
+                  className="upload-button"
+                  label="Upload Game"
+                  type="submit"
+                ></Button>
+              </div>
+            </>
+          )}
         </div>
       </form>
     </Panel>

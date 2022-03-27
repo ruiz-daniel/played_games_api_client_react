@@ -63,24 +63,34 @@
     .p-button {
       margin-right: 10px;
     }
+    .watch-data-item {
+      margin: 10px;
+      font-size: large;
+      font-weight: 600;
+    }
   }
 }
 
-.upload-button {
-  width: 30%;
-  border-radius: 5px;
-  border: none !important;
-  background-color: $background-color-purple !important;
-  // @include arrowBorderRight;
-  padding: 0.5rem;
-  text-align: center;
-  // transition: all 0.5s ease;
-  // cursor: pointer;
+.upload-button-span {
+  padding-left: 5rem;
+  .p-button {
+    margin: 2rem;
+  }
+  .upload-button {
+    border-radius: 5px;
+    border: none !important;
+    background-color: $background-color-purple !important;
+    // @include arrowBorderRight;
+    padding: 0.5rem;
+    text-align: center;
+    // transition: all 0.5s ease;
+    // cursor: pointer;
 
-  &:hover {
-    background-color: lighten(
-      $color: $background-color-purple,
-      $amount: 2
-    ) !important;
+    &:hover {
+      background-color: lighten(
+        $color: $background-color-purple,
+        $amount: 2
+      ) !important;
+    }
   }
 }
