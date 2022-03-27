@@ -11,7 +11,7 @@ const TopBar = () => {
       <Link to={routes.home}>
         <h2 className="logo">
           {" "}
-          <i className="pi pi-book"></i> My Games Shelve
+          <i className="pi pi-book"></i> My Games Shelf
         </h2>
       </Link>
 
