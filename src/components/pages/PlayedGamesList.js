@@ -1,10 +1,12 @@
 /* eslint-disable eqeqeq */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import api from "../../services/APICalls";
 import GameBox from "../utils/GameBox";
 import { InputText } from "primereact/inputtext";
 import { ScrollPanel } from "primereact/scrollpanel";
 import { ScrollTop } from "primereact/scrolltop";
+
+import { Toast } from "primereact/toast";
 
 var filters = {
   name: "",
@@ -22,6 +24,8 @@ var gamesBackup = [];
 const PlayedGamesList = () => {
   const [games, setGames] = useState([]);
   const [filtering, setFiltering] = useState(false);
+
+  const toast = useRef(null);
 
   const cleanFilters = () => {
     filters = {
@@ -42,10 +46,19 @@ const PlayedGamesList = () => {
 
   useEffect(() => {
     cleanFilters();
-    api.getPlayedGames((data) => {
-      setGames(data);
-      gamesBackup = data;
-    });
+    api.getPlayedGames(
+      (data) => {
+        setGames(data);
+        gamesBackup = data;
+      },
+      (error) => {
+        toast.current.show({
+          severity: "error",
+          summary: error.message,
+          life: 3000,
+        });
+      }
+    );
   }, []);
 
   useEffect(() => {
@@ -111,6 +124,7 @@ const PlayedGamesList = () => {
 
   return (
     <div className="played-games-list">
+      <Toast ref={toast} position="top-center" />
       <h3 className="games-quantity-text">Showing: {games.length}</h3>
       <div className="filters-container flex justify-content-between">
         <InputText
