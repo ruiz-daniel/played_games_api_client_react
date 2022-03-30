@@ -12,13 +12,19 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
-apiClient.interceptors.response.use((response) => {
-  NProgress.done();
-  return response;
-});
+apiClient.interceptors.response.use(
+  (response) => {
+    NProgress.done();
+    return response;
+  },
+  function (error) {
+    NProgress.done();
+    return Promise.reject(error);
+  }
+);
 
 export default {
-  getPlayedGames(callback) {
+  getPlayedGames(callback, errorFunction) {
     apiClient
       .request({
         method: "get",
@@ -26,6 +32,9 @@ export default {
       })
       .then((response) => {
         callback(response.data);
+      })
+      .catch((error) => {
+        errorFunction(error);
       });
   },
   postPlayedGame(game, callback) {
