@@ -45,11 +45,11 @@ const PlayedGamesList = () => {
   };
 
   useEffect(() => {
-    cleanFilters();
     api.getPlayedGames(
       (data) => {
         setGames(data);
         gamesBackup = data;
+        setFiltering(true);
       },
       (error) => {
         toast.current.show({
@@ -131,48 +131,56 @@ const PlayedGamesList = () => {
           id="fname"
           placeholder="Name"
           className="p-inputtext-sm"
+          value={filters.name}
           onChange={(e) => filterName(e.target.value)}
         />
         <InputText
           id="fdev"
           placeholder="Developer"
           className="p-inputtext-sm"
+          value={filters.dev}
           onChange={(e) => filterDev(e.target.value)}
         />
         <InputText
           id="fpub"
           placeholder="Publisher"
           className="p-inputtext-sm"
+          value={filters.publisher}
           onChange={(e) => filterPublisher(e.target.value)}
         />
         <InputText
           id="fyear"
           placeholder="Year"
           className="p-inputtext-sm"
+          value={filters.year}
           onChange={(e) => filterYear(e.target.value)}
         />
         <InputText
           id="fgenre"
           placeholder="Genre"
           className="p-inputtext-sm"
+          value={filters.genre}
           onChange={(e) => filterGenre(e.target.value)}
         />
         <InputText
           id="fplatform"
           placeholder="Platform"
           className="p-inputtext-sm"
+          value={filters.platform}
           onChange={(e) => filterPlatform(e.target.value)}
         />
         <InputText
           id="fstatus"
           placeholder="Status"
           className="p-inputtext-sm"
+          value={filters.status}
           onChange={(e) => filterStatus(e.target.value)}
         />
         <InputText
           id="frating"
           placeholder="Rating"
           className="p-inputtext-sm"
+          value={filters.rating}
           onChange={(e) => filterRating(e.target.value)}
         />
       </div>
