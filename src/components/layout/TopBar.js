@@ -1,16 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 
 import { Toolbar } from 'primereact/toolbar'
 import { Avatar } from 'primereact/avatar'
 import { Dialog } from 'primereact/dialog'
+import { Toast } from 'primereact/toast'
 
 import LoginForm from '../utils/LoginForm'
 
 import { Link, useLocation } from 'react-router-dom'
 import * as routes from '../../routes'
+import api from '../../services/APICalls'
 
 const TopBar = () => {
   const location = useLocation()
+  const toast = useRef(null)
   const [loginVisible, showLogin] = useState(false)
   const leftContents = (
     <React.Fragment>
@@ -72,11 +75,32 @@ const TopBar = () => {
     </React.Fragment>
   )
 
-  const loginPopup = () => {}
+  const handleLogin = (username, password) => {
+    api.login({ username, password }, onLogin, handleError)
+  }
+
+  const onLogin = (data) => {
+    sessionStorage.setItem('username', data.username)
+    sessionStorage.setItem('userid', data.userid)
+    sessionStorage.setItem('display_name', data.display_name)
+    sessionStorage.setItem('access_token', data.access_token)
+    toast.current.show({
+      severity: 'success',
+      summary: `Welcome ${data.display_name}`,
+      life: 3000,
+    })
+    showLogin(false)
+  }
+  const handleError = (error) => {
+    console.log(error)
+    alert(error)
+    showLogin(false)
+  }
   return (
     location.pathname !== '/login' && (
       <div className="sticky-section">
         <Toolbar left={leftContents} right={rightContents} className="topbar" />
+        <Toast ref={toast} />
         <Dialog
           visible={loginVisible}
           style={{ width: '40vw' }}
@@ -88,8 +112,7 @@ const TopBar = () => {
         >
           <LoginForm
             onLogin={(username, password) => {
-              console.log(username, password)
-              showLogin(false)
+              handleLogin(username, password)
             }}
           />
         </Dialog>

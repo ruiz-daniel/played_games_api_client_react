@@ -1,23 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react'
-import api from '../../services/APICalls'
+import React from 'react'
 
 import { InputText } from 'primereact/inputtext'
-import { Password } from 'primereact/password'
 import { Button } from 'primereact/button'
 import { Panel } from 'primereact/panel'
-import { Toast } from 'primereact/toast'
 
-import { useForm, Controller } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 const LoginForm = ({ onLogin }) => {
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors },
   } = useForm()
-
-  const toast = useRef(null)
 
   const onSubmit = (data) => {
     if (onLogin) onLogin(data.username, data.password)
