@@ -31,7 +31,7 @@ function App() {
             <Login />
           </Route>
           <Route exact path={routes.home}>
-            <PlayedGames />
+            <Home />
           </Route>
           <Route exact path={routes.playedgames}>
             <PlayedGames />

@@ -24,44 +24,48 @@ const TopBar = () => {
         </h2>
       </Link>
 
-      <Link to={routes.playedgames}>
-        <span>
-          <i className="pi pi-list"></i> Games List
-        </span>
-      </Link>
-      <Link to={routes.uploadgame}>
-        <span>
-          <i className="pi pi-upload"></i> Upload Game
-        </span>
-      </Link>
-      <Link to={routes.stats}>
-        <span>
-          {' '}
-          <i className="pi pi-chart-bar"></i> Stats
-        </span>
-      </Link>
-      <Link
-        to={{
-          pathname: routes.top10games,
-          state: { top10name: 'All Time' },
-        }}
-      >
-        <span>
-          {' '}
-          <i className="pi pi-star"></i> Top 10 Games
-        </span>
-      </Link>
-      <Link
-        to={{
-          pathname: routes.top10characters,
-          state: { top10name: 'All Time' },
-        }}
-      >
-        <span>
-          {' '}
-          <i className="pi pi-star"></i> Top 10 Characters
-        </span>
-      </Link>
+      {sessionStorage.getItem('userid') && (
+        <>
+          <Link to={routes.playedgames}>
+            <span>
+              <i className="pi pi-list"></i> Games List
+            </span>
+          </Link>
+          <Link to={routes.uploadgame}>
+            <span>
+              <i className="pi pi-upload"></i> Upload Game
+            </span>
+          </Link>
+          <Link to={routes.stats}>
+            <span>
+              {' '}
+              <i className="pi pi-chart-bar"></i> Stats
+            </span>
+          </Link>
+          <Link
+            to={{
+              pathname: routes.top10games,
+              state: { top10name: 'All Time' },
+            }}
+          >
+            <span>
+              {' '}
+              <i className="pi pi-star"></i> Top 10 Games
+            </span>
+          </Link>
+          <Link
+            to={{
+              pathname: routes.top10characters,
+              state: { top10name: 'All Time' },
+            }}
+          >
+            <span>
+              {' '}
+              <i className="pi pi-star"></i> Top 10 Characters
+            </span>
+          </Link>
+        </>
+      )}
     </React.Fragment>
   )
 
@@ -92,9 +96,14 @@ const TopBar = () => {
     showLogin(false)
   }
   const handleError = (error) => {
-    console.log(error)
-    alert(error)
-    showLogin(false)
+    console.log('🚀 ~ file: TopBar.js ~ line 95 ~ handleError ~ error', error)
+
+    toast.current.show({
+      severity: 'error',
+      summary: 'Error with login',
+      detail: error.response.data.message,
+      life: 3000,
+    })
   }
   return (
     location.pathname !== '/login' && (
