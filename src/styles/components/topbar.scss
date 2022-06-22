@@ -17,7 +17,21 @@
   .logo {
     color: $text-color-light;
   }
+
+  .p-avatar {
+    background-color: white;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $background-color-purple;
+      color: white;
+    }
+  }
 }
+.p-dialog-content {
+  padding: 0 !important;
+}
+
 .sticky-section {
   overflow: hidden;
   position: sticky;
