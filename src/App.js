@@ -1,23 +1,24 @@
-import React from "react";
-import "primereact/resources/primereact.min.css";
-import "primeicons/primeicons.css";
-import "primereact/resources/themes/saga-blue/theme.css";
-import "primeflex/primeflex.css";
+import React from 'react'
+import 'primereact/resources/primereact.min.css'
+import 'primeicons/primeicons.css'
+import 'primereact/resources/themes/saga-blue/theme.css'
+import 'primeflex/primeflex.css'
 
-import TopBar from "./components/layout/TopBar";
-import PlayedGames from "./components/pages/PlayedGamesList";
-import UploadGame from "./components/pages/UploadGame";
-import EditGame from "./components/pages/EditGame";
-import GameStats from "./components/pages/GameStats";
-import Top10Games from "./components/pages/Top10Games";
-import Top10Characters from "./components/pages/Top10Characters";
-import Home from "./components/pages/Home";
+import TopBar from './components/layout/TopBar'
+import PlayedGames from './components/pages/PlayedGamesList'
+import UploadGame from './components/pages/UploadGame'
+import EditGame from './components/pages/EditGame'
+import GameStats from './components/pages/GameStats'
+import Top10Games from './components/pages/Top10Games'
+import Top10Characters from './components/pages/Top10Characters'
+import Home from './components/pages/Home'
 
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import * as routes from "./routes";
-import "./styles/main.scss";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import * as routes from './routes'
+import './styles/main.scss'
 
-import "nprogress/nprogress.css";
+import 'nprogress/nprogress.css'
+import Login from './components/pages/Login'
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
 
       {
         <Switch>
+          <Route path={routes.login}>
+            <Login />
+          </Route>
           <Route exact path={routes.home}>
             <PlayedGames />
           </Route>
@@ -50,7 +54,7 @@ function App() {
         </Switch>
       }
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
