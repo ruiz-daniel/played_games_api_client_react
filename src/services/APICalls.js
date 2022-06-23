@@ -52,11 +52,24 @@ export default {
         errorFunction(error)
       })
   },
-  getPlayedGames(callback, errorFunction) {
+  getPlayedGames(userid, callback, errorFunction) {
     apiClient
       .request({
         method: 'get',
-        url: 'PlayedGames',
+        url: `PlayedGames/user/${userid}`,
+      })
+      .then((response) => {
+        callback(response.data)
+      })
+      .catch((error) => {
+        errorFunction(error)
+      })
+  },
+  getAllPlayedGames(callback, errorFunction) {
+    apiClient
+      .request({
+        method: 'get',
+        url: `PlayedGames`,
       })
       .then((response) => {
         callback(response.data)
