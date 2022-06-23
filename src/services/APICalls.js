@@ -292,11 +292,11 @@ export default {
   fetchStatuses() {
     return apiClient.get('PlayedGames/statuses')
   },
-  uploadImage(gameImage) {
+  uploadImage(gameImage, userid) {
     const formData = new FormData()
 
     formData.append('image', gameImage)
-    return apiClient.post('Images', formData, {
+    return apiClient.post(`Images/${userid}`, formData, {
       headers: {
         'content-type': 'multipart/form-data',
       },

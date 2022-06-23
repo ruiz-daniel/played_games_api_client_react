@@ -103,9 +103,11 @@ const EditGame = (props) => {
   }, [])
 
   const onupload = async (e) => {
-    await api.uploadImage(e.files[0])
-    setImage(sr_images + e.files[0].name)
-    e.options.clear()
+    await api.uploadImage(e.files[0], sessionStorage.getItem('userid'))
+    setImage(
+      sr_images + sessionStorage.getItem('userid') + '/' + e.files[0].name,
+    )
+    // e.options.clear()
   }
 
   return (

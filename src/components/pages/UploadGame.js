@@ -70,7 +70,7 @@ const UploadGame = () => {
 
   //SAVE THE IMAGE TO ITS STATE AFTER SELECTING IT FROM LOCAL FILES
   const onupload = async (e) => {
-    setGameImage(e.files[0])
+    setGameImage(e.files[0], sessionStorage.getItem('userid'))
   }
 
   //STEPS ITEMS
