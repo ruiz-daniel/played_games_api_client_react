@@ -4,6 +4,9 @@ import NProgress from 'nprogress'
 
 export const apiClient = axios.create({
   baseURL: 'https://localhost:5001/drgapi/',
+  headers: {
+    Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+  },
 })
 
 // Interceptors to initiate and stop progress bar during axios requests
@@ -180,11 +183,11 @@ export default {
         callback(response.data)
       })
   },
-  getTop10Games(top10name, callback) {
+  getTop10Games(top10name, userid, callback) {
     apiClient
       .request({
         method: 'get',
-        url: 'Top10Games/' + top10name,
+        url: `Top10Games/user/${userid}/${top10name}`,
       })
       .then((response) => {
         callback(response.data)
