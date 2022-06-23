@@ -53,6 +53,10 @@ const PlayedGamesList = () => {
         setFiltering(true)
       },
       (error) => {
+        console.log(
+          '🚀 ~ file: PlayedGamesList.js ~ line 56 ~ useEffect ~ error',
+          error,
+        )
         toast.current.show({
           severity: 'error',
           summary: error.message,
