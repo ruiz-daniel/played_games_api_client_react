@@ -39,3 +39,15 @@
   z-index: 1;
   top: 0px;
 }
+
+.p-menu,
+.p-menu-list,
+.p-menuitem,
+.p-menuitem-link {
+  background-color: $background-color-dark2 !important;
+  justify-content: center !important;
+}
+.p-menuitem-text {
+  text-align: center !important;
+  color: white !important;
+}

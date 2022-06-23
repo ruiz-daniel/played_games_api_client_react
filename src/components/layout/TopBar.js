@@ -4,17 +4,50 @@ import { Toolbar } from 'primereact/toolbar'
 import { Avatar } from 'primereact/avatar'
 import { Dialog } from 'primereact/dialog'
 import { Toast } from 'primereact/toast'
+import { Menu } from 'primereact/menu'
 
 import LoginForm from '../utils/LoginForm'
 
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useHistory } from 'react-router-dom'
 import * as routes from '../../routes'
 import api from '../../services/APICalls'
 
 const TopBar = () => {
   const location = useLocation()
+  const history = useHistory()
   const toast = useRef(null)
+  const menu = useRef(null)
   const [loginVisible, showLogin] = useState(false)
+
+  const handleLogin = (username, password) => {
+    api.login({ username, password }, onLogin, handleError)
+  }
+
+  const toggleLogin = () => {
+    let logged = sessionStorage.getItem('userid')
+
+    if (logged !== null) {
+      //LOGOUT
+      sessionStorage.clear()
+      history.push('/')
+    } else {
+      //LOGIN
+      showLogin(true)
+    }
+  }
+
+  const userMenuItems = [
+    {
+      label: sessionStorage.getItem('username')
+        ? sessionStorage.getItem('display_name')
+        : 'Guest',
+    },
+    {
+      label: sessionStorage.getItem('userid') ? 'Logout' : 'Login',
+      command: toggleLogin,
+    },
+  ]
+
   const leftContents = (
     <React.Fragment>
       <Link to={routes.home}>
@@ -74,14 +107,11 @@ const TopBar = () => {
       <Avatar
         icon="pi pi-user"
         shape="circle"
-        onClick={() => showLogin(true)}
+        onClick={(e) => menu.current.toggle(e)}
       />
+      <Menu model={userMenuItems} popup ref={menu} />
     </React.Fragment>
   )
-
-  const handleLogin = (username, password) => {
-    api.login({ username, password }, onLogin, handleError)
-  }
 
   const onLogin = (data) => {
     sessionStorage.setItem('username', data.username)
