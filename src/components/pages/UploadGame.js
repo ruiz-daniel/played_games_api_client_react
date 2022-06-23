@@ -1,21 +1,21 @@
-import React, { useState, useRef } from "react";
-import api from "../../services/APICalls";
-import { useForm, Controller } from "react-hook-form";
+import React, { useState, useRef } from 'react'
+import api from '../../services/APICalls'
+import { useForm, Controller } from 'react-hook-form'
 
-import { InputText } from "primereact/inputtext";
-import { Dropdown } from "primereact/dropdown";
-import { FileUpload } from "primereact/fileupload";
-import { Panel } from "primereact/panel";
-import { InputTextarea } from "primereact/inputtextarea";
-import { Button } from "primereact/button";
+import { InputText } from 'primereact/inputtext'
+import { Dropdown } from 'primereact/dropdown'
+import { FileUpload } from 'primereact/fileupload'
+import { Panel } from 'primereact/panel'
+import { InputTextarea } from 'primereact/inputtextarea'
+import { Button } from 'primereact/button'
 
-import { Toast } from "primereact/toast";
-import { Steps } from "primereact/steps";
+import { Toast } from 'primereact/toast'
+import { Steps } from 'primereact/steps'
 
 const UploadGame = () => {
-  const [platformList, setPlatformList] = useState([]);
-  const [statusList, setStatusList] = useState([]);
-  const [gameImage, setGameImage] = useState();
+  const [platformList, setPlatformList] = useState([])
+  const [statusList, setStatusList] = useState([])
+  const [gameImage, setGameImage] = useState()
 
   const {
     register,
@@ -25,61 +25,62 @@ const UploadGame = () => {
     trigger,
     clearErrors,
     formState: { errors },
-  } = useForm({});
-  const watchData = watch();
+  } = useForm({})
+  const watchData = watch()
 
-  const toast = useRef(null);
+  const toast = useRef(null)
 
   const onSubmit = async (data) => {
-    await api.uploadImage(gameImage);
+    await api.uploadImage(gameImage)
     api.postPlayedGame(
       {
         name: data.name,
-        developer: data.dev ? data.dev : "Unknown",
-        publisher: data.publisher ? data.publisher : "Unknown",
-        year: data.year ? data.year : "Unknown",
-        genre: data.genre ? data.genre : "Unknown",
+        developer: data.dev ? data.dev : 'Unknown',
+        publisher: data.publisher ? data.publisher : 'Unknown',
+        year: data.year ? data.year : 'Unknown',
+        genre: data.genre ? data.genre : 'Unknown',
         rating: data.rating,
         description: data.description,
         platformid: data.platform.id,
         statusid: data.status.id,
-        image: gameImage ? gameImage.name : "no-cover.jpg",
+        image: gameImage ? gameImage.name : 'no-cover.jpg',
+        userid: sessionStorage.getItem('userid'),
       },
       () => {
         toast.current.show({
-          severity: "success",
-          summary: "Game Uploaded Successfully",
+          severity: 'success',
+          summary: 'Game Uploaded Successfully',
           life: 3000,
-        });
-      }
-    );
-  };
+        })
+      },
+    )
+  }
 
   //FETCH PLATFORMS AND STATUSES WHEN THE COMPONENT MOUNTS
   React.useEffect(() => {
-    (async () => {
-      const response_platforms = await api.fetchPlatforms();
-      const platforms = await response_platforms.data;
-      setPlatformList(platforms);
-      const response_status = await api.fetchStatuses();
-      const statuses = await response_status.data;
-      setStatusList(statuses);
-    })();
-  }, []);
+    ;(async () => {
+      const response_platforms = await api.fetchPlatforms()
+      const platforms = await response_platforms.data
+      setPlatformList(platforms)
+      const response_status = await api.fetchStatuses()
+      const statuses = await response_status.data
+      setStatusList(statuses)
+    })()
+  }, [])
 
   //SAVE THE IMAGE TO ITS STATE AFTER SELECTING IT FROM LOCAL FILES
   const onupload = async (e) => {
-    setGameImage(e.files[0]);
-  };
+    setGameImage(e.files[0])
+  }
 
   //STEPS ITEMS
   const step_items = [
-    { label: "Info" },
-    { label: "Played" },
-    { label: "Cover" },
-    { label: "Finish" },
-  ];
-  const [activeIndex, setActiveIndex] = useState(0);
+    { label: 'Info' },
+    { label: 'Played' },
+    { label: 'Cover' },
+    { label: 'Finish' },
+  ]
+  const [activeIndex, setActiveIndex] = useState(0)
 
   //HTML CODE
   return (
@@ -91,7 +92,7 @@ const UploadGame = () => {
             model={step_items}
             activeIndex={activeIndex}
             onSelect={(e) => setActiveIndex(e.index)}
-            style={{ width: "100%" }}
+            style={{ width: '100%' }}
           />
 
           {activeIndex === 0 && (
@@ -100,7 +101,7 @@ const UploadGame = () => {
                 <label htmlFor="gname">Name*</label>
                 <InputText
                   id="gname"
-                  {...register("name", { required: true })}
+                  {...register('name', { required: true })}
                 />
                 {errors.name && (
                   <span className="error-message">Name is required</span>
@@ -109,12 +110,12 @@ const UploadGame = () => {
 
               <span className="item flex flex-column">
                 <label htmlFor="gdev">Developer</label>
-                <InputText id="gdev" {...register("dev")} />
+                <InputText id="gdev" {...register('dev')} />
               </span>
 
               <span className="item flex flex-column">
                 <label htmlFor="gpub">Publisher</label>
-                <InputText id="gpub" {...register("publisher")} />
+                <InputText id="gpub" {...register('publisher')} />
               </span>
 
               <span className="item flex flex-column">
@@ -122,7 +123,7 @@ const UploadGame = () => {
                 <InputText
                   id="gyear"
                   type="number"
-                  {...register("year", { min: 1970, max: 2030 })}
+                  {...register('year', { min: 1970, max: 2030 })}
                 />
                 {errors.year && (
                   <span className="error-message">Requires a valid year</span>
@@ -131,7 +132,7 @@ const UploadGame = () => {
 
               <span className="item flex flex-column">
                 <label htmlFor="ggenre">Genre</label>
-                <InputText id="ggenre" {...register("genre")} />
+                <InputText id="ggenre" {...register('genre')} />
               </span>
 
               <span className="flex">
@@ -140,10 +141,10 @@ const UploadGame = () => {
                   icon="pi pi-angle-right"
                   iconPos="right"
                   onClick={async () => {
-                    const result = await trigger(["name", "year"]);
+                    const result = await trigger(['name', 'year'])
                     if (result) {
-                      setActiveIndex(activeIndex + 1);
-                      clearErrors();
+                      setActiveIndex(activeIndex + 1)
+                      clearErrors()
                     }
                   }}
                 />
@@ -158,7 +159,7 @@ const UploadGame = () => {
                 <Controller
                   name="platform"
                   control={control}
-                  rules={{ required: "Platform is required" }}
+                  rules={{ required: 'Platform is required' }}
                   render={({ field, fieldState }) => (
                     <Dropdown
                       id={field.name}
@@ -179,7 +180,7 @@ const UploadGame = () => {
                 <Controller
                   name="status"
                   control={control}
-                  rules={{ required: "Status is required" }}
+                  rules={{ required: 'Status is required' }}
                   render={({ field, fieldState }) => (
                     <Dropdown
                       id={field.name}
@@ -200,7 +201,7 @@ const UploadGame = () => {
                 <InputText
                   id="grating"
                   type="number"
-                  {...register("rating", { min: 1, max: 10, required: true })}
+                  {...register('rating', { min: 1, max: 10, required: true })}
                 />
                 {errors.rating && (
                   <div className="error-message">Requires a valid rating</div>
@@ -212,7 +213,7 @@ const UploadGame = () => {
                 <InputTextarea
                   id="gdesc"
                   rows={5}
-                  {...register("description")}
+                  {...register('description')}
                   autoResize
                 />
               </span>
@@ -223,7 +224,7 @@ const UploadGame = () => {
                   icon="pi pi-angle-left"
                   iconPos="right"
                   onClick={() => {
-                    setActiveIndex(activeIndex - 1);
+                    setActiveIndex(activeIndex - 1)
                   }}
                 />
                 <Button
@@ -232,13 +233,13 @@ const UploadGame = () => {
                   iconPos="right"
                   onClick={async () => {
                     const result = await trigger([
-                      "platform",
-                      "status",
-                      "rating",
-                    ]);
+                      'platform',
+                      'status',
+                      'rating',
+                    ])
                     if (result) {
-                      setActiveIndex(activeIndex + 1);
-                      clearErrors();
+                      setActiveIndex(activeIndex + 1)
+                      clearErrors()
                     }
                   }}
                 />
@@ -271,7 +272,7 @@ const UploadGame = () => {
                   icon="pi pi-angle-left"
                   iconPos="right"
                   onClick={() => {
-                    setActiveIndex(activeIndex - 1);
+                    setActiveIndex(activeIndex - 1)
                   }}
                 />
                 <Button
@@ -279,7 +280,7 @@ const UploadGame = () => {
                   icon="pi pi-angle-right"
                   iconPos="right"
                   onClick={() => {
-                    setActiveIndex(activeIndex + 1);
+                    setActiveIndex(activeIndex + 1)
                   }}
                 />
               </span>
@@ -297,25 +298,25 @@ const UploadGame = () => {
                   <div className="flex">
                     <p className="watch-data-item">Developer</p>
                     <p className="watch-data-item">
-                      {watchData.dev || "Not specified"}
+                      {watchData.dev || 'Not specified'}
                     </p>
                   </div>
                   <div className="flex">
                     <p className="watch-data-item">Publisher</p>
                     <p className="watch-data-item">
-                      {watchData.publisher || "Not specified"}
+                      {watchData.publisher || 'Not specified'}
                     </p>
                   </div>
                   <div className="flex">
                     <p className="watch-data-item">Year</p>
                     <p className="watch-data-item">
-                      {watchData.year || "Not specified"}
+                      {watchData.year || 'Not specified'}
                     </p>
                   </div>
                   <div className="flex">
                     <p className="watch-data-item">Genre</p>
                     <p className="watch-data-item">
-                      {watchData.genre || "Not specified"}
+                      {watchData.genre || 'Not specified'}
                     </p>
                   </div>
                 </div>
@@ -335,7 +336,7 @@ const UploadGame = () => {
                   <div className="flex">
                     <p className="watch-data-item">Description</p>
                     <p className="watch-data-item">
-                      {watchData.description || "No description"}
+                      {watchData.description || 'No description'}
                     </p>
                   </div>
                 </div>
@@ -346,7 +347,7 @@ const UploadGame = () => {
                   icon="pi pi-angle-left"
                   iconPos="right"
                   onClick={() => {
-                    setActiveIndex(activeIndex - 1);
+                    setActiveIndex(activeIndex - 1)
                   }}
                 />
                 <Button
@@ -360,7 +361,7 @@ const UploadGame = () => {
         </div>
       </form>
     </Panel>
-  );
-};
+  )
+}
 
-export default UploadGame;
+export default UploadGame
