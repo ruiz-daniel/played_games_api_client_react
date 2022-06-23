@@ -124,6 +124,7 @@ const TopBar = () => {
       life: 3000,
     })
     showLogin(false)
+    window.location.reload()
   }
   const handleError = (error) => {
     console.log('🚀 ~ file: TopBar.js ~ line 95 ~ handleError ~ error', error)
