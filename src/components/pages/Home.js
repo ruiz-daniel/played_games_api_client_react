@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react'
 
 const Home = () => {
-  useEffect(() => {
-    sessionStorage.clear()
-  }, [])
   return (
     <>
       <div className="home-wrapper">
