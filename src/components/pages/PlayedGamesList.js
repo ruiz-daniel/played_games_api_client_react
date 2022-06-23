@@ -1,68 +1,69 @@
 /* eslint-disable eqeqeq */
-import React, { useState, useEffect, useRef } from "react";
-import api from "../../services/APICalls";
-import GameBox from "../utils/GameBox";
-import { InputText } from "primereact/inputtext";
-import { ScrollPanel } from "primereact/scrollpanel";
-import { ScrollTop } from "primereact/scrolltop";
+import React, { useState, useEffect, useRef } from 'react'
+import api from '../../services/APICalls'
+import GameBox from '../utils/GameBox'
+import { InputText } from 'primereact/inputtext'
+import { ScrollPanel } from 'primereact/scrollpanel'
+import { ScrollTop } from 'primereact/scrolltop'
 
-import { Toast } from "primereact/toast";
+import { Toast } from 'primereact/toast'
 
 var filters = {
-  name: "",
-  dev: "",
-  publisher: "",
-  year: "",
-  rating: "",
-  genre: "",
-  platform: "",
-  status: "",
-};
+  name: '',
+  dev: '',
+  publisher: '',
+  year: '',
+  rating: '',
+  genre: '',
+  platform: '',
+  status: '',
+}
 
-var gamesBackup = [];
+var gamesBackup = []
 
 const PlayedGamesList = () => {
-  const [games, setGames] = useState([]);
-  const [filtering, setFiltering] = useState(false);
+  const [games, setGames] = useState([])
+  const [filtering, setFiltering] = useState(false)
 
-  const toast = useRef(null);
+  const toast = useRef(null)
 
   const cleanFilters = () => {
     filters = {
-      name: "",
-      dev: "",
-      publisher: "",
-      year: "",
-      rating: "",
-      genre: "",
-      platform: "",
-      status: "",
-    };
-  };
+      name: '',
+      dev: '',
+      publisher: '',
+      year: '',
+      rating: '',
+      genre: '',
+      platform: '',
+      status: '',
+    }
+  }
 
   const compareIgnoreCase = (stringA, stringB) => {
-    return stringA.toUpperCase().includes(stringB.toUpperCase());
-  };
+    return stringA.toUpperCase().includes(stringB.toUpperCase())
+  }
 
   useEffect(() => {
     api.getPlayedGames(
+      sessionStorage.getItem('userid'),
       (data) => {
-        setGames(data);
-        gamesBackup = data;
-        setFiltering(true);
+        setGames(data)
+        gamesBackup = data
+        setFiltering(true)
       },
       (error) => {
         toast.current.show({
-          severity: "error",
+          severity: 'error',
           summary: error.message,
           life: 3000,
-        });
-      }
-    );
-  }, []);
+        })
+      },
+    )
+  }, [])
 
   useEffect(() => {
-    var filtered = [];
+    var filtered = []
 
     gamesBackup.forEach((game) => {
       if (
@@ -71,56 +72,56 @@ const PlayedGamesList = () => {
         compareIgnoreCase(game.publisher, filters.publisher) &&
         game.year.includes(filters.year) &&
         compareIgnoreCase(game.genre, filters.genre) &&
-        (filters.rating == "" || game.rating == filters.rating) &&
+        (filters.rating == '' || game.rating == filters.rating) &&
         compareIgnoreCase(game.platform.name, filters.platform) &&
         compareIgnoreCase(game.status.name, filters.status)
       ) {
-        filtered.push(game);
+        filtered.push(game)
       }
-    });
-    setGames(filtered);
-    setFiltering(false);
-  }, [filtering]);
+    })
+    setGames(filtered)
+    setFiltering(false)
+  }, [filtering])
 
   const filterName = (name) => {
-    filters.name = name;
-    setFiltering(true);
-  };
+    filters.name = name
+    setFiltering(true)
+  }
 
   const filterDev = (dev) => {
-    filters.dev = dev;
-    setFiltering(true);
-  };
+    filters.dev = dev
+    setFiltering(true)
+  }
 
   const filterPublisher = (publisher) => {
-    filters.publisher = publisher;
-    setFiltering(true);
-  };
+    filters.publisher = publisher
+    setFiltering(true)
+  }
 
   const filterGenre = (genre) => {
-    filters.genre = genre;
-    setFiltering(true);
-  };
+    filters.genre = genre
+    setFiltering(true)
+  }
 
   const filterYear = (year) => {
-    filters.year = year;
-    setFiltering(true);
-  };
+    filters.year = year
+    setFiltering(true)
+  }
 
   const filterRating = (rating) => {
-    filters.rating = rating;
-    setFiltering(true);
-  };
+    filters.rating = rating
+    setFiltering(true)
+  }
 
   const filterPlatform = (platform) => {
-    filters.platform = platform;
-    setFiltering(true);
-  };
+    filters.platform = platform
+    setFiltering(true)
+  }
 
   const filterStatus = (status) => {
-    filters.status = status;
-    setFiltering(true);
-  };
+    filters.status = status
+    setFiltering(true)
+  }
 
   return (
     <div className="played-games-list">
@@ -184,7 +185,7 @@ const PlayedGamesList = () => {
           onChange={(e) => filterRating(e.target.value)}
         />
       </div>
-      <ScrollPanel style={{ width: "100%", height: "87vh" }}>
+      <ScrollPanel style={{ width: '100%', height: '87vh' }}>
         <div className="games-container flex flex-wrap justify-content-between">
           {games.map((game) => {
             return (
@@ -192,14 +193,14 @@ const PlayedGamesList = () => {
                 key={game.id}
                 game={game}
                 reload={() => {
-                  cleanFilters();
+                  cleanFilters()
                   api.getPlayedGames((data) => {
-                    setGames(data);
-                    gamesBackup = data;
-                  });
+                    setGames(data)
+                    gamesBackup = data
+                  })
                 }}
               ></GameBox>
-            );
+            )
           })}
         </div>
         <ScrollTop
@@ -210,7 +211,7 @@ const PlayedGamesList = () => {
         />
       </ScrollPanel>
     </div>
-  );
-};
+  )
+}
 
-export default PlayedGamesList;
+export default PlayedGamesList
