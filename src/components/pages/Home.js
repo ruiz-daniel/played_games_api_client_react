@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import PlayingGames from '../utils/PlayingGames'
 
 const Home = () => {
   useEffect(() => {
