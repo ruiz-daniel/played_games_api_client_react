@@ -68,6 +68,19 @@ export default {
         errorFunction(error)
       })
   },
+  getPlayedGameById(gameid, callback, errorFunction) {
+    apiClient
+      .request({
+        method: 'get',
+        url: `PlayedGames/${gameid}`,
+      })
+      .then((response) => {
+        callback(response.data)
+      })
+      .catch((error) => {
+        errorFunction(error)
+      })
+  },
   getAllPlayedGames(callback, errorFunction) {
     apiClient
       .request({

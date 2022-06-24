@@ -1,21 +1,21 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import * as routes from "../../routes";
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+import * as routes from '../../routes'
 
-import Score from "./score";
-import Status from "./status";
+import Score from './score'
+import Status from './status'
 
 const GameBox = (props) => {
-  const history = useHistory();
+  const history = useHistory()
   const editEvent = () => {
     history.push({
       pathname: routes.editgame,
       state: {
         // location state
-        game: props.game,
+        gameid: props.game.id,
       },
-    });
-  };
+    })
+  }
 
   return (
     <div className="game-box-container">
@@ -25,7 +25,7 @@ const GameBox = (props) => {
           src={
             props.game.image
               ? props.game.image
-              : "https://localhost:5001/game_images/no-cover.jpg"
+              : 'https://localhost:5001/game_images/no-cover.jpg'
           }
         />
         <div className="game-details-panel">
@@ -39,7 +39,7 @@ const GameBox = (props) => {
 
       <p>{props.game.name}</p>
     </div>
-  );
-};
+  )
+}
 
-export default GameBox;
+export default GameBox
