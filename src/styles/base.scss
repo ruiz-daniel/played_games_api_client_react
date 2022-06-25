@@ -44,6 +44,9 @@ body.dark-mode {
     @include removeFocusBehavior;
   }
 }
+.p-scrollpanel-bar-y {
+  background-color: $text-color-purple !important;
+}
 
 .score-good {
   font-weight: 800;

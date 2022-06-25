@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import api from '../../services/APICalls'
 import { Chart } from 'primereact/chart'
+import { ScrollPanel } from 'primereact/scrollpanel'
 
 const GameStats = () => {
   const [total_games, setTotalGames] = useState()
@@ -481,43 +482,45 @@ const GameStats = () => {
   }
 
   return (
-    <div className="stats-wrapper">
-      <h1>Played Games Stats</h1>
-      <h3>Completion Rate</h3>
-      <div className="flex justify-content-evenly stats-item">
-        <Chart
-          type="pie"
-          data={completionChart}
-          options={completionOptions}
-          style={{ position: 'relative', width: '20%' }}
-        />
-        <Chart
-          type="pie"
-          data={completionPercent}
-          options={completionPercentageOptions}
-          style={{ position: 'relative', width: '20%' }}
-        />
-        <Chart
-          type="pie"
-          data={completionDrop}
-          options={completionDropOptions}
-          style={{ position: 'relative', width: '20%' }}
-        />
-        <div className="flex-column justify-content-around">
-          <h3>Total played games: {total_games}</h3>
-          <h3>Avg Score: {avg_score}</h3>
+    <ScrollPanel style={{ width: '100%', height: '100vh' }}>
+      <div className="stats-wrapper">
+        <h1>Played Games Stats</h1>
+        <h3>Completion Rate</h3>
+        <div className="flex justify-content-evenly stats-item">
+          <Chart
+            type="pie"
+            data={completionChart}
+            options={completionOptions}
+            style={{ position: 'relative', width: '20%' }}
+          />
+          <Chart
+            type="pie"
+            data={completionPercent}
+            options={completionPercentageOptions}
+            style={{ position: 'relative', width: '20%' }}
+          />
+          <Chart
+            type="pie"
+            data={completionDrop}
+            options={completionDropOptions}
+            style={{ position: 'relative', width: '20%' }}
+          />
+          <div className="flex-column justify-content-around">
+            <h3>Total played games: {total_games}</h3>
+            <h3>Avg Score: {avg_score}</h3>
+          </div>
+        </div>
+        <div className=" stats-item">
+          <Chart type="bar" data={platformChart} options={platformOptions} />
+        </div>
+        <div className="stats-item">
+          <Chart type="bar" data={yearsChart} options={yearsOptions} />
+        </div>
+        <div className="stats-item">
+          <Chart type="bar" data={scoresChart} options={scoreOptions} />
         </div>
       </div>
-      <div className=" stats-item">
-        <Chart type="bar" data={platformChart} options={platformOptions} />
-      </div>
-      <div className="stats-item">
-        <Chart type="bar" data={yearsChart} options={yearsOptions} />
-      </div>
-      <div className="stats-item">
-        <Chart type="bar" data={scoresChart} options={scoreOptions} />
-      </div>
-    </div>
+    </ScrollPanel>
   )
 }
 
