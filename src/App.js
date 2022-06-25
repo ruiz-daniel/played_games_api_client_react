@@ -5,6 +5,7 @@ import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primeflex/primeflex.css'
 
 import TopBar from './components/layout/TopBar'
+import SideBar from './components/layout/SideBar'
 import PlayedGames from './components/pages/PlayedGamesList'
 import UploadGame from './components/pages/UploadGame'
 import EditGame from './components/pages/EditGame'
@@ -23,36 +24,41 @@ import Login from './components/pages/Login'
 function App() {
   return (
     <Router>
-      <TopBar></TopBar>
-
-      {
-        <Switch>
-          <Route path={routes.login}>
-            <Login />
-          </Route>
-          <Route exact path={routes.home}>
-            <Home />
-          </Route>
-          <Route exact path={routes.playedgames}>
-            <PlayedGames />
-          </Route>
-          <Route path={routes.uploadgame}>
-            <UploadGame />
-          </Route>
-          <Route path={routes.editgame}>
-            <EditGame />
-          </Route>
-          <Route path={routes.stats}>
-            <GameStats />
-          </Route>
-          <Route path={routes.top10games}>
-            <Top10Games />
-          </Route>
-          <Route path={routes.top10characters}>
-            <Top10Characters />
-          </Route>
-        </Switch>
-      }
+      <div className="grid">
+        <div className="col-2 shadow-4 sidebar-container">
+          <SideBar></SideBar>
+        </div>
+        <div className="col-10 content-container">
+          {
+            <Switch>
+              <Route path={routes.login}>
+                <Login />
+              </Route>
+              <Route exact path={routes.home}>
+                <Home />
+              </Route>
+              <Route exact path={routes.playedgames}>
+                <PlayedGames />
+              </Route>
+              <Route path={routes.uploadgame}>
+                <UploadGame />
+              </Route>
+              <Route path={routes.editgame}>
+                <EditGame />
+              </Route>
+              <Route path={routes.stats}>
+                <GameStats />
+              </Route>
+              <Route path={routes.top10games}>
+                <Top10Games />
+              </Route>
+              <Route path={routes.top10characters}>
+                <Top10Characters />
+              </Route>
+            </Switch>
+          }
+        </div>
+      </div>
     </Router>
   )
 }

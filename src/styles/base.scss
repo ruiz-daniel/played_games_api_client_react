@@ -7,6 +7,7 @@ body {
   // background: $background-purple2;
   // background-color: $background-color-light;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 body.dark-mode {
@@ -23,6 +24,15 @@ body.dark-mode {
   .p-card {
     @include darkBackground;
   }
+}
+
+.sidebar-container {
+  border-right: solid $background-color-light;
+  background-color: $background-color-dark2;
+  height: 101vh;
+}
+.content-container {
+  height: 101vh;
 }
 
 .p-inputtext,

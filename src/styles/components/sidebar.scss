@@ -1,0 +1,65 @@
+.logo-section {
+  @include paddingY(0.5rem);
+  display: flex;
+  justify-content: center;
+
+  a {
+    width: 100%;
+    color: $text-color-light;
+    text-align: center;
+    &:hover {
+      color: $text-color-gold;
+    }
+  }
+}
+
+.avatar-section {
+  @include paddingY(1rem);
+  display: flex;
+  justify-content: center;
+
+  .p-avatar {
+    align-self: center;
+  }
+
+  h2,
+  h3 {
+    color: white;
+    align-self: center;
+    background: none;
+    background-color: transparent;
+    @include marginY(10px);
+  }
+  h3 {
+    cursor: pointer;
+
+    &:hover {
+      color: $text-color-purple;
+    }
+  }
+}
+.menu-section {
+  @include paddingY(0.5rem);
+  display: flex;
+  flex-direction: column;
+  color: white;
+
+  .menu-item {
+    align-self: center;
+    width: 90%;
+    border-top: solid 0.5px snow;
+    border-bottom: solid 0.5px snow;
+    display: flex;
+    padding-left: 1rem;
+    // justify-content: center;
+    // margin-bottom: 1rem;
+
+    a {
+      width: 100%;
+      color: $text-color-light;
+      &:hover {
+        color: $text-color-gold;
+      }
+    }
+  }
+}

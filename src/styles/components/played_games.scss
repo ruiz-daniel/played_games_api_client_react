@@ -1,6 +1,6 @@
 .played-games-list {
   padding: 15px;
-  @include centerContent($width: 80%);
+  @include centerContent($width: 95%);
 
   .games-quantity-text {
     position: absolute;

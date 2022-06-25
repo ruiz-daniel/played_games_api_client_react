@@ -130,7 +130,7 @@ const PlayedGamesList = () => {
   return (
     <div className="played-games-list">
       <Toast ref={toast} position="top-center" />
-      <h3 className="games-quantity-text">Showing: {games.length}</h3>
+      {/* <h3 className="games-quantity-text">Showing: {games.length}</h3> */}
       <div className="filters-container flex justify-content-between">
         <InputText
           id="fname"
@@ -189,7 +189,7 @@ const PlayedGamesList = () => {
           onChange={(e) => filterRating(e.target.value)}
         />
       </div>
-      <ScrollPanel style={{ width: '100%', height: '87vh' }}>
+      <ScrollPanel style={{ width: '100%', height: '90vh' }}>
         <div className="games-container flex flex-wrap justify-content-between">
           {games.map((game) => {
             return (
