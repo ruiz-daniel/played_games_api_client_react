@@ -1,0 +1,62 @@
+.filters-container {
+  padding: 2rem;
+  @include darkBackground();
+  width: 60vw;
+  height: 60vh;
+
+  .filter-in,
+  .filter-out,
+  .filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+
+    .p-inputtext,
+    .p-dropdown {
+      width: 23%;
+      height: 39px;
+      margin-bottom: 0.5rem;
+      margin-right: 0.5rem;
+      background-color: $background-transparent;
+      border-color: $background-color-dark;
+      border-radius: 0;
+      @include bottomBorder(white);
+      color: $text-color-silver;
+      font-size: large;
+      .p-inputtext {
+        border: none !important;
+      }
+      .p-dropdown-items-wrapper,
+      .p-dropdown-items,
+      .p-dropdown-item {
+        background-color: $background-color-dark2 !important;
+      }
+    }
+    .p-focus,
+    .p-inputwrapper-focus {
+      @include bottomBorder(white);
+    }
+
+    .p-button {
+      margin-right: 2rem;
+      width: 80px;
+      border: none;
+    }
+    .clear-button {
+      background-color: $text-color-red;
+      &:hover {
+        background-color: darken($color: $text-color-red, $amount: 20);
+      }
+    }
+    .filter-button {
+      background-color: $text-color-purple;
+      &:hover {
+        background-color: darken($color: $text-color-purple, $amount: 20);
+      }
+    }
+  }
+}
+.filters-border {
+  padding: 1rem;
+  background-color: $background-color-light;
+}
