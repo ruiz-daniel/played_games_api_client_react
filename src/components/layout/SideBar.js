@@ -102,21 +102,37 @@ const SideBar = () => {
         <section className="menu-section">
           <div className="menu-item">
             <Link to={routes.playedgames}>
-              <h3>
+              <h3
+                className={
+                  location.pathname.includes(routes.playedgames)
+                    ? 'router-view'
+                    : ''
+                }
+              >
                 <i className="pi pi-list"></i> Played Games
               </h3>
             </Link>
           </div>
           <div className="menu-item">
             <Link to={routes.uploadgame}>
-              <h3>
+              <h3
+                className={
+                  location.pathname.includes(routes.uploadgame)
+                    ? 'router-view'
+                    : ''
+                }
+              >
                 <i className="pi pi-upload"></i> Upload Game
               </h3>
             </Link>
           </div>
           <div className="menu-item">
             <Link to={routes.stats}>
-              <h3>
+              <h3
+                className={
+                  location.pathname.includes(routes.stats) ? 'router-view' : ''
+                }
+              >
                 <i className="pi pi-chart-bar"></i> Stats
               </h3>
             </Link>
@@ -128,7 +144,13 @@ const SideBar = () => {
                 state: { top10name: 'All Time' },
               }}
             >
-              <h3>
+              <h3
+                className={
+                  location.pathname.includes(routes.top10games)
+                    ? 'router-view'
+                    : ''
+                }
+              >
                 <i className="pi pi-star"></i> Favorite Games
               </h3>
             </Link>
@@ -140,7 +162,13 @@ const SideBar = () => {
                 state: { top10name: 'All Time' },
               }}
             >
-              <h3>
+              <h3
+                className={
+                  location.pathname.includes(routes.top10characters)
+                    ? 'router-view'
+                    : ''
+                }
+              >
                 <i className="pi pi-star"></i> Favorite Characters
               </h3>
             </Link>
