@@ -49,6 +49,22 @@
   }
 }
 
+@mixin purpleButton() {
+  border: none;
+  background-color: $text-color-purple;
+  &:hover {
+    background-color: darken($color: $text-color-purple, $amount: 20);
+  }
+}
+
+@mixin redButton() {
+  border: none;
+  background-color: $text-color-red;
+  &:hover {
+    background-color: darken($color: $text-color-red, $amount: 20);
+  }
+}
+
 @mixin transition(
   $for: all,
   $time-in: 250ms,

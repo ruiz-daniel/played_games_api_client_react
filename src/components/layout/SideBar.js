@@ -37,6 +37,7 @@ const SideBar = () => {
     sessionStorage.setItem('userid', data.userid)
     sessionStorage.setItem('display_name', data.display_name)
     sessionStorage.setItem('access_token', data.access_token)
+    sessionStorage.setItem('premium', data.premium)
     toast.current.show({
       severity: 'success',
       summary: `Welcome ${data.display_name}`,

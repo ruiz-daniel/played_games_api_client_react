@@ -1,0 +1,33 @@
+.favorites-container {
+  padding: 2rem;
+  @include darkBackground();
+  width: 60vw;
+  height: 60vh;
+
+  .favorites-list {
+    height: 30vh;
+    h3 {
+      margin: 10px;
+      cursor: pointer;
+      &:hover {
+        color: $text-color-gold;
+      }
+    }
+    .favorite-list-item {
+      margin-right: 20px;
+      height: 50px;
+      border: solid 0.3px white;
+    }
+  }
+
+  .favorites-options {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    .p-button {
+      width: 100px;
+      margin-left: 5px;
+      @include purpleButton();
+    }
+  }
+}

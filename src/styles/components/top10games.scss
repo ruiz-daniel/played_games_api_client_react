@@ -5,6 +5,7 @@
 
   .p-button {
     @include blackButton();
+    margin-right: 15px;
   }
 }
 .top10games {

@@ -4,26 +4,25 @@ import api from '../../services/APICalls'
 import GameBox from '../utils/Top10GameBox'
 import Position from '../utils/position'
 import { ScrollPanel } from 'primereact/scrollpanel'
-import { useLocation } from 'react-router-dom'
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
+import FavoritesList from '../utils/FavoritesList'
 
 var gamesBackup = []
 var filters = {
   name: '',
 }
+var top10name = 'Favorite Games'
 
 const Top10Games = (props) => {
-  const location = useLocation()
   const [allGames, setAllGames] = useState([])
   const [orderedGames, setOrder] = useState([])
-  // eslint-disable-next-line no-unused-vars
-  const [top10name, setTop10Name] = useState(location.state.top10name)
   const [movingGame, setMovingGame] = useState(null)
   const [addingGame, setAddingGame] = useState(null)
   const [filtering, setFiltering] = useState(false)
   const [gamesPanel, toogleGamesPanel] = useState(true)
+  const [topsPanel, togleTopsPanel] = useState(false)
 
   const cleanFilters = () => {
     filters = {
@@ -50,28 +49,50 @@ const Top10Games = (props) => {
     setFiltering(true)
   }
 
+  const changeTop10 = (newName) => {
+    top10name = newName.name
+    togleTopsPanel(false)
+    getGames()
+  }
+
   const getGames = () => {
     api.getTop10Games(top10name, sessionStorage.getItem('userid'), (data) => {
       splitGames(data)
     })
   }
 
-  const addGame = (game, position) => {
-    console.log('🚀 ~ file: Top10Games.js ~ line 58 ~ addGame ~ game', game)
-    api.postTop10Game(
-      {
-        gameid: game.id,
-        pos: position,
-        userid: sessionStorage.getItem('userid'),
-      },
-      top10name,
-      () => {
+  const getFirstTop10 = () => {
+    api.getTop10Names(
+      sessionStorage.getItem('userid'),
+      (data) => {
+        top10name = data[0].name
         getGames()
-        setAddingGame(null)
-        setMovingGame(null)
-        cleanFilters()
       },
+      onGetFirstError,
     )
+  }
+
+  const onGetFirstError = () => {
+    toogleGamesPanel(false)
+    top10name = 'No favorites list found'
+  }
+
+  const addGame = (game, position) => {
+    if (!top10name.includes('No favorites list found'))
+      api.postTop10Game(
+        {
+          gameid: game.id,
+          pos: position,
+          userid: sessionStorage.getItem('userid'),
+        },
+        top10name,
+        () => {
+          getGames()
+          setAddingGame(null)
+          setMovingGame(null)
+          cleanFilters()
+        },
+      )
   }
 
   const moveGame = (game, position) => {
@@ -113,7 +134,7 @@ const Top10Games = (props) => {
 
   useEffect(() => {
     cleanFilters()
-    getGames()
+    getFirstTop10()
     api.getPlayedGames(sessionStorage.getItem('userid'), (data) => {
       setAllGames(data)
       gamesBackup = data
@@ -150,12 +171,26 @@ const Top10Games = (props) => {
   return (
     <>
       <div className="top10gamesheader">
-        <h1>Top 10 Games</h1>
-        <Button
-          label="Add Game"
-          icon={gamesPanel ? 'pi pi-eye-slash' : 'pi pi-eye'}
-          onClick={() => toogleGamesPanel(!gamesPanel)}
-        />
+        <h1>{top10name}</h1>
+        <div className="flex">
+          <Button
+            label="Add Game"
+            icon={gamesPanel ? 'pi pi-eye-slash' : 'pi pi-eye'}
+            onClick={() => toogleGamesPanel(!gamesPanel)}
+          />
+          {sessionStorage.getItem('premium') && (
+            <Button label="Manage Lists" onClick={() => togleTopsPanel(true)} />
+          )}
+        </div>
+        <Dialog
+          visible={topsPanel}
+          showHeader={false}
+          dismissableMask
+          position="top"
+          onHide={() => togleTopsPanel(false)}
+        >
+          <FavoritesList onSelect={(newName) => changeTop10(newName)} />
+        </Dialog>
       </div>
       <ScrollPanel style={{ width: '100%', height: '90vh' }}>
         <div className="top10games flex flex-column">
