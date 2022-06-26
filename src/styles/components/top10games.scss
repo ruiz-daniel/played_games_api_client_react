@@ -14,6 +14,8 @@
 }
 .top10-item {
   display: flex;
+  position: relative;
+  width: 100%;
   @include marginY(10px);
   @include paddingY(15px);
   // background-color: $background-color-dark2;
@@ -21,6 +23,23 @@
   box-shadow: 1px 2px #bebebe;
   border-top: solid 0.5px $background-color-light;
   border-bottom: solid 0.5px $background-color-light;
+
+  .tier-buttons {
+    position: absolute;
+    right: 4%;
+    i {
+      cursor: pointer;
+      padding: 3px;
+      border-radius: 30px;
+      background-color: $background-color-dark2;
+      color: white;
+      margin-top: 20px;
+
+      &:hover {
+        background-color: red;
+      }
+    }
+  }
 
   h2 {
     width: 40px;

@@ -36,7 +36,7 @@ const FavoritesList = ({ onSelect }) => {
   return (
     <div className="filters-border">
       <div className="favorites-container">
-        <h2>Favorites List</h2>
+        <h2>Favorites Lists</h2>
         <div className="flex flex-wrap favorites-list">
           {top10names.map((top10) => {
             return (

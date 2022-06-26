@@ -21,7 +21,7 @@ const Top10Games = (props) => {
   const [movingGame, setMovingGame] = useState(null)
   const [addingGame, setAddingGame] = useState(null)
   const [filtering, setFiltering] = useState(false)
-  const [gamesPanel, toogleGamesPanel] = useState(true)
+  const [gamesPanel, toogleGamesPanel] = useState(false)
   const [topsPanel, togleTopsPanel] = useState(false)
 
   const cleanFilters = () => {
@@ -168,6 +168,23 @@ const Top10Games = (props) => {
     document.getElementById(id).classList.remove('hoveredTier')
   }
 
+  const moveTierUp = (tier, index) => {
+    tier.forEach((game) => {
+      moveGame(game, game.pos - 1)
+    })
+    orderedGames[index - 1].map((game) => {
+      moveGame(game, game.pos + 1)
+    })
+  }
+  const moveTierDown = (tier, index) => {
+    tier.forEach((game) => {
+      moveGame(game, game.pos + 1)
+    })
+    orderedGames[index + 1].map((game) => {
+      moveGame(game, game.pos - 1)
+    })
+  }
+
   return (
     <>
       <div className="top10gamesheader">
@@ -290,6 +307,22 @@ const Top10Games = (props) => {
                     </div>
                   )
                 })}
+                <div className="tier-buttons flex flex-column">
+                  {index > 0 && (
+                    <i
+                      className="pi pi-arrow-up"
+                      onClick={() => {
+                        moveTierUp(tier, index)
+                      }}
+                    />
+                  )}
+                  <i
+                    className="pi pi-arrow-down"
+                    onClick={() => {
+                      moveTierDown(tier, index)
+                    }}
+                  />
+                </div>
               </div>
             )
           })}
