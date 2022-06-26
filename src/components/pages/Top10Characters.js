@@ -5,10 +5,10 @@ import AddTop10Character from "../utils/AddTop10Character";
 import Position from "../utils/position";
 import CharacterBox from "../utils/CharacterBox";
 import { Dialog } from "primereact/dialog";
-import { Tooltip } from "primereact/tooltip";
 import { Button } from "primereact/button";
 import { Image } from "primereact/image";
 import { Sidebar } from "primereact/sidebar";
+import { ScrollPanel } from 'primereact/scrollpanel'
 
 const Top10Characters = () => {
   const location = useLocation();
@@ -71,6 +71,7 @@ const Top10Characters = () => {
 
   return (
     <>
+    <ScrollPanel style={{ width: '100%', height: '100vh' }}>
       <div className="top10header">
         <h1>Top 10 {top10name} Characters</h1>
       </div>
@@ -174,6 +175,8 @@ const Top10Characters = () => {
           );
         })}
       </div>
+    </ScrollPanel>
+      
     </>
   );
 };
