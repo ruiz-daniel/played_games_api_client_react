@@ -36,6 +36,19 @@
   }
 }
 
+@mixin blackButton() {
+  border: none;
+  background-color: black;
+  color: white;
+  &:hover {
+    background-color: $background-color-purple;
+  }
+  &:focus {
+    border: none !important;
+    outline: none !important;
+  }
+}
+
 @mixin transition(
   $for: all,
   $time-in: 250ms,

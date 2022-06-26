@@ -37,7 +37,6 @@
   width: 95%;
   .p-button {
     margin-right: 10px;
-    background-color: black;
-    border: none;
+    @include blackButton();
   }
 }

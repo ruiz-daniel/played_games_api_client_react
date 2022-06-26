@@ -48,6 +48,13 @@ body.dark-mode {
   background-color: $text-color-purple !important;
 }
 
+.p-dialog-titlebar-close {
+  outline: none;
+  &:focus {
+    outline: none !important;
+  }
+}
+
 .score-good {
   font-weight: 800;
   color: $text-color-green !important;
@@ -91,4 +98,8 @@ body.dark-mode {
 
 .router-view {
   color: $text-color-gold;
+}
+
+*:focus {
+  outline: none;
 }

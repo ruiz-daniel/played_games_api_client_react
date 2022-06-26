@@ -1,24 +1,45 @@
-.top10header {
-  text-align: center;
+.top10gamesheader {
+  // text-align: center;
+  padding-left: 20px;
+  padding-bottom: 5px;
+
+  .p-button {
+    @include blackButton();
+  }
 }
 .top10games {
   @include marginX(20px);
   margin-bottom: 60px;
 }
 .top10-item {
-  @include marginX(10px);
+  display: flex;
+  @include marginY(10px);
+  @include paddingY(15px);
+  // background-color: $background-color-dark2;
+  // width: 60%;
+  box-shadow: 1px 2px #bebebe;
+  border-top: solid 0.5px $background-color-light;
+  border-bottom: solid 0.5px $background-color-light;
+
+  h2 {
+    width: 40px;
+    // color: white;
+    @include marginX(15px);
+  }
 }
 .top10-newgame {
   @include marginX(40px);
-  .p-scrollpanel-bar-x {
-    background-color: $background-color-purple;
+  // padding-bottom: 30px;
+  width: 30vw;
+  .p-scrollpanel {
+    @include marginY(20px);
   }
 }
 .top10-remove-button {
   position: absolute;
   width: 70px !important;
   height: 70px !important;
-  bottom: 250px;
+  top: 50px;
   right: 100px;
   transition: all 0.5s ease;
   &::hover {
@@ -27,4 +48,7 @@
 }
 .p-overlaypanel .p-overlaypanel-content {
   padding: 0 !important;
+}
+.hoveredTier {
+  background: $background-gray-gradient;
 }
