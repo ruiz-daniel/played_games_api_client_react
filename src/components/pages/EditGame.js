@@ -85,6 +85,7 @@ const EditGame = () => {
         platformid: platform.id,
         statusid: status.id,
         image,
+        description: data.description,
         userid: sessionStorage.getItem('userid'),
       },
       () => {
