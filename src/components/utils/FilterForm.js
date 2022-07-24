@@ -8,7 +8,6 @@ import { Dropdown } from 'primereact/dropdown'
 import { Button } from 'primereact/button'
 
 const FilterForm = ({ list, onFilter }) => {
-  const [games, setGames] = useState(list)
   const [name, setName] = useState('')
   const [year, setYear] = useState('')
   const [dev, setDev] = useState('')
@@ -33,7 +32,7 @@ const FilterForm = ({ list, onFilter }) => {
   const filter = () => {
     var filtered = []
 
-    games.forEach((game) => {
+    list.forEach((game) => {
       if (
         compareIgnoreCase(game.name, name) &&
         compareIgnoreCase(game.developer, dev) &&
@@ -106,6 +105,13 @@ const FilterForm = ({ list, onFilter }) => {
     setRatingOut('')
   }
 
+  const enterKeyEvent = (e) => {
+    if (e.key === 'Enter') {
+      console.log(e)
+      handleFilter()
+    }
+  }
+
   React.useEffect(() => {
     ;(async () => {
       const response_platforms = await api.fetchPlatforms()
@@ -117,7 +123,12 @@ const FilterForm = ({ list, onFilter }) => {
     })()
   }, [])
   return (
-    <div className="filters-border">
+    <div
+      className="filters-border"
+      onKeyUp={(e) => {
+        enterKeyEvent(e)
+      }}
+    >
       <div className="filters-container">
         <div className="filter-in">
           <h3>Filter by</h3>
