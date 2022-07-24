@@ -31,7 +31,7 @@ const UploadGame = () => {
   const toast = useRef(null)
 
   const onSubmit = async (data) => {
-    await api.uploadImage(gameImage)
+    await api.uploadImage(gameImage, sessionStorage.getItem('userid'))
     api.postPlayedGame(
       {
         name: data.name,
@@ -43,6 +43,7 @@ const UploadGame = () => {
         description: data.description,
         platformid: data.platform.id,
         statusid: data.status.id,
+        steam_page: data.steam_page,
         image: gameImage ? gameImage.name : 'no-cover.jpg',
         userid: sessionStorage.getItem('userid'),
       },
@@ -70,7 +71,7 @@ const UploadGame = () => {
 
   //SAVE THE IMAGE TO ITS STATE AFTER SELECTING IT FROM LOCAL FILES
   const onupload = async (e) => {
-    setGameImage(e.files[0], sessionStorage.getItem('userid'))
+    setGameImage(e.files[0])
   }
 
   //STEPS ITEMS
@@ -133,6 +134,11 @@ const UploadGame = () => {
               <span className="item flex flex-column">
                 <label htmlFor="ggenre">Genre</label>
                 <InputText id="ggenre" {...register('genre')} />
+              </span>
+
+              <span className="item flex flex-column">
+                <label htmlFor="gsteam">Steam Page URL</label>
+                <InputText id="gsteam" {...register('steam_page')} />
               </span>
 
               <span className="flex">

@@ -86,6 +86,7 @@ const EditGame = () => {
         statusid: status.id,
         image,
         description: data.description,
+        steam_page: data.steam_page,
         userid: sessionStorage.getItem('userid'),
       },
       () => {
@@ -197,6 +198,14 @@ const EditGame = () => {
           <p>
             <Status status={game.status.name} />{' '}
           </p>
+          <p>
+            <h4>
+              <a href={game.steam_page} target="blank">
+                {' '}
+                Steam Page
+              </a>
+            </h4>
+          </p>
           {game.description && game.description !== '' && (
             <p>{game.description}</p>
           )}
@@ -241,6 +250,12 @@ const EditGame = () => {
                 id="ggenre"
                 defaultValue={game.genre}
                 {...register('genre')}
+              />
+              <h4>Steam Page</h4>
+              <InputText
+                id="gsteam"
+                defaultValue={game.steam_page}
+                {...register('steam_page')}
               />
             </div>
             <div className="flex flex-column flex-grow-1 ml-5">
