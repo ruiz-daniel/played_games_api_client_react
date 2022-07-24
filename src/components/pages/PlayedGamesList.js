@@ -77,7 +77,7 @@ const PlayedGamesList = () => {
       </div>
       <h3>Showing: {games.length}</h3>
       <ScrollPanel style={{ width: '100%', height: '90vh' }}>
-        <div className="games-container flex flex-wrap justify-content-between">
+        <div className="games-container flex flex-wrap justify-content-evenly">
           {games.map((game) => {
             return (
               <GameBox
