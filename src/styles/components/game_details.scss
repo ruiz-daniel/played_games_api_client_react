@@ -1,5 +1,5 @@
 .game-details-wrapper {
-  padding: 3%;
+  padding-left: 3%;
 
   .edit-button {
     border-color: #2f2e2e;
@@ -17,12 +17,14 @@
   }
 
   .game-details-image {
-    flex: 0 0 60%;
-    @include paddingX(80px);
+    width: 50%;
     .p-image,
     .p-image-preview-container,
     .p-image-preview-indicator,
     img {
+      width: 100%;
+    }
+    @media screen and (max-width: 900px) {
       width: 100%;
     }
   }

@@ -1,0 +1,26 @@
+.game-info-box-container {
+  text-align: center;
+  background: $background-color-light;
+  width: 160px;
+  height: 140px;
+  padding: 10px;
+  border-radius: 10px;
+  i {
+    width: 100%;
+    font-size: 50px;
+  }
+  .game-info-box-score {
+    font-size: larger;
+    .info-score {
+      @include marginY(0);
+      font-size: 50px;
+    }
+  }
+  .info-steam {
+    height: 100px;
+    align-content: center;
+    img {
+      width: 100%;
+    }
+  }
+}

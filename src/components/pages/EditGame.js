@@ -11,14 +11,15 @@ import { Image } from 'primereact/image'
 import { Button } from 'primereact/button'
 import { confirmDialog } from 'primereact/confirmdialog'
 import { InputTextarea } from 'primereact/inputtextarea'
+import { ScrollPanel } from 'primereact/scrollpanel'
 
-import Score from '../utils/score'
 import Status from '../utils/status'
 
 import { useLocation, useHistory } from 'react-router-dom'
 import { sr_images, playedgames } from '../../routes'
 
 import { Toast } from 'primereact/toast'
+import GameInfoBox from '../utils/GameInfoBox'
 
 const EditGame = () => {
   const location = useLocation()
@@ -153,182 +154,189 @@ const EditGame = () => {
   }
 
   return (
-    <div className="game-details-wrapper flex ">
-      <Toast ref={toast} />
-      <div className="game-details-image">
-        <Image src={image} alt={game.name} preview />
-        <div className="flex justify-content-end mt-2">
-          <Button
-            label={editing ? 'Cancel Edit' : 'Edit'}
-            icon="pi pi-pencil"
-            className="p-button-outlined edit-button"
-            onClick={() => {
-              setEditing(!editing)
-            }}
-          />
-          <Button
-            label="Delete"
-            icon="pi pi-trash"
-            className="p-button-outlined p-button-danger ml-3 delete-button"
-            onClick={confirm}
-          />
+    <ScrollPanel style={{ width: '100%', height: '99vh' }}>
+      <div className="game-details-wrapper flex flex-column ">
+        <Toast ref={toast} />
+        <div className="game-details-image">
+          <h2>{game.name}</h2>
+          <Image src={image} alt={game.name} preview />
+          <div className="flex justify-content-end mt-2">
+            <Button
+              icon={editing ? 'pi pi-times' : 'pi pi-pencil'}
+              className="p-button-outlined p-button-rounded edit-button"
+              onClick={() => {
+                setEditing(!editing)
+              }}
+            />
+            <Button
+              icon="pi pi-trash"
+              className="p-button-rounded p-button-outlined p-button-danger ml-3 delete-button"
+              onClick={confirm}
+            />
+          </div>
         </div>
-      </div>
-      {!editing && (
-        <div className="game-details-fields flex-column">
-          <h3>{game.name}</h3>
-          {game.developer && (
-            <p>
-              Developed by <span>{game.developer}</span>
-            </p>
-          )}
-          {game.publisher && (
-            <p>
-              Published by <span>{game.publisher}</span>
-            </p>
-          )}
-          {game.year && (
-            <p>
-              Year: <span>{game.year}</span>
-            </p>
-          )}
-          {game.genre && (
-            <p>
-              Genre: <span>{game.genre}</span>
-            </p>
-          )}
-          <p>
-            Played On: <span>{game.platform.name}</span>
-          </p>
-          <p>
-            Score: <Score score={game.rating} />{' '}
-          </p>
-          <p>
-            <Status status={game.status.name} />{' '}
-          </p>
-          {game.steam_page && (
-            <p>
-              <h4>
-                <a href={game.steam_page} target="blank">
-                  {' '}
-                  Steam Page
-                </a>
-              </h4>
-            </p>
-          )}
-          {game.description && game.description !== '' && (
-            <p>{game.description}</p>
-          )}
-        </div>
-      )}
-      {editing && (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="game-details-edit flex flex-wrap">
-            <div className="flex flex-column flex-grow-1">
-              <h4>Name</h4>
-              <InputText
-                id="gname"
-                defaultValue={game.name}
-                {...register('name', { required: true })}
+        {!editing && (
+          <div className="game-details-fields flex-column">
+            {game.developer && (
+              <p>
+                Developed by <span>{game.developer}</span>
+              </p>
+            )}
+            {game.publisher && (
+              <p>
+                Published by <span>{game.publisher}</span>
+              </p>
+            )}
+            {game.genre && (
+              <p>
+                Genre: <span>{game.genre}</span>
+              </p>
+            )}
+            <div className="flex">
+              <GameInfoBox
+                type="platform"
+                style={{ marginRight: '10px' }}
+                game={game}
               />
-              {errors.name && (
-                <span className="error-message">Name is required</span>
+              {game.year && (
+                <GameInfoBox
+                  type="year"
+                  style={{ marginRight: '10px' }}
+                  game={game}
+                />
               )}
-              <h4>Developer</h4>
-              <InputText
-                id="gdev"
-                defaultValue={game.developer}
-                {...register('developer')}
-              />
-              <h4>Publisher</h4>
-              <InputText
-                id="gpub"
-                defaultValue={game.publisher}
-                {...register('publisher')}
-              />
-              <h4>Year</h4>
-              <InputText
-                id="gyear"
-                defaultValue={game.year}
-                {...register('year', { min: 1970, max: 2030 })}
-              />
-              {errors.year && (
-                <span className="error-message">Requires a valid year</span>
+              {game.rating && (
+                <GameInfoBox
+                  type="score"
+                  style={{ marginRight: '10px' }}
+                  game={game}
+                />
               )}
-              <h4>Genre</h4>
-              <InputText
-                id="ggenre"
-                defaultValue={game.genre}
-                {...register('genre')}
-              />
-              <h4>Steam Page</h4>
-              <InputText
-                id="gsteam"
-                defaultValue={game.steam_page}
-                {...register('steam_page')}
-              />
+              {game.steam_page && (
+                <GameInfoBox
+                  type="steam"
+                  style={{ marginRight: '10px' }}
+                  game={game}
+                />
+              )}
             </div>
-            <div className="flex flex-column flex-grow-1 ml-5">
-              <h4>Platform</h4>
-
-              <Dropdown
-                value={platform}
-                onChange={(e) => setPlatform(e.value)}
-                options={platformList}
-                optionLabel="name"
-              />
-              <h4>Status</h4>
-
-              <Dropdown
-                value={status}
-                onChange={(e) => setStatus(e.value)}
-                options={statusList}
-                optionLabel="name"
-              />
-              <h4>Score</h4>
-              <InputText
-                id="grating"
-                type="number"
-                defaultValue={game.rating}
-                {...register('rating', { min: 1, max: 10, required: true })}
-              />
-              <h4>Description </h4>
-              <InputTextarea
-                rows={5}
-                autoResize
-                defaultValue={game.description ? game.description : ''}
-                {...register('description')}
-              />
-            </div>
-            <div className="flex flex-column" style={{ width: '100%' }}>
-              <h4>Image</h4>
-              <FileUpload
-                name="gameImage"
-                customUpload
-                uploadHandler={onupload}
-                onUpload={(e) => {}}
-                accept="image/*"
-                chooseLabel="File"
-                auto
-                emptyTemplate={
-                  <p className="p-m-0">
-                    Drag and drop files to here to upload.
-                  </p>
-                }
-              />
-              <div className="flex justify-content-end mt-2">
-                <Button
-                  label="Upload"
-                  type="submit"
-                  icon="pi pi-upload"
-                  className="p-button-outlined edit-button"
+            <p>
+              <Status status={game.status.name} />{' '}
+            </p>
+            {game.description && game.description !== '' && (
+              <p>{game.description}</p>
+            )}
+          </div>
+        )}
+        {editing && (
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="game-details-edit flex flex-wrap">
+              <div className="flex flex-column flex-grow-1">
+                <h4>Name</h4>
+                <InputText
+                  id="gname"
+                  defaultValue={game.name}
+                  {...register('name', { required: true })}
+                />
+                {errors.name && (
+                  <span className="error-message">Name is required</span>
+                )}
+                <h4>Developer</h4>
+                <InputText
+                  id="gdev"
+                  defaultValue={game.developer}
+                  {...register('developer')}
+                />
+                <h4>Publisher</h4>
+                <InputText
+                  id="gpub"
+                  defaultValue={game.publisher}
+                  {...register('publisher')}
+                />
+                <h4>Year</h4>
+                <InputText
+                  id="gyear"
+                  defaultValue={game.year}
+                  {...register('year', { min: 1970, max: 2030 })}
+                />
+                {errors.year && (
+                  <span className="error-message">Requires a valid year</span>
+                )}
+                <h4>Genre</h4>
+                <InputText
+                  id="ggenre"
+                  defaultValue={game.genre}
+                  {...register('genre')}
+                />
+                <h4>Steam Page</h4>
+                <InputText
+                  id="gsteam"
+                  defaultValue={game.steam_page}
+                  {...register('steam_page')}
                 />
               </div>
+              <div className="flex flex-column flex-grow-1 ml-5">
+                <h4>Platform</h4>
+
+                <Dropdown
+                  value={platform}
+                  onChange={(e) => setPlatform(e.value)}
+                  options={platformList}
+                  optionLabel="name"
+                />
+                <h4>Status</h4>
+
+                <Dropdown
+                  value={status}
+                  onChange={(e) => setStatus(e.value)}
+                  options={statusList}
+                  optionLabel="name"
+                />
+                <h4>Score</h4>
+                <InputText
+                  id="grating"
+                  type="number"
+                  defaultValue={game.rating}
+                  {...register('rating', { min: 1, max: 10, required: true })}
+                />
+                <h4>Description </h4>
+                <InputTextarea
+                  rows={5}
+                  autoResize
+                  defaultValue={game.description ? game.description : ''}
+                  {...register('description')}
+                />
+              </div>
+              <div className="flex flex-column" style={{ width: '100%' }}>
+                <h4>Image</h4>
+                <FileUpload
+                  name="gameImage"
+                  customUpload
+                  uploadHandler={onupload}
+                  onUpload={(e) => {}}
+                  accept="image/*"
+                  chooseLabel="File"
+                  auto
+                  emptyTemplate={
+                    <p className="p-m-0">
+                      Drag and drop files to here to upload.
+                    </p>
+                  }
+                />
+                <div className="flex justify-content-end mt-2">
+                  <Button
+                    label="Upload"
+                    type="submit"
+                    icon="pi pi-upload"
+                    className="p-button-outlined edit-button"
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-        </form>
-      )}
-    </div>
+          </form>
+        )}
+      </div>
+    </ScrollPanel>
   )
 }
 
