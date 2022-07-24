@@ -177,18 +177,26 @@ const EditGame = () => {
       {!editing && (
         <div className="game-details-fields flex-column">
           <h3>{game.name}</h3>
-          <p>
-            Developed by <span>{game.developer}</span>
-          </p>
-          <p>
-            Published by <span>{game.publisher}</span>
-          </p>
-          <p>
-            Year: <span>{game.year}</span>
-          </p>
-          <p>
-            Genre: <span>{game.genre}</span>
-          </p>
+          {game.developer && (
+            <p>
+              Developed by <span>{game.developer}</span>
+            </p>
+          )}
+          {game.publisher && (
+            <p>
+              Published by <span>{game.publisher}</span>
+            </p>
+          )}
+          {game.year && (
+            <p>
+              Year: <span>{game.year}</span>
+            </p>
+          )}
+          {game.genre && (
+            <p>
+              Genre: <span>{game.genre}</span>
+            </p>
+          )}
           <p>
             Played On: <span>{game.platform.name}</span>
           </p>
@@ -198,14 +206,16 @@ const EditGame = () => {
           <p>
             <Status status={game.status.name} />{' '}
           </p>
-          <p>
-            <h4>
-              <a href={game.steam_page} target="blank">
-                {' '}
-                Steam Page
-              </a>
-            </h4>
-          </p>
+          {game.steam_page && (
+            <p>
+              <h4>
+                <a href={game.steam_page} target="blank">
+                  {' '}
+                  Steam Page
+                </a>
+              </h4>
+            </p>
+          )}
           {game.description && game.description !== '' && (
             <p>{game.description}</p>
           )}
