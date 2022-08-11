@@ -24,10 +24,10 @@ function App() {
   return (
     <Router>
       <div className="grid">
-        <div className="col-2 shadow-4 sidebar-container">
+        <div className="col-1 shadow-4 sidebar-container">
           <SideBar></SideBar>
         </div>
-        <div className="col-10 content-container">
+        <div className="col-11 content-container">
           {
             <Switch>
               <Route exact path={routes.home}>
