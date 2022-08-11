@@ -10,7 +10,7 @@ import LoginForm from '../utils/LoginForm'
 
 import { Link, useLocation, useHistory } from 'react-router-dom'
 import * as routes from '../../routes'
-import api from '../../services/APICalls'
+import api from '../../services/IApi'
 
 const TopBar = () => {
   const location = useLocation()
@@ -20,7 +20,7 @@ const TopBar = () => {
   const [loginVisible, showLogin] = useState(false)
 
   const handleLogin = (username, password) => {
-    api.login({ username, password }, onLogin, handleError)
+    api.UserApi.login({ username, password }, onLogin, handleError)
   }
 
   const toggleLogin = () => {

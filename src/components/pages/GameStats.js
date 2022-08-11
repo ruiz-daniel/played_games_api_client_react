@@ -1,6 +1,6 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect } from 'react'
-import api from '../../services/APICalls'
+import api from '../../services/IApi'
 import { Chart } from 'primereact/chart'
 import { ScrollPanel } from 'primereact/scrollpanel'
 
@@ -33,7 +33,7 @@ const GameStats = () => {
   })
 
   useEffect(() => {
-    api.getPlayedGames(sessionStorage.getItem('userid'), (data) => {
+    api.PlayedGamesApi.getPlayedGames(sessionStorage.getItem('userid'), (data) => {
       setTotalGames(data.length)
       getStats(data)
       getCompletionStats(data.length)

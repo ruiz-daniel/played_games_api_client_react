@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api from "../../services/APICalls";
+import api from "../../services/IApi";
 import { useLocation } from "react-router-dom";
 import AddTop10Character from "../utils/AddTop10Character";
 import Position from "../utils/position";
@@ -23,7 +23,7 @@ const Top10Characters = () => {
   const [showCharacterDetails, setShowDetails] = useState(false);
 
   const getCharacters = () => {
-    api.getTop10Characters("All Time", (data) => {
+    api.Top10CharactersApi.getTop10Characters("All Time", (data) => {
       data.forEach((element) => {
         element.name = element.character.name;
       });
@@ -48,13 +48,13 @@ const Top10Characters = () => {
     if (index === characters.length) {
       getCharacters();
     } else {
-      api.putTop10Character(characters[index], () => {
+      api.Top10CharactersApi.putTop10Character(characters[index], () => {
         updateCharactersList(index + 1);
       });
     }
   };
   const removeCharacter = (character) => {
-    api.deleteTop10Character(character.id, () => {
+    api.Top10CharactersApi.deleteTop10Character(character.id, () => {
       characters.forEach((element) => {
         if (element.pos > character.pos) {
           element.pos--;

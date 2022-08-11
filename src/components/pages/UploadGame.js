@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import api from '../../services/APICalls'
+import api from '../../services/IApi'
 import { useForm, Controller } from 'react-hook-form'
 
 import { InputText } from 'primereact/inputtext'
@@ -31,8 +31,8 @@ const UploadGame = () => {
   const toast = useRef(null)
 
   const onSubmit = async (data) => {
-    await api.uploadImage(gameImage, sessionStorage.getItem('userid'))
-    api.postPlayedGame(
+    await api.GeneralApi.uploadImage(gameImage, sessionStorage.getItem('userid'))
+    api.PlayedGamesApi.postPlayedGame(
       {
         name: data.name,
         developer: data.dev ? data.dev : 'Unknown',
@@ -60,10 +60,10 @@ const UploadGame = () => {
   //FETCH PLATFORMS AND STATUSES WHEN THE COMPONENT MOUNTS
   React.useEffect(() => {
     ;(async () => {
-      const response_platforms = await api.fetchPlatforms()
+      const response_platforms = await api.GeneralApi.fetchPlatforms()
       const platforms = await response_platforms.data
       setPlatformList(platforms)
-      const response_status = await api.fetchStatuses()
+      const response_status = await api.GeneralApi.fetchStatuses()
       const statuses = await response_status.data
       setStatusList(statuses)
     })()

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
-import api from '../../services/APICalls'
+import api from '../../services/IApi'
 import GameBox from '../utils/Top10GameBox'
 import Position from '../utils/position'
 import { ScrollPanel } from 'primereact/scrollpanel'
@@ -56,13 +56,13 @@ const Top10Games = (props) => {
   }
 
   const getGames = () => {
-    api.getTop10Games(top10name, sessionStorage.getItem('userid'), (data) => {
+    api.Top10GamesAPI.getTop10Games(top10name, sessionStorage.getItem('userid'), (data) => {
       splitGames(data)
     })
   }
 
   const getFirstTop10 = () => {
-    api.getTop10Names(
+    api.Top10NamesApi.getTop10Names(
       sessionStorage.getItem('userid'),
       (data) => {
         top10name = data[0].name
@@ -79,7 +79,7 @@ const Top10Games = (props) => {
 
   const addGame = (game, position) => {
     if (!top10name.includes('No favorites list found'))
-      api.postTop10Game(
+      api.Top10GamesAPI.postTop10Game(
         {
           gameid: game.id,
           pos: position,
@@ -97,7 +97,7 @@ const Top10Games = (props) => {
 
   const moveGame = (game, position) => {
     game.pos = position
-    api.putTop10Game(game, () => {
+    api.Top10GamesAPI.putTop10Game(game, () => {
       getGames()
       setAddingGame(null)
       setMovingGame(null)
@@ -106,7 +106,7 @@ const Top10Games = (props) => {
   }
 
   const removeGame = (game) => {
-    api.deleteTop10Game(game.id, () => {
+    api.Top10GamesAPI.deleteTop10Game(game.id, () => {
       getGames()
       setAddingGame(null)
       setMovingGame(null)
@@ -135,7 +135,7 @@ const Top10Games = (props) => {
   useEffect(() => {
     cleanFilters()
     getFirstTop10()
-    api.getPlayedGames(sessionStorage.getItem('userid'), (data) => {
+    api.PlayedGamesApi.getPlayedGames(sessionStorage.getItem('userid'), (data) => {
       setAllGames(data)
       gamesBackup = data
     })

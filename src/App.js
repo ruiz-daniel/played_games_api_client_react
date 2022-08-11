@@ -19,7 +19,6 @@ import * as routes from './routes'
 import './styles/main.scss'
 
 import 'nprogress/nprogress.css'
-import Login from './components/pages/Login'
 
 function App() {
   return (
@@ -31,9 +30,6 @@ function App() {
         <div className="col-10 content-container">
           {
             <Switch>
-              <Route path={routes.login}>
-                <Login />
-              </Route>
               <Route exact path={routes.home}>
                 <Home />
               </Route>

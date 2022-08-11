@@ -1,6 +1,6 @@
 import { Button } from 'primereact/button'
 import React, { useState, useEffect } from 'react'
-import api from '../../services/APICalls'
+import api from '../../services/IApi'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 
@@ -13,14 +13,14 @@ const FavoritesList = ({ onSelect }) => {
   }, [])
 
   const getTop10Names = () => {
-    api.getTop10Names(sessionStorage.getItem('userid'), onGetNames)
+    api.Top10NamesApi.getTop10Names(sessionStorage.getItem('userid'), onGetNames)
   }
   const onGetNames = (data) => {
     setTop10Names(data)
   }
 
   const addName = () => {
-    api.postTop10Name(
+    api.Top10NamesApi.postTop10Name(
       { name: newName, userid: sessionStorage.getItem('userid') },
       () => {
         getTop10Names()
@@ -28,7 +28,7 @@ const FavoritesList = ({ onSelect }) => {
     )
   }
   const deleteName = (top10) => {
-    api.deleteTop10Name(top10.id, () => {
+    api.Top10NamesApi.deleteTop10Name(top10.id, () => {
       getTop10Names()
     })
   }

@@ -1,6 +1,6 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect, useRef } from 'react'
-import api from '../../services/APICalls'
+import api from '../../services/IApi'
 import GameBox from '../utils/GameBox'
 import FilterForm from '../utils/FilterForm'
 import { ScrollPanel } from 'primereact/scrollpanel'
@@ -23,7 +23,7 @@ const PlayedGamesList = () => {
   }
 
   useEffect(() => {
-    api.getPlayedGames(
+    api.PlayedGamesApi.getPlayedGames(
       sessionStorage.getItem('userid'),
       (data) => {
         setGames(data)
@@ -79,18 +79,7 @@ const PlayedGamesList = () => {
       <ScrollPanel style={{ width: '100%', height: '90vh' }}>
         <div className="games-container flex flex-wrap justify-content-evenly">
           {games.map((game) => {
-            return (
-              <GameBox
-                key={game.id}
-                game={game}
-                reload={() => {
-                  api.getPlayedGames((data) => {
-                    setGames(data)
-                    gamesBackup = data
-                  })
-                }}
-              ></GameBox>
-            )
+            return <GameBox key={game.id} game={game} />
           })}
         </div>
         <ScrollTop

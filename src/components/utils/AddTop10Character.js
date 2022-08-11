@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api from "../../services/APICalls";
+import api from "../../services/IApi";
 
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
@@ -14,7 +14,7 @@ const AddTop10Character = (props) => {
   const [games, setGames] = useState();
 
   const getGames = () => {
-    api.getPlayedGames((data) => {
+    api.PlayedGamesApi.getPlayedGames((data) => {
       setGames(data);
     });
   };
@@ -31,7 +31,7 @@ const AddTop10Character = (props) => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    await api.uploadImage(image);
+    await api.GeneralApi.uploadImage(image);
     addCharacter(
       {
         name: data.name,
@@ -44,8 +44,8 @@ const AddTop10Character = (props) => {
   };
 
   const addCharacter = (character, position) => {
-    api.postCharacter(character, (data) => {
-      api.postTop10Character(
+    api.CharactersApi.postCharacter(character, (data) => {
+      api.Top10CharactersApi.postTop10Character(
         { characterid: data.id, pos: position },
         props.top10name,
         () => {

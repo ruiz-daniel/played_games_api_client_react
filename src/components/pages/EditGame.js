@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from 'react'
-import api from '../../services/APICalls'
+import api from '../../services/IApi'
 
 import { useForm } from 'react-hook-form'
 
@@ -57,7 +57,7 @@ const EditGame = () => {
 
   const getGame = () => {
     var gameid = location.state.gameid
-    api.getPlayedGameById(gameid, onGetGame, onErrorGetGame)
+    api.PlayedGamesApi.getPlayedGameById(gameid, onGetGame, onErrorGetGame)
   }
   const onGetGame = (data) => {
     setGame(data)
@@ -74,7 +74,7 @@ const EditGame = () => {
   }
 
   const onSubmit = (data) => {
-    api.putPlayedGame(
+    api.PlayedGamesApi.putPlayedGame(
       {
         id: game.id,
         name: data.name,
@@ -103,7 +103,7 @@ const EditGame = () => {
   }
 
   const deleteGame = () => {
-    api.deletePlayedGame(location.state.game, () => {
+    api.PlayedGamesApi.deletePlayedGame(location.state.game, () => {
       toast.current.show({
         severity: 'error',
         summary: 'Game Deleted Successfully',
@@ -127,7 +127,7 @@ const EditGame = () => {
 
   useEffect(() => {
     ;(async () => {
-      const response = await api.fetchPlatforms()
+      const response = await api.GeneralApi.fetchPlatforms()
       const platforms = await response.data
       setPlatformList(platforms)
     })()
@@ -135,7 +135,7 @@ const EditGame = () => {
 
   useEffect(() => {
     ;(async () => {
-      const response = await api.fetchStatuses()
+      const response = await api.GeneralApi.fetchStatuses()
       const statuses = await response.data
       setStatusList(statuses)
     })()
@@ -146,7 +146,7 @@ const EditGame = () => {
   }, [])
 
   const onupload = async (e) => {
-    await api.uploadImage(e.files[0], sessionStorage.getItem('userid'))
+    await api.GeneralApi.uploadImage(e.files[0], sessionStorage.getItem('userid'))
     setImage(
       sr_images + sessionStorage.getItem('userid') + '/' + e.files[0].name,
     )
