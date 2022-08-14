@@ -10,13 +10,13 @@
   h1 {
     margin: 0;
     margin-left: 3rem;
-    font-size: 40px;
+    font-size: 50px;
   }
   .home-header-description {
     margin-left: 3rem;
     p {
       align-self: center;
-      font-size: 25px;
+      font-size: 35px;
     }
 
     span {
@@ -33,15 +33,19 @@
   font-family: 'Roboto';
   margin-top: 2rem;
   padding: 0 3rem;
-  opacity: 0;
-  transition: opacity 1000ms;
   .home-section-desc {
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0;
+    transform: translateY(-40%);
+    transition: all 1000ms;
   }
   .home-section-img {
     padding: 5rem;
+    opacity: 0;
+    transform: translateX(190%);
+    transition: all 1000ms;
   }
   img {
     width: 100%;
@@ -49,5 +53,13 @@
   }
 }
 .is-inview {
+  .home-section-img {
+    padding: 5rem;
     opacity: 1 !important;
+    transform: translateX(0);
   }
+  .home-section-desc {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

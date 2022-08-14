@@ -27,6 +27,7 @@ function App() {
         {/* <div className="col-1 shadow-4 sidebar-container">
           <SideBar></SideBar>
         </div> */}
+        <TopBar></TopBar>
         <div className="col-12 content-container">
           {
             <Switch>
