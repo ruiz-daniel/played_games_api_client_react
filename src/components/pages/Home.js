@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import * as routes from '../../routes'
 import { ScrollPanel } from 'primereact/scrollpanel'
 
 import { Dialog } from 'primereact/dialog'
@@ -45,7 +46,10 @@ const Home = () => {
       life: 3000,
     })
     showLogin(false)
-    window.location.reload()
+    history.push(
+      routes.playedgames,
+    )
+    // window.location.reload()
   }
   const handleError = (error) => {
     console.log('🚀 ~ file: TopBar.js ~ line 95 ~ handleError ~ error', error)

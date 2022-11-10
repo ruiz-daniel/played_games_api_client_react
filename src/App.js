@@ -21,14 +21,14 @@ import './styles/main.scss'
 import 'nprogress/nprogress.css'
 
 function App() {
+  const checkLoggedInRoutes = () => {
+    return routes.loggedRoutes.some(route => window.location.href.includes(route))
+  }
   return (
     <Router>
-      <div className="grid">
-        {/* <div className="col-1 shadow-4 sidebar-container">
-          <SideBar></SideBar>
-        </div> */}
+      <div className="">
         <TopBar></TopBar>
-        <div className="col-12 content-container">
+        <div className="content-container">
           {
             <Switch>
               <Route exact path={routes.home}>

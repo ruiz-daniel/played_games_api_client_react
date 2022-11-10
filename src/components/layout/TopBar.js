@@ -137,7 +137,7 @@ const TopBar = () => {
     })
   }
   return (
-    location.pathname !== '/login' && (
+    
       <div className="sticky-section">
         <Toolbar left={leftContents} right={rightContents} className="topbar" />
         <Toast ref={toast} />
@@ -157,7 +157,7 @@ const TopBar = () => {
           />
         </Dialog>
       </div>
-    )
+    
   )
 }
 

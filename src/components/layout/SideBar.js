@@ -27,6 +27,7 @@ const SideBar = () => {
       //LOGOUT
       sessionStorage.clear()
       history.push('/')
+      window.location.reload()
     } else {
       //LOGIN
       showLogin(true)

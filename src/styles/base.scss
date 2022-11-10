@@ -35,7 +35,8 @@ body.dark-mode {
   height: 101vh;
 }
 .content-container {
-  height: 101vh;
+  padding-top: 80px;
+  height: calc(100vh - 80px);
 }
 
 .p-inputtext,
