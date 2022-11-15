@@ -1,23 +1,25 @@
 /* eslint-disable eqeqeq */
-import React, { useState, useEffect } from "react";
-import api from "../../services/APICalls";
-import { useHistory } from "react-router";
+import React, { useState, useEffect } from 'react'
+import api from '../../services/IApi'
+import { useHistory } from 'react-router'
 
-import { Carousel } from "primereact/carousel";
+import { Carousel } from 'primereact/carousel'
 
-import Score from "./score";
-import Status from "./status";
-import * as routes from "../../routes";
+import Score from './score'
+import Status from './status'
+import * as routes from '../../routes'
 
 const PlayingGames = () => {
-  const history = useHistory();
-  const [games, setGames] = useState([]);
+  const history = useHistory()
+  const [games, setGames] = useState([])
 
   useEffect(() => {
-    api.getPlayingGames((data) => {
-      setGames(data);
-    });
-  }, []);
+    api.PlayedGamesApi.getPlayingGames(
+      (data) => {
+        setGames(data)
+      },
+    )
+  }, [])
 
   const editEvent = (game) => {
     history.push({
@@ -26,26 +28,26 @@ const PlayingGames = () => {
         // location state
         game: game,
       },
-    });
-  };
+    })
+  }
 
   const responsiveOptions = [
     {
-      breakpoint: "1024px",
+      breakpoint: '1024px',
       numVisible: 1,
       numScroll: 1,
     },
     {
-      breakpoint: "600px",
+      breakpoint: '600px',
       numVisible: 1,
       numScroll: 1,
     },
     {
-      breakpoint: "480px",
+      breakpoint: '480px',
       numVisible: 1,
       numScroll: 1,
     },
-  ];
+  ]
 
   const template = (game) => {
     return (
@@ -61,7 +63,7 @@ const PlayingGames = () => {
           <h3>
             <Score score={game.rating}></Score>
           </h3>
-          {game.status.name === "Replaying" && (
+          {game.status.name === 'Replaying' && (
             <h3>
               <Status status={game.status.name}></Status>
             </h3>
@@ -72,13 +74,13 @@ const PlayingGames = () => {
             src={game.image}
             alt="Game Cover"
             onClick={() => {
-              editEvent(game);
+              editEvent(game)
             }}
           ></img>
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   return (
     <div>
@@ -95,7 +97,7 @@ const PlayingGames = () => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PlayingGames;
+export default PlayingGames

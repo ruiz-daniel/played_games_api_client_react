@@ -1,5 +1,6 @@
 //client routes
 export const home = '/'
+export const dashboard = '/dashboard'
 export const playedgames = '/playedgames'
 export const tableview = '/tableview'
 export const uploadgame = '/uploadgame'

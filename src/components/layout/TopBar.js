@@ -36,11 +36,36 @@ const TopBar = () => {
     }
   }
 
+  const onLogin = (data) => {
+    sessionStorage.setItem('username', data.username)
+    sessionStorage.setItem('userid', data.userid)
+    sessionStorage.setItem('display_name', data.display_name)
+    sessionStorage.setItem('access_token', data.access_token)
+    toast.current.show({
+      severity: 'success',
+      summary: `Welcome ${data.display_name}`,
+      life: 3000,
+    })
+    showLogin(false)
+    window.location.reload()
+  }
+  const handleError = (error) => {
+    console.log('🚀 ~ file: TopBar.js ~ line 95 ~ handleError ~ error', error)
+
+    toast.current.show({
+      severity: 'error',
+      summary: 'Error with login',
+      detail: error.response.data.message,
+      life: 3000,
+    })
+  }
+
   const userMenuItems = [
     {
       label: sessionStorage.getItem('username')
         ? sessionStorage.getItem('display_name')
         : 'Guest',
+      command: () => {sessionStorage.getItem('username') ? history.push(routes.dashboard) : history.push(routes.home) }  
     },
     {
       label: sessionStorage.getItem('userid') ? 'Logout' : 'Login',
@@ -113,51 +138,26 @@ const TopBar = () => {
     </React.Fragment>
   )
 
-  const onLogin = (data) => {
-    sessionStorage.setItem('username', data.username)
-    sessionStorage.setItem('userid', data.userid)
-    sessionStorage.setItem('display_name', data.display_name)
-    sessionStorage.setItem('access_token', data.access_token)
-    toast.current.show({
-      severity: 'success',
-      summary: `Welcome ${data.display_name}`,
-      life: 3000,
-    })
-    showLogin(false)
-    window.location.reload()
-  }
-  const handleError = (error) => {
-    console.log('🚀 ~ file: TopBar.js ~ line 95 ~ handleError ~ error', error)
-
-    toast.current.show({
-      severity: 'error',
-      summary: 'Error with login',
-      detail: error.response.data.message,
-      life: 3000,
-    })
-  }
   return (
-    
-      <div className="sticky-section">
-        <Toolbar left={leftContents} right={rightContents} className="topbar" />
-        <Toast ref={toast} />
-        <Dialog
-          visible={loginVisible}
-          style={{ width: '40vw' }}
-          showHeader={false}
-          dismissableMask
-          onHide={() => {
-            showLogin(false)
+    <div className="sticky-section">
+      <Toolbar left={leftContents} right={rightContents} className="topbar" />
+      <Toast ref={toast} />
+      <Dialog
+        visible={loginVisible}
+        style={{ width: '40vw' }}
+        showHeader={false}
+        dismissableMask
+        onHide={() => {
+          showLogin(false)
+        }}
+      >
+        <LoginForm
+          onLogin={(username, password) => {
+            handleLogin(username, password)
           }}
-        >
-          <LoginForm
-            onLogin={(username, password) => {
-              handleLogin(username, password)
-            }}
-          />
-        </Dialog>
-      </div>
-    
+        />
+      </Dialog>
+    </div>
   )
 }
 

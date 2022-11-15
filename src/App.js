@@ -13,6 +13,7 @@ import GameStats from './components/pages/GameStats'
 import Top10Games from './components/pages/Top10Games'
 import Top10Characters from './components/pages/Top10Characters'
 import Home from './components/pages/Home'
+import Dashboard from './components/pages/Dashboard'
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import * as routes from './routes'
@@ -33,6 +34,9 @@ function App() {
             <Switch>
               <Route exact path={routes.home}>
                 <Home />
+              </Route>
+              <Route exact path={routes.dashboard}>
+                <Dashboard />
               </Route>
               <Route exact path={routes.playedgames}>
                 <PlayedGames />

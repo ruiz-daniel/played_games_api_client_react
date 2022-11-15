@@ -47,9 +47,9 @@ const Home = () => {
     })
     showLogin(false)
     history.push(
-      routes.playedgames,
+      routes.dashboard,
     )
-    // window.location.reload()
+    window.location.reload()
   }
   const handleError = (error) => {
     console.log('🚀 ~ file: TopBar.js ~ line 95 ~ handleError ~ error', error)
@@ -134,24 +134,6 @@ const Home = () => {
           </div>
         </section>
       </ScrollPanel>
-      {/* <div className="home-wrapper">
-        <div className="home-header">WORK IN PROGRESS. Please Login</div>
-        <div className="welcome-panel">
-          <Card>
-            <div className='grid'>
-              <div className='col-6 text-center'>
-                <section>
-                  <h1>Welcome to your <span>Games Shelf</span></h1>
-                </section>
-              </div>
-              <div className='col-6'>
-                <img src={welcomeImg} alt="Shelf"></img>
-              </div>
-            </div>
-          </Card>
-        </div>
-        <div className="home-playing-carousel"></div>
-      </div> */}
     </>
   )
 }

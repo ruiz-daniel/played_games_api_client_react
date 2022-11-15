@@ -48,6 +48,9 @@ body.dark-mode {
     @include removeFocusBehavior;
   }
 }
+.p-avatar-circle {
+    border-radius: 50% !important;
+}
 .p-scrollpanel-bar-y {
   background-color: $text-color-purple !important;
 }
