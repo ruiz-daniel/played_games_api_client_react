@@ -1,22 +1,38 @@
-.playing-carrousel {
+.playing-carrousel,
+.p-carrousel,
+.p-carrousel-content {
   text-align: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
 
-  @include crystalBox();
   .content {
-    width: 95%;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
     img {
-      position: relative;
-      right: 5px;
-      top: 15px;
-      height: 145px;
-      border: dashed;
-      cursor: pointer;
+      height: 90%;
+      width: 100%;
+      
     }
     .details {
-      display: inline;
-      position: relative;
-      left: 7px;
-      top: 5px;
+      height: 90%;
+      width: 100%;
+      display: block;
+      position: absolute;
+      background-image: linear-gradient(
+        200deg,
+        rgba(137, 137, 137, 0.64) 14%,
+        rgba(3, 10, 0, 0.95) 100%
+      );
+      background-attachment: fixed;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-bottom: 10%;
+      
+
       .status_tittle {
         color: $text-color-yellow;
       }

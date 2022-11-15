@@ -12,13 +12,12 @@ import * as routes from '../../routes'
 const PlayingGames = () => {
   const history = useHistory()
   const [games, setGames] = useState([])
+  const [details, showDetails] = useState(true)
 
   useEffect(() => {
-    api.PlayedGamesApi.getPlayingGames(
-      (data) => {
-        setGames(data)
-      },
-    )
+    api.PlayedGamesApi.getPlayingGames((data) => {
+      setGames(data)
+    })
   }, [])
 
   const editEvent = (game) => {
@@ -26,7 +25,7 @@ const PlayingGames = () => {
       pathname: routes.editgame,
       state: {
         // location state
-        game: game,
+        gameid: game.id,
       },
     })
   }
@@ -51,51 +50,56 @@ const PlayingGames = () => {
 
   const template = (game) => {
     return (
-      <div className="content p-grid">
-        <div className="details p-col-6">
-          {game.status.id == 3 && (
-            <h2 className="status_tittle">Playing Right Now</h2>
-          )}
-          {game.status.id == 4 && <h2 className="status_tittle">On Hold</h2>}
-          {game.status.id == 6 && <h2 className="status_tittle">Replaying</h2>}
-          <h3>{game.name}</h3>
-          <h3>Current Score:</h3>
-          <h3>
-            <Score score={game.rating}></Score>
-          </h3>
-          {game.status.name === 'Replaying' && (
-            <h3>
-              <Status status={game.status.name}></Status>
-            </h3>
-          )}
-        </div>
-        <div className="p-col-6">
-          <img
-            src={game.image}
-            alt="Game Cover"
-            onClick={() => {
-              editEvent(game)
-            }}
-          ></img>
-        </div>
+      <div
+        className="content"
+        onClick={() => {
+          editEvent(game)
+        }}
+        onMouseEnter={() => {
+          showDetails(false)
+        }}
+        onMouseLeave={() => {
+          showDetails(true)
+        }}
+      >
+        {details && (
+          <div className="details">
+            <div className="details-status">
+              {game.status.id == 3 && (
+                <h2 className="status_tittle">Currently Playing</h2>
+              )}
+              {game.status.id == 4 && (
+                <h2 className="status_tittle">On Hold</h2>
+              )}
+              {game.status.id == 6 && (
+                <h2 className="status_tittle">Currently Replaying</h2>
+              )}
+            </div>
+            <div className="details-name">
+              <h1>{game.name}</h1>
+              <h3>
+                Current Score: <Score score={game.rating}></Score>
+              </h3>
+            </div>
+          </div>
+        )}
+        <img src={game.image} alt="Game Cover"></img>
       </div>
     )
   }
 
   return (
-    <div>
-      <div className="playing-carrousel">
-        <Carousel
-          value={games}
-          numVisible={1}
-          numScroll={1}
-          responsiveOptions={responsiveOptions}
-          className="custom-carousel"
-          circular
-          autoplayInterval={3000}
-          itemTemplate={template}
-        />
-      </div>
+    <div className="playing-carrousel">
+      <Carousel
+        value={games}
+        numVisible={1}
+        numScroll={1}
+        responsiveOptions={responsiveOptions}
+        className="custom-carousel"
+        circular
+        autoplayInterval={3000}
+        itemTemplate={template}
+      />
     </div>
   )
 }
