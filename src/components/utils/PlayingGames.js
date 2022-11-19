@@ -97,6 +97,8 @@ const PlayingGames = () => {
         responsiveOptions={responsiveOptions}
         className="custom-carousel"
         circular
+        showNavigators={false}
+        showIndicators={false}
         autoplayInterval={3000}
         itemTemplate={template}
       />

@@ -69,7 +69,10 @@ const Dashboard = () => {
               </div>
             </Card>
             <div className="mt-2" style={{ height: '45vh' }}>
-              <PlayingGames />
+              <Card>
+                <PlayingGames />
+              </Card>
+              
             </div>
           </div>
         </div>
