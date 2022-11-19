@@ -74,30 +74,27 @@ export default {
         callback(response.data)
       })
   },
-  getPlayingGames(callback) {
+  getPlayingGames(userid, callback) {
     apiClient
       .request({
         method: 'get',
-        url: 'PlayedGames/status/3',
+        url: `PlayedGames/playing/${userid}`,
       })
-      .then((response1) => {
-        apiClient
-          .request({
-            method: 'get',
-            url: 'PlayedGames/status/6',
-          })
-          .then((response2) => {
-            apiClient
-              .request({
-                method: 'get',
-                url: 'PlayedGames/status/4',
-              })
-              .then((response3) => {
-                callback(
-                  response1.data.concat(response2.data.concat(response3.data)),
-                )
-              })
-          })
+      .then((response) => {
+        callback(response.data.sort((a, b) => a.statusid - b.statusid))
+      })
+  },
+  getUserGamesInfo(userid, callback, errorFunction) {
+    apiClient
+      .request({
+        method: 'get',
+        url: `PlayedGames/gamesinfo/${userid}`,
+      })
+      .then((response) => {
+        callback(response.data)
+      })
+      .catch((error) => {
+        errorFunction(error)
       })
   },
 }
