@@ -7,7 +7,7 @@ body {
   // background: $background-purple2;
   // background-color: $background-color-light;
   overflow-x: hidden;
-  overflow-y: hidden;
+  // overflow-y: hidden;
   // background-image: url('../images/pink wave background.png');
   // background-size: cover;
   font-family: 'Roboto';
@@ -34,10 +34,10 @@ body.dark-mode {
   background-color: $background-color-dark2;
   height: 101vh;
 }
-.content-container {
-  padding-top: 80px;
-  height: calc(100vh - 80px);
-}
+// .content-container {
+//   padding-top: 80px;
+//   height: calc(100vh - 80px);
+// }
 
 .p-inputtext,
 .p-dropdown {

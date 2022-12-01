@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import api from '../../services/IApi'
 

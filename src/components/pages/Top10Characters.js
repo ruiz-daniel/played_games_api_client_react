@@ -71,7 +71,6 @@ const Top10Characters = () => {
 
   return (
     <>
-    <ScrollPanel style={{ width: '100%', height: '100vh' }}>
       <div className="top10header">
         <h1>Top 10 {top10name} Characters</h1>
       </div>
@@ -175,7 +174,6 @@ const Top10Characters = () => {
           );
         })}
       </div>
-    </ScrollPanel>
       
     </>
   );

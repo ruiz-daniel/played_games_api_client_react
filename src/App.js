@@ -5,7 +5,6 @@ import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primeflex/primeflex.css'
 
 import TopBar from './components/layout/TopBar'
-import SideBar from './components/layout/SideBar'
 import PlayedGames from './components/pages/PlayedGamesList'
 import UploadGame from './components/pages/UploadGame'
 import EditGame from './components/pages/EditGame'
@@ -27,7 +26,6 @@ function App() {
   }
   return (
     <Router>
-      <div className="">
         <TopBar></TopBar>
         <div className="content-container">
           {
@@ -59,7 +57,6 @@ function App() {
             </Switch>
           }
         </div>
-      </div>
     </Router>
   )
 }

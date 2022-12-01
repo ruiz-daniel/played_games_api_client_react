@@ -482,7 +482,6 @@ const GameStats = () => {
   }
 
   return (
-    <ScrollPanel style={{ width: '100%', height: '100vh' }}>
       <div className="stats-wrapper">
         <h1>Played Games Stats</h1>
         <h3>Completion Rate</h3>
@@ -520,7 +519,6 @@ const GameStats = () => {
           <Chart type="bar" data={scoresChart} options={scoreOptions} />
         </div>
       </div>
-    </ScrollPanel>
   )
 }
 

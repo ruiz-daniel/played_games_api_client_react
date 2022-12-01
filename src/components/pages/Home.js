@@ -4,7 +4,6 @@ import { ScrollPanel } from 'primereact/scrollpanel'
 
 import { Dialog } from 'primereact/dialog'
 import { Toast } from 'primereact/toast'
-import { Card } from 'primereact/card'
 
 import LoginForm from '../utils/LoginForm'
 import shelfImage from '../../images/empty shelf background.png'
@@ -101,7 +100,6 @@ const Home = () => {
           }}
         />
       </Dialog>
-      <ScrollPanel style={{ width: '100%', height: '100vh' }}>
         <div className="home-header">
           <div className="home-header-text flex flex-column">
             <h1>
@@ -133,7 +131,6 @@ const Home = () => {
             <h1>Organize all your games</h1>
           </div>
         </section>
-      </ScrollPanel>
     </>
   )
 }

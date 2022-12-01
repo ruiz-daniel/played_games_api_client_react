@@ -209,7 +209,6 @@ const Top10Games = (props) => {
           <FavoritesList onSelect={(newName) => changeTop10(newName)} />
         </Dialog>
       </div>
-      <ScrollPanel style={{ width: '100%', height: '90vh' }}>
         <div className="top10games flex flex-column">
           <Dialog
             visible={gamesPanel}
@@ -327,7 +326,6 @@ const Top10Games = (props) => {
             )
           })}
         </div>
-      </ScrollPanel>
       {movingGame && (
         <Button
           icon="pi pi-trash"
