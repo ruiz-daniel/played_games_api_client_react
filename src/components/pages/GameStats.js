@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react'
 import api from '../../services/IApi'
 import { Chart } from 'primereact/chart'
-import { ScrollPanel } from 'primereact/scrollpanel'
 
 const GameStats = () => {
   const [total_games, setTotalGames] = useState()

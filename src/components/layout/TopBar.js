@@ -8,12 +8,11 @@ import { Menu } from 'primereact/menu'
 
 import LoginForm from '../utils/LoginForm'
 
-import { Link, useLocation, useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import * as routes from '../../routes'
 import api from '../../services/IApi'
 
 const TopBar = () => {
-  const location = useLocation()
   const history = useHistory()
   const toast = useRef(null)
   const menu = useRef(null)

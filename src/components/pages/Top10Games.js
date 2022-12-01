@@ -56,9 +56,13 @@ const Top10Games = (props) => {
   }
 
   const getGames = () => {
-    api.Top10GamesAPI.getTop10Games(top10name, sessionStorage.getItem('userid'), (data) => {
-      splitGames(data)
-    })
+    api.Top10GamesAPI.getTop10Games(
+      top10name,
+      sessionStorage.getItem('userid'),
+      (data) => {
+        splitGames(data)
+      },
+    )
   }
 
   const getFirstTop10 = () => {
@@ -135,10 +139,13 @@ const Top10Games = (props) => {
   useEffect(() => {
     cleanFilters()
     getFirstTop10()
-    api.PlayedGamesApi.getPlayedGames(sessionStorage.getItem('userid'), (data) => {
-      setAllGames(data)
-      gamesBackup = data
-    })
+    api.PlayedGamesApi.getPlayedGames(
+      sessionStorage.getItem('userid'),
+      (data) => {
+        setAllGames(data)
+        gamesBackup = data
+      },
+    )
   }, [])
 
   const splitGames = (games) => {
@@ -172,17 +179,13 @@ const Top10Games = (props) => {
     tier.forEach((game) => {
       moveGame(game, game.pos - 1)
     })
-    orderedGames[index - 1].map((game) => {
-      moveGame(game, game.pos + 1)
-    })
+    orderedGames[index - 1].map((game) => moveGame(game, game.pos + 1))
   }
   const moveTierDown = (tier, index) => {
     tier.forEach((game) => {
       moveGame(game, game.pos + 1)
     })
-    orderedGames[index + 1].map((game) => {
-      moveGame(game, game.pos - 1)
-    })
+    orderedGames[index + 1].map((game) => moveGame(game, game.pos - 1))
   }
 
   return (
@@ -209,123 +212,123 @@ const Top10Games = (props) => {
           <FavoritesList onSelect={(newName) => changeTop10(newName)} />
         </Dialog>
       </div>
-        <div className="top10games flex flex-column">
-          <Dialog
-            visible={gamesPanel}
-            header="Add Game"
-            modal={false}
-            dismissableMask
-            position="bottom-right"
-            onHide={() => {
-              toogleGamesPanel(false)
-            }}
-          >
-            <div className="top10-newgame">
+      <div className="top10games flex flex-column">
+        <Dialog
+          visible={gamesPanel}
+          header="Add Game"
+          modal={false}
+          dismissableMask
+          position="bottom-right"
+          onHide={() => {
+            toogleGamesPanel(false)
+          }}
+        >
+          <div className="top10-newgame">
+            <div>
+              <p>
+                <span style={{ color: 'red', fontWeight: 900 }}>Drag </span> a
+                game from here to add it to the list or{' '}
+                <span style={{ color: 'red', fontWeight: 900 }}>
+                  double click{' '}
+                </span>
+                to add it at the end of the list
+              </p>
               <div>
-                <p>
-                  <span style={{ color: 'red', fontWeight: 900 }}>Drag </span> a
-                  game from here to add it to the list or{' '}
-                  <span style={{ color: 'red', fontWeight: 900 }}>
-                    double click{' '}
-                  </span>
-                  to add it at the end of the list
-                </p>
-                <div>
-                  <span className="p-input-icon-left">
-                    <i className="pi pi-search" />
-                    <InputText
-                      id="fname"
-                      placeholder="Name"
-                      onChange={(e) => filterName(e.target.value)}
-                    />
-                  </span>
-                </div>
+                <span className="p-input-icon-left">
+                  <i className="pi pi-search" />
+                  <InputText
+                    id="fname"
+                    placeholder="Name"
+                    onChange={(e) => filterName(e.target.value)}
+                  />
+                </span>
               </div>
-              <ScrollPanel style={{ width: '100%', height: '40vh' }}>
-                <div className="flex flex-wrap justify-content-between">
-                  {allGames.map((game) => {
-                    return (
-                      <div
-                        draggable="true"
-                        onDragStart={() => {
-                          dragNew(game)
-                        }}
-                        onDoubleClick={() => {
-                          addGame(game, orderedGames.length + 1)
-                        }}
-                      >
-                        <GameBox key={game.id} game={game}></GameBox>
-                      </div>
-                    )
-                  })}
-                </div>
-              </ScrollPanel>
             </div>
-          </Dialog>
-          {orderedGames.map((tier, index) => {
-            return (
-              <div
-                id={`tier-${index}`}
-                className="top10-item"
-                onDrop={(ev) => {
-                  drop(ev, index + 1)
-                  turnLightOff(`tier-${index}`)
-                }}
-                onDragOver={(ev) => {
-                  allowDrop(ev)
-                  lightUpTier(`tier-${index}`)
-                }}
-                onDragLeave={(ev) => {
-                  turnLightOff(`tier-${index}`)
-                }}
-              >
-                <h2>
-                  <Position pos={index + 1}></Position>
-                </h2>
-
-                {tier.map((game) => {
-                  if (tier.length === 0) {
-                    return <div style={{ height: 130 }}></div>
-                  }
+            <ScrollPanel style={{ width: '100%', height: '40vh' }}>
+              <div className="flex flex-wrap justify-content-between">
+                {allGames.map((game) => {
                   return (
                     <div
-                      key={game.id}
                       draggable="true"
-                      onDragStart={(e) => {
-                        drag(game)
-                      }}
-                      onDragEnd={(e) => {
-                        setTimeout(3000)
-                        setMovingGame()
+                      onDragStart={() => {
+                        dragNew(game)
                       }}
                       onDoubleClick={() => {
-                        moveGame(game, orderedGames.length + 1)
+                        addGame(game, orderedGames.length + 1)
                       }}
                     >
-                      <GameBox key={game.id} game={game.game}></GameBox>
+                      <GameBox key={game.id} game={game}></GameBox>
                     </div>
                   )
                 })}
-                <div className="tier-buttons flex flex-column">
-                  {index > 0 && (
-                    <i
-                      className="pi pi-arrow-up"
-                      onClick={() => {
-                        moveTierUp(tier, index)
-                      }}
-                    />
-                  )}
+              </div>
+            </ScrollPanel>
+          </div>
+        </Dialog>
+        {orderedGames.map((tier, index) => {
+          return (
+            <div
+              id={`tier-${index}`}
+              className="top10-item"
+              onDrop={(ev) => {
+                drop(ev, index + 1)
+                turnLightOff(`tier-${index}`)
+              }}
+              onDragOver={(ev) => {
+                allowDrop(ev)
+                lightUpTier(`tier-${index}`)
+              }}
+              onDragLeave={(ev) => {
+                turnLightOff(`tier-${index}`)
+              }}
+            >
+              <h2>
+                <Position pos={index + 1}></Position>
+              </h2>
+
+              {tier.map((game) => {
+                if (tier.length === 0) {
+                  return <div style={{ height: 130 }}></div>
+                }
+                return (
+                  <div
+                    key={game.id}
+                    draggable="true"
+                    onDragStart={(e) => {
+                      drag(game)
+                    }}
+                    onDragEnd={(e) => {
+                      setTimeout(3000)
+                      setMovingGame()
+                    }}
+                    onDoubleClick={() => {
+                      moveGame(game, orderedGames.length + 1)
+                    }}
+                  >
+                    <GameBox key={game.id} game={game.game}></GameBox>
+                  </div>
+                )
+              })}
+              <div className="tier-buttons flex flex-column">
+                {index > 0 && (
                   <i
-                    className="pi pi-arrow-down"
+                    className="pi pi-arrow-up"
                     onClick={() => {
-                      moveTierDown(tier, index)
+                      moveTierUp(tier, index)
                     }}
                   />
-                </div>
+                )}
+                <i
+                  className="pi pi-arrow-down"
+                  onClick={() => {
+                    moveTierDown(tier, index)
+                  }}
+                />
               </div>
-            )
-          })}
-        </div>
+            </div>
+          )
+        })}
+      </div>
       {movingGame && (
         <Button
           icon="pi pi-trash"

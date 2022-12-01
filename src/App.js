@@ -21,9 +21,9 @@ import './styles/main.scss'
 import 'nprogress/nprogress.css'
 
 function App() {
-  const checkLoggedInRoutes = () => {
-    return routes.loggedRoutes.some(route => window.location.href.includes(route))
-  }
+  // const checkLoggedInRoutes = () => {
+  //   return routes.loggedRoutes.some(route => window.location.href.includes(route))
+  // }
   return (
     <Router>
         <TopBar></TopBar>

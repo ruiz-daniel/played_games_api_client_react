@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
 import * as routes from '../../routes'
-import { ScrollPanel } from 'primereact/scrollpanel'
 
 import { Dialog } from 'primereact/dialog'
 import { Toast } from 'primereact/toast'
