@@ -11,7 +11,6 @@ import { Image } from 'primereact/image'
 import { Button } from 'primereact/button'
 import { confirmDialog } from 'primereact/confirmdialog'
 import { InputTextarea } from 'primereact/inputtextarea'
-import { ScrollPanel } from 'primereact/scrollpanel'
 
 import Status from '../utils/status'
 
@@ -154,7 +153,6 @@ const EditGame = () => {
   }
 
   return (
-    <ScrollPanel style={{ width: '100%', height: '99vh' }}>
       <div className="game-details-wrapper flex flex-column ">
         <Toast ref={toast} />
         <div className="game-details-image">
@@ -336,7 +334,6 @@ const EditGame = () => {
           </form>
         )}
       </div>
-    </ScrollPanel>
   )
 }
 
