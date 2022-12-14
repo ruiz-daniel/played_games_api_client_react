@@ -18,6 +18,12 @@ const TopBar = () => {
   const menu = useRef(null)
   const [loginVisible, showLogin] = useState(false)
 
+  var isMobile = navigator.userAgent.toLowerCase().match(/mobile/i),
+      isTablet = navigator.userAgent.toLowerCase().match(/tablet/i),
+      isAndroid = navigator.userAgent.toLowerCase().match(/android/i),
+      isiPhone = navigator.userAgent.toLowerCase().match(/iphone/i),
+      isiPad = navigator.userAgent.toLowerCase().match(/ipad/i);
+
   const handleLogin = (username, password) => {
     api.UserApi.login({ username, password }, onLogin, handleError)
   }
