@@ -12,6 +12,8 @@ import { Link, useHistory } from 'react-router-dom'
 import * as routes from '../../routes'
 import api from '../../services/IApi'
 
+import weissIcon from '../../images/KUIYU.png'
+
 const TopBar = () => {
   const history = useHistory()
   const toast = useRef(null)
@@ -65,6 +67,14 @@ const TopBar = () => {
     })
   }
 
+  const handleLogoClick = () => {
+    if (sessionStorage.getItem('userid')) {
+      history.push(routes.dashboard)
+    } else {
+      history.push(routes.home)
+    }
+  }
+
   const userMenuItems = [
     {
       label: sessionStorage.getItem('username')
@@ -85,7 +95,7 @@ const TopBar = () => {
   const leftContents = (
     <React.Fragment>
       <div className="flex">
-        <h2 className="logo">My Games Shelf</h2>
+        <h2 className="logo" onClick={handleLogoClick}>My Games Shelf</h2>
 
         {sessionStorage.getItem('userid') && (
           <div className="flex">
@@ -127,8 +137,9 @@ const TopBar = () => {
   const rightContents = (
     <React.Fragment>
       <Avatar
-        icon="pi pi-user"
+        image={weissIcon}
         shape="circle"
+        size='large'
         onClick={(e) => menu.current.toggle(e)}
       />
       <Menu model={userMenuItems} popup ref={menu} />
