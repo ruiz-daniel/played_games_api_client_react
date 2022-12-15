@@ -19,10 +19,10 @@ const TopBar = () => {
   const [loginVisible, showLogin] = useState(false)
 
   var isMobile = navigator.userAgent.toLowerCase().match(/mobile/i),
-      isTablet = navigator.userAgent.toLowerCase().match(/tablet/i),
-      isAndroid = navigator.userAgent.toLowerCase().match(/android/i),
-      isiPhone = navigator.userAgent.toLowerCase().match(/iphone/i),
-      isiPad = navigator.userAgent.toLowerCase().match(/ipad/i);
+    isTablet = navigator.userAgent.toLowerCase().match(/tablet/i),
+    isAndroid = navigator.userAgent.toLowerCase().match(/android/i),
+    isiPhone = navigator.userAgent.toLowerCase().match(/iphone/i),
+    isiPad = navigator.userAgent.toLowerCase().match(/ipad/i)
 
   const handleLogin = (username, password) => {
     api.UserApi.login({ username, password }, onLogin, handleError)
@@ -70,7 +70,11 @@ const TopBar = () => {
       label: sessionStorage.getItem('username')
         ? sessionStorage.getItem('display_name')
         : 'Guest',
-      command: () => {sessionStorage.getItem('username') ? history.push(routes.dashboard) : history.push(routes.home) }  
+      command: () => {
+        sessionStorage.getItem('username')
+          ? history.push(routes.dashboard)
+          : history.push(routes.home)
+      },
     },
     {
       label: sessionStorage.getItem('userid') ? 'Logout' : 'Login',
@@ -80,55 +84,43 @@ const TopBar = () => {
 
   const leftContents = (
     <React.Fragment>
-      <Link to={routes.home}>
-        <h2 className="logo">
-          {' '}
-          <i className="pi pi-book"></i> My Games Shelf
-        </h2>
-      </Link>
+      <div className="flex">
+        <h2 className="logo">My Games Shelf</h2>
 
-      {sessionStorage.getItem('userid') && (
-        <>
-          <Link to={routes.playedgames}>
-            <span>
-              <i className="pi pi-list"></i> Games List
-            </span>
-          </Link>
-          <Link to={routes.uploadgame}>
-            <span>
-              <i className="pi pi-upload"></i> Upload Game
-            </span>
-          </Link>
-          <Link to={routes.stats}>
-            <span>
-              {' '}
-              <i className="pi pi-chart-bar"></i> Stats
-            </span>
-          </Link>
-          <Link
-            to={{
-              pathname: routes.top10games,
-              state: { top10name: 'All Time' },
-            }}
-          >
-            <span>
-              {' '}
-              <i className="pi pi-star"></i> Top 10 Games
-            </span>
-          </Link>
-          <Link
-            to={{
-              pathname: routes.top10characters,
-              state: { top10name: 'All Time' },
-            }}
-          >
-            <span>
-              {' '}
-              <i className="pi pi-star"></i> Top 10 Characters
-            </span>
-          </Link>
-        </>
-      )}
+        {sessionStorage.getItem('userid') && (
+          <div className="flex">
+            <div className="topbar-element">
+              <Link to={routes.playedgames}>Games List</Link>
+            </div>
+            <div className="topbar-element">
+              <Link to={routes.uploadgame}>Upload Game</Link>
+            </div>
+            <div className="topbar-element">
+              <Link to={routes.stats}>Stats</Link>
+            </div>
+            <div className="topbar-element">
+              <Link
+                to={{
+                  pathname: routes.top10games,
+                  state: { top10name: 'All Time' },
+                }}
+              >
+                Top 10 Games
+              </Link>
+            </div>
+            <div className="topbar-element">
+              <Link
+                to={{
+                  pathname: routes.top10characters,
+                  state: { top10name: 'All Time' },
+                }}
+              >
+                Top 10 Characters
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
     </React.Fragment>
   )
 
