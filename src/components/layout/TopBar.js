@@ -5,6 +5,8 @@ import { Avatar } from 'primereact/avatar'
 import { Dialog } from 'primereact/dialog'
 import { Toast } from 'primereact/toast'
 import { Menu } from 'primereact/menu'
+import { Sidebar } from 'primereact/sidebar'
+import SidebarContent from './SideBar'
 
 import LoginForm from '../utils/LoginForm'
 
@@ -19,12 +21,9 @@ const TopBar = () => {
   const toast = useRef(null)
   const menu = useRef(null)
   const [loginVisible, showLogin] = useState(false)
+  const [sideMenu, toggleSideMenu] = useState(false)
 
-  var isMobile = navigator.userAgent.toLowerCase().match(/mobile/i),
-    isTablet = navigator.userAgent.toLowerCase().match(/tablet/i),
-    isAndroid = navigator.userAgent.toLowerCase().match(/android/i),
-    isiPhone = navigator.userAgent.toLowerCase().match(/iphone/i),
-    isiPad = navigator.userAgent.toLowerCase().match(/ipad/i)
+  // var isMobile = navigator.userAgent.toLowerCase().match(/mobile/i)
 
   const handleLogin = (username, password) => {
     api.UserApi.login({ username, password }, onLogin, handleError)
@@ -95,10 +94,15 @@ const TopBar = () => {
   const leftContents = (
     <React.Fragment>
       <div className="flex">
-        <h2 className="logo" onClick={handleLogoClick}>My Games Shelf</h2>
+        {<div className="topbar-element sidemenu-icon mr-4" onClick={() => toggleSideMenu(true)}>
+          <i className="pi pi-bars" />
+        </div>}
+        <h2 className="logo" onClick={handleLogoClick}>
+          My Games Shelf
+        </h2>
 
         {sessionStorage.getItem('userid') && (
-          <div className="flex">
+          <div className="flex topbar-links">
             <div className="topbar-element">
               <Link to={routes.playedgames}>Games List</Link>
             </div>
@@ -139,7 +143,7 @@ const TopBar = () => {
       <Avatar
         image={weissIcon}
         shape="circle"
-        size='large'
+        size="large"
         onClick={(e) => menu.current.toggle(e)}
       />
       <Menu model={userMenuItems} popup ref={menu} />
@@ -165,6 +169,9 @@ const TopBar = () => {
           }}
         />
       </Dialog>
+      <Sidebar visible={sideMenu} onHide={() => toggleSideMenu(false)}>
+        <SidebarContent />
+      </Sidebar>
     </div>
   )
 }

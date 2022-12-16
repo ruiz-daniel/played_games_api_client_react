@@ -2,7 +2,22 @@
   background-color: $background-color-dark2;
   color: white;
   width: 100vw;
-  padding-right: 3rem;
+  @media (min-width: 900px) {
+    padding-right: 3rem;
+  }
+
+  .sidemenu-icon {
+    @media (min-width: 1055px) {
+      display: none !important;
+    }
+  }
+  .topbar-links {
+    @media (max-width: 1055px) {
+    display: none !important;
+    transition: 1s ease;
+  }
+  }
+
   @include paddingY(0);
   .topbar-element {
     display: flex;
