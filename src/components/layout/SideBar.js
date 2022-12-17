@@ -28,7 +28,7 @@ const SideBar = ({ toggleSidebar }) => {
     if (logged !== null) {
       //LOGOUT
       sessionStorage.clear()
-      history.push('/')
+      history.push(routes.home)
       window.location.reload()
     } else {
       //LOGIN
@@ -47,6 +47,7 @@ const SideBar = ({ toggleSidebar }) => {
       life: 3000,
     })
     showLogin(false)
+    history.push(routes.dashboard)
     window.location.reload()
   }
   const handleError = (error) => {
@@ -60,13 +61,6 @@ const SideBar = ({ toggleSidebar }) => {
     })
   }
 
-  const navigate = (route) => {
-    history.push(route)
-    if (toggleSidebar) {
-      toggleSidebar(false)
-    }
-  }
-
   return (
     <div className="flex flex-column">
       <Toast ref={toast} />
@@ -77,7 +71,7 @@ const SideBar = ({ toggleSidebar }) => {
         onHide={() => {
           showLogin(false)
         }}
-        className='login-dialog'
+        className="login-dialog"
       >
         <LoginForm
           onLogin={(username, password) => {
@@ -97,15 +91,22 @@ const SideBar = ({ toggleSidebar }) => {
       </section>
       <section className="avatar-section">
         <div className="flex flex-column">
-          <Avatar image={sessionStorage.getItem('userpfp') || weissIcon} shape="circle" size="xlarge" />
+          <Avatar
+            onClick={() => {
+              if (sessionStorage.getItem('userid')) {
+                history.push(routes.dashboard)
+                toggleSidebar(false)
+              }
+            }}
+            image={sessionStorage.getItem('userpfp') || weissIcon}
+            shape="circle"
+            size="xlarge"
+          />
           <h2>
             {sessionStorage.getItem('display_name')
               ? sessionStorage.getItem('display_name')
               : 'Guest'}
           </h2>
-          <h3>
-            <i className="pi pi-camera"></i> Profile
-          </h3>
           <h3 onClick={toggleLogin}>
             <i className="pi pi-power-off"></i>{' '}
             {sessionStorage.getItem('userid') ? 'Logout' : 'Login'}
