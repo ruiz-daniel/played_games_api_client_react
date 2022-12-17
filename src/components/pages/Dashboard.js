@@ -35,48 +35,34 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="grid">
-        <div className="p-5 col-12 md:col-8 xl:col-6">
+      <div className="grid pt-8">
+        <div className="dashboard-user-info flex flex-column justify-content-center align-items-start  pl-8 col-12 md:col-4">
           <div>
-            <Card style={{ width: '100%' }}>
-              <div className="flex relative user-card">
-                <Avatar
-                  image={weissIcon}
-                  className="mr-4"
-                  size="xlarge"
-                  shape="circle"
-                />
-                <div>
-                  <h1>{sessionStorage.getItem('display_name')}</h1>
-                  <h3>@{sessionStorage.getItem('username')}</h3>
-                  {userGamesInfo?.userid && (
-                    <div className='flex flex-wrap'>
-                      <div className="info-box" onClick={goToList}>
-                        <i className="pi pi-desktop" />{' '}
-                        <p>{userGamesInfo.playedgames}</p>
-                      </div>
-                      <div className="info-box info-box-green" onClick={goToList}>
-                        <i className="pi pi-check" />{' '}
-                        <p>{userGamesInfo.completedGames}</p>
-                      </div>
-                      <div className="info-box info-box-yellow" onClick={goToList}>
-                        <i className="pi pi-clock" />{' '}
-                        <p>{userGamesInfo.playingGames}</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </Card>
-            <div className="mt-2" style={{ height: '45vh' }}>
-              <Card>
-                <PlayingGames />
-              </Card>
-              
+            <Avatar
+              image={weissIcon}
+              className="mr-4"
+              size="xlarge"
+              shape="circle"
+            />
+            <h1>{sessionStorage.getItem('display_name')}</h1>
+            <h3>@{sessionStorage.getItem('username')}</h3>
+          </div>
+
+          {userGamesInfo?.userid && (
+            <div className="dashboard-user-stats flex flex-column">
+              <p>Total Played Games:  {userGamesInfo.playedgames}</p>
+
+              <p>Completed Games:  {userGamesInfo.completedGames}</p>
+
+              <p>Currently Playing Games:  {userGamesInfo.playingGames}</p>
             </div>
+          )}
+        </div>
+        <div className="px-3 col-12 md:col-8">
+          <div className="mt-2" style={{ height: '45vh' }}>
+            <PlayingGames />
           </div>
         </div>
-        <div className="p-5 col-12 md:col-6"></div>
       </div>
     </>
   )
