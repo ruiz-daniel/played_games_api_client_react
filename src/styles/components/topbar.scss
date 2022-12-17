@@ -1,31 +1,49 @@
 .topbar {
-  // background: $background-purple;
-  // position: fixed;
-  // top: 0px;
-  // background-color: rgba(255,255,255,0);
-  height: 80px;
+  background-color: $background-color-dark2;
+  color: white;
   width: 100vw;
-  color: black;
-  @include paddingY(0);
-  @include paddingX(3rem);
-  a {
-    // color: $text-color-light;
-    font-size: medium;
-    margin-right: 30px;
-    margin-left: 20px;
-    &:hover {
-      text-decoration: underline dotted !important;
-    }
+  @media (min-width: 900px) {
+    padding-right: 3rem;
   }
 
-  .p-avatar {
-    // background-color: white;
+  .sidemenu-icon {
+    @media (min-width: 1055px) {
+      display: none !important;
+    }
+  }
+  .topbar-links {
+    @media (max-width: 1055px) {
+    display: none !important;
+    transition: 1s ease;
+  }
+  }
+
+  @include paddingY(0);
+  .topbar-element {
+    display: flex;
+    align-items: center;
+  }
+  .logo {
+    margin-right: 30px;
+    color: $text-color-purple;
     cursor: pointer;
+  }
+  a {
+    color: $text-color-light;
+    font-size: 20px;
+    font-weight: 600;
+    @include paddingX(10px);
+    @include paddingY(5px);
+    @include marginY(0);
+    @include marginX(8px);
 
     &:hover {
-      background-color: $background-color-purple;
-      // color: white;
+      background-color: $background-color-semi-transparent-light;
+      border-radius: 10px;
     }
+  }
+  .p-avatar {
+    cursor: pointer;
   }
 }
 .p-dialog-content {
@@ -44,10 +62,22 @@
 .p-menu-list,
 .p-menuitem,
 .p-menuitem-link {
-  // background-color: $background-color-dark2 !important;
-  justify-content: center !important;
+  justify-content: center;
+  background-color: $background-color-dark2 !important;
+}
+.p-menu {
+  border-top: solid 4px $text-color-pink !important;
+}
+.p-menuitem-link {
+  &:hover {
+    background-color: $background-color-semi-transparent-light !important;
+    border-radius: 10px !important;
+  }
 }
 .p-menuitem-text {
-  text-align: center !important;
-  // color: white !important;
+  color: $text-color-light !important;
+}
+
+.menu-sidebar {
+  background-color: $background-color-dark2;
 }

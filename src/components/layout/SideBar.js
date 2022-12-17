@@ -10,7 +10,9 @@ import { Link, useLocation, useHistory } from 'react-router-dom'
 import * as routes from '../../routes'
 import api from '../../services/IApi'
 
-const SideBar = () => {
+import weissIcon from '../../images/KUIYU.png'
+
+const SideBar = ({ toggleSidebar }) => {
   const location = useLocation()
   const history = useHistory()
   const toast = useRef(null)
@@ -26,7 +28,7 @@ const SideBar = () => {
     if (logged !== null) {
       //LOGOUT
       sessionStorage.clear()
-      history.push('/')
+      history.push(routes.home)
       window.location.reload()
     } else {
       //LOGIN
@@ -45,6 +47,7 @@ const SideBar = () => {
       life: 3000,
     })
     showLogin(false)
+    history.push(routes.dashboard)
     window.location.reload()
   }
   const handleError = (error) => {
@@ -57,17 +60,18 @@ const SideBar = () => {
       life: 3000,
     })
   }
+
   return (
     <div className="flex flex-column">
       <Toast ref={toast} />
       <Dialog
         visible={loginVisible}
-        style={{ width: '40vw' }}
         showHeader={false}
         dismissableMask
         onHide={() => {
           showLogin(false)
         }}
+        className="login-dialog"
       >
         <LoginForm
           onLogin={(username, password) => {
@@ -76,24 +80,33 @@ const SideBar = () => {
         />
       </Dialog>
       <section className="logo-section">
-        <Link to={routes.home}>
-          <h2 className="logo">
-            {' '}
-            <i className="pi pi-book"></i> My Games Shelf
-          </h2>
+        <Link
+          onClick={() => {
+            toggleSidebar(false)
+          }}
+          to={routes.home}
+        >
+          <h2 className="logo">My Games Shelf</h2>
         </Link>
       </section>
       <section className="avatar-section">
         <div className="flex flex-column">
-          <Avatar icon="pi pi-user" shape="circle" size="xlarge" />
+          <Avatar
+            onClick={() => {
+              if (sessionStorage.getItem('userid')) {
+                history.push(routes.dashboard)
+                toggleSidebar(false)
+              }
+            }}
+            image={sessionStorage.getItem('userpfp') || weissIcon}
+            shape="circle"
+            size="xlarge"
+          />
           <h2>
             {sessionStorage.getItem('display_name')
               ? sessionStorage.getItem('display_name')
               : 'Guest'}
           </h2>
-          <h3>
-            <i className="pi pi-camera"></i> Profile
-          </h3>
           <h3 onClick={toggleLogin}>
             <i className="pi pi-power-off"></i>{' '}
             {sessionStorage.getItem('userid') ? 'Logout' : 'Login'}
@@ -103,7 +116,12 @@ const SideBar = () => {
       {sessionStorage.getItem('userid') && (
         <section className="menu-section">
           <div className="menu-item">
-            <Link to={routes.playedgames}>
+            <Link
+              onClick={() => {
+                toggleSidebar(false)
+              }}
+              to={routes.playedgames}
+            >
               <h3
                 className={
                   location.pathname.includes(routes.playedgames)
@@ -116,7 +134,12 @@ const SideBar = () => {
             </Link>
           </div>
           <div className="menu-item">
-            <Link to={routes.uploadgame}>
+            <Link
+              onClick={() => {
+                toggleSidebar(false)
+              }}
+              to={routes.uploadgame}
+            >
               <h3
                 className={
                   location.pathname.includes(routes.uploadgame)
@@ -129,7 +152,12 @@ const SideBar = () => {
             </Link>
           </div>
           <div className="menu-item">
-            <Link to={routes.stats}>
+            <Link
+              onClick={() => {
+                toggleSidebar(false)
+              }}
+              to={routes.stats}
+            >
               <h3
                 className={
                   location.pathname.includes(routes.stats) ? 'router-view' : ''
@@ -141,6 +169,9 @@ const SideBar = () => {
           </div>
           <div className="menu-item">
             <Link
+              onClick={() => {
+                toggleSidebar(false)
+              }}
               to={{
                 pathname: routes.top10games,
                 state: { top10name: 'All Time' },
@@ -159,6 +190,9 @@ const SideBar = () => {
           </div>
           <div className="menu-item">
             <Link
+              onClick={() => {
+                toggleSidebar(false)
+              }}
               to={{
                 pathname: routes.top10characters,
                 state: { top10name: 'All Time' },

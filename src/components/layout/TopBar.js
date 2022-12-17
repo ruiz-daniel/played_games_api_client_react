@@ -5,6 +5,8 @@ import { Avatar } from 'primereact/avatar'
 import { Dialog } from 'primereact/dialog'
 import { Toast } from 'primereact/toast'
 import { Menu } from 'primereact/menu'
+import { Sidebar } from 'primereact/sidebar'
+import SidebarContent from './SideBar'
 
 import LoginForm from '../utils/LoginForm'
 
@@ -12,11 +14,16 @@ import { Link, useHistory } from 'react-router-dom'
 import * as routes from '../../routes'
 import api from '../../services/IApi'
 
+import weissIcon from '../../images/KUIYU.png'
+
 const TopBar = () => {
   const history = useHistory()
   const toast = useRef(null)
   const menu = useRef(null)
   const [loginVisible, showLogin] = useState(false)
+  const [sideMenu, toggleSideMenu] = useState(false)
+
+  // var isMobile = navigator.userAgent.toLowerCase().match(/mobile/i)
 
   const handleLogin = (username, password) => {
     api.UserApi.login({ username, password }, onLogin, handleError)
@@ -59,12 +66,24 @@ const TopBar = () => {
     })
   }
 
+  const handleLogoClick = () => {
+    if (sessionStorage.getItem('userid')) {
+      history.push(routes.dashboard)
+    } else {
+      history.push(routes.home)
+    }
+  }
+
   const userMenuItems = [
     {
       label: sessionStorage.getItem('username')
         ? sessionStorage.getItem('display_name')
         : 'Guest',
-      command: () => {sessionStorage.getItem('username') ? history.push(routes.dashboard) : history.push(routes.home) }  
+      command: () => {
+        sessionStorage.getItem('username')
+          ? history.push(routes.dashboard)
+          : history.push(routes.home)
+      },
     },
     {
       label: sessionStorage.getItem('userid') ? 'Logout' : 'Login',
@@ -74,65 +93,64 @@ const TopBar = () => {
 
   const leftContents = (
     <React.Fragment>
-      <Link to={routes.home}>
-        <h2 className="logo">
-          {' '}
-          <i className="pi pi-book"></i> My Games Shelf
+      <div className="flex">
+        {
+          <div
+            className="topbar-element sidemenu-icon mr-4"
+            onClick={() => toggleSideMenu(true)}
+          >
+            <i className="pi pi-bars" />
+          </div>
+        }
+        <h2 className="logo" onClick={handleLogoClick}>
+          My Games Shelf
         </h2>
-      </Link>
 
-      {sessionStorage.getItem('userid') && (
-        <>
-          <Link to={routes.playedgames}>
-            <span>
-              <i className="pi pi-list"></i> Games List
-            </span>
-          </Link>
-          <Link to={routes.uploadgame}>
-            <span>
-              <i className="pi pi-upload"></i> Upload Game
-            </span>
-          </Link>
-          <Link to={routes.stats}>
-            <span>
-              {' '}
-              <i className="pi pi-chart-bar"></i> Stats
-            </span>
-          </Link>
-          <Link
-            to={{
-              pathname: routes.top10games,
-              state: { top10name: 'All Time' },
-            }}
-          >
-            <span>
-              {' '}
-              <i className="pi pi-star"></i> Top 10 Games
-            </span>
-          </Link>
-          <Link
-            to={{
-              pathname: routes.top10characters,
-              state: { top10name: 'All Time' },
-            }}
-          >
-            <span>
-              {' '}
-              <i className="pi pi-star"></i> Top 10 Characters
-            </span>
-          </Link>
-        </>
-      )}
+        {sessionStorage.getItem('userid') && (
+          <div className="flex topbar-links">
+            <div className="topbar-element">
+              <Link to={routes.playedgames}>Games List</Link>
+            </div>
+            <div className="topbar-element">
+              <Link to={routes.uploadgame}>Upload Game</Link>
+            </div>
+            <div className="topbar-element">
+              <Link to={routes.stats}>Stats</Link>
+            </div>
+            <div className="topbar-element">
+              <Link
+                to={{
+                  pathname: routes.top10games,
+                  state: { top10name: 'All Time' },
+                }}
+              >
+                Top 10 Games
+              </Link>
+            </div>
+            <div className="topbar-element">
+              <Link
+                to={{
+                  pathname: routes.top10characters,
+                  state: { top10name: 'All Time' },
+                }}
+              >
+                Top 10 Characters
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
     </React.Fragment>
   )
 
   const rightContents = (
     <React.Fragment>
-      <Avatar
-        icon="pi pi-user"
+      {!sideMenu && <Avatar
+        image={weissIcon}
         shape="circle"
+        size="large"
         onClick={(e) => menu.current.toggle(e)}
-      />
+      />}
       <Menu model={userMenuItems} popup ref={menu} />
     </React.Fragment>
   )
@@ -156,6 +174,14 @@ const TopBar = () => {
           }}
         />
       </Dialog>
+      <Sidebar
+        className="menu-sidebar"
+        visible={sideMenu}
+        onHide={() => toggleSideMenu(false)}
+        showCloseIcon={false}
+      >
+        <SidebarContent toggleSidebar={toggleSideMenu} />
+      </Sidebar>
     </div>
   )
 }

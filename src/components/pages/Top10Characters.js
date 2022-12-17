@@ -87,6 +87,7 @@ const Top10Characters = () => {
         position="right"
         onHide={() => toggleSideBar(false)}
         showCloseIcon={false}
+        className="add-character-sidebar"
       >
         <AddTop10Character
           movePositions={movePositions}
