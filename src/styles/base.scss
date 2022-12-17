@@ -114,3 +114,19 @@ body.dark-mode {
 *:focus {
   outline: none;
 }
+
+.login-dialog {
+  @media (max-width: 500px) {
+    width: 50vw;
+  }
+  @media (max-width: 900px) {
+    width: 80vw;
+  }
+  @media (min-width: 900px) {
+    width: 60vw;
+  }
+  @media (min-width: 1200px) {
+    width: 40vw;
+  }
+  
+}

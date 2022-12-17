@@ -2,14 +2,13 @@
   @include paddingY(0.5rem);
   display: flex;
   justify-content: center;
+  
 
   a {
     width: 100%;
     color: $text-color-light;
     text-align: center;
-    &:hover {
-      color: $text-color-gold;
-    }
+    color: $text-color-purple;
   }
 }
 
@@ -51,8 +50,6 @@
     border-bottom: solid 0.5px snow;
     display: flex;
     padding-left: 1rem;
-    // justify-content: center;
-    // margin-bottom: 1rem;
 
     a {
       width: 100%;

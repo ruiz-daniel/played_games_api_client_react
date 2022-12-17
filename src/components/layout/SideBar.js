@@ -10,7 +10,9 @@ import { Link, useLocation, useHistory } from 'react-router-dom'
 import * as routes from '../../routes'
 import api from '../../services/IApi'
 
-const SideBar = () => {
+import weissIcon from '../../images/KUIYU.png'
+
+const SideBar = ({ toggleSidebar }) => {
   const location = useLocation()
   const history = useHistory()
   const toast = useRef(null)
@@ -57,17 +59,25 @@ const SideBar = () => {
       life: 3000,
     })
   }
+
+  const navigate = (route) => {
+    history.push(route)
+    if (toggleSidebar) {
+      toggleSidebar(false)
+    }
+  }
+
   return (
     <div className="flex flex-column">
       <Toast ref={toast} />
       <Dialog
         visible={loginVisible}
-        style={{ width: '40vw' }}
         showHeader={false}
         dismissableMask
         onHide={() => {
           showLogin(false)
         }}
+        className='login-dialog'
       >
         <LoginForm
           onLogin={(username, password) => {
@@ -76,16 +86,18 @@ const SideBar = () => {
         />
       </Dialog>
       <section className="logo-section">
-        <Link to={routes.home}>
-          <h2 className="logo">
-            {' '}
-            <i className="pi pi-book"></i> My Games Shelf
-          </h2>
+        <Link
+          onClick={() => {
+            toggleSidebar(false)
+          }}
+          to={routes.home}
+        >
+          <h2 className="logo">My Games Shelf</h2>
         </Link>
       </section>
       <section className="avatar-section">
         <div className="flex flex-column">
-          <Avatar icon="pi pi-user" shape="circle" size="xlarge" />
+          <Avatar image={sessionStorage.getItem('userpfp') || weissIcon} shape="circle" size="xlarge" />
           <h2>
             {sessionStorage.getItem('display_name')
               ? sessionStorage.getItem('display_name')
@@ -103,7 +115,12 @@ const SideBar = () => {
       {sessionStorage.getItem('userid') && (
         <section className="menu-section">
           <div className="menu-item">
-            <Link to={routes.playedgames}>
+            <Link
+              onClick={() => {
+                toggleSidebar(false)
+              }}
+              to={routes.playedgames}
+            >
               <h3
                 className={
                   location.pathname.includes(routes.playedgames)
@@ -116,7 +133,12 @@ const SideBar = () => {
             </Link>
           </div>
           <div className="menu-item">
-            <Link to={routes.uploadgame}>
+            <Link
+              onClick={() => {
+                toggleSidebar(false)
+              }}
+              to={routes.uploadgame}
+            >
               <h3
                 className={
                   location.pathname.includes(routes.uploadgame)
@@ -129,7 +151,12 @@ const SideBar = () => {
             </Link>
           </div>
           <div className="menu-item">
-            <Link to={routes.stats}>
+            <Link
+              onClick={() => {
+                toggleSidebar(false)
+              }}
+              to={routes.stats}
+            >
               <h3
                 className={
                   location.pathname.includes(routes.stats) ? 'router-view' : ''
@@ -141,6 +168,9 @@ const SideBar = () => {
           </div>
           <div className="menu-item">
             <Link
+              onClick={() => {
+                toggleSidebar(false)
+              }}
               to={{
                 pathname: routes.top10games,
                 state: { top10name: 'All Time' },
@@ -159,6 +189,9 @@ const SideBar = () => {
           </div>
           <div className="menu-item">
             <Link
+              onClick={() => {
+                toggleSidebar(false)
+              }}
               to={{
                 pathname: routes.top10characters,
                 state: { top10name: 'All Time' },

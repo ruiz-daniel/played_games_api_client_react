@@ -94,9 +94,14 @@ const TopBar = () => {
   const leftContents = (
     <React.Fragment>
       <div className="flex">
-        {<div className="topbar-element sidemenu-icon mr-4" onClick={() => toggleSideMenu(true)}>
-          <i className="pi pi-bars" />
-        </div>}
+        {
+          <div
+            className="topbar-element sidemenu-icon mr-4"
+            onClick={() => toggleSideMenu(true)}
+          >
+            <i className="pi pi-bars" />
+          </div>
+        }
         <h2 className="logo" onClick={handleLogoClick}>
           My Games Shelf
         </h2>
@@ -140,12 +145,12 @@ const TopBar = () => {
 
   const rightContents = (
     <React.Fragment>
-      <Avatar
+      {!sideMenu && <Avatar
         image={weissIcon}
         shape="circle"
         size="large"
         onClick={(e) => menu.current.toggle(e)}
-      />
+      />}
       <Menu model={userMenuItems} popup ref={menu} />
     </React.Fragment>
   )
@@ -169,8 +174,13 @@ const TopBar = () => {
           }}
         />
       </Dialog>
-      <Sidebar visible={sideMenu} onHide={() => toggleSideMenu(false)}>
-        <SidebarContent />
+      <Sidebar
+        className="menu-sidebar"
+        visible={sideMenu}
+        onHide={() => toggleSideMenu(false)}
+        showCloseIcon={false}
+      >
+        <SidebarContent toggleSidebar={toggleSideMenu} />
       </Sidebar>
     </div>
   )
