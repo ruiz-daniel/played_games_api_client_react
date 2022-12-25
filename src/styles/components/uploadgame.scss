@@ -1,92 +1,124 @@
-.upload-game-form {
-  @include centerContent(70%);
-  // text-align: center;
-  margin: 10px;
+.upload-game-wrapper {
+  text-align: center;
+  overflow-x: hidden;
 
-  .p-panel-header {
-    @include darkBackground();
-  }
-  .p-fileupload {
-    width: 40%;
-    margin-bottom: 3rem;
-  }
-  .p-fileupload-buttonbar {
-    background-color: $background-color-dark2;
+  #form-wrapper {
+    display: inline-flex;
+    transition: all 500ms;
+    min-width: 100vw;
 
-    span,
-    button {
-      background: $background-color-purple !important;
-      border-color: white;
+    .upload-game-step {
+      width: 100vw;
+      display: flex;
+      justify-content: center;
     }
   }
-}
-.upload-game-fields {
-  .p-steps-item {
-    a {
-      width: 120px;
-      background-color: transparent !important;
-    }
-  }
-  .form-content {
-    margin-top: 3rem;
-    padding-left: 5rem;
 
-    input,
-    .p-dropdown {
-      color: black;
-      font-weight: 400;
-      font-size: large;
-      width: 40%;
-      height: 40px;
-
-      &:focus {
-        // @include bottomBorder(black);
-        box-shadow: none !important;
-      }
+  .upload-game-form {
+    background-color: $background-transparent;
+    border-radius: 10px;
+    padding: 3rem;
+    margin-top: 1rem;
+    @media (max-width: 768px) {
+      width: 90%;
+      @include paddingX(1rem);
+      @include marginX(10%)
     }
-    .p-inputtextarea {
-      width: 40% !important;
+    width: 50%;
+    @include marginX(25%);
+    box-shadow: 0 0.5rem 1rem 0 rgba(216, 118, 192, 0.1);
+
+    .error-message {
+      color: red;
     }
 
     .item {
       margin-bottom: 3rem;
+      label {
+        font-size: 20px;
+      }
+      input,
+      .p-dropdown,
+      .p-inputtextarea {
+        margin-top: 5px;
+        color: white;
+        font-weight: 400;
+        font-size: larger;
+        background-color: $background-transparent-darker;
+        border: none;
+
+        &:focus,
+        &:hover {
+          box-shadow: none !important;
+          border-color: $text-color-silver !important;
+        }
+
+        .p-inputtext {
+          text-align: start;
+          color: white;
+          font-weight: 400;
+          font-size: large;
+          background-color: $background-transparent-darker;
+        }
+      }
+      .p-fileupload-buttonbar {
+        background-color: $background-transparent-darker;
+
+        span,
+        button {
+          background: $text-color-pink !important;
+          border-color: white;
+        }
+      }
     }
 
-    .error-message {
-      color: red;
-      margin-top: 5px;
+    table {
+      margin-bottom: 3rem;
+      font-size: 20px;
+       td {
+        padding: 0.5rem;
+       }
     }
-    .p-button {
-      margin-right: 10px;
+
+    .upload-button {
+      background: none;
+      border: none;
+      font-size: 30px;
+      font-weight: 800;
+      text-transform: uppercase;
+      &:hover {
+        color: $text-color-pink;
+      }
+      @media (max-width: 900px) {
+        float: none;
+        margin-top: 3rem;
+      }
     }
-    .watch-data-item {
-      margin: 10px;
-      font-size: large;
-      font-weight: 600;
+
+    .form-last-step-buton {
+      @media (max-width: 900px) {
+        float: none;
+        margin-top: 3rem;
+      }
+    }
+
+    .button-span {
+      font-size: 30px;
+      
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 300ms;
+
+      &:hover {
+        color: $text-color-pink;
+      }
     }
   }
 }
 
-.upload-button-span {
-  padding-left: 5rem;
-  .p-button {
-    margin: 2rem;
-  }
-  .upload-button {
-    border-radius: 5px;
-    border: none !important;
-    background-color: $background-color-purple !important;
-    // @include arrowBorderRight;
-    padding: 0.5rem;
-    text-align: center;
-    // transition: all 0.5s ease;
-    // cursor: pointer;
-
-    &:hover {
-      background-color: lighten(
-        $color: $background-color-purple,
-        $amount: 2
-      ) !important;
-    }
-  }
+.p-dropdown-items-wrapper,
+.p-dropdown-items,
+.p-dropdown-item {
+  background-color: $background-color-dark;
+  color: white !important;
 }

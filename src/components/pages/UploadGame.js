@@ -1,16 +1,16 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import api from '../../services/IApi'
 import { useForm, Controller } from 'react-hook-form'
 
 import { InputText } from 'primereact/inputtext'
 import { Dropdown } from 'primereact/dropdown'
 import { FileUpload } from 'primereact/fileupload'
-import { Panel } from 'primereact/panel'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { Button } from 'primereact/button'
 
 import { Toast } from 'primereact/toast'
-import { Steps } from 'primereact/steps'
+
+var step = 0
 
 const UploadGame = () => {
   const [platformList, setPlatformList] = useState([])
@@ -31,14 +31,19 @@ const UploadGame = () => {
   const toast = useRef(null)
 
   const onSubmit = async (data) => {
-    await api.GeneralApi.uploadImage(gameImage, sessionStorage.getItem('userid'))
+    await api.GeneralApi.uploadImage(
+      gameImage,
+      sessionStorage.getItem('userid'),
+    )
     api.PlayedGamesApi.postPlayedGame(
       {
         name: data.name,
         developer: data.dev ? data.dev : 'Unknown',
         publisher: data.publisher ? data.publisher : 'Unknown',
         year: data.year ? data.year : 'Unknown',
+        played_year: data.played_year ? data.played_year : 'Unknown',
         genre: data.genre ? data.genre : 'Unknown',
+        played_hours: data.played_hours,
         rating: data.rating,
         description: data.description,
         platformid: data.platform.id,
@@ -58,7 +63,8 @@ const UploadGame = () => {
   }
 
   //FETCH PLATFORMS AND STATUSES WHEN THE COMPONENT MOUNTS
-  React.useEffect(() => {
+  useEffect(() => {
+    step = 0
     ;(async () => {
       const response_platforms = await api.GeneralApi.fetchPlatforms()
       const platforms = await response_platforms.data
@@ -74,52 +80,45 @@ const UploadGame = () => {
     setGameImage(e.files[0])
   }
 
-  //STEPS ITEMS
-  const step_items = [
-    { label: 'Info' },
-    { label: 'Played' },
-    { label: 'Cover' },
-    { label: 'Finish' },
-  ]
-  const [activeIndex, setActiveIndex] = useState(0)
+  const moveStep = (direction) => {
+    var section = document.getElementById('form-wrapper')
+    if (direction === 'forward') {
+      step++
+    } else if (direction === 'backwards') {
+      step--
+    }
+    section.setAttribute('style', `transform: translateX(-${step * 25}%)`)
+  }
 
   //HTML CODE
   return (
-    <Panel header="New Game" className="upload-game-form">
+    <div className="flex flex-column upload-game-wrapper">
       <Toast ref={toast} />
+      <h2>Upload new game</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="upload-game-fields">
-          <Steps
-            model={step_items}
-            activeIndex={activeIndex}
-            onSelect={(e) => setActiveIndex(e.index)}
-            style={{ width: '100%' }}
-          />
-
-          {activeIndex === 0 && (
-            <div className="form-content justify-content-center">
-              <span className="item flex flex-column">
+        <div id="form-wrapper">
+          {/* STEP 1 */}
+          <div className="upload-game-step">
+            <div className="flex flex-column upload-game-form">
+              <div className="item flex flex-column">
                 <label htmlFor="gname">Name*</label>
                 <InputText
                   id="gname"
                   {...register('name', { required: true })}
                 />
                 {errors.name && (
-                  <span className="error-message">Name is required</span>
+                  <div className="error-message">Name is required</div>
                 )}
-              </span>
-
-              <span className="item flex flex-column">
+              </div>
+              <div className="item flex flex-column">
                 <label htmlFor="gdev">Developer</label>
                 <InputText id="gdev" {...register('dev')} />
-              </span>
-
-              <span className="item flex flex-column">
+              </div>
+              <div className="item flex flex-column">
                 <label htmlFor="gpub">Publisher</label>
                 <InputText id="gpub" {...register('publisher')} />
-              </span>
-
-              <span className="item flex flex-column">
+              </div>
+              <div className="item flex flex-column">
                 <label htmlFor="gyear">Year</label>
                 <InputText
                   id="gyear"
@@ -127,40 +126,50 @@ const UploadGame = () => {
                   {...register('year', { min: 1970, max: 2030 })}
                 />
                 {errors.year && (
-                  <span className="error-message">Requires a valid year</span>
+                  <div className="error-message">Requires a valid year</div>
                 )}
-              </span>
+              </div>
+              <div className="item flex flex-column">
+                <label htmlFor="gplayedyear">Played Year</label>
+                <InputText
+                  id="gplayedyear"
+                  type="number"
+                  {...register('played_year', { min: 1970, max: 2030 })}
+                />
+                {errors.played_year && (
+                  <div className="error-message">Requires a valid year</div>
+                )}
+              </div>
 
-              <span className="item flex flex-column">
-                <label htmlFor="ggenre">Genre</label>
-                <InputText id="ggenre" {...register('genre')} />
-              </span>
-
-              <span className="item flex flex-column">
-                <label htmlFor="gsteam">Steam Page URL</label>
-                <InputText id="gsteam" {...register('steam_page')} />
-              </span>
-
-              <span className="flex">
-                <Button
-                  label="Continue"
-                  icon="pi pi-angle-right"
-                  iconPos="right"
+              <div className="upload-game-form-footer">
+                <span
+                  className="button-span form-button-right"
                   onClick={async () => {
-                    const result = await trigger(['name', 'year'])
+                    const result = await trigger([
+                      'name',
+                      'year',
+                      'played_year',
+                    ])
                     if (result) {
-                      setActiveIndex(activeIndex + 1)
                       clearErrors()
+                      moveStep('forward')
                     }
                   }}
-                />
-              </span>
+                >
+                  Continue
+                </span>
+              </div>
             </div>
-          )}
+          </div>
 
-          {activeIndex === 1 && (
-            <div className="form-content justify-content-center">
-              <span className="item flex flex-column">
+          {/* STEP 2 */}
+          <div className="upload-game-step">
+            <div className="flex flex-column upload-game-form">
+              <div className="item flex flex-column">
+                <label htmlFor="ggenre">Genre</label>
+                <InputText id="ggenre" {...register('genre')} />
+              </div>
+              <div className="item flex flex-column">
                 <label htmlFor="platform">Platform*</label>
                 <Controller
                   name="platform"
@@ -179,10 +188,9 @@ const UploadGame = () => {
                 {errors.platform && (
                   <div className="error-message">Platform is required</div>
                 )}
-              </span>
-
-              <span className="item flex flex-column">
-                <label htmlFor="status">Status*</label>
+              </div>
+              <div className="item flex flex-column">
+                <label htmlFor="status">Completion*</label>
                 <Controller
                   name="status"
                   control={control}
@@ -200,43 +208,46 @@ const UploadGame = () => {
                 {errors.status && (
                   <div className="error-message">Status is required</div>
                 )}
-              </span>
-
-              <span className="item flex flex-column">
+              </div>
+              <div className="item flex flex-column">
                 <label htmlFor="grating">Rating*</label>
                 <InputText
                   id="grating"
                   type="number"
+                  min={1}
+                  max={10}
                   {...register('rating', { min: 1, max: 10, required: true })}
                 />
                 {errors.rating && (
                   <div className="error-message">Requires a valid rating</div>
                 )}
-              </span>
-
-              <span className="item flex flex-column">
-                <label htmlFor="gdesc">Description (optional)</label>
-                <InputTextarea
-                  id="gdesc"
-                  rows={5}
-                  {...register('description')}
-                  autoResize
+              </div>
+              <div className="item flex flex-column">
+                <label htmlFor="ghours">Played Hours</label>
+                <InputText
+                  id="ghours"
+                  type="number"
+                  min={0}
+                  {...register('played_hours')}
                 />
-              </span>
+                {errors.played_hours && (
+                  <div className="error-message">
+                    Requires a valid amount of hours
+                  </div>
+                )}
+              </div>
 
-              <span className="flex">
-                <Button
-                  label="Back"
-                  icon="pi pi-angle-left"
-                  iconPos="right"
-                  onClick={() => {
-                    setActiveIndex(activeIndex - 1)
+              <div className="upload-game-form-footer">
+                <span
+                  className="button-span form-button-left"
+                  onClick={async () => {
+                    moveStep('backwards')
                   }}
-                />
-                <Button
-                  label="Continue"
-                  icon="pi pi-angle-right"
-                  iconPos="right"
+                >
+                  Back
+                </span>
+                <span
+                  className="button-span form-button-right"
                   onClick={async () => {
                     const result = await trigger([
                       'platform',
@@ -244,129 +255,146 @@ const UploadGame = () => {
                       'rating',
                     ])
                     if (result) {
-                      setActiveIndex(activeIndex + 1)
                       clearErrors()
+                      moveStep('forward')
                     }
                   }}
-                />
-              </span>
+                >
+                  Continue
+                </span>
+              </div>
             </div>
-          )}
-
-          {activeIndex === 2 && (
-            <div className="form-content justify-content-center">
-              <h3>Cover Image</h3>
-              <span className="item">
-                <FileUpload
-                  name="gameImage"
-                  customUpload
-                  auto
-                  uploadHandler={onupload}
-                  accept="image/*"
-                  chooseLabel="File"
-                  emptyTemplate={
-                    <p className="p-m-0">
-                      Drag and drop files to here to upload.
-                    </p>
-                  }
+          </div>
+          {/* STEP 3 */}
+          <div className="upload-game-step">
+            <div className="flex flex-column upload-game-form">
+              <div className="item flex flex-column">
+                <label htmlFor="gsteam">Steam Page URL</label>
+                <InputText id="gsteam" {...register('steam_page')} />
+              </div>
+              <div className="item flex flex-column">
+                <label htmlFor="gdesc">Description (optional)</label>
+                <InputTextarea
+                  id="gdesc"
+                  rows={5}
+                  {...register('description')}
+                  autoResize
                 />
-              </span>
-
-              <span className="flex">
-                <Button
-                  label="Back"
-                  icon="pi pi-angle-left"
-                  iconPos="right"
-                  onClick={() => {
-                    setActiveIndex(activeIndex - 1)
-                  }}
-                />
-                <Button
-                  label="Continue"
-                  icon="pi pi-angle-right"
-                  iconPos="right"
-                  onClick={() => {
-                    setActiveIndex(activeIndex + 1)
-                  }}
-                />
-              </span>
-            </div>
-          )}
-
-          {activeIndex === 3 && (
-            <>
-              <div className="form-content flex">
-                <div className="flex flex-grow-1 flex-column">
-                  <div className="flex">
-                    <p className="watch-data-item">Name</p>
-                    <p className="watch-data-item">{watchData.name}</p>
-                  </div>
-                  <div className="flex">
-                    <p className="watch-data-item">Developer</p>
-                    <p className="watch-data-item">
-                      {watchData.dev || 'Not specified'}
-                    </p>
-                  </div>
-                  <div className="flex">
-                    <p className="watch-data-item">Publisher</p>
-                    <p className="watch-data-item">
-                      {watchData.publisher || 'Not specified'}
-                    </p>
-                  </div>
-                  <div className="flex">
-                    <p className="watch-data-item">Year</p>
-                    <p className="watch-data-item">
-                      {watchData.year || 'Not specified'}
-                    </p>
-                  </div>
-                  <div className="flex">
-                    <p className="watch-data-item">Genre</p>
-                    <p className="watch-data-item">
-                      {watchData.genre || 'Not specified'}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex flex-grow-1 flex-column">
-                  <div className="flex">
-                    <p className="watch-data-item">Platform</p>
-                    <p className="watch-data-item">{watchData.platform.name}</p>
-                  </div>
-                  <div className="flex">
-                    <p className="watch-data-item">Status</p>
-                    <p className="watch-data-item">{watchData.status.name}</p>
-                  </div>
-                  <div className="flex">
-                    <p className="watch-data-item">Rating</p>
-                    <p className="watch-data-item">{watchData.rating}</p>
-                  </div>
-                  <div className="flex">
-                    <p className="watch-data-item">Description</p>
-                    <p className="watch-data-item">
-                      {watchData.description || 'No description'}
-                    </p>
-                  </div>
+              </div>
+              <div className="item flex flex-column">
+                <label>Cover Image</label>
+                <div className="item">
+                  <FileUpload
+                    name="gameImage"
+                    customUpload
+                    auto
+                    uploadHandler={onupload}
+                    accept="image/*"
+                    chooseLabel="File"
+                    emptyTemplate={
+                      <p className="p-m-0">
+                        Drag and drop files to here to upload.
+                      </p>
+                    }
+                  />
                 </div>
               </div>
-              <div className="flex justify-content-end upload-button-span">
-                <Button
-                  label="Back"
-                  icon="pi pi-angle-left"
-                  iconPos="right"
-                  onClick={() => {
-                    setActiveIndex(activeIndex - 1)
+
+              <div className="upload-game-form-footer">
+                <span
+                  className="button-span form-button-left"
+                  onClick={async () => {
+                    moveStep('backwards')
                   }}
-                />
+                >
+                  Back
+                </span>
+                <span
+                  className="button-span form-button-right"
+                  onClick={async () => {
+                    const result = await trigger([
+                      'platform',
+                      'status',
+                      'rating',
+                    ])
+                    if (result) {
+                      clearErrors()
+                      moveStep('forward')
+                    }
+                  }}
+                >
+                  Continue
+                </span>
+              </div>
+            </div>
+          </div>
+          {/* FINAL STEP */}
+          <div className="upload-game-step">
+            <div className="flex flex-column upload-game-form">
+              <table>
+                <tbody>
+                  <tr>
+                    <td>Name</td>
+                    <td>{watchData.name || 'Not specified'}</td>
+                  </tr>
+                  <tr>
+                    <td>Developer</td>
+                    <td>{watchData.publisher || 'Not specified'}</td>
+                  </tr>
+                  <tr>
+                    <td>Year</td>
+                    <td>{watchData.year || 'Not specified'}</td>
+                  </tr>
+                  <tr>
+                    <td>Played Year</td>
+                    <td>{watchData.played_year || 'Not specified'}</td>
+                  </tr>
+                  <tr>
+                    <td>Genre</td>
+                    <td>{watchData.genre || 'Not specified'}</td>
+                  </tr>
+                  <tr>
+                    <td>Platform</td>
+                    <td>{watchData.platform?.name}</td>
+                  </tr>
+                  <tr>
+                    <td>Completion</td>
+                    <td>{watchData.status?.name}</td>
+                  </tr>
+                  <tr>
+                    <td>Rating</td>
+                    <td>{watchData.rating}</td>
+                  </tr>
+                  <tr>
+                    <td>Played Hours</td>
+                    <td>{watchData.played_hours || 'Not specified'}</td>
+                  </tr>
+                  <tr>
+                    <td>Description</td>
+                    <td>{watchData.description || 'No description'}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div className="upload-game-form-footer">
+                <span
+                  className="button-span form-button-left form-last-step-buton"
+                  onClick={async () => {
+                    moveStep('backwards')
+                  }}
+                >
+                  Back
+                </span>
                 <Button
-                  className="upload-button"
+                  className="upload-button form-button-right"
                   label="Upload Game"
                   type="submit"
                 ></Button>
               </div>
-            </>
-          )}
+            </div>
+          </div>
         </div>
       </form>
-    </Panel>
+    </div>
   )
 }
 
