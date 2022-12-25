@@ -102,7 +102,7 @@ const EditGame = () => {
   }
 
   const deleteGame = () => {
-    api.PlayedGamesApi.deletePlayedGame(location.state.game, () => {
+    api.PlayedGamesApi.deletePlayedGame({id: game.id}, () => {
       toast.current.show({
         severity: 'error',
         summary: 'Game Deleted Successfully',
