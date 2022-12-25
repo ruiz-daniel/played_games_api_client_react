@@ -11,6 +11,7 @@ import { Toast } from 'primereact/toast'
 import { Button } from 'primereact/button'
 
 var gamesBackup = []
+var filteringGames = []
 
 const PlayedGamesList = () => {
   const [games, setGames] = useState([])
@@ -19,14 +20,25 @@ const PlayedGamesList = () => {
   const toast = useRef(null)
 
   const resetFilter = () => {
+    filteringGames = []
     setGames(gamesBackup)
+  }
+
+  const onFilter = (games) => {
+    filteringGames = games
+    setGames(games)
+    setFilter(false)
   }
 
   useEffect(() => {
     api.PlayedGamesApi.getPlayedGames(
       sessionStorage.getItem('userid'),
       (data) => {
-        setGames(data)
+        if (filteringGames.length) {
+          setGames(filteringGames)
+        } else {
+          setGames(data)
+        }
         gamesBackup = data
       },
       (error) => {
@@ -58,8 +70,7 @@ const PlayedGamesList = () => {
         <FilterForm
           list={gamesBackup}
           onFilter={(games) => {
-            setGames(games)
-            setFilter(false)
+            onFilter(games)
           }}
         />
       </Dialog>
