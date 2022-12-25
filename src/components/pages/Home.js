@@ -102,7 +102,7 @@ const Home = () => {
         <div className="home-header">
           <div className="home-header-text flex flex-column">
             <h1>
-              Welcome to your <span>Games Shelf</span>
+              Welcome to your <span>Game Shelf</span>
             </h1>
             <div className="home-header-description">
               <p>

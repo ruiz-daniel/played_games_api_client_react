@@ -86,7 +86,7 @@ const SideBar = ({ toggleSidebar }) => {
           }}
           to={routes.home}
         >
-          <h2 className="logo">My Games Shelf</h2>
+          <h2 className="logo">My Game Shelf</h2>
         </Link>
       </section>
       <section className="avatar-section">

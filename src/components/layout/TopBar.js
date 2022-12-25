@@ -103,7 +103,7 @@ const TopBar = () => {
           </div>
         }
         <h2 className="logo" onClick={handleLogoClick}>
-          My Games Shelf
+          My Game Shelf
         </h2>
 
         {sessionStorage.getItem('userid') && (
