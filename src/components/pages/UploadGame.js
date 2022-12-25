@@ -43,7 +43,7 @@ const UploadGame = () => {
         year: data.year ? data.year : 'Unknown',
         played_year: data.played_year ? data.played_year : 'Unknown',
         genre: data.genre ? data.genre : 'Unknown',
-        played_hours: data.played_hours,
+        played_hours: data.played_hours || 0,
         rating: data.rating,
         description: data.description,
         platformid: data.platform.id,
