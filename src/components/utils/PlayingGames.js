@@ -6,7 +6,6 @@ import { useHistory } from 'react-router'
 import { Carousel } from 'primereact/carousel'
 
 import Score from './score'
-import Status from './status'
 import * as routes from '../../routes'
 
 const PlayingGames = () => {
