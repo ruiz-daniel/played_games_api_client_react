@@ -22,7 +22,7 @@ const PlayingGames = () => {
 
   const editEvent = (game) => {
     history.push({
-      pathname: routes.editgame,
+      pathname: routes.gamedetails,
       state: {
         // location state
         gameid: game.id,

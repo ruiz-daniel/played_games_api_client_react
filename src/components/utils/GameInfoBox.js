@@ -7,10 +7,9 @@ const GameInfoBox = ({ type, text, style, game }) => {
     <div className="game-info-box-container" style={style || null}>
       {type === 'platform' && (
         <div>
-          {' '}
           <i className="pi pi-desktop"></i>
           <p>
-            Played On:{' '}
+            Played On:
             <span>
               {game
                 ? game.platform.name.length > 12
@@ -18,35 +17,47 @@ const GameInfoBox = ({ type, text, style, game }) => {
                   : game.platform.name
                 : ''}
             </span>
-          </p>{' '}
+          </p>
         </div>
       )}
       {type === 'year' && (
         <div>
-          {' '}
           <i className="pi pi-calendar"></i>
           <p>
             Released: <span>{game ? game.year : ''}</span>
-          </p>{' '}
+          </p>
+        </div>
+      )}
+      {type === 'played_year' && (
+        <div>
+          <i className="pi pi-calendar"></i>
+          <p>
+            Played: <span>{game ? game.played_year : ''}</span>
+          </p>
         </div>
       )}
       {type === 'score' && (
-        <div className="game-info-box-score">
-          <p className="info-score">
-            {' '}
+        <div className="game-info-box-number">
+          <p className="info-number">
             <Score score={game.rating} />
           </p>
           Score
         </div>
       )}
+      {type === 'hours' && (
+        <div className="game-info-box-number">
+          <p className="info-number">{game.played_hours}</p>
+          Hours
+        </div>
+      )}
       {type === 'steam' && (
-        <div className="flex flex-column info-steam">
+        <div className="flex flex-column justify-content-center info-steam">
           <a href={game.steam_page} target="blank">
             <img
-              src="https://localhost:5001/game_images/Steam Logo.png"
+              src="https://store.cloudflare.steamstatic.com/public/shared/images/header/logo_steam.svg?t=962016"
               alt="Steam Page"
             ></img>
-          </a>{' '}
+          </a>
         </div>
       )}
     </div>

@@ -9,7 +9,7 @@ const GameBox = (props) => {
   const history = useHistory()
   const editEvent = () => {
     history.push({
-      pathname: routes.editgame,
+      pathname: routes.gamedetails,
       state: {
         // location state
         gameid: props.game.id,

@@ -1,5 +1,5 @@
 .game-details-wrapper {
-  padding-left: 3%;
+  @include paddingX(3%);
 
   .edit-button {
     border-color: #2f2e2e;
@@ -17,18 +17,32 @@
   }
 
   .game-details-image {
-    width: 50%;
+    width: 100%;
+
     .p-image,
-    .p-image-preview-container,
-    .p-image-preview-indicator,
-    img {
+    .p-image-preview-container {
       width: 100%;
     }
-    @media screen and (max-width: 900px) {
-      width: 100%;
+    // .p-image-preview-indicator {
+    //   left: 20%;
+    // }
+
+    .p-image-preview-indicator,
+    img,
+    .game-details-buttons {
+      width: 40%;
+
+      @media (max-width: 1200px) {
+        width: 50%;
+      }
+
+      @media (max-width: 900px) {
+        width: 100%;
+      }
     }
   }
   .game-details-fields {
+    text-align: start;
     p {
       font-size: larger;
     }
@@ -37,6 +51,9 @@
     }
     .score {
       font-weight: 900;
+    }
+    .game-details-info-box {
+      width: 100%;
     }
   }
   .game-details-edit {

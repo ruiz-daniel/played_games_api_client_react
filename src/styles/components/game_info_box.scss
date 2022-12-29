@@ -1,24 +1,23 @@
 .game-info-box-container {
   text-align: center;
-  background: $background-color-light;
+  background: $background-transparent-darker;
   width: 160px;
-  height: 140px;
   padding: 10px;
   border-radius: 10px;
   i {
     width: 100%;
     font-size: 50px;
   }
-  .game-info-box-score {
+  .game-info-box-number {
     font-size: larger;
-    .info-score {
+    .info-number {
       @include marginY(0);
       font-size: 50px;
     }
   }
   .info-steam {
     height: 100px;
-    align-content: center;
+    align-items: center;
     img {
       width: 100%;
     }

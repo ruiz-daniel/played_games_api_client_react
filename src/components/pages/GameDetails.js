@@ -20,7 +20,7 @@ import { sr_images, playedgames } from '../../routes'
 import { Toast } from 'primereact/toast'
 import GameInfoBox from '../utils/GameInfoBox'
 
-const EditGame = () => {
+const GameDetails = () => {
   const location = useLocation()
   const history = useHistory()
   const [game, setGame] = useState({
@@ -31,6 +31,7 @@ const EditGame = () => {
     publisher: '',
     genre: '',
     rating: 0,
+    played_hours: 0,
     status: {
       id: '',
       name: '',
@@ -153,15 +154,16 @@ const EditGame = () => {
   }
 
   return (
-      <div className="game-details-wrapper flex flex-column ">
+      <div className="game-details-wrapper">
         <Toast ref={toast} />
-        <div className="game-details-image">
-          <h2>{game.name}</h2>
+        <h2>{game.name}</h2>
+          <div className="game-details-image flex flex-column ">
+          
           <Image src={image} alt={game.name} preview />
-          <div className="flex justify-content-end mt-2">
+          <div className="game-details-buttons flex justify-content-end mt-2">
             <Button
               icon={editing ? 'pi pi-times' : 'pi pi-pencil'}
-              className="p-button-outlined p-button-rounded edit-button"
+              className="p-button-outlined p-button-rounded p-button-warning edit-button"
               onClick={() => {
                 setEditing(!editing)
               }}
@@ -173,8 +175,8 @@ const EditGame = () => {
             />
           </div>
         </div>
-        {!editing && (
-          <div className="game-details-fields flex-column">
+        
+          <div className="game-details-fields">
             {game.developer && (
               <p>
                 Developed by <span>{game.developer}</span>
@@ -190,7 +192,7 @@ const EditGame = () => {
                 Genre: <span>{game.genre}</span>
               </p>
             )}
-            <div className="flex">
+            <div className='flex flex-wrap game-details-info-box'>
               <GameInfoBox
                 type="platform"
                 style={{ marginRight: '10px' }}
@@ -203,9 +205,23 @@ const EditGame = () => {
                   game={game}
                 />
               )}
+              {game.played_year && (
+                <GameInfoBox
+                  type="played_year"
+                  style={{ marginRight: '10px' }}
+                  game={game}
+                />
+              )}
               {game.rating && (
                 <GameInfoBox
                   type="score"
+                  style={{ marginRight: '10px' }}
+                  game={game}
+                />
+              )}
+              {game.played_hours > 0 && (
+                <GameInfoBox
+                  type="hours"
                   style={{ marginRight: '10px' }}
                   game={game}
                 />
@@ -218,6 +234,7 @@ const EditGame = () => {
                 />
               )}
             </div>
+            
             <p>
               <Status status={game.status.name} />{' '}
             </p>
@@ -225,7 +242,8 @@ const EditGame = () => {
               <p>{game.description}</p>
             )}
           </div>
-        )}
+        
+        
         {editing && (
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="game-details-edit flex flex-wrap">
@@ -337,4 +355,4 @@ const EditGame = () => {
   )
 }
 
-export default EditGame
+export default GameDetails

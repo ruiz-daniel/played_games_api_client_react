@@ -4,13 +4,13 @@ export const dashboard = '/dashboard'
 export const playedgames = '/playedgames'
 export const tableview = '/tableview'
 export const uploadgame = '/uploadgame'
-export const editgame = '/editgame'
+export const gamedetails = '/gamedetails'
 export const stats = '/stats'
 export const top10games = '/top10games'
 export const managetop10games = '/managetop10games'
 export const top10characters = '/top10characters'
 export const login = '/login'
-export const loggedRoutes = [playedgames, tableview, uploadgame, editgame, stats, top10games, managetop10games, top10characters]
+export const loggedRoutes = [playedgames, tableview, uploadgame, gamedetails, stats, top10games, managetop10games, top10characters]
 
 //server routes
 export const sr_images = 'https://localhost:5001/game_images/'
