@@ -1,6 +1,11 @@
 .game-details-wrapper {
   @include paddingX(3%);
 
+  .p-dialog,
+  .p-dialog-content {
+    background: none;
+  }
+
   .edit-button {
     border-color: #2f2e2e;
     color: #2f2e2e;
@@ -19,8 +24,8 @@
   .game-details-image {
     width: 100%;
 
-    .p-image,
-    .p-image-preview-container {
+    .p-image
+     {
       width: 100%;
     }
     // .p-image-preview-indicator {
