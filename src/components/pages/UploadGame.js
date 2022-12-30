@@ -90,12 +90,16 @@ const UploadGame = () => {
     section.setAttribute('style', `transform: translateX(-${step * 25}%)`)
   }
 
+  const checkKeyDown = (e) => {
+    if (e.code === 'Enter') e.preventDefault();
+  };
+
   //HTML CODE
   return (
     <div className="flex flex-column upload-game-wrapper">
       <Toast ref={toast} />
       <h2>Upload new game</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} onKeyDown={(e) => checkKeyDown(e)}>
         <div id="form-wrapper">
           {/* STEP 1 */}
           <div className="upload-game-step">
