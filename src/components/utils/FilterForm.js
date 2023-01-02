@@ -7,6 +7,7 @@ import { InputText } from 'primereact/inputtext'
 import { Dropdown } from 'primereact/dropdown'
 import { Button } from 'primereact/button'
 
+// Keep the filter when component unmounts
 var filterRecord = {
   name: '',
   dev: '',
@@ -72,13 +73,11 @@ const FilterForm = ({ list, onFilter }) => {
         compareIgnoreCase(game.name, name) &&
         compareIgnoreCase(game.developer, dev) &&
         compareIgnoreCase(game.publisher, publisher) &&
-        (game.year?.includes(year) || !game.year) &&
-        (game.played_year?.includes(played_year) || !game.played_year) &&
-        (played_hours == '' || game.played_hours
-          ? Number(game.played_hours) >= Number(played_hours)
-          : true) &&
+        compare(year, game.year) &&
+        compare(played_year, game.played_year) &&
+        compare(played_hours, game.played_hours, 'ge') &&
         compareIgnoreCase(game.genre, genre) &&
-        (rating == '' || game.rating == rating) &&
+        compare(rating, game.rating) &&
         compareIgnoreCase(
           game.platform.name,
           platform
@@ -131,6 +130,33 @@ const FilterForm = ({ list, onFilter }) => {
     }
     return stringA.toUpperCase().includes(stringB.toUpperCase())
   }
+  const compare = (valueA, valueB, comparison) => {
+    // Active filter but no value on game -> filter out
+    if (valueA && !valueB) {
+      return false
+    }
+    // No Active filter -> filter in
+    if (valueA === '') {
+      return true
+    }
+    switch (comparison) {
+      case 'lt':
+        return Number(valueA) < Number(valueB)
+
+      case 'le':
+        return Number(valueA) <= Number(valueB)
+
+      case 'gt':
+        return Number(valueA) > Number(valueB)
+
+      case 'ge':
+        return Number(valueA) >= Number(valueB)
+
+      default:
+        break
+    }
+    return valueA == valueB
+  }
 
   const handleFilter = () => {
     saveRecords()
@@ -172,7 +198,6 @@ const FilterForm = ({ list, onFilter }) => {
 
   const enterKeyEvent = (e) => {
     if (e.key === 'Enter') {
-      console.log(e)
       handleFilter()
     }
   }
@@ -252,7 +277,9 @@ const FilterForm = ({ list, onFilter }) => {
       }}
     >
       <div className="filter-in">
-        <h3>Filter In <span onClick={clearInFilters}>X</span></h3>
+        <h3>
+          Filter In <span onClick={clearInFilters}>X</span>
+        </h3>
         <InputText
           placeholder="Name"
           className="p-inputtext-sm"
@@ -328,7 +355,9 @@ const FilterForm = ({ list, onFilter }) => {
         />
       </div>
       <div className="filter-out">
-        <h3>Filter Out <span onClick={clearOutFilters}>X</span></h3>
+        <h3>
+          Filter Out <span onClick={clearOutFilters}>X</span>
+        </h3>
         <InputText
           placeholder="Name"
           className="p-inputtext-sm"

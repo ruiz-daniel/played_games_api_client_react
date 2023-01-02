@@ -11,6 +11,7 @@ import { Toast } from 'primereact/toast'
 import { Button } from 'primereact/button'
 
 var gamesBackup = []
+// Keep the filtered games when component unmounts
 var filteringGames = []
 
 const PlayedGamesList = () => {
