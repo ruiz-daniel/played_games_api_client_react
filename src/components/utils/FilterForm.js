@@ -7,24 +7,58 @@ import { InputText } from 'primereact/inputtext'
 import { Dropdown } from 'primereact/dropdown'
 import { Button } from 'primereact/button'
 
-const FilterForm = ({ list, onFilter }) => {
-  const [name, setName] = useState('')
-  const [year, setYear] = useState('')
-  const [dev, setDev] = useState('')
-  const [publisher, setPublisher] = useState('')
-  const [genre, setGenre] = useState('')
-  const [rating, setRating] = useState('')
-  const [status, setStatus] = useState()
-  const [platform, setPlatform] = useState()
+var filterRecord = {
+  name: '',
+  dev: '',
+  publisher: '',
+  year: '',
+  genre: '',
+  rating: '',
+  status: undefined,
+  platform: undefined,
+  played_year: '',
+  played_hours: '',
+}
 
-  const [nameOut, setNameOut] = useState('')
-  const [yearOut, setYearOut] = useState('')
-  const [devOut, setDevOut] = useState('')
-  const [publisherOut, setPublisherOut] = useState('')
-  const [genreOut, setGenreOut] = useState('')
-  const [ratingOut, setRatingOut] = useState('')
-  const [statusOut, setStatusOut] = useState()
-  const [platformOut, setPlatformOut] = useState()
+var filterOutRecord = {
+  name: '',
+  dev: '',
+  publisher: '',
+  year: '',
+  genre: '',
+  rating: '',
+  status: undefined,
+  platform: undefined,
+  played_year: '',
+  played_hours: '',
+}
+
+const FilterForm = ({ list, onFilter }) => {
+  const [name, setName] = useState(filterRecord.name)
+  const [year, setYear] = useState(filterRecord.year)
+  const [played_year, setPlayedYear] = useState(filterRecord.played_year)
+  const [played_hours, setPlayedHours] = useState(filterRecord.played_hours)
+  const [dev, setDev] = useState(filterRecord.dev)
+  const [publisher, setPublisher] = useState(filterRecord.publisher)
+  const [genre, setGenre] = useState(filterRecord.genre)
+  const [rating, setRating] = useState(filterRecord.rating)
+  const [status, setStatus] = useState(filterRecord.status)
+  const [platform, setPlatform] = useState(filterRecord.platform)
+
+  const [nameOut, setNameOut] = useState(filterOutRecord.name)
+  const [yearOut, setYearOut] = useState(filterOutRecord.year)
+  const [played_yearOut, setPlayedYearOut] = useState(
+    filterOutRecord.played_year,
+  )
+  const [played_hoursOut, setPlayedHoursOut] = useState(
+    filterOutRecord.played_hours,
+  )
+  const [devOut, setDevOut] = useState(filterOutRecord.dev)
+  const [publisherOut, setPublisherOut] = useState(filterOutRecord.publisher)
+  const [genreOut, setGenreOut] = useState(filterOutRecord.genre)
+  const [ratingOut, setRatingOut] = useState(filterOutRecord.rating)
+  const [statusOut, setStatusOut] = useState(filterOutRecord.status)
+  const [platformOut, setPlatformOut] = useState(filterOutRecord.platform)
 
   const [platformList, setPlatformList] = useState([])
   const [statusList, setStatusList] = useState([])
@@ -33,11 +67,16 @@ const FilterForm = ({ list, onFilter }) => {
     var filtered = []
 
     list.forEach((game) => {
+      // Compare filters using include. Empty filters will not have effect
       if (
         compareIgnoreCase(game.name, name) &&
         compareIgnoreCase(game.developer, dev) &&
         compareIgnoreCase(game.publisher, publisher) &&
-        game.year.includes(year) &&
+        (game.year?.includes(year) || !game.year) &&
+        (game.played_year?.includes(played_year) || !game.played_year) &&
+        (played_hours == '' || game.played_hours
+          ? Number(game.played_hours) >= Number(played_hours)
+          : true) &&
         compareIgnoreCase(game.genre, genre) &&
         (rating == '' || game.rating == rating) &&
         compareIgnoreCase(
@@ -54,12 +93,19 @@ const FilterForm = ({ list, onFilter }) => {
         )
       ) {
         filtered.push(game)
+        // Immediately pop out if it matches a filter-out condition
         if (
           (nameOut !== '' && compareIgnoreCase(game.name, nameOut)) ||
           (devOut !== '' && compareIgnoreCase(game.developer, devOut)) ||
           (publisherOut !== '' &&
             compareIgnoreCase(game.publisher, publisherOut)) ||
-          (yearOut !== '' && game.year.includes(yearOut)) ||
+          (yearOut !== '' && (game.year?.includes(yearOut) || !game.year)) ||
+          (played_yearOut !== '' &&
+            (game.played_year?.includes(played_yearOut) ||
+              !game.played_year)) ||
+          (played_hoursOut !== '' && game.played_hours
+            ? Number(game.played_hours) > Number(played_hoursOut)
+            : false) ||
           (genreOut !== '' && compareIgnoreCase(game.genre, genreOut)) ||
           (ratingOut !== '' && game.rating == ratingOut) ||
           (platformOut !== undefined &&
@@ -80,35 +126,111 @@ const FilterForm = ({ list, onFilter }) => {
   }
 
   const compareIgnoreCase = (stringA, stringB) => {
+    if (stringA === undefined || stringB === undefined) {
+      return false
+    }
     return stringA.toUpperCase().includes(stringB.toUpperCase())
   }
 
   const handleFilter = () => {
+    saveRecords()
     onFilter(filter())
   }
-  const clearFilters = () => {
+
+  const clearInFilters = () => {
     setName('')
     setDev('')
     setPublisher('')
     setYear('')
+    setPlayedYear('')
+    setPlayedHours('')
+    setPlayedHoursOut('')
     setGenre('')
     setStatus()
     setPlatform()
     setRating('')
+
+    clearInRecords()
+  }
+  const clearOutFilters = () => {
     setNameOut('')
     setPublisherOut('')
     setDevOut('')
     setYearOut('')
+    setPlayedYearOut('')
     setGenreOut('')
     setStatusOut()
     setPlatformOut()
     setRatingOut('')
+
+    clearOutRecords()
+  }
+  const clearFilters = () => {
+    clearInFilters()
+    clearOutFilters()
   }
 
   const enterKeyEvent = (e) => {
     if (e.key === 'Enter') {
       console.log(e)
       handleFilter()
+    }
+  }
+
+  const saveRecords = () => {
+    filterRecord = {
+      name,
+      dev,
+      publisher,
+      year,
+      genre,
+      rating,
+      status,
+      platform,
+      played_year,
+      played_hours,
+    }
+
+    filterOutRecord = {
+      name: nameOut,
+      dev: devOut,
+      publisher: publisherOut,
+      year: yearOut,
+      genre: genreOut,
+      rating: ratingOut,
+      status: statusOut,
+      platform: platformOut,
+      played_year: played_yearOut,
+      played_hours: played_hoursOut,
+    }
+  }
+
+  const clearInRecords = () => {
+    filterRecord = {
+      name: '',
+      dev: '',
+      publisher: '',
+      year: '',
+      genre: '',
+      rating: '',
+      status: undefined,
+      platform: undefined,
+      played_year: '',
+      played_hours: '',
+    }
+  }
+  const clearOutRecords = () => {
+    filterOutRecord = {
+      name: '',
+      dev: '',
+      publisher: '',
+      year: '',
+      genre: '',
+      rating: '',
+      status: undefined,
+      platform: undefined,
+      played_year: '',
+      played_hours: '',
     }
   }
 
@@ -124,158 +246,157 @@ const FilterForm = ({ list, onFilter }) => {
   }, [])
   return (
     <div
-      className="filters-border"
+      className="filters-container"
       onKeyUp={(e) => {
         enterKeyEvent(e)
       }}
     >
-      <div className="filters-container">
-        <div className="filter-in">
-          <h3>Filter by</h3>
-          <div>
-            <InputText
-              id="fname"
-              placeholder="Name"
-              className="p-inputtext-sm"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <InputText
-              id="fdev"
-              placeholder="Developer"
-              className="p-inputtext-sm"
-              value={dev}
-              onChange={(e) => setDev(e.target.value)}
-            />
-            <InputText
-              id="fpub"
-              placeholder="Publisher"
-              className="p-inputtext-sm"
-              value={publisher}
-              onChange={(e) => setPublisher(e.target.value)}
-            />
-            <InputText
-              id="fyear"
-              placeholder="Year"
-              className="p-inputtext-sm"
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
-            />
-            <InputText
-              id="fgenre"
-              placeholder="Genre"
-              className="p-inputtext-sm"
-              value={genre}
-              onChange={(e) => setGenre(e.target.value)}
-            />
-            <Dropdown
-              id="fplatform"
-              placeholder="Platform"
-              className="p-inputtext-sm"
-              options={platformList}
-              optionLabel="name"
-              value={platform}
-              editable
-              onChange={(e) => setPlatform(e.value)}
-            />
-            <Dropdown
-              id="fstatus"
-              placeholder="Status"
-              className="p-inputtext-sm"
-              options={statusList}
-              optionLabel="name"
-              value={status}
-              editable
-              onChange={(e) => setStatus(e.value)}
-            />
-            <InputText
-              id="frating"
-              placeholder="Rating"
-              className="p-inputtext-sm"
-              value={rating}
-              onChange={(e) => setRating(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="filter-out">
-          <h3>Filter Out</h3>
-          <div>
-            <InputText
-              id="fname"
-              placeholder="Name"
-              className="p-inputtext-sm"
-              value={nameOut}
-              onChange={(e) => setNameOut(e.target.value)}
-            />
-            <InputText
-              id="fdev"
-              placeholder="Developer"
-              className="p-inputtext-sm"
-              value={devOut}
-              onChange={(e) => setDevOut(e.target.value)}
-            />
-            <InputText
-              id="fpub"
-              placeholder="Publisher"
-              className="p-inputtext-sm"
-              value={publisherOut}
-              onChange={(e) => setPublisherOut(e.target.value)}
-            />
-            <InputText
-              id="fyear"
-              placeholder="Year"
-              className="p-inputtext-sm"
-              value={yearOut}
-              onChange={(e) => setYearOut(e.target.value)}
-            />
-            <InputText
-              id="fgenre"
-              placeholder="Genre"
-              className="p-inputtext-sm"
-              value={genreOut}
-              onChange={(e) => setGenreOut(e.target.value)}
-            />
-            <Dropdown
-              id="fplatform"
-              placeholder="Platform"
-              className="p-inputtext-sm"
-              options={platformList}
-              optionLabel="name"
-              value={platformOut}
-              editable
-              onChange={(e) => setPlatformOut(e.target.value)}
-            />
-            <Dropdown
-              id="fstatus"
-              placeholder="Status"
-              className="p-inputtext-sm"
-              options={statusList}
-              optionLabel="name"
-              value={statusOut}
-              editable
-              onChange={(e) => setStatusOut(e.value)}
-            />
-            <InputText
-              id="frating"
-              placeholder="Rating"
-              className="p-inputtext-sm"
-              value={ratingOut}
-              onChange={(e) => setRatingOut(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="filter-buttons">
-          <Button
-            className="clear-button"
-            onClick={clearFilters}
-            label="Clear"
-          />
-          <Button
-            className="filter-button"
-            onClick={handleFilter}
-            label="Filter"
-          />
-        </div>
+      <div className="filter-in">
+        <h3>Filter In <span onClick={clearInFilters}>X</span></h3>
+        <InputText
+          placeholder="Name"
+          className="p-inputtext-sm"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <InputText
+          placeholder="Developer"
+          className="p-inputtext-sm"
+          value={dev}
+          onChange={(e) => setDev(e.target.value)}
+        />
+        <InputText
+          placeholder="Publisher"
+          className="p-inputtext-sm"
+          value={publisher}
+          onChange={(e) => setPublisher(e.target.value)}
+        />
+        <InputText
+          placeholder="Year"
+          className="p-inputtext-sm"
+          value={year}
+          onChange={(e) => setYear(e.target.value)}
+        />
+        <InputText
+          placeholder="Played Year"
+          className="p-inputtext-sm"
+          value={played_year}
+          onChange={(e) => setPlayedYear(e.target.value)}
+        />
+
+        <InputText
+          placeholder="Genre"
+          className="p-inputtext-sm"
+          value={genre}
+          onChange={(e) => setGenre(e.target.value)}
+        />
+        <Dropdown
+          placeholder="Platform"
+          className="p-inputtext-sm"
+          options={platformList}
+          optionLabel="name"
+          value={platform}
+          editable
+          onChange={(e) => setPlatform(e.value)}
+        />
+        <Dropdown
+          placeholder="Status"
+          className="p-inputtext-sm"
+          options={statusList}
+          optionLabel="name"
+          value={status}
+          editable
+          onChange={(e) => setStatus(e.value)}
+        />
+        <InputText
+          placeholder="Rating"
+          className="p-inputtext-sm"
+          value={rating}
+          onChange={(e) => setRating(e.target.value)}
+        />
+        <InputText
+          placeholder="Played Hours (min)"
+          className="p-inputtext-sm"
+          value={played_hours}
+          onChange={(e) => setPlayedHours(e.target.value)}
+        />
+        <InputText
+          placeholder="Played Hours (max)"
+          className="p-inputtext-sm"
+          value={played_hoursOut}
+          onChange={(e) => setPlayedHoursOut(e.target.value)}
+        />
+      </div>
+      <div className="filter-out">
+        <h3>Filter Out <span onClick={clearOutFilters}>X</span></h3>
+        <InputText
+          placeholder="Name"
+          className="p-inputtext-sm"
+          value={nameOut}
+          onChange={(e) => setNameOut(e.target.value)}
+        />
+        <InputText
+          placeholder="Developer"
+          className="p-inputtext-sm"
+          value={devOut}
+          onChange={(e) => setDevOut(e.target.value)}
+        />
+        <InputText
+          placeholder="Publisher"
+          className="p-inputtext-sm"
+          value={publisherOut}
+          onChange={(e) => setPublisherOut(e.target.value)}
+        />
+        <InputText
+          placeholder="Year"
+          className="p-inputtext-sm"
+          value={yearOut}
+          onChange={(e) => setYearOut(e.target.value)}
+        />
+        <InputText
+          placeholder="Played Year"
+          className="p-inputtext-sm"
+          value={played_yearOut}
+          onChange={(e) => setPlayedYearOut(e.target.value)}
+        />
+        <InputText
+          placeholder="Genre"
+          className="p-inputtext-sm"
+          value={genreOut}
+          onChange={(e) => setGenreOut(e.target.value)}
+        />
+        <Dropdown
+          placeholder="Platform"
+          className="p-inputtext-sm"
+          options={platformList}
+          optionLabel="name"
+          value={platformOut}
+          editable
+          onChange={(e) => setPlatformOut(e.target.value)}
+        />
+        <Dropdown
+          placeholder="Status"
+          className="p-inputtext-sm"
+          options={statusList}
+          optionLabel="name"
+          value={statusOut}
+          editable
+          onChange={(e) => setStatusOut(e.value)}
+        />
+        <InputText
+          placeholder="Rating"
+          className="p-inputtext-sm"
+          value={ratingOut}
+          onChange={(e) => setRatingOut(e.target.value)}
+        />
+      </div>
+      <div className="filter-buttons">
+        <Button
+          className="filter-button"
+          onClick={handleFilter}
+          label="Filter"
+        />
+        <Button className="clear-button" onClick={clearFilters} label="Clear" />
       </div>
     </div>
   )

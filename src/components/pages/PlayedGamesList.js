@@ -5,7 +5,7 @@ import GameBox from '../utils/GameBox'
 import FilterForm from '../utils/FilterForm'
 import { ScrollPanel } from 'primereact/scrollpanel'
 import { ScrollTop } from 'primereact/scrolltop'
-import { Dialog } from 'primereact/dialog'
+import { Sidebar } from 'primereact/sidebar';
 
 import { Toast } from 'primereact/toast'
 import { Button } from 'primereact/button'
@@ -58,22 +58,14 @@ const PlayedGamesList = () => {
   return (
     <div className="played-games-list">
       <Toast ref={toast} position="top-center" />
-      <Dialog
-        visible={filter}
-        showHeader={false}
-        dismissableMask
-        position="top"
-        onHide={() => {
-          setFilter(false)
-        }}
-      >
+      <Sidebar visible={filter} position="right" showCloseIcon={false} onHide={() => setFilter(false)} className='filter-sidebar'>
         <FilterForm
           list={gamesBackup}
           onFilter={(games) => {
             onFilter(games)
           }}
         />
-      </Dialog>
+      </Sidebar>
       <div className="options-container flex">
         <Button
           icon="pi pi-filter"

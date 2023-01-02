@@ -149,3 +149,12 @@ body.dark-mode {
 .p-dialog-content {
   border-radius: 0 !important;
 }
+
+.filter-sidebar {
+  .p-sidebar-header {
+    padding: 0 !important;
+  }
+  .p-sidebar-content {
+    padding: 0 !important;
+  }
+}
