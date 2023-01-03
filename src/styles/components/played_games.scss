@@ -30,9 +30,27 @@
 
 .options-container {
   margin-bottom: 15px;
-  width: 95%;
+  width: 100%;
   .p-button {
     margin-right: 10px;
     @include blackButton();
+  }
+  .p-inputtext {
+      margin-right: 1rem;
+      background-color: $background-transparent;
+      border-color: $background-color-dark;
+      color: $text-color-light;
+      font-size: large;
+    }
+  @media (max-width: 600px) {
+    .p-inputtext {
+      width: 60%;
+    }
+    .p-button-label {
+      display: none;
+    }
+    .p-button-icon {
+      margin-right: 0;
+    }
   }
 }

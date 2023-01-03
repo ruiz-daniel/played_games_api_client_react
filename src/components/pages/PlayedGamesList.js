@@ -5,7 +5,8 @@ import GameBox from '../utils/GameBox'
 import FilterForm from '../utils/FilterForm'
 import { ScrollPanel } from 'primereact/scrollpanel'
 import { ScrollTop } from 'primereact/scrolltop'
-import { Sidebar } from 'primereact/sidebar';
+import { Sidebar } from 'primereact/sidebar'
+import { InputText } from 'primereact/inputtext'
 
 import { Toast } from 'primereact/toast'
 import { Button } from 'primereact/button'
@@ -29,6 +30,35 @@ const PlayedGamesList = () => {
     filteringGames = games
     setGames(games)
     setFilter(false)
+  }
+
+  const localFilter = (value) => {
+    const filtered = []
+    gamesBackup.forEach((game) => {
+      let found = false
+      Object.keys(game).forEach((key) => {
+        if (!['played_hours', 'id'].includes(key)) {
+          if (['status', 'platform'].includes(key)) {
+            if (game[key].name == value) {
+              found = true
+            }
+          } else if (typeof game[key] === 'string') {
+            if (game[key].includes(value)) {
+              found = true
+            }
+          } else {
+            if (game[key] == value) {
+              found = true
+            }
+          }
+        }
+      })
+      if (found) {
+        filtered.push(game)
+      }
+    })
+    filteringGames = filtered
+    setGames(filtered)
   }
 
   useEffect(() => {
@@ -59,7 +89,13 @@ const PlayedGamesList = () => {
   return (
     <div className="played-games-list">
       <Toast ref={toast} position="top-center" />
-      <Sidebar visible={filter} position="right" showCloseIcon={false} onHide={() => setFilter(false)} className='filter-sidebar'>
+      <Sidebar
+        visible={filter}
+        position="right"
+        showCloseIcon={false}
+        onHide={() => setFilter(false)}
+        className="filter-sidebar"
+      >
         <FilterForm
           list={gamesBackup}
           onFilter={(games) => {
@@ -68,9 +104,14 @@ const PlayedGamesList = () => {
         />
       </Sidebar>
       <div className="options-container flex">
+        <InputText
+          placeholder="Search"
+          className="p-inputtext-sm"
+          onChange={(e) => localFilter(e.target.value)}
+        />
         <Button
           icon="pi pi-filter"
-          label="Filter"
+          label="Advanced Filter"
           onClick={() => setFilter(!filter)}
         />
         <Button
