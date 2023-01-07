@@ -1,32 +1,46 @@
 .home-header {
   font-family: 'Roboto';
-  height: 60vh;
-  background-image: url('../../images/pacman wall.png');
-  background-position: left 25%;
-  background-size: 100%;
+  // color: $text-color-purple;
+  height: 50vh;
+  background-image: url('../../images/electric controller.png');
+  background-size: cover;
   text-align: center;
   display: flex;
   align-items: center;
+  @include paddingX(2rem);
+  
   h1 {
     margin: 0;
-    margin-left: 3rem;
     font-size: 50px;
   }
   .home-header-description {
-    margin-left: 3rem;
     p {
       align-self: center;
       font-size: 35px;
+      font-weight: 700;
     }
 
     span {
       cursor: pointer;
-      color: blue;
+      color: $text-color-silver;
     }
   }
-}
-.p-scrollpanel-content {
-  padding: 0;
+
+  @media (max-width: 678px) {
+    height: 30vh;
+    color: $text-color-gold;
+    padding: 1rem;
+    h1 {
+      display: none;
+      font-size: 30px;
+    }
+    .home-header-description {
+      display: none;
+    p {
+      font-size: 20px !important;
+    }
+  }
+  }
 }
 
 .home-section {
@@ -35,7 +49,7 @@
   padding: 0 3rem;
   .home-section-desc {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
     opacity: 0;
     transform: translateY(-40%);
@@ -43,6 +57,9 @@
   }
   .home-section-img {
     padding: 5rem;
+    @media (max-width: 900px) {
+      padding: 0 !important;
+    }
     opacity: 0;
     transform: translateX(190%);
     transition: all 1000ms;
@@ -54,7 +71,6 @@
 }
 .is-inview {
   .home-section-img {
-    padding: 5rem;
     opacity: 1 !important;
     transform: translateX(0);
   }

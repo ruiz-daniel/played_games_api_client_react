@@ -161,7 +161,7 @@ const TopBar = () => {
       <Toast ref={toast} />
       <Dialog
         visible={loginVisible}
-        style={{ width: '40vw' }}
+        className="login-dialog"
         showHeader={false}
         dismissableMask
         onHide={() => {

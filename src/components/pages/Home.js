@@ -5,7 +5,8 @@ import { Dialog } from 'primereact/dialog'
 import { Toast } from 'primereact/toast'
 
 import LoginForm from '../utils/LoginForm'
-import shelfImage from '../../images/empty shelf background.png'
+import listImage from '../../images/games_shelf_games_list.png'
+import detailsImage from '../../images/games_shelf_game_details.png'
 
 import { useHistory } from 'react-router-dom'
 
@@ -44,9 +45,7 @@ const Home = () => {
       life: 3000,
     })
     showLogin(false)
-    history.push(
-      routes.dashboard,
-    )
+    history.push(routes.dashboard)
     window.location.reload()
   }
   const handleError = (error) => {
@@ -86,7 +85,7 @@ const Home = () => {
       <Toast ref={toast} />
       <Dialog
         visible={loginVisible}
-        style={{ width: '40vw' }}
+        className="login-dialog"
         showHeader={false}
         dismissableMask
         onHide={() => {
@@ -99,37 +98,43 @@ const Home = () => {
           }}
         />
       </Dialog>
-        <div className="home-header">
-          <div className="home-header-text flex flex-column">
-            <h1>
-              Welcome to your <span>Game Shelf</span>
-            </h1>
-            <div className="home-header-description">
-              <p>
-                <span onClick={toggleLogin}>Login</span> or{' '}
-                <span>Register</span> to start organizing your games{' '}
-              </p>
-            </div>
+      <div className="home-header">
+        <div className="home-header-text flex flex-column">
+          <h1>
+            Welcome to your <span>Game Shelf</span>
+          </h1>
+          <div className="home-header-description">
+            <p>
+              <span onClick={toggleLogin}>Login</span> or <span>Register</span>{' '}
+              to start organizing your games{' '}
+            </p>
           </div>
         </div>
-        <h1 className='text-center'>What can I do here?</h1>
-        <h1 className='text-center'><i className='pi pi-arrow-down '></i></h1>
-        <section className="home-section grid">
-          <div className="home-section-img col-6">
-            <img src={shelfImage} alt="Shelf"></img>
-          </div>
-          <div className="home-section-desc col-6">
-            <h1>Organize all your games</h1>
-          </div>
-        </section>
-        <section className="home-section grid">
-          <div className="home-section-img col-6">
-            <img src={shelfImage} alt="Shelf"></img>
-          </div>
-          <div className="home-section-desc col-6">
-            <h1>Organize all your games</h1>
-          </div>
-        </section>
+      </div>
+      <section className="home-section grid">
+        <div className="home-section-img col-12 md:col-6">
+          <img src={listImage} alt="Shelf"></img>
+        </div>
+        <div className="home-section-desc col-12 md:col-6">
+          <h1>Organize all your games</h1>
+          <h3>
+            Create your games shelf with all the games you've played, finished,
+            dropped. Ranked them to your liking
+          </h3>
+        </div>
+      </section>
+      <section className="home-section grid">
+        <div className="home-section-img col-12 md:col-6">
+          <img src={detailsImage} alt="Shelf"></img>
+        </div>
+        <div className="home-section-desc col-12 md:col-6">
+          <h1>Add your own info</h1>
+          <h3>
+            When it came out, when you played it, where you played it, how long?
+            Record your journey with your games
+          </h3>
+        </div>
+      </section>
     </>
   )
 }
