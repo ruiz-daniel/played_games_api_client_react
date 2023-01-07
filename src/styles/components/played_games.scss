@@ -37,10 +37,9 @@
   }
   .p-inputtext {
       margin-right: 1rem;
-      background-color: $background-transparent;
       border-color: $background-color-dark;
-      color: $text-color-light;
-      font-size: large;
+      @include darkInput();
+      
     }
   @media (max-width: 600px) {
     .p-inputtext {

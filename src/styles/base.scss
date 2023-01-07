@@ -179,6 +179,12 @@ body.dark-mode {
     width: 80vw;
   }
 }
+.favorites-list-dialog {
+  max-width: 70vw;
+  @media (max-width: 600px) {
+    max-width: 100vw;
+  }
+}
 .filters-border {
   padding: 1rem;
   background-color: $background-color-light;

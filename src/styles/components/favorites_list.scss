@@ -20,6 +20,9 @@
     display: flex;
     flex-direction: column;
     margin-top: 10px;
+    input {
+      @include darkInput();
+    }
     .p-button {
       width: 100px;
       margin-left: 5px;

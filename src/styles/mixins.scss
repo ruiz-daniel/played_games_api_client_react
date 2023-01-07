@@ -109,3 +109,10 @@
   border: none !important;
   border-bottom: solid 1px $color !important;
 }
+
+@mixin darkInput {
+  color: white;
+  font-weight: 400;
+  font-size: larger;
+  background-color: $background-transparent-darker;
+}

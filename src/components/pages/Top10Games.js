@@ -203,6 +203,7 @@ const Top10Games = (props) => {
           )}
         </div>
         <Dialog
+          className="favorites-list-dialog"
           visible={topsPanel}
           showHeader={false}
           dismissableMask
@@ -214,7 +215,7 @@ const Top10Games = (props) => {
       </div>
       <div className="top10games flex flex-column">
         <Dialog
-        className='add-game-dialog'
+          className="add-game-dialog"
           visible={gamesPanel}
           header="Add Game"
           modal={false}

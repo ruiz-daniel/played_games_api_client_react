@@ -46,17 +46,9 @@
   .tier-games {
     overflow-x: auto;
   }
-
-  h2 {
-    // width: 40px;
-    // color: white;
-    // @include marginX(15px);
-  }
 }
 .top10-newgame {
   @include marginX(40px);
-  // padding-bottom: 30px;
-  // width: 100%;
   .p-scrollpanel {
     @include marginY(20px);
   }

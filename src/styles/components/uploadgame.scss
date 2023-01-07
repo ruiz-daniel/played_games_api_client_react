@@ -41,10 +41,7 @@
       .p-dropdown,
       .p-inputtextarea {
         margin-top: 5px;
-        color: white;
-        font-weight: 400;
-        font-size: larger;
-        background-color: $background-transparent-darker;
+        @include darkInput();
         border: none;
 
         &:focus,
@@ -55,10 +52,7 @@
 
         .p-inputtext {
           text-align: start;
-          color: white;
-          font-weight: 400;
-          font-size: large;
-          background-color: $background-transparent-darker;
+          @include darkInput();
         }
       }
       .p-fileupload-buttonbar {
