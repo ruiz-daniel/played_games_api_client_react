@@ -13,7 +13,10 @@ const FavoritesList = ({ onSelect }) => {
   }, [])
 
   const getTop10Names = () => {
-    api.Top10NamesApi.getTop10Names(sessionStorage.getItem('userid'), onGetNames)
+    api.Top10NamesApi.getTop10Names(
+      sessionStorage.getItem('userid'),
+      onGetNames,
+    )
   }
   const onGetNames = (data) => {
     setTop10Names(data)
@@ -63,7 +66,7 @@ const FavoritesList = ({ onSelect }) => {
             <InputText
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
-            />{' '}
+            />
             <Button label="New List" onClick={() => addName()} />
           </div>
         </div>
