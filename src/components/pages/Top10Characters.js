@@ -1,72 +1,72 @@
-import React, { useState, useEffect } from "react";
-import api from "../../services/IApi";
-import { useLocation } from "react-router-dom";
-import AddTop10Character from "../utils/AddTop10Character";
-import Position from "../utils/position";
-import CharacterBox from "../utils/CharacterBox";
-import { Dialog } from "primereact/dialog";
-import { Button } from "primereact/button";
-import { Image } from "primereact/image";
-import { Sidebar } from "primereact/sidebar";
+import React, { useState, useEffect } from 'react'
+import api from '../../services/IApi'
+import { useLocation } from 'react-router-dom'
+import AddTop10Character from '../utils/AddTop10Character'
+import Position from '../utils/position'
+import CharacterBox from '../utils/CharacterBox'
+import { Dialog } from 'primereact/dialog'
+import { Button } from 'primereact/button'
+import { Image } from 'primereact/image'
+import { Sidebar } from 'primereact/sidebar'
 
 const Top10Characters = () => {
-  const location = useLocation();
-  const [characters, setCharacters] = useState([]);
+  const location = useLocation()
+  const [characters, setCharacters] = useState([])
   // eslint-disable-next-line no-unused-vars
-  const [top10name, setTop10Name] = useState(location.state.top10name);
+  const [top10name, setTop10Name] = useState(location.state.top10name)
 
-  const [selectedCharacter, setSelectedCharacter] = useState();
+  const [selectedCharacter, setSelectedCharacter] = useState()
 
-  const [sidebar, toggleSideBar] = useState(false);
+  const [sidebar, toggleSideBar] = useState(false)
 
-  const [showCharacterDetails, setShowDetails] = useState(false);
+  const [showCharacterDetails, setShowDetails] = useState(false)
 
   const getCharacters = () => {
-    api.Top10CharactersApi.getTop10Characters("All Time", (data) => {
+    api.Top10CharactersApi.getTop10Characters('All Time', (data) => {
       data.forEach((element) => {
-        element.name = element.character.name;
-      });
-      setCharacters(data);
-    });
-  };
+        element.name = element.character.name
+      })
+      setCharacters(data)
+    })
+  }
 
   useEffect(() => {
-    getCharacters();
-  }, []);
+    getCharacters()
+  }, [])
 
   const movePositions = (position) => {
     characters.forEach((element) => {
       if (element.pos >= position) {
-        element.pos++;
+        element.pos++
       }
-    });
-    updateCharactersList(position - 2);
-  };
+    })
+    updateCharactersList(position - 2)
+  }
 
   const updateCharactersList = (index) => {
     if (index === characters.length) {
-      getCharacters();
+      getCharacters()
     } else {
       api.Top10CharactersApi.putTop10Character(characters[index], () => {
-        updateCharactersList(index + 1);
-      });
+        updateCharactersList(index + 1)
+      })
     }
-  };
+  }
   const removeCharacter = (character) => {
     api.Top10CharactersApi.deleteTop10Character(character.id, () => {
       characters.forEach((element) => {
         if (element.pos > character.pos) {
-          element.pos--;
+          element.pos--
         }
-      });
-      updateCharactersList(character.pos);
-    });
-  };
+      })
+      updateCharactersList(character.pos)
+    })
+  }
   const switchCharacters = (character1, character2) => {
-    character1.pos++;
-    character2.pos--;
-    updateCharactersList(character2.pos - 1);
-  };
+    character1.pos++
+    character2.pos--
+    updateCharactersList(character2.pos - 1)
+  }
 
   return (
     <>
@@ -78,7 +78,7 @@ const Top10Characters = () => {
           className="add-character-button"
           icon="pi pi-plus"
           onClick={() => {
-            toggleSideBar(true);
+            toggleSideBar(true)
           }}
         />
       )}
@@ -98,7 +98,7 @@ const Top10Characters = () => {
         <Dialog
           visible={showCharacterDetails}
           onHide={() => setShowDetails(false)}
-          breakpoints={{ "960px": "75vw", "640px": "100vw" }}
+          breakpoints={{ '960px': '75vw', '640px': '100vw' }}
           resizable={false}
           dismissableMask
           showHeader={false}
@@ -112,7 +112,7 @@ const Top10Characters = () => {
               className="top10-character"
               key={character.id}
               onMouseEnter={() => {
-                setSelectedCharacter(character.character);
+                setSelectedCharacter(character.character)
               }}
             >
               <h2>
@@ -130,10 +130,10 @@ const Top10Characters = () => {
                     icon="pi pi-arrow-left"
                     className=" p-button-primary p-button-sm "
                     onClick={(e) => {
-                      switchCharacters(characters[index - 1], character);
+                      switchCharacters(characters[index - 1], character)
                     }}
                     tooltip="Move position up"
-                    tooltipOptions={{ position: "top" }}
+                    tooltipOptions={{ position: 'top' }}
                   />
                 )}
                 {character.pos < characters.length && (
@@ -141,20 +141,20 @@ const Top10Characters = () => {
                     icon="pi pi-arrow-right"
                     className=" p-button-primary p-button-sm "
                     onClick={(e) => {
-                      switchCharacters(character, characters[index + 1]);
+                      switchCharacters(character, characters[index + 1])
                     }}
                     tooltip="Move position down"
-                    tooltipOptions={{ position: "top" }}
+                    tooltipOptions={{ position: 'top' }}
                   />
                 )}
                 <Button
                   icon="pi pi-trash"
                   className=" p-button-danger p-button-sm "
                   onClick={(e) => {
-                    removeCharacter(character);
+                    removeCharacter(character)
                   }}
                   tooltip="Remove"
-                  tooltipOptions={{ position: "top" }}
+                  tooltipOptions={{ position: 'top' }}
                 />
               </div>
               <div className="top10-characters-handle flex justify-content-center">
@@ -162,21 +162,20 @@ const Top10Characters = () => {
                   icon="pi pi-eye"
                   className=" p-button-primary p-button-sm "
                   onClick={async (e) => {
-                    await setSelectedCharacter(character.character);
-                    console.log(selectedCharacter);
-                    setShowDetails(true);
+                    await setSelectedCharacter(character.character)
+                    console.log(selectedCharacter)
+                    setShowDetails(true)
                   }}
                   tooltip="View details"
-                  tooltipOptions={{ position: "bottom" }}
+                  tooltipOptions={{ position: 'bottom' }}
                 />
               </div>
             </div>
-          );
+          )
         })}
       </div>
-      
     </>
-  );
-};
+  )
+}
 
-export default Top10Characters;
+export default Top10Characters

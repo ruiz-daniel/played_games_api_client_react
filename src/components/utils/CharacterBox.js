@@ -1,27 +1,23 @@
-import React from "react";
+import React from 'react'
 
-import { Image } from "primereact/image";
+import { Image } from 'primereact/image'
 
 const CharacterBox = ({ character }) => {
   return (
     <div className="character-box flex">
-      <Image alt="Character Art" src={character.image} />
+      <div className='flex justify-content-center character-box-image'>
+        <Image alt="Character Art" src={character.image} />
+      </div>
+      
       <div className="character-box-data flex flex-grow-1 flex-column">
         <h2>{character.name}</h2>
-        <div className="flex ">
-          <p className="character-data-item">Game: </p>
-          <p className="character-data-item">{character.game.name}</p>
-        </div>
-        <div className="flex ">
-          <p className="character-data-item">Wikia: </p>
-          <p className="character-data-item">
-            {" "}
-            <a href={character.wikia_url}>{character.wikia_url}</a>{" "}
-          </p>
-        </div>
+        <p className="character-data-item">{character.game.name}</p>
+        <p className="character-data-item">
+          <a href={character.wikia_url}>Wikia</a>
+        </p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CharacterBox;
+export default CharacterBox
