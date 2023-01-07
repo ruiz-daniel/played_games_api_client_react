@@ -189,3 +189,29 @@ body.dark-mode {
   padding: 1rem;
   background-color: $background-color-light;
 }
+.add-character-sidebar {
+  top: 70px;
+  background: none;
+  .p-sidebar-header {
+    padding: 0 !important;
+  }
+  .p-sidebar-content {
+    padding: 0 !important;
+    background-color: $background-color-dark;
+
+    .upload-button {
+      border-radius: 5px;
+      border: none !important;
+      background-color: $background-color-purple !important;
+      padding: 0.5rem;
+      text-align: center;
+
+      &:hover {
+        background-color: lighten(
+          $color: $background-color-purple,
+          $amount: 2
+        ) !important;
+      }
+    }
+  }
+}

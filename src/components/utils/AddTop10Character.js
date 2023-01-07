@@ -60,18 +60,18 @@ const AddTop10Character = (props) => {
   };
 
   return (
-    <div className="flex-column">
+    <div className="flex flex-column">
       <Panel header="New Character" className="upload-character-form">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h5>Name *</h5>
+          <h4>Name *</h4>
           <InputText
             className="p-mb-3"
             {...register("name", { required: true })}
           />
           {errors.name && <div className="error-message">Name required</div>}
-          <h5>Wikia Url</h5>
+          <h4>Wikia Url</h4>
           <InputText className="p-mb-3" {...register("wikia_url")} />
-          <h5>Game *</h5>
+          <h4>Game *</h4>
           <Controller
             name="game"
             control={control}
@@ -87,7 +87,7 @@ const AddTop10Character = (props) => {
             )}
           />
           {errors.game && <div className="error-message">Select a game</div>}
-          <h5>Position *</h5>
+          <h4>Position *</h4>
           <InputText
             type="number"
             {...register("position", { required: true, min: 1 })}
@@ -95,7 +95,7 @@ const AddTop10Character = (props) => {
           {errors.position && (
             <div className="error-message">Position required</div>
           )}
-          <h5>Image</h5>
+          <h4>Image</h4>
           <FileUpload
             name="characterImage"
             customUpload

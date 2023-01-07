@@ -1,11 +1,8 @@
-.top10content {
-  @include centerContent();
-}
 .top10header {
   text-align: center;
 }
 .top10-characters-container {
-  @include centerContent(95%);
+  @include paddingX(20px);
 }
 .top10-character-info {
   @include centerContent(90%);
@@ -24,35 +21,7 @@
     background-color: $background-color-purple !important;
   }
 }
-.add-character-sidebar {
-  top: 70px;
-  height: 817px;
-  .p-sidebar-header {
-    padding: 0 !important;
-  }
-  .p-sidebar-content {
-    padding: 0 !important;
-    background: $background-gray-gradient;
 
-    .upload-button {
-      border-radius: 5px;
-      border: none !important;
-      background-color: $background-color-purple !important;
-      // @include arrowBorderRight;
-      padding: 0.5rem;
-      text-align: center;
-      // transition: all 0.5s ease;
-      // cursor: pointer;
-
-      &:hover {
-        background-color: lighten(
-          $color: $background-color-purple,
-          $amount: 2
-        ) !important;
-      }
-    }
-  }
-}
 
 .top10-character {
   text-align: center;
@@ -67,7 +36,7 @@
     .p-button {
       background: none;
       border: none;
-      color: black;
+      color: $text-color-light;
       width: 20px !important;
       height: 25px !important;
       &:hover {
@@ -80,12 +49,39 @@
 
 .upload-character-form {
   text-align: center;
-  height: 817px;
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h4 {
+      color: $text-color-light;
+    }
+
+    input,
+    .p-dropdown,
+    .p-inputtextarea {
+      @include darkInput();
+      border: none;
+
+      &:focus,
+      &:hover {
+        box-shadow: none !important;
+        border-color: $text-color-silver !important;
+      }
+
+      .p-inputtext {
+        text-align: start;
+        @include darkInput();
+      }
+    }
+  }
   .p-panel-content {
-    background: $background-gray-gradient;
+    background-color: $background-color-dark;
   }
   .p-panel-header {
-    @include darkBackground();
+    background-color: black;
+    color: $text-color-light;
   }
   .p-dropdown,
   input {
