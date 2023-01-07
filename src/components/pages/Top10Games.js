@@ -214,6 +214,7 @@ const Top10Games = (props) => {
       </div>
       <div className="top10games flex flex-column">
         <Dialog
+        className='add-game-dialog'
           visible={gamesPanel}
           header="Add Game"
           modal={false}
@@ -245,7 +246,7 @@ const Top10Games = (props) => {
               </div>
             </div>
             <ScrollPanel style={{ width: '100%', height: '40vh' }}>
-              <div className="flex flex-wrap justify-content-between">
+              <div className="flex flex-wrap justify-content-around">
                 {allGames.map((game) => {
                   return (
                     <div
@@ -282,34 +283,7 @@ const Top10Games = (props) => {
                 turnLightOff(`tier-${index}`)
               }}
             >
-              <h2>
-                <Position pos={index + 1}></Position>
-              </h2>
-
-              {tier.map((game) => {
-                if (tier.length === 0) {
-                  return <div style={{ height: 130 }}></div>
-                }
-                return (
-                  <div
-                    key={game.id}
-                    draggable="true"
-                    onDragStart={(e) => {
-                      drag(game)
-                    }}
-                    onDragEnd={(e) => {
-                      setTimeout(3000)
-                      setMovingGame()
-                    }}
-                    onDoubleClick={() => {
-                      moveGame(game, orderedGames.length + 1)
-                    }}
-                  >
-                    <GameBox key={game.id} game={game.game}></GameBox>
-                  </div>
-                )
-              })}
-              <div className="tier-buttons flex flex-column">
+              <div className="flex flex-column justify-content-center tier-buttons">
                 {index > 0 && (
                   <i
                     className="pi pi-arrow-up"
@@ -318,12 +292,41 @@ const Top10Games = (props) => {
                     }}
                   />
                 )}
+                <h2>
+                  <Position pos={index + 1}></Position>
+                </h2>
                 <i
                   className="pi pi-arrow-down"
                   onClick={() => {
                     moveTierDown(tier, index)
                   }}
                 />
+              </div>
+
+              <div className="flex tier-games">
+                {tier.map((game) => {
+                  if (tier.length === 0) {
+                    return <div style={{ height: 130 }}></div>
+                  }
+                  return (
+                    <div
+                      key={game.id}
+                      draggable="true"
+                      onDragStart={(e) => {
+                        drag(game)
+                      }}
+                      onDragEnd={(e) => {
+                        setTimeout(3000)
+                        setMovingGame()
+                      }}
+                      onDoubleClick={() => {
+                        moveGame(game, orderedGames.length + 1)
+                      }}
+                    >
+                      <GameBox key={game.game.id} game={game.game}></GameBox>
+                    </div>
+                  )
+                })}
               </div>
             </div>
           )

@@ -1,7 +1,12 @@
 .top10gamesheader {
-  // text-align: center;
-  padding-left: 20px;
+  padding-left: 4rem;
   padding-bottom: 5px;
+
+  @media (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
   .p-button {
     @include blackButton();
@@ -11,6 +16,9 @@
 .top10games {
   @include marginX(20px);
   margin-bottom: 60px;
+  @media (max-width: 600px) {
+    @include marginX(0);
+  }
 }
 .top10-item {
   display: flex;
@@ -18,39 +26,37 @@
   width: 100%;
   @include marginY(10px);
   @include paddingY(15px);
-  // background-color: $background-color-dark2;
-  // width: 60%;
-  box-shadow: 1px 2px #bebebe;
-  border-top: solid 0.5px $background-color-light;
-  border-bottom: solid 0.5px $background-color-light;
 
   .tier-buttons {
-    position: absolute;
-    right: 4%;
+    @include paddingX(2rem);
+    text-align: center;
     i {
+      text-align: center;
       cursor: pointer;
       padding: 3px;
       border-radius: 30px;
-      background-color: $background-color-dark2;
+      // background-color: $background-color-dark2;
       color: white;
-      margin-top: 20px;
 
       &:hover {
         background-color: red;
       }
     }
   }
+  .tier-games {
+    overflow-x: auto;
+  }
 
   h2 {
-    width: 40px;
+    // width: 40px;
     // color: white;
-    @include marginX(15px);
+    // @include marginX(15px);
   }
 }
 .top10-newgame {
   @include marginX(40px);
   // padding-bottom: 30px;
-  width: 30vw;
+  // width: 100%;
   .p-scrollpanel {
     @include marginY(20px);
   }

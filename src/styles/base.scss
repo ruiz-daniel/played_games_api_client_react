@@ -129,10 +129,10 @@ body.dark-mode {
 }
 
 .form-button-right {
-  float: right
+  float: right;
 }
 .form-button-left {
-  float: left
+  float: left;
 }
 
 .p-dropdown-items-wrapper,
@@ -168,5 +168,14 @@ body.dark-mode {
   }
   @media (max-width: 600px) {
     width: 90vw;
+  }
+}
+.add-game-dialog {
+  width: 40vw;
+  @media (max-width: 1200px) {
+    width: 50vw;
+  }
+  @media (max-width: 600px) {
+    width: 80vw;
   }
 }
