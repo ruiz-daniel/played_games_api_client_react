@@ -78,6 +78,7 @@
   }
   .p-panel-content {
     background-color: $background-color-dark;
+    overflow-y: auto;
   }
   .p-panel-header {
     background-color: black;

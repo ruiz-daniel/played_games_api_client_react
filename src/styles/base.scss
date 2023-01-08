@@ -192,12 +192,15 @@ body.dark-mode {
 .add-character-sidebar {
   top: 70px;
   background: none;
+  max-height: 91vh;
   .p-sidebar-header {
     padding: 0 !important;
   }
   .p-sidebar-content {
-    padding: 0 !important;
+    padding: 0;
+
     background-color: $background-color-dark;
+    
 
     .upload-button {
       border-radius: 5px;

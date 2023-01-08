@@ -1,47 +1,50 @@
-import React, { useState, useEffect } from "react";
-import api from "../../services/IApi";
+import React, { useState, useEffect } from 'react'
+import api from '../../services/IApi'
 
-import { Dropdown } from "primereact/dropdown";
-import { InputText } from "primereact/inputtext";
-import { Button } from "primereact/button";
-import { FileUpload } from "primereact/fileupload";
-import { Panel } from "primereact/panel";
+import { Dropdown } from 'primereact/dropdown'
+import { InputText } from 'primereact/inputtext'
+import { Button } from 'primereact/button'
+import { FileUpload } from 'primereact/fileupload'
+import { Panel } from 'primereact/panel'
 
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller } from 'react-hook-form'
 
 const AddTop10Character = (props) => {
-  const [image, setImage] = useState();
-  const [games, setGames] = useState();
+  const [image, setImage] = useState()
+  const [games, setGames] = useState()
 
   const getGames = () => {
-    api.PlayedGamesApi.getPlayedGames((data) => {
-      setGames(data);
-    });
-  };
+    api.PlayedGamesApi.getPlayedGames(
+      sessionStorage.getItem('userid'),
+      (data) => {
+        setGames(data)
+      },
+    )
+  }
 
   useEffect(() => {
-    getGames();
-  }, []);
+    getGames()
+  }, [])
 
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm();
+  } = useForm()
 
   const onSubmit = async (data) => {
-    await api.GeneralApi.uploadImage(image);
+    await api.GeneralApi.uploadImage(image)
     addCharacter(
       {
         name: data.name,
         gameid: data.game.id,
         wikia_url: data.wikia_url,
-        image: image ? image.name : "",
+        image: image ? image.name : '',
       },
-      data.position
-    );
-  };
+      data.position,
+    )
+  }
 
   const addCharacter = (character, position) => {
     api.CharactersApi.postCharacter(character, (data) => {
@@ -49,15 +52,15 @@ const AddTop10Character = (props) => {
         { characterid: data.id, pos: position },
         props.top10name,
         () => {
-          props.movePositions(position);
-        }
-      );
-    });
-  };
+          props.movePositions(position)
+        },
+      )
+    })
+  }
 
   const onupload = async (e) => {
-    setImage(e.files[0]);
-  };
+    setImage(e.files[0])
+  }
 
   return (
     <div className="flex flex-column">
@@ -66,16 +69,16 @@ const AddTop10Character = (props) => {
           <h4>Name *</h4>
           <InputText
             className="p-mb-3"
-            {...register("name", { required: true })}
+            {...register('name', { required: true })}
           />
           {errors.name && <div className="error-message">Name required</div>}
           <h4>Wikia Url</h4>
-          <InputText className="p-mb-3" {...register("wikia_url")} />
+          <InputText className="p-mb-3" {...register('wikia_url')} />
           <h4>Game *</h4>
           <Controller
             name="game"
             control={control}
-            rules={{ required: "Game is required" }}
+            rules={{ required: 'Game is required' }}
             render={({ field, fieldState }) => (
               <Dropdown
                 className="p-mb-3"
@@ -90,7 +93,7 @@ const AddTop10Character = (props) => {
           <h4>Position *</h4>
           <InputText
             type="number"
-            {...register("position", { required: true, min: 1 })}
+            {...register('position', { required: true, min: 1 })}
           />
           {errors.position && (
             <div className="error-message">Position required</div>
@@ -116,7 +119,7 @@ const AddTop10Character = (props) => {
         </form>
       </Panel>
     </div>
-  );
-};
+  )
+}
 
-export default AddTop10Character;
+export default AddTop10Character
