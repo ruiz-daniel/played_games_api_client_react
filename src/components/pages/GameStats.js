@@ -31,6 +31,10 @@ const GameStats = () => {
     labels: [],
     datasets: [{}],
   })
+  const [playedYearStats, setPlayedYearStats] = useState({
+    labels: [],
+    datasets: [{}],
+  })
 
   useEffect(() => {
     api.PlayedGamesApi.getPlayedGames(
@@ -238,6 +242,7 @@ const GameStats = () => {
 
   const getStats = (data) => {
     data.forEach((element) => {
+      
       //COMPLETION
       if (element.status.name === 'Completed') {
         completed++
@@ -466,13 +471,18 @@ const GameStats = () => {
   }
 
   const getScoreStats = () => {
+    var labels = []
+    var datasets = {}
+    for (let i = 1; i < 11; i++) {
+      labels.push(i.toString())
+    }
     setScoresChart({
-      labels: ['2', '3', '4', '5', '6', '7', '8', '9', '10'],
+      labels,
       datasets: [
         {
           label: 'Games per Score',
           backgroundColor: '#13cf46',
-          data: [sc2, sc3, sc4, sc5, sc6, sc7, sc8, sc9, sc10],
+          data: [null, sc2, sc3, sc4, sc5, sc6, sc7, sc8, sc9, sc10],
         },
       ],
     })
@@ -481,36 +491,32 @@ const GameStats = () => {
   return (
     <div className="stats-wrapper">
       <h1>Played Games Stats</h1>
-      <h3>Completion Rate</h3>
-      <div className="flex justify-content-evenly stats-item">
-        <Chart
-          type="pie"
-          data={completionChart}
-          options={completionOptions}
-          style={{ position: 'relative', width: '20%' }}
-        />
+
+      <div className="text-center mb-5">
+        <h3>Total played games: {total_games}</h3>
+        <h3>Avg Score: {avg_score.toFixed(2)}</h3>
+      </div>
+      <div className="flex flex-wrap justify-content-evenly stats-item stats-pie">
+        <Chart type="pie" data={completionChart} options={completionOptions} />
         <Chart
           type="pie"
           data={completionPercent}
           options={completionPercentageOptions}
-          style={{ position: 'relative', width: '20%' }}
         />
         <Chart
           type="pie"
           data={completionDrop}
           options={completionDropOptions}
-          style={{ position: 'relative', width: '20%' }}
         />
-        <div className="flex-column justify-content-around">
-          <h3>Total played games: {total_games}</h3>
-          <h3>Avg Score: {avg_score}</h3>
-        </div>
       </div>
       <div className=" stats-item">
         <Chart type="bar" data={platformChart} options={platformOptions} />
       </div>
       <div className="stats-item">
         <Chart type="bar" data={yearsChart} options={yearsOptions} />
+      </div>
+      <div className="stats-item">
+        <Chart type="bar" data={scoresChart} options={scoreOptions} />
       </div>
       <div className="stats-item">
         <Chart type="bar" data={scoresChart} options={scoreOptions} />

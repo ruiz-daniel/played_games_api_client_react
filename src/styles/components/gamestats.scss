@@ -3,4 +3,16 @@
 }
 .stats-item {
   margin-bottom: 50px;
+  overflow-x: auto;
+  width: 100%;
+}
+.stats-pie {
+  .p-chart {
+    position: relative;
+    width: 20%;
+
+    @media (max-width: 678px) {
+      width: 80%;
+    }
+  }
 }
