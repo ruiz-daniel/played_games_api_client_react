@@ -36,6 +36,7 @@ const TopBar = () => {
       //LOGOUT
       sessionStorage.clear()
       history.push('/')
+      window.location.reload()
     } else {
       //LOGIN
       showLogin(true)
@@ -43,10 +44,6 @@ const TopBar = () => {
   }
 
   const onLogin = (data) => {
-    sessionStorage.setItem('username', data.username)
-    sessionStorage.setItem('userid', data.userid)
-    sessionStorage.setItem('display_name', data.display_name)
-    sessionStorage.setItem('access_token', data.access_token)
     toast.current.show({
       severity: 'success',
       summary: `Welcome ${data.display_name}`,

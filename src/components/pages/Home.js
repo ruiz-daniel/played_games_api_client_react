@@ -24,9 +24,10 @@ const Home = () => {
   const toggleLogin = () => {
     let logged = sessionStorage.getItem('userid')
 
-    if (logged !== null) {
+    if (logged) {
       //LOGOUT
       sessionStorage.clear()
+      window.location.reload()
       history.push('/')
     } else {
       //LOGIN
@@ -34,11 +35,6 @@ const Home = () => {
     }
   }
   const onLogin = (data) => {
-    sessionStorage.setItem('username', data.username)
-    sessionStorage.setItem('userid', data.userid)
-    sessionStorage.setItem('display_name', data.display_name)
-    sessionStorage.setItem('access_token', data.access_token)
-    sessionStorage.setItem('premium', data.premium)
     toast.current.show({
       severity: 'success',
       summary: `Welcome ${data.display_name}`,
