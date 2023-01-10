@@ -35,8 +35,8 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="grid pt-8">
-        <div className="dashboard-user-info flex flex-column justify-content-center align-items-start  pl-8 col-12 md:col-4">
+      <div className="grid pt-4 md:pt-8">
+        <div className="dashboard-user-info flex flex-column justify-content-center align-items-start  pl-4 md:pl-8 col-12 md:col-4">
           <div>
             <Avatar
               image={weissIcon}

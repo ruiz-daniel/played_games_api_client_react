@@ -1,6 +1,15 @@
 .playing-carrousel,
 .p-carrousel,
 .p-carrousel-content {
+  .p-carousel-indicators {
+    display: none;
+  }
+  .p-carousel-next,
+  .p-carousel-prev {
+    @media (max-width: 600px) {
+      display: none;
+    }
+  }
   text-align: center;
   position: relative;
   width: 100%;
@@ -11,14 +20,13 @@
     width: 100%;
     cursor: pointer;
     img {
-      height: 90%;
+      height: 100%;
       width: 100%;
-      
     }
     .details {
-      height: 90%;
+      height: 100%;
       width: 100%;
-      display: block;
+      // display: block;
       position: absolute;
       background-image: linear-gradient(
         200deg,
@@ -30,11 +38,13 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding-bottom: 10%;
-      
 
       .status_tittle {
         color: $text-color-yellow;
+      }
+
+      @media (max-width: 600px) {
+        display: none;
       }
     }
   }

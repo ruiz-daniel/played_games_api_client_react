@@ -75,7 +75,7 @@ const PlayingGames = () => {
               )}
             </div>
             <div className="details-name">
-              <h1>{game.name}</h1>
+              <h2>{game.name}</h2>
               <h3>
                 Current Score: <Score score={game.rating}></Score>
               </h3>
@@ -93,11 +93,9 @@ const PlayingGames = () => {
         value={games}
         numVisible={1}
         numScroll={1}
-        responsiveOptions={responsiveOptions}
         className="custom-carousel"
         circular
         showNavigators={false}
-        showIndicators={false}
         autoplayInterval={3000}
         itemTemplate={template}
       />
