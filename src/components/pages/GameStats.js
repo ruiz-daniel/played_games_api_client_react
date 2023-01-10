@@ -6,6 +6,7 @@ import { Chart } from 'primereact/chart'
 const GameStats = () => {
   const [total_games, setTotalGames] = useState()
   const [avg_score, setAvgScore] = useState(0)
+  const color = '#fbfaf8'
   const [completionChart, setcompletionChart] = useState({
     labels: [],
     datasets: [{}],
@@ -32,14 +33,17 @@ const GameStats = () => {
   })
 
   useEffect(() => {
-    api.PlayedGamesApi.getPlayedGames(sessionStorage.getItem('userid'), (data) => {
-      setTotalGames(data.length)
-      getStats(data)
-      getCompletionStats(data.length)
-      getPlatformStats()
-      getYearsStats()
-      getScoreStats()
-    })
+    api.PlayedGamesApi.getPlayedGames(
+      sessionStorage.getItem('userid'),
+      (data) => {
+        setTotalGames(data.length)
+        getStats(data)
+        getCompletionStats(data.length)
+        getPlatformStats()
+        getYearsStats()
+        getScoreStats()
+      },
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -103,12 +107,13 @@ const GameStats = () => {
     plugins: {
       legend: {
         labels: {
-          color: '#495057',
+          color,
         },
       },
       title: {
         display: true,
         text: 'Completion nominal',
+        color,
         font: {
           size: 16,
         },
@@ -119,12 +124,13 @@ const GameStats = () => {
     plugins: {
       legend: {
         labels: {
-          color: '#495057',
+          color,
         },
       },
       title: {
         display: true,
         text: 'Completion percentage',
+        color,
         font: {
           size: 16,
         },
@@ -135,12 +141,13 @@ const GameStats = () => {
     plugins: {
       legend: {
         labels: {
-          color: '#495057',
+          color,
         },
       },
       title: {
         display: true,
         text: 'Completed vs Dropped Percentage',
+        color,
         font: {
           size: 16,
         },
@@ -154,25 +161,22 @@ const GameStats = () => {
     plugins: {
       legend: {
         labels: {
-          color: '#495057',
+          color,
         },
       },
     },
     scales: {
       x: {
         ticks: {
-          color: '#495057',
-        },
-        grid: {
-          color: '#ebedef',
+          color,
         },
       },
       y: {
         ticks: {
-          color: '#495057',
+          color,
         },
         grid: {
-          color: '#ebedef',
+          color,
         },
       },
     },
@@ -184,25 +188,22 @@ const GameStats = () => {
     plugins: {
       legend: {
         labels: {
-          color: '#60036d',
+          color,
         },
       },
     },
     scales: {
       x: {
         ticks: {
-          color: '#60036d',
-        },
-        grid: {
-          color: '#ebedef',
+          color,
         },
       },
       y: {
         ticks: {
-          color: '#495057',
+          color,
         },
         grid: {
-          color: '#ebedef',
+          color,
         },
       },
     },
@@ -214,25 +215,22 @@ const GameStats = () => {
     plugins: {
       legend: {
         labels: {
-          color: '#13cf46',
+          color,
         },
       },
     },
     scales: {
       x: {
         ticks: {
-          color: '#60036d',
-        },
-        grid: {
-          color: '#ebedef',
+          color,
         },
       },
       y: {
         ticks: {
-          color: '#495057',
+          color,
         },
         grid: {
-          color: '#ebedef',
+          color,
         },
       },
     },
@@ -481,43 +479,43 @@ const GameStats = () => {
   }
 
   return (
-      <div className="stats-wrapper">
-        <h1>Played Games Stats</h1>
-        <h3>Completion Rate</h3>
-        <div className="flex justify-content-evenly stats-item">
-          <Chart
-            type="pie"
-            data={completionChart}
-            options={completionOptions}
-            style={{ position: 'relative', width: '20%' }}
-          />
-          <Chart
-            type="pie"
-            data={completionPercent}
-            options={completionPercentageOptions}
-            style={{ position: 'relative', width: '20%' }}
-          />
-          <Chart
-            type="pie"
-            data={completionDrop}
-            options={completionDropOptions}
-            style={{ position: 'relative', width: '20%' }}
-          />
-          <div className="flex-column justify-content-around">
-            <h3>Total played games: {total_games}</h3>
-            <h3>Avg Score: {avg_score}</h3>
-          </div>
-        </div>
-        <div className=" stats-item">
-          <Chart type="bar" data={platformChart} options={platformOptions} />
-        </div>
-        <div className="stats-item">
-          <Chart type="bar" data={yearsChart} options={yearsOptions} />
-        </div>
-        <div className="stats-item">
-          <Chart type="bar" data={scoresChart} options={scoreOptions} />
+    <div className="stats-wrapper">
+      <h1>Played Games Stats</h1>
+      <h3>Completion Rate</h3>
+      <div className="flex justify-content-evenly stats-item">
+        <Chart
+          type="pie"
+          data={completionChart}
+          options={completionOptions}
+          style={{ position: 'relative', width: '20%' }}
+        />
+        <Chart
+          type="pie"
+          data={completionPercent}
+          options={completionPercentageOptions}
+          style={{ position: 'relative', width: '20%' }}
+        />
+        <Chart
+          type="pie"
+          data={completionDrop}
+          options={completionDropOptions}
+          style={{ position: 'relative', width: '20%' }}
+        />
+        <div className="flex-column justify-content-around">
+          <h3>Total played games: {total_games}</h3>
+          <h3>Avg Score: {avg_score}</h3>
         </div>
       </div>
+      <div className=" stats-item">
+        <Chart type="bar" data={platformChart} options={platformOptions} />
+      </div>
+      <div className="stats-item">
+        <Chart type="bar" data={yearsChart} options={yearsOptions} />
+      </div>
+      <div className="stats-item">
+        <Chart type="bar" data={scoresChart} options={scoreOptions} />
+      </div>
+    </div>
   )
 }
 
