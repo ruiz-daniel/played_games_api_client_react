@@ -29,24 +29,6 @@ const PlayingGames = () => {
     })
   }
 
-  const responsiveOptions = [
-    {
-      breakpoint: '1024px',
-      numVisible: 1,
-      numScroll: 1,
-    },
-    {
-      breakpoint: '600px',
-      numVisible: 1,
-      numScroll: 1,
-    },
-    {
-      breakpoint: '480px',
-      numVisible: 1,
-      numScroll: 1,
-    },
-  ]
-
   const template = (game) => {
     return (
       <div

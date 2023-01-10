@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
 import api from '../../services/IApi'
 
-import { Card } from 'primereact/card'
 import { Avatar } from 'primereact/avatar'
 
 import PlayingGames from '../utils/PlayingGames'
 
 import weissIcon from '../../images/KUIYU.png'
-import * as routes from '../../routes'
 
 const Dashboard = () => {
-  const history = useHistory()
   const [userGamesInfo, setUserGamesInfo] = useState()
 
   useEffect(() => {
@@ -28,10 +24,6 @@ const Dashboard = () => {
       },
     )
   }, [])
-
-  const goToList = () => {
-    history.push(routes.playedgames)
-  }
 
   return (
     <>
