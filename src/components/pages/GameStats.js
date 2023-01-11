@@ -31,7 +31,19 @@ const GameStats = () => {
     labels: [],
     datasets: [{}],
   })
-  const [playedYearStats, setPlayedYearStats] = useState({
+  const [playedYearChart, setPlayedYearStats] = useState({
+    labels: [],
+    datasets: [{}],
+  })
+  const [genreChart, setGenreStats] = useState({
+    labels: [],
+    datasets: [{}],
+  })
+  const [developerChart, setDeveloperChart] = useState({
+    labels: [],
+    datasets: [{}],
+  })
+  const [publisherChart, setPublisherChart] = useState({
     labels: [],
     datasets: [{}],
   })
@@ -43,69 +55,28 @@ const GameStats = () => {
         setTotalGames(data.length)
         getStats(data)
         getCompletionStats(data.length)
-        getPlatformStats()
-        getYearsStats()
-        getScoreStats()
+        setBarChartStats()
+      },
+      (error) => {
+        console.log(error.message)
       },
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  //VARIABLES FOR DATA
+  // VARIABLES FOR DATA
   var completed = 0
   var dropped = 0
   var played = 0
   var onHold = 0
 
-  var pc = 0
-  var ps3 = 0
-  var ps2 = 0
-  var ps1 = 0
-  var gba = 0
-  var nds = 0
-  var ds3 = 0
-  var nswitch = 0
-  var wiiu = 0
-  var psp = 0
-  var wii = 0
-
-  var y1996 = 0
-  var y1997 = 0
-  var y1998 = 0
-  var y1999 = 0
-  var y2000 = 0
-  var y2001 = 0
-  var y2002 = 0
-  var y2003 = 0
-  var y2004 = 0
-  var y2005 = 0
-  var y2006 = 0
-  var y2007 = 0
-  var y2008 = 0
-  var y2009 = 0
-  var y2010 = 0
-  var y2011 = 0
-  var y2012 = 0
-  var y2013 = 0
-  var y2014 = 0
-  var y2015 = 0
-  var y2016 = 0
-  var y2017 = 0
-  var y2018 = 0
-  var y2019 = 0
-  var y2020 = 0
-  var y2021 = 0
-  var y2022 = 0
-
-  var sc2 = 0
-  var sc3 = 0
-  var sc4 = 0
-  var sc5 = 0
-  var sc6 = 0
-  var sc7 = 0
-  var sc8 = 0
-  var sc9 = 0
-  var sc10 = 0
+  var playedYearDatasets = {}
+  var yearDatasets = {}
+  var platformDatasets = {}
+  var scoreDatasets = {}
+  var genreDatasets = {}
+  var developerDataset = {}
+  var publisherDataset = {}
 
   const completionOptions = {
     plugins: {
@@ -159,7 +130,7 @@ const GameStats = () => {
     },
   }
 
-  const platformOptions = {
+  const barOptions = {
     maintainAspectRatio: false,
     aspectRatio: 0.8,
     plugins: {
@@ -186,64 +157,17 @@ const GameStats = () => {
     },
   }
 
-  const yearsOptions = {
-    maintainAspectRatio: false,
-    aspectRatio: 0.8,
-    plugins: {
-      legend: {
-        labels: {
-          color,
-        },
-      },
-    },
-    scales: {
-      x: {
-        ticks: {
-          color,
-        },
-      },
-      y: {
-        ticks: {
-          color,
-        },
-        grid: {
-          color,
-        },
-      },
-    },
-  }
-
-  const scoreOptions = {
-    maintainAspectRatio: false,
-    aspectRatio: 0.8,
-    plugins: {
-      legend: {
-        labels: {
-          color,
-        },
-      },
-    },
-    scales: {
-      x: {
-        ticks: {
-          color,
-        },
-      },
-      y: {
-        ticks: {
-          color,
-        },
-        grid: {
-          color,
-        },
-      },
-    },
+  const getAvgScore = (data) => {
+    let totalScore = 0
+    Object.keys(scoreDatasets).forEach((key) => {
+      totalScore += scoreDatasets[key] * Number(key)
+    })
+    setAvgScore(totalScore / data.length)
   }
 
   const getStats = (data) => {
     data.forEach((element) => {
-      
-      //COMPLETION
+      // COMPLETION
       if (element.status.name === 'Completed') {
         completed++
       } else if (element.status.name === 'Dropped') {
@@ -254,84 +178,75 @@ const GameStats = () => {
         onHold++
       }
 
-      //PLATFORMS
-      if (element.platform.name === 'PC') {
-        pc++
-      } else if (element.platform.name === 'Nintendo DS') {
-        nds++
-      } else if (element.platform.name === 'PS3') {
-        ps3++
-      } else if (element.platform.name === 'PS2') {
-        ps2++
-      } else if (element.platform.name === 'PS1') {
-        ps1++
-      } else if (element.platform.name === 'GameBoy Advance') {
-        gba++
-      } else if (element.platform.name === 'Nintendo 3DS') {
-        ds3++
-      } else if (element.platform.name === 'Nintendo Switch') {
-        nswitch++
-      } else if (element.platform.name === 'Nintendo WiiU') {
-        wiiu++
-      } else if (element.platform.name === 'Nintendo Wii') {
-        wii++
-      } else if (element.platform.name === 'PSP') {
-        psp++
+      // PLATFORMS
+      if (
+        element.platform &&
+        platformDatasets[element.platform.short_name] == undefined
+      ) {
+        platformDatasets[element.platform.short_name] = 1
+      } else if (
+        element.platform &&
+        platformDatasets[element.platform.short_name] >= 1
+      ) {
+        platformDatasets[element.platform.short_name]++
       }
 
-      //YEARS
-      if (element.year === '1996') y1996++
-      else if (element.year === '1997') y1997++
-      else if (element.year === '1998') y1998++
-      else if (element.year === '1999') y1999++
-      else if (element.year === '2000') y2000++
-      else if (element.year === '2001') y2001++
-      else if (element.year === '2002') y2002++
-      else if (element.year === '2003') y2003++
-      else if (element.year === '2004') y2004++
-      else if (element.year === '2005') y2005++
-      else if (element.year === '2006') y2006++
-      else if (element.year === '2007') y2007++
-      else if (element.year === '2008') y2008++
-      else if (element.year === '2009') y2009++
-      else if (element.year === '2010') y2010++
-      else if (element.year === '2011') y2011++
-      else if (element.year === '2012') y2012++
-      else if (element.year === '2013') y2013++
-      else if (element.year === '2014') y2014++
-      else if (element.year === '2015') y2015++
-      else if (element.year === '2016') y2016++
-      else if (element.year === '2017') y2017++
-      else if (element.year === '2018') y2018++
-      else if (element.year === '2019') y2019++
-      else if (element.year === '2020') y2020++
-      else if (element.year === '2021') y2021++
-      else if (element.year === '2022') y2022++
+      // YEARS
+      if (element.year && yearDatasets[element.year.toString()] == undefined) {
+        yearDatasets[element.year.toString()] = 1
+      } else if (element.year && yearDatasets[element.year.toString()] >= 1) {
+        yearDatasets[element.year.toString()]++
+      }
 
-      //SCORES
-      if (element.rating == 2) sc2++
-      else if (element.rating == 3) sc3++
-      else if (element.rating == 4) sc4++
-      else if (element.rating == 5) sc5++
-      else if (element.rating == 6) sc6++
-      else if (element.rating == 7) sc7++
-      else if (element.rating == 8) sc8++
-      else if (element.rating == 9) sc9++
-      else if (element.rating == 10) sc10++
+      // PLAYED YEAR
+      if (
+        element.played_year &&
+        playedYearDatasets[element.played_year.toString()] == undefined
+      ) {
+        playedYearDatasets[element.played_year.toString()] = 1
+      } else if (
+        element.played_year &&
+        playedYearDatasets[element.played_year.toString()] >= 1
+      ) {
+        playedYearDatasets[element.played_year.toString()]++
+      }
+
+      // SCORES
+      if (
+        element.rating &&
+        scoreDatasets[element.rating.toString()] == undefined
+      ) {
+        scoreDatasets[element.rating.toString()] = 1
+      } else if (
+        element.rating &&
+        scoreDatasets[element.rating.toString()] >= 1
+      ) {
+        scoreDatasets[element.rating.toString()]++
+      }
+
+      // GENRE
+      if (element.genre && genreDatasets[element.genre] == undefined) {
+        genreDatasets[element.genre] = 1
+      } else if (element.genre && genreDatasets[element.genre] >= 1) {
+        genreDatasets[element.genre]++
+      }
+
+      // DEVELOPER
+      if (element.developer && developerDataset[element.developer] == undefined) {
+        developerDataset[element.developer] = 1
+      } else if (element.developer && developerDataset[element.developer] >= 1) {
+        developerDataset[element.developer]++
+      }
+
+      // PUBLISHER
+      if (element.publisher && publisherDataset[element.publisher] == undefined) {
+        publisherDataset[element.publisher] = 1
+      } else if (element.publisher && publisherDataset[element.publisher] >= 1) {
+        publisherDataset[element.publisher]++
+      }
     })
 
-    setAvgScore(
-      (sc2 * 2 +
-        sc3 * 3 +
-        sc4 * 4 +
-        sc5 * 5 +
-        sc6 * 6 +
-        sc7 * 7 +
-        sc8 * 8 +
-        sc9 * 9 +
-        sc10 * 10) /
-        data.length,
-    )
+    getAvgScore(data)
   }
 
   const getCompletionStats = (total_games) => {
@@ -375,114 +290,75 @@ const GameStats = () => {
     })
   }
 
-  const getPlatformStats = () => {
+  const setBarChartStats = () => {
     setPlatformChart({
-      labels: [
-        'PC',
-        'PS1',
-        'PS2',
-        'PS3',
-        'PSP',
-        'GBA',
-        'Wii',
-        'WiiU',
-        'NDS',
-        '3DS',
-        'Switch',
-      ],
+      labels: Object.keys(platformDatasets),
       datasets: [
         {
           label: 'Games per Platform',
           backgroundColor: '#42A5F5',
-          data: [pc, ps1, ps2, ps3, psp, gba, wii, wiiu, nds, ds3, nswitch],
+          data: Object.values(platformDatasets),
         },
       ],
     })
-  }
-
-  const getYearsStats = () => {
     setYearsChart({
-      labels: [
-        '1996',
-        '1997',
-        '1998',
-        '1999',
-        '2000',
-        '2001',
-        '2002',
-        '2003',
-        '2004',
-        '2005',
-        '2006',
-        '2007',
-        '2008',
-        '2009',
-        '2010',
-        '2011',
-        '2012',
-        '2013',
-        '2014',
-        '2015',
-        '2016',
-        '2017',
-        '2018',
-        '2019',
-        '2020',
-        '2021',
-        '2022',
-      ],
+      labels: Object.keys(yearDatasets),
       datasets: [
         {
           type: 'bar',
           label: 'Games per Year',
           backgroundColor: '#d8e00d',
-          data: [
-            y1996,
-            y1997,
-            y1998,
-            y1999,
-            y2000,
-            y2001,
-            y2002,
-            y2003,
-            y2004,
-            y2005,
-            y2006,
-            y2007,
-            y2008,
-            y2009,
-            y2010,
-            y2011,
-            y2012,
-            y2013,
-            y2014,
-            y2015,
-            y2016,
-            y2017,
-            y2018,
-            y2019,
-            y2020,
-            y2021,
-            y2022,
-          ],
+          data: Object.values(yearDatasets),
         },
       ],
     })
-  }
-
-  const getScoreStats = () => {
-    var labels = []
-    var datasets = {}
-    for (let i = 1; i < 11; i++) {
-      labels.push(i.toString())
-    }
     setScoresChart({
-      labels,
+      labels: Object.keys(scoreDatasets),
       datasets: [
         {
           label: 'Games per Score',
           backgroundColor: '#13cf46',
-          data: [null, sc2, sc3, sc4, sc5, sc6, sc7, sc8, sc9, sc10],
+          data: Object.values(scoreDatasets),
+        },
+      ],
+    })
+    setPlayedYearStats({
+      labels: Object.keys(playedYearDatasets),
+      datasets: [
+        {
+          label: 'Games per Played Year',
+          backgroundColor: '#bd0f75',
+          data: Object.values(playedYearDatasets),
+        },
+      ],
+    })
+    setGenreStats({
+      labels: Object.keys(genreDatasets).filter(key => genreDatasets[key] > 1),
+      datasets: [
+        {
+          label: 'Games per Genre (more than 1)',
+          backgroundColor: '#00cbcb',
+          data: Object.values(genreDatasets).filter(value => value > 1),
+        },
+      ],
+    })
+    setDeveloperChart({
+      labels: Object.keys(developerDataset).filter(key => developerDataset[key] > 1),
+      datasets: [
+        {
+          label: 'Games per Developer (more than 1)',
+          backgroundColor: '#ff0042',
+          data: Object.values(developerDataset).filter(value => value > 1),
+        },
+      ],
+    })
+    setPublisherChart({
+      labels: Object.keys(publisherDataset).filter(key => publisherDataset[key] > 1),
+      datasets: [
+        {
+          label: 'Games per Publisher (more than 1)',
+          backgroundColor: '#155495',
+          data: Object.values(publisherDataset).filter(value => value > 1),
         },
       ],
     })
@@ -491,7 +367,6 @@ const GameStats = () => {
   return (
     <div className="stats-wrapper">
       <h1>Played Games Stats</h1>
-
       <div className="text-center mb-5">
         <h3>Total played games: {total_games}</h3>
         <h3>Avg Score: {avg_score.toFixed(2)}</h3>
@@ -510,16 +385,25 @@ const GameStats = () => {
         />
       </div>
       <div className=" stats-item">
-        <Chart type="bar" data={platformChart} options={platformOptions} />
+        <Chart type="bar" data={platformChart} options={barOptions} />
       </div>
       <div className="stats-item">
-        <Chart type="bar" data={yearsChart} options={yearsOptions} />
+        <Chart type="bar" data={yearsChart} options={barOptions} />
       </div>
       <div className="stats-item">
-        <Chart type="bar" data={scoresChart} options={scoreOptions} />
+        <Chart type="bar" data={playedYearChart} options={barOptions} />
       </div>
       <div className="stats-item">
-        <Chart type="bar" data={scoresChart} options={scoreOptions} />
+        <Chart type="bar" data={scoresChart} options={barOptions} />
+      </div>
+      <div className="stats-item">
+        <Chart type="bar" data={genreChart} options={barOptions} />
+      </div>
+      <div className="stats-item">
+        <Chart type="bar" data={developerChart} options={barOptions} />
+      </div>
+      <div className="stats-item">
+        <Chart type="bar" data={publisherChart} options={barOptions} />
       </div>
     </div>
   )
