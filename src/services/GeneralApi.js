@@ -3,7 +3,7 @@ import axios from 'axios'
 import NProgress from 'nprogress'
 
 export const apiClient = axios.create({
-  baseURL: 'https://localhost:5001/drgapi/',
+  baseURL: 'http://localhost:3001',
   headers: {
     Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
   },
@@ -31,7 +31,7 @@ export default {
     apiClient
       .request({
         method: 'get',
-        url: 'PlayedGames/platforms',
+        url: '/platforms',
       })
       .then((response) => {
         callback(response.data)
@@ -41,17 +41,17 @@ export default {
     apiClient
       .request({
         method: 'get',
-        url: 'PlayedGames/statuses',
+        url: '/completions',
       })
       .then((response) => {
         callback(response.data)
       })
   },
   fetchPlatforms() {
-    return apiClient.get('PlayedGames/platforms')
+    return apiClient.get('/platforms')
   },
   fetchStatuses() {
-    return apiClient.get('PlayedGames/statuses')
+    return apiClient.get('/completions')
   },
   uploadImage(gameImage, userid) {
     const formData = new FormData()
