@@ -12,7 +12,7 @@ const GameBox = (props) => {
       pathname: routes.gamedetails,
       state: {
         // location state
-        gameid: props.game.id,
+        gameid: props.game._id,
       },
     })
   }
@@ -23,8 +23,8 @@ const GameBox = (props) => {
         <img
           alt="Game Cover"
           src={
-            props.game.image
-              ? props.game.image
+            props.game.cover
+              ? props.game.cover
               : 'https://localhost:5001/game_images/no-cover.jpg'
           }
         />

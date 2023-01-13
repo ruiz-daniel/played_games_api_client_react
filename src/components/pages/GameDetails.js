@@ -6,6 +6,7 @@ import { Image } from 'primereact/image'
 import { Button } from 'primereact/button'
 import { confirmDialog } from 'primereact/confirmdialog'
 import { Dialog } from 'primereact/dialog'
+import { Chip } from 'primereact/chip'
 
 import Status from '../utils/status'
 import EditGame from '../utils/EditGame'
@@ -22,13 +23,13 @@ const GameDetails = () => {
   const [game, setGame] = useState({
     id: '',
     name: '',
-    year: '',
+    released_year: '',
     developer: '',
     publisher: '',
     genre: '',
     rating: 0,
     played_hours: 0,
-    status: {
+    completion: {
       id: '',
       name: '',
     },
@@ -48,7 +49,7 @@ const GameDetails = () => {
   }
   const onGetGame = (data) => {
     setGame(data)
-    setImage(data.image)
+    setImage(data.cover)
   }
   const onErrorGetGame = (error) => {
     toast.current.show({
@@ -107,6 +108,7 @@ const GameDetails = () => {
       <h2>{game.name}</h2>
       <div className="game-details-image flex flex-column ">
         <Image src={image} alt={game.name} preview />
+
         <div className="game-details-buttons flex justify-content-end mt-2">
           <Button
             icon={editing ? 'pi pi-times' : 'pi pi-pencil'}
@@ -124,20 +126,22 @@ const GameDetails = () => {
       </div>
 
       <div className="game-details-fields">
-        {game.developer && (
+        {game.developers?.length > 0 && (
           <p>
-            Developed by <span>{game.developer}</span>
+            Developed by <span>{game.developers.join(', ')}</span>
           </p>
         )}
-        {game.publisher && (
+        {game.publishers?.length > 0 && (
           <p>
-            Published by <span>{game.publisher}</span>
+            Published by <span>{game.publishers.join(', ')}</span>
           </p>
         )}
-        {game.genre && (
-          <p>
-            Genre: <span>{game.genre}</span>
-          </p>
+        {game.genres?.length > 0 && (
+          <div className="flex flex-wrap mb-3">
+            {game.genres.map((genre) => (
+              <Chip className="mr-2" label={genre} />
+            ))}{' '}
+          </div>
         )}
         <div className="flex flex-wrap game-details-info-box">
           <GameInfoBox
@@ -145,7 +149,7 @@ const GameDetails = () => {
             style={{ marginRight: '10px' }}
             game={game}
           />
-          {game.year && (
+          {game.release_year && (
             <GameInfoBox
               type="year"
               style={{ marginRight: '10px' }}
@@ -159,7 +163,7 @@ const GameDetails = () => {
               game={game}
             />
           )}
-          {game.rating && (
+          {game.score && (
             <GameInfoBox
               type="score"
               style={{ marginRight: '10px' }}
@@ -183,7 +187,7 @@ const GameDetails = () => {
         </div>
 
         <p>
-          <Status status={game.status.name} />{' '}
+          <Status status={game.completion.name} />
         </p>
         {game.description && game.description !== '' && (
           <p>{game.description}</p>

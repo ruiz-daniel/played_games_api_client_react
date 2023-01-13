@@ -24,16 +24,7 @@
   .game-details-image {
     width: 100%;
 
-    .p-image
-     {
-      width: 100%;
-    }
-    // .p-image-preview-indicator {
-    //   left: 20%;
-    // }
-
-    .p-image-preview-indicator,
-    img,
+    .p-image,
     .game-details-buttons {
       width: 40%;
 
@@ -44,6 +35,11 @@
       @media (max-width: 900px) {
         width: 100%;
       }
+    }
+
+    .p-image-preview-indicator,
+    img {
+      width: 100%;
     }
   }
   .game-details-fields {
