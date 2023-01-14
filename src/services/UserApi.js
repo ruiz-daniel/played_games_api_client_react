@@ -16,6 +16,7 @@ export default {
         sessionStorage.setItem('access_token', response.data.access_token)
         sessionStorage.setItem('premium', response.data.premium)
         sessionStorage.setItem('admin', response.data.admin)
+        sessionStorage.setItem('userpfp', response.data.profile_picture)
         callback(response.data)
       })
       .catch((error) => {
@@ -26,7 +27,7 @@ export default {
     apiClient
       .request({
         method: 'post',
-        url: 'users/register',
+        url: 'users',
         data: user,
       })
       .then((response) => {
