@@ -19,7 +19,7 @@ export default {
     apiClient
       .request({
         method: 'get',
-        url: `PlayedGames/${gameid}`,
+        url: `PlayedGames/game/${gameid}`,
       })
       .then((response) => {
         callback(response.data)
@@ -74,14 +74,14 @@ export default {
         callback(response.data)
       })
   },
-  getPlayingGames(userid, callback) {
+  getPlayingGames(callback) {
     apiClient
       .request({
         method: 'get',
-        url: `PlayedGames/playing/${userid}`,
+        url: `PlayedGames/playing/`,
       })
       .then((response) => {
-        callback(response.data.sort((a, b) => a.statusid - b.statusid))
+        callback(response.data)
       })
   },
   getUserGamesInfo(userid, callback, errorFunction) {

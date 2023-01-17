@@ -14,7 +14,7 @@ const PlayingGames = () => {
   const [details, showDetails] = useState(true)
 
   useEffect(() => {
-    api.PlayedGamesApi.getPlayingGames(sessionStorage.getItem('userid'),(data) => {
+    api.PlayedGamesApi.getPlayingGames((data) => {
       setGames(data)
     })
   }, [])
