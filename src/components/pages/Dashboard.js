@@ -31,7 +31,7 @@ const Dashboard = () => {
         <div className="dashboard-user-info flex flex-column justify-content-center align-items-start  pl-4 md:pl-8 col-12 md:col-4">
           <div>
             <Avatar
-              image={weissIcon}
+              image={sessionStorage.getItem('userpfp') || weissIcon}
               className="mr-4"
               size="xlarge"
               shape="circle"

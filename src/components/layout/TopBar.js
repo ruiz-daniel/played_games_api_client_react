@@ -143,7 +143,7 @@ const TopBar = () => {
   const rightContents = (
     <React.Fragment>
       {!sideMenu && <Avatar
-        image={weissIcon}
+        image={sessionStorage.getItem('userpfp') || weissIcon}
         shape="circle"
         size="large"
         onClick={(e) => menu.current.toggle(e)}
