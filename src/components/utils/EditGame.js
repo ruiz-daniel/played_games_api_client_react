@@ -30,7 +30,7 @@ const EditGame = ({ game, callback }) => {
       await api.GeneralApi.uploadImage(image, sessionStorage.getItem('userid'))
     }
     
-    api.PlayedGamesApi.putPlayedGame(
+    api.PlayedGamesApi.patchPlayedGame(
       {
         id: game.id,
         name: data.name,
