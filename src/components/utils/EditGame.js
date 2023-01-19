@@ -30,23 +30,11 @@ const EditGame = ({ game, callback }) => {
     // if (image) {
     //   await api.GeneralApi.uploadImage(image, sessionStorage.getItem('userid'))
     // }
-    
+
     api.PlayedGamesApi.patchPlayedGame(
       {
         _id: game._id,
-        name: data.name,
-        developers: data.developers,
-        publishers: data.publishers,
-        release_year: data.year,
-        played_year: data.played_year,
-        genres: data.genres,
-        tags: data.tags,
-        played_hours: data.played_hours,
-        score: data.rating,
-        platform: data.platform.id,
-        completion: data.status.id,
-        description: data.description,
-        steam_page: data.steam_page
+        ...data,
       },
       () => {
         toast.current.show({
@@ -78,7 +66,7 @@ const EditGame = ({ game, callback }) => {
   return (
     <div style={{ width: '100%' }}>
       <Toast ref={toast} />
-      
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <div
           className="flex flex-column edit-game-form"
@@ -87,7 +75,11 @@ const EditGame = ({ game, callback }) => {
           <h2>Edit Game</h2>
           <div className="item flex flex-column">
             <label htmlFor="gname">Name*</label>
-            <InputText id="gname" defaultValue={game.name} {...register('name', { required: true })} />
+            <InputText
+              id="gname"
+              defaultValue={game.name}
+              {...register('name', { required: true })}
+            />
             {errors.name && (
               <div className="error-message">Name is required</div>
             )}
@@ -99,7 +91,13 @@ const EditGame = ({ game, callback }) => {
               defaultValue={game.developers || []}
               control={control}
               render={({ field, fieldState }) => (
-                <Chips id="gdev" allowDuplicate={false} separator="," value={field.value} onChange={e => field.onChange(e.value)} />
+                <Chips
+                  id="gdev"
+                  allowDuplicate={false}
+                  separator=","
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.value)}
+                />
               )}
             />
           </div>
@@ -110,19 +108,25 @@ const EditGame = ({ game, callback }) => {
               defaultValue={game.publishers || []}
               control={control}
               render={({ field, fieldState }) => (
-                <Chips id="gdev" allowDuplicate={false} separator="," value={field.value} onChange={e => field.onChange(e.value)} />
+                <Chips
+                  id="gdev"
+                  allowDuplicate={false}
+                  separator=","
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.value)}
+                />
               )}
             />
           </div>
           <div className="item flex flex-column">
-            <label htmlFor="gyear">Year</label>
+            <label htmlFor="gyear">Release Year</label>
             <InputText
               id="gyear"
               type="number"
               defaultValue={game.release_year}
-              {...register('year', { min: 1970, max: 2030 })}
+              {...register('release_year', { min: 1970, max: 2030 })}
             />
-            {errors.year && (
+            {errors.release_year && (
               <div className="error-message">Requires a valid year</div>
             )}
           </div>
@@ -145,7 +149,13 @@ const EditGame = ({ game, callback }) => {
               defaultValue={game.genres || []}
               control={control}
               render={({ field, fieldState }) => (
-                <Chips id="gdev" allowDuplicate={false} separator="," value={field.value} onChange={e => field.onChange(e.value)} />
+                <Chips
+                  id="gdev"
+                  allowDuplicate={false}
+                  separator=","
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.value)}
+                />
               )}
             />
           </div>
@@ -156,12 +166,18 @@ const EditGame = ({ game, callback }) => {
               defaultValue={game.tags || []}
               control={control}
               render={({ field, fieldState }) => (
-                <Chips id="gtags" allowDuplicate={false} separator="," value={field.value} onChange={e => field.onChange(e.value)} />
+                <Chips
+                  id="gtags"
+                  allowDuplicate={false}
+                  separator=","
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.value)}
+                />
               )}
             />
           </div>
           <div className="item flex flex-column">
-            <label htmlFor="platform">Platform*</label>
+            <label htmlFor="platform">Platform</label>
             <Controller
               name="platform"
               defaultValue={game.platform}
@@ -173,7 +189,6 @@ const EditGame = ({ game, callback }) => {
                   onChange={(e) => field.onChange(e.value)}
                   options={platformList}
                   optionLabel="name"
-                  
                 />
               )}
             />
@@ -181,7 +196,7 @@ const EditGame = ({ game, callback }) => {
           <div className="item flex flex-column">
             <label htmlFor="status">Completion*</label>
             <Controller
-              name="status"
+              name="completion"
               control={control}
               defaultValue={game.completion}
               rules={{ required: 'Completion is required' }}
@@ -197,14 +212,14 @@ const EditGame = ({ game, callback }) => {
             />
           </div>
           <div className="item flex flex-column">
-            <label htmlFor="grating">Score*</label>
+            <label htmlFor="grating">Score</label>
             <InputText
               id="grating"
               type="number"
               defaultValue={game.score}
               min={1}
               max={10}
-              {...register('rating', { min: 1, max: 10 })}
+              {...register('score', { min: 1, max: 10 })}
             />
             {errors.rating && (
               <div className="error-message">Requires a valid score</div>
@@ -227,7 +242,19 @@ const EditGame = ({ game, callback }) => {
           </div>
           <div className="item flex flex-column">
             <label htmlFor="gsteam">Steam Page URL</label>
-            <InputText id="gsteam" defaultValue={game.steam_page} {...register('steam_page')} />
+            <InputText
+              id="gsteam"
+              defaultValue={game.steam_page}
+              {...register('steam_page')}
+            />
+          </div>
+          <div className="item flex flex-column">
+            <label htmlFor="gepic">Epic Store Page URL</label>
+            <InputText
+              id="gepic"
+              defaultValue={game.steam_page}
+              {...register('epic_page')}
+            />
           </div>
           <div className="item flex flex-column">
             <label htmlFor="gdesc">Description (optional)</label>
@@ -248,7 +275,9 @@ const EditGame = ({ game, callback }) => {
               accept="image/*"
               chooseLabel="File"
               auto
-              onRemove={() => {setImage(null)}}
+              onRemove={() => {
+                setImage(null)
+              }}
               emptyTemplate={
                 <p className="p-m-0">Drag and drop files to here to upload.</p>
               }
