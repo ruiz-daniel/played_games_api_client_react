@@ -12,7 +12,7 @@ import { Chips } from 'primereact/chips'
 
 import { Toast } from 'primereact/toast'
 
-import { sr_images } from '../../routes'
+import { sr_played_games_folder, sr_images_games } from '../../routes'
 
 const EditGame = ({ game, callback }) => {
   const toast = useRef(null)
@@ -27,13 +27,16 @@ const EditGame = ({ game, callback }) => {
   } = useForm({})
 
   const onSubmit = async (data) => {
-    // if (image) {
-    //   await api.GeneralApi.uploadImage(image, sessionStorage.getItem('userid'))
-    // }
+    let cover = undefined
+    if (image) {
+      await api.GeneralApi.uploadImage(image, sessionStorage.getItem('username'), sr_played_games_folder)
+      cover = sr_images_games(sessionStorage.getItem('username')) + image.name
+    }
 
     api.PlayedGamesApi.patchPlayedGame(
       {
         _id: game._id,
+        cover,
         ...data,
       },
       () => {

@@ -10,12 +10,25 @@ export const top10games = '/top10games'
 export const managetop10games = '/managetop10games'
 export const top10characters = '/top10characters'
 export const login = '/login'
-export const loggedRoutes = [playedgames, tableview, uploadgame, gamedetails, stats, top10games, managetop10games, top10characters]
+export const loggedRoutes = [
+  playedgames,
+  tableview,
+  uploadgame,
+  gamedetails,
+  stats,
+  top10games,
+  managetop10games,
+  top10characters,
+]
 
 //server routes
-export const sr_images = 'https://localhost:5001/game_images/'
-export const sr_top10games = 'top10games'
-export const sr_playedgames = 'PlayedGames/'
-export const sr_playinggames = 'PlayedGames/status/3'
-export const sr_platforms = 'PlayedGames/platforms/'
-export const sr_statuses = 'PlayedGames/statuses/'
+export const sr_imagesHost = 'https://localhost:7104/'
+export const sr_images = `${sr_imagesHost}imageHost/Images/`
+export const sr_played_games_folder = 'games'
+export const sr_played_pfp_folder = 'pfp'
+export const sr_images_games = (username) => {
+  return `${sr_imagesHost}/${username}/${sr_played_games_folder}/`
+}
+export const sr_images_pfp = (username) => {
+  return `${sr_imagesHost}/${username}/${sr_played_pfp_folder}/`
+}
