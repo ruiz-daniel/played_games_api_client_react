@@ -144,11 +144,11 @@ const GameDetails = () => {
           </div>
         )}
         <div className="flex flex-wrap game-details-info-box">
-          <GameInfoBox
+          {game.platform && <GameInfoBox
             type="platform"
             style={{ marginRight: '10px' }}
             game={game}
-          />
+          />}
           {game.release_year && (
             <GameInfoBox
               type="year"
