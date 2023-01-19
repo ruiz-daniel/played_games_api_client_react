@@ -21,14 +21,6 @@ const GameDetails = () => {
   const location = useLocation()
   const history = useHistory()
   const [game, setGame] = useState({
-    id: '',
-    name: '',
-    released_year: '',
-    developer: '',
-    publisher: '',
-    genre: '',
-    rating: 0,
-    played_hours: 0,
     completion: {
       id: '',
       name: '',
@@ -36,8 +28,7 @@ const GameDetails = () => {
     platform: {
       id: '',
       name: '',
-    },
-    description: '',
+    }
   })
   const [image, setImage] = useState()
   const toast = useRef(null)
@@ -64,7 +55,7 @@ const GameDetails = () => {
   }
 
   const deleteGame = () => {
-    api.PlayedGamesApi.deletePlayedGame({ id: game.id }, () => {
+    api.PlayedGamesApi.deletePlayedGame(game._id, () => {
       toast.current.show({
         severity: 'error',
         summary: 'Game Deleted Successfully',

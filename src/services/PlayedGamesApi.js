@@ -63,12 +63,11 @@ export default {
         callback(response.data)
       })
   },
-  deletePlayedGame(game, callback) {
+  deletePlayedGame(id, callback) {
     apiClient
       .request({
         method: 'delete',
-        url: 'PlayedGames/' + game.id,
-        data: game,
+        url: `PlayedGames/${id}`
       })
       .then((response) => {
         callback(response.data)
