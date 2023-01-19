@@ -52,11 +52,11 @@ export default {
         callback(response.data)
       })
   },
-  putPlayedGame(game, callback) {
+  patchPlayedGame(game, callback) {
     apiClient
       .request({
-        method: 'put',
-        url: 'PlayedGames/' + game.id,
+        method: 'patch',
+        url: 'PlayedGames/',
         data: game,
       })
       .then((response) => {

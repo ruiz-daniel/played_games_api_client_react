@@ -10,7 +10,8 @@
     }
     input,
     .p-dropdown,
-    .p-inputtextarea {
+    .p-inputtextarea,
+    .p-chips {
       margin-top: 5px;
       color: white;
       font-weight: 400;
@@ -30,6 +31,24 @@
         font-weight: 400;
         font-size: large;
         background-color: $background-transparent-darker;
+      }
+    }
+    .p-chips {
+      .p-inputtext {
+        border: none;
+        width: 100%;
+        &:focus,
+        &:hover {
+          box-shadow: none !important;
+          border-color: $text-color-silver !important;
+        }
+      }
+      input {
+        color: white;
+      }
+      .p-chips-token {
+        background-color: white;
+        border-radius: 10px;
       }
     }
     .p-fileupload-buttonbar {
