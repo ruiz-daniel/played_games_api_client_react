@@ -71,7 +71,7 @@ const PlayingGames = () => {
 
   return (
     <div className="playing-carrousel">
-      <Carousel
+      {games.length > 0 && <Carousel
         value={games}
         numVisible={1}
         numScroll={1}
@@ -80,7 +80,7 @@ const PlayingGames = () => {
         showNavigators={false}
         autoplayInterval={3000}
         itemTemplate={template}
-      />
+      />}
     </div>
   )
 }

@@ -3,7 +3,6 @@
   .p-avatar-image {
     width: 140px;
     height: 140px;
-    
   }
   h1 {
     @include marginY(0);
@@ -16,6 +15,46 @@
       text-transform: uppercase;
       font-weight: 600;
       font-size: 18px;
+    }
+  }
+}
+.dashboard-user-details {
+  padding-right: 10%;
+  width: 100%;
+  .p-card {
+    background-color: $background-transparent;
+
+    .item {
+      margin-bottom: 3rem;
+      label {
+        font-size: 20px;
+      }
+      input,
+      .p-dropdown,
+      .p-inputtextarea {
+        margin-top: 5px;
+        @include darkInput();
+        border: none;
+
+        &:focus,
+        &:hover {
+          box-shadow: none !important;
+          border-color: $text-color-silver !important;
+        }
+
+        .p-inputtext {
+          text-align: start;
+          @include darkInput();
+        }
+      }
+      .p-fileupload {
+        .p-button {
+          margin-top: 10px;
+          border: none;
+          background: $text-color-pink !important;
+          border-color: white;
+        }
+      }
     }
   }
 }
