@@ -24,7 +24,7 @@ const PlayingGames = () => {
       pathname: routes.gamedetails,
       state: {
         // location state
-        gameid: game.id,
+        gameid: game._id,
       },
     })
   }
@@ -45,26 +45,15 @@ const PlayingGames = () => {
       >
         {details && (
           <div className="details">
-            <div className="details-status">
-              {game.status.id == 3 && (
-                <h2 className="status_tittle">Currently Playing</h2>
-              )}
-              {game.status.id == 4 && (
-                <h2 className="status_tittle">On Hold</h2>
-              )}
-              {game.status.id == 6 && (
-                <h2 className="status_tittle">Currently Replaying</h2>
-              )}
-            </div>
             <div className="details-name">
               <h2>{game.name}</h2>
               <h3>
-                Current Score: <Score score={game.rating}></Score>
+                Current Score: <Score score={game.score}></Score>
               </h3>
             </div>
           </div>
         )}
-        <img src={game.image} alt="Game Cover"></img>
+        <img src={game.cover} alt="Game Cover"></img>
       </div>
     )
   }
