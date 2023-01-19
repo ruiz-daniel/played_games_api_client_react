@@ -150,13 +150,13 @@ const EditGame = ({ game, callback }) => {
             />
           </div>
           <div className="item flex flex-column">
-            <label htmlFor="ggenre">Tags</label>
+            <label htmlFor="gtags">Tags</label>
             <Controller
               name="tags"
               defaultValue={game.tags || []}
               control={control}
               render={({ field, fieldState }) => (
-                <Chips id="gdev" allowDuplicate={false} separator="," value={field.value} onChange={e => field.onChange(e.value)} />
+                <Chips id="gtags" allowDuplicate={false} separator="," value={field.value} onChange={e => field.onChange(e.value)} />
               )}
             />
           </div>

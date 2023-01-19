@@ -116,3 +116,23 @@
   font-size: larger;
   background-color: $background-transparent-darker;
 }
+
+@mixin darkChips {
+  .p-inputtext {
+    border: none;
+    width: 100%;
+    &:focus,
+    &:hover {
+      box-shadow: none !important;
+      border-color: $text-color-silver !important;
+    }
+  }
+  input {
+    color: white;
+  }
+  .p-chips-token {
+    background-color: white;
+    border-radius: 10px;
+    font-size: 19px;
+  }
+}
