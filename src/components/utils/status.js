@@ -5,11 +5,7 @@ const status = (props) => {
     if (props.status === "Completed" || props.status === "Replaying")
       return "status status-completed";
     else if (props.status === "Dropped") return " status status-dropped";
-    else if (
-      props.status === "Playing" ||
-      props.status === "Played" ||
-      props.status === "On Hold"
-    )
+    else 
       return "status status-incomplete";
   };
   return <span className={getStatus()}>{props.status}</span>;

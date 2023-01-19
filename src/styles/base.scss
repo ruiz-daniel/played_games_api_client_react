@@ -60,6 +60,7 @@ body.dark-mode {
   }
 }
 
+
 .score-good {
   font-weight: 800;
   color: $text-color-green !important;
@@ -79,6 +80,9 @@ body.dark-mode {
 
 .status {
   color: white !important;
+  font-weight: 500;
+  padding: 0.2rem;
+  border-radius: 10px;
 }
 
 .status-completed {
