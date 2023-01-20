@@ -28,7 +28,7 @@ const GameDetails = () => {
     platform: {
       id: '',
       name: '',
-    }
+    },
   })
   const [image, setImage] = useState()
   const toast = useRef(null)
@@ -135,11 +135,13 @@ const GameDetails = () => {
           </div>
         )}
         <div className="flex flex-wrap game-details-info-box">
-          {game.platform && <GameInfoBox
-            type="platform"
-            style={{ marginRight: '10px' }}
-            game={game}
-          />}
+          {game.platform && (
+            <GameInfoBox
+              type="platform"
+              style={{ marginRight: '10px' }}
+              game={game}
+            />
+          )}
           {game.release_year && (
             <GameInfoBox
               type="year"
@@ -177,9 +179,11 @@ const GameDetails = () => {
           )}
         </div>
 
-        <p>
-          <Status status={game.completion.name} />
-        </p>
+        {game.completion && (
+          <p>
+            <Status status={game.completion.name} />
+          </p>
+        )}
         {game.description && game.description !== '' && (
           <p>{game.description}</p>
         )}

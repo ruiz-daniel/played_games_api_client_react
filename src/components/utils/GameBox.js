@@ -33,8 +33,8 @@ const GameBox = (props) => {
             <span className="pi pi-pencil"></span>
           </div>
         </div>
-        <Status status={props.game.completion.name}></Status>
-        <Score score={props.game.score}></Score>
+        {props.game.completion && <Status status={props.game.completion.name}></Status>}
+        {props.game.score && <Score score={props.game.score}></Score>}
       </div>
 
       <p>{props.game.name}</p>
