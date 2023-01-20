@@ -255,7 +255,7 @@ const EditGame = ({ game, callback }) => {
             <label htmlFor="gepic">Epic Store Page URL</label>
             <InputText
               id="gepic"
-              defaultValue={game.steam_page}
+              defaultValue={game.epic_page}
               {...register('epic_page')}
             />
           </div>
