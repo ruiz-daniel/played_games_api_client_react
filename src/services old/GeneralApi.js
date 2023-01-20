@@ -5,7 +5,7 @@ import NProgress from 'nprogress'
 export const apiClient = axios.create({
   baseURL: 'https://localhost:5001/drgapi/',
   headers: {
-    Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+    Authorization: `Bearer ${sessionStorage.getItem('access_token_v1')}`,
   },
 })
 
