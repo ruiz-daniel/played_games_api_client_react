@@ -126,6 +126,7 @@ const EditGame = ({ game, callback }) => {
             <InputText
               id="gyear"
               type="number"
+              onWheel={(e) => {e.target.blur()}}
               defaultValue={game.release_year}
               {...register('release_year', { min: 1970, max: 2030 })}
             />
@@ -138,6 +139,7 @@ const EditGame = ({ game, callback }) => {
             <InputText
               id="gplayedyear"
               type="number"
+              onWheel={(e) => {e.target.blur()}}
               defaultValue={game.played_year}
               {...register('played_year', { min: 1970, max: 2030 })}
             />
@@ -219,6 +221,7 @@ const EditGame = ({ game, callback }) => {
             <InputText
               id="grating"
               type="number"
+              onWheel={(e) => {e.target.blur()}}
               defaultValue={game.score}
               min={1}
               max={10}
@@ -235,6 +238,7 @@ const EditGame = ({ game, callback }) => {
               type="number"
               defaultValue={game.played_hours}
               min={0}
+              onWheel={(e) => {e.target.blur()}}
               {...register('played_hours')}
             />
             {errors.played_hours && (
