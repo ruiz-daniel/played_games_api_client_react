@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import api from '../../services/IApi'
 import { useForm, Controller } from 'react-hook-form'
+import { useHistory } from 'react-router-dom'
 
 import { InputText } from 'primereact/inputtext'
 import { Dropdown } from 'primereact/dropdown'
@@ -11,9 +12,12 @@ import { Chips } from 'primereact/chips'
 
 import { Toast } from 'primereact/toast'
 
+import * as routes from '../../routes'
+
 var step = 0
 
 const UploadGame = () => {
+  const history = useHistory()
   const [platformList, setPlatformList] = useState([])
   const [statusList, setStatusList] = useState([])
   const [gameImage, setGameImage] = useState()
@@ -42,6 +46,7 @@ const UploadGame = () => {
         summary: 'Game Uploaded Successfully',
         life: 3000,
       })
+      history.push(routes.playedgames)
     })
   }
 
