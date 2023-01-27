@@ -28,7 +28,7 @@ const Top10GameBox = (props) => {
     <div className={classes.root}>
       <img
         style={classes.img}
-        src={props.game.image || no_cover}
+        src={props.game.cover || no_cover}
         alt="Game"
         onClick={(e) => op.current.toggle(e)}
         // onMouseLeave={(e) => op.current.toggle(e)}

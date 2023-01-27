@@ -9,117 +9,32 @@ import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
 import FavoritesList from '../utils/FavoritesList'
 
-var gamesBackup = []
-var filters = {
-  name: '',
-}
-var top10name = 'Favorite Games'
-
 const Top10Games = (props) => {
-  const [allGames, setAllGames] = useState([])
-  const [orderedGames, setOrder] = useState([])
-  const [movingGame, setMovingGame] = useState(null)
+  const [list, setList] = useState([])
   const [addingGame, setAddingGame] = useState(null)
-  const [filtering, setFiltering] = useState(false)
   const [gamesPanel, toogleGamesPanel] = useState(false)
   const [topsPanel, togleTopsPanel] = useState(false)
 
-  const cleanFilters = () => {
-    filters = {
-      name: '',
-    }
-  }
-  const compareIgnoreCase = (stringA, stringB) => {
-    return stringA.toUpperCase().includes(stringB.toUpperCase())
-  }
-  useEffect(() => {
-    var filtered = []
-
-    gamesBackup.forEach((game) => {
-      if (compareIgnoreCase(game.name, filters.name)) {
-        filtered.push(game)
-      }
-    })
-    setAllGames(filtered)
-    setFiltering(false)
-  }, [filtering])
-
-  const filterName = (name) => {
-    filters.name = name
-    setFiltering(true)
+  const changeList = (listId) => {
+    api.FavoritesApi.getListById(listId, setList)
   }
 
-  const changeTop10 = (newName) => {
-    top10name = newName.name
-    togleTopsPanel(false)
-    getGames()
-  }
-
-  const getGames = () => {
-    api.Top10GamesAPI.getTop10Games(
-      top10name,
-      sessionStorage.getItem('userid'),
+  const getLists = () => {
+    api.FavoritesApi.getLists(
       (data) => {
-        splitGames(data)
+        if (data.length) {
+          setList(data[0])
+        }
+      },
+      (error) => {
+        console.log(error.message)
       },
     )
-  }
-
-  const getFirstTop10 = () => {
-    api.Top10NamesApi.getTop10Names(
-      sessionStorage.getItem('userid'),
-      (data) => {
-        top10name = data[0].name
-        getGames()
-      },
-      onGetFirstError,
-    )
-  }
-
-  const onGetFirstError = () => {
-    toogleGamesPanel(false)
-    top10name = 'No favorites list found'
   }
 
   const addGame = (game, position) => {
-    if (!top10name.includes('No favorites list found'))
-      api.Top10GamesAPI.postTop10Game(
-        {
-          gameid: game.id,
-          pos: position,
-          userid: sessionStorage.getItem('userid'),
-        },
-        top10name,
-        () => {
-          getGames()
-          setAddingGame(null)
-          setMovingGame(null)
-          cleanFilters()
-        },
-      )
-  }
-
-  const moveGame = (game, position) => {
-    game.pos = position
-    api.Top10GamesAPI.putTop10Game(game, () => {
-      getGames()
-      setAddingGame(null)
-      setMovingGame(null)
-      cleanFilters()
-    })
-  }
-
-  const removeGame = (game) => {
-    api.Top10GamesAPI.deleteTop10Game(game.id, () => {
-      getGames()
-      setAddingGame(null)
-      setMovingGame(null)
-      cleanFilters()
-    })
-  }
-
-  const drag = (game) => {
-    setMovingGame(game)
+    if (list) {
+    }
   }
   const dragNew = (game) => {
     setAddingGame(game)
@@ -127,46 +42,10 @@ const Top10Games = (props) => {
   const allowDrop = (ev) => {
     ev.preventDefault()
   }
-  const drop = (ev, pos) => {
-    ev.preventDefault()
-    if (movingGame != null) {
-      moveGame(movingGame, pos)
-    } else if (addingGame != null) {
-      addGame(addingGame, pos)
-    }
-  }
 
   useEffect(() => {
-    cleanFilters()
-    getFirstTop10()
-    api.PlayedGamesApi.getPlayedGames(
-      sessionStorage.getItem('userid'),
-      (data) => {
-        setAllGames(data)
-        gamesBackup = data
-      },
-    )
+    getLists()
   }, [])
-
-  const splitGames = (games) => {
-    let result = []
-    games.forEach((game, index) => {
-      game.name = game.game.name
-      if (index === 0) {
-        result.push([game])
-      } else {
-        if (game.pos > games[index - 1].pos + 1) {
-          result.push([])
-          result.push([game])
-        } else if (game.pos === games[index - 1].pos) {
-          result[game.pos - 1].push(game)
-        } else {
-          result.push([game])
-        }
-      }
-    })
-    setOrder(result)
-  }
 
   const lightUpTier = (id) => {
     document.getElementById(id).classList.add('hoveredTier')
@@ -175,23 +54,10 @@ const Top10Games = (props) => {
     document.getElementById(id).classList.remove('hoveredTier')
   }
 
-  const moveTierUp = (tier, index) => {
-    tier.forEach((game) => {
-      moveGame(game, game.pos - 1)
-    })
-    orderedGames[index - 1].map((game) => moveGame(game, game.pos + 1))
-  }
-  const moveTierDown = (tier, index) => {
-    tier.forEach((game) => {
-      moveGame(game, game.pos + 1)
-    })
-    orderedGames[index + 1].map((game) => moveGame(game, game.pos - 1))
-  }
-
   return (
     <>
       <div className="top10gamesheader">
-        <h1>{top10name}</h1>
+        {(list.length && <h1>{list.name}</h1>) || <h1>No List selected</h1>}
         <div className="flex">
           <Button
             label="Add Game"
@@ -210,7 +76,7 @@ const Top10Games = (props) => {
           position="top"
           onHide={() => togleTopsPanel(false)}
         >
-          <FavoritesList onSelect={(newName) => changeTop10(newName)} />
+          <FavoritesList onSelect={(list) => setList(list)} />
         </Dialog>
       </div>
       <div className="top10games flex flex-column">
@@ -225,7 +91,7 @@ const Top10Games = (props) => {
             toogleGamesPanel(false)
           }}
         >
-          <div className="top10-newgame">
+          {/* <div className="top10-newgame">
             <div>
               <p>
                 <span style={{ color: 'red', fontWeight: 900 }}>Drag </span> a
@@ -265,88 +131,10 @@ const Top10Games = (props) => {
                 })}
               </div>
             </ScrollPanel>
-          </div>
+          </div> */}
         </Dialog>
-        {orderedGames.map((tier, index) => {
-          return (
-            <div
-              id={`tier-${index}`}
-              className="top10-item"
-              onDrop={(ev) => {
-                drop(ev, index + 1)
-                turnLightOff(`tier-${index}`)
-              }}
-              onDragOver={(ev) => {
-                allowDrop(ev)
-                lightUpTier(`tier-${index}`)
-              }}
-              onDragLeave={(ev) => {
-                turnLightOff(`tier-${index}`)
-              }}
-            >
-              <div className="flex flex-column justify-content-center tier-buttons">
-                {index > 0 && (
-                  <i
-                    className="pi pi-arrow-up"
-                    onClick={() => {
-                      moveTierUp(tier, index)
-                    }}
-                  />
-                )}
-                <h2>
-                  <Position pos={index + 1}></Position>
-                </h2>
-                <i
-                  className="pi pi-arrow-down"
-                  onClick={() => {
-                    moveTierDown(tier, index)
-                  }}
-                />
-              </div>
-
-              <div className="flex tier-games">
-                {tier.map((game) => {
-                  if (tier.length === 0) {
-                    return <div style={{ height: 130 }}></div>
-                  }
-                  return (
-                    <div
-                      key={game.id}
-                      draggable="true"
-                      onDragStart={(e) => {
-                        drag(game)
-                      }}
-                      onDragEnd={(e) => {
-                        setTimeout(3000)
-                        setMovingGame()
-                      }}
-                      onDoubleClick={() => {
-                        moveGame(game, orderedGames.length + 1)
-                      }}
-                    >
-                      <GameBox key={game.game.id} game={game.game}></GameBox>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-          )
-        })}
+        {list?.tiers?.length > 0 && list.tiers.map((tier, index) => {})}
       </div>
-      {movingGame && (
-        <Button
-          icon="pi pi-trash"
-          className="p-button-rounded p-button-raised p-button-danger top10-remove-button  z-1"
-          hidden={movingGame == null}
-          onDrop={(ev) => {
-            ev.preventDefault()
-            removeGame(movingGame)
-          }}
-          onDragOver={(ev) => {
-            allowDrop(ev)
-          }}
-        />
-      )}
     </>
   )
 }
