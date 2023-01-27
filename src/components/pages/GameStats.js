@@ -58,7 +58,7 @@ const GameStats = () => {
         setBarChartStats()
       },
       (error) => {
-        console.log(error.message)
+        console.log(error)
       },
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -168,13 +168,13 @@ const GameStats = () => {
   const getStats = (data) => {
     data.forEach((element) => {
       // COMPLETION
-      if (element.status.name === 'Completed') {
+      if (element.completion.name === 'Completed') {
         completed++
-      } else if (element.status.name === 'Dropped') {
+      } else if (element.completion.name === 'Dropped') {
         dropped++
-      } else if (element.status.name === 'Played') {
+      } else if (element.completion.name === 'Played') {
         played++
-      } else if (element.status.name === 'On Hold') {
+      } else if (element.completion.name === 'On Hold') {
         onHold++
       }
 
@@ -192,10 +192,16 @@ const GameStats = () => {
       }
 
       // YEARS
-      if (element.year && yearDatasets[element.year.toString()] == undefined) {
-        yearDatasets[element.year.toString()] = 1
-      } else if (element.year && yearDatasets[element.year.toString()] >= 1) {
-        yearDatasets[element.year.toString()]++
+      if (
+        element.release_year &&
+        yearDatasets[element.release_year.toString()] == undefined
+      ) {
+        yearDatasets[element.release_year.toString()] = 1
+      } else if (
+        element.release_year &&
+        yearDatasets[element.release_year.toString()] >= 1
+      ) {
+        yearDatasets[element.release_year.toString()]++
       }
 
       // PLAYED YEAR
@@ -213,36 +219,48 @@ const GameStats = () => {
 
       // SCORES
       if (
-        element.rating &&
-        scoreDatasets[element.rating.toString()] == undefined
+        element.score &&
+        scoreDatasets[element.score.toString()] == undefined
       ) {
-        scoreDatasets[element.rating.toString()] = 1
+        scoreDatasets[element.score.toString()] = 1
       } else if (
-        element.rating &&
-        scoreDatasets[element.rating.toString()] >= 1
+        element.score &&
+        scoreDatasets[element.score.toString()] >= 1
       ) {
-        scoreDatasets[element.rating.toString()]++
+        scoreDatasets[element.score.toString()]++
       }
 
-      // GENRE
-      if (element.genre && genreDatasets[element.genre] == undefined) {
-        genreDatasets[element.genre] = 1
-      } else if (element.genre && genreDatasets[element.genre] >= 1) {
-        genreDatasets[element.genre]++
+      // GENRES
+      if (element.genres?.length) {
+        element.genres.forEach((genre) => {
+          if (genreDatasets[genre] == undefined) {
+            genreDatasets[genre] = 1
+          } else if (genreDatasets[genre] >= 1) {
+            genreDatasets[genre]++
+          }
+        })
       }
 
       // DEVELOPER
-      if (element.developer && developerDataset[element.developer] == undefined) {
-        developerDataset[element.developer] = 1
-      } else if (element.developer && developerDataset[element.developer] >= 1) {
-        developerDataset[element.developer]++
+      if (element.developers?.length) {
+        element.developers.forEach((developer) => {
+          if (developerDataset[developer] == undefined) {
+            developerDataset[developer] = 1
+          } else if (developerDataset[developer] >= 1) {
+            developerDataset[developer]++
+          }
+        })
       }
 
       // PUBLISHER
-      if (element.publisher && publisherDataset[element.publisher] == undefined) {
-        publisherDataset[element.publisher] = 1
-      } else if (element.publisher && publisherDataset[element.publisher] >= 1) {
-        publisherDataset[element.publisher]++
+      if (element.publishers?.length) {
+        element.publishers.forEach((publisher) => {
+          if (publisherDataset[publisher] == undefined) {
+            publisherDataset[publisher] = 1
+          } else if (publisherDataset[publisher] >= 1) {
+            publisherDataset[publisher]++
+          }
+        })
       }
     })
 
@@ -333,32 +351,38 @@ const GameStats = () => {
       ],
     })
     setGenreStats({
-      labels: Object.keys(genreDatasets).filter(key => genreDatasets[key] > 1),
+      labels: Object.keys(genreDatasets).filter(
+        (key) => genreDatasets[key] > 1,
+      ).sort((a,b) => genreDatasets[b] - genreDatasets[a]),
       datasets: [
         {
           label: 'Games per Genre (more than 1)',
           backgroundColor: '#00cbcb',
-          data: Object.values(genreDatasets).filter(value => value > 1),
+          data: Object.values(genreDatasets).filter((value) => value > 1).sort((a,b) => b - a),
         },
       ],
     })
     setDeveloperChart({
-      labels: Object.keys(developerDataset).filter(key => developerDataset[key] > 1),
+      labels: Object.keys(developerDataset).filter(
+        (key) => developerDataset[key] > 1,
+      ).sort((a,b) => developerDataset[b] - developerDataset[a]),
       datasets: [
         {
           label: 'Games per Developer (more than 1)',
           backgroundColor: '#ff0042',
-          data: Object.values(developerDataset).filter(value => value > 1),
+          data: Object.values(developerDataset).filter((value) => value > 1).sort((a,b) => b - a),
         },
       ],
     })
     setPublisherChart({
-      labels: Object.keys(publisherDataset).filter(key => publisherDataset[key] > 1),
+      labels: Object.keys(publisherDataset).filter(
+        (key) => publisherDataset[key] > 1,
+      ).sort((a,b) => publisherDataset[b] - publisherDataset[a]),
       datasets: [
         {
           label: 'Games per Publisher (more than 1)',
           backgroundColor: '#155495',
-          data: Object.values(publisherDataset).filter(value => value > 1),
+          data: Object.values(publisherDataset).filter((value) => value > 1).sort((a,b) => b - a),
         },
       ],
     })
