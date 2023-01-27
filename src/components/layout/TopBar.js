@@ -115,24 +115,7 @@ const TopBar = () => {
               <Link to={routes.stats}>Stats</Link>
             </div>
             <div className="topbar-element">
-              <Link
-                to={{
-                  pathname: routes.top10games,
-                  state: { top10name: 'All Time' },
-                }}
-              >
-                Top 10 Games
-              </Link>
-            </div>
-            <div className="topbar-element">
-              <Link
-                to={{
-                  pathname: routes.top10characters,
-                  state: { top10name: 'All Time' },
-                }}
-              >
-                Top 10 Characters
-              </Link>
+              <Link to={routes.top10games}>Favorites</Link>
             </div>
           </div>
         )}
@@ -142,12 +125,14 @@ const TopBar = () => {
 
   const rightContents = (
     <React.Fragment>
-      {!sideMenu && <Avatar
-        image={sessionStorage.getItem('userpfp') || weissIcon}
-        shape="circle"
-        size="large"
-        onClick={(e) => menu.current.toggle(e)}
-      />}
+      {!sideMenu && (
+        <Avatar
+          image={sessionStorage.getItem('userpfp') || weissIcon}
+          shape="circle"
+          size="large"
+          onClick={(e) => menu.current.toggle(e)}
+        />
+      )}
       <Menu model={userMenuItems} popup ref={menu} />
     </React.Fragment>
   )

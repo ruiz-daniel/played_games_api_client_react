@@ -1,6 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
 import GeneralApi from "./GeneralApi";
-import CharactersApi from "./CharactersApi";
 import PlayedGamesApi from "./PlayedGamesApi";
 import Top10CharactersApi from "./Top10CharactersApi";
 import FavoritesApi from "./FavoritesApi";
@@ -9,7 +8,6 @@ import UserApi from "./UserApi";
 
 export default {
     GeneralApi,
-    CharactersApi,
     PlayedGamesApi,
     Top10CharactersApi,
     FavoritesApi,
