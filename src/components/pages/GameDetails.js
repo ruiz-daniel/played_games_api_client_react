@@ -17,6 +17,8 @@ import { playedgames } from '../../routes'
 import { Toast } from 'primereact/toast'
 import GameInfoBox from '../utils/GameInfoBox'
 
+import  no_cover  from '../../images/no-cover.jpg'
+
 const GameDetails = () => {
   const location = useLocation()
   const history = useHistory()
@@ -98,7 +100,7 @@ const GameDetails = () => {
       </Dialog>
       <h2>{game.name}</h2>
       <div className="game-details-image flex flex-column ">
-        <Image src={image} alt={game.name} preview />
+        <Image src={image || no_cover} alt={game.name} preview />
 
         <div className="game-details-buttons flex justify-content-end mt-2">
           <Button

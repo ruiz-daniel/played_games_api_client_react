@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import GameBox from "./GameBox";
 import { OverlayPanel } from "primereact/overlaypanel";
+import  no_cover  from '../../images/no-cover.jpg'
 const classes = {
   root: {},
   paper: {
@@ -27,7 +28,7 @@ const Top10GameBox = (props) => {
     <div className={classes.root}>
       <img
         style={classes.img}
-        src={props.game.image}
+        src={props.game.image || no_cover}
         alt="Game"
         onClick={(e) => op.current.toggle(e)}
         // onMouseLeave={(e) => op.current.toggle(e)}
