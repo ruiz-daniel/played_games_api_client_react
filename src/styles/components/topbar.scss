@@ -2,7 +2,7 @@
   background-color: $background-color-dark2;
   color: white;
   width: 100vw;
-  @media (min-width: 900px) {
+  @include respond(tab-land) {
     padding-right: 3rem;
   }
 
@@ -12,10 +12,10 @@
     }
   }
   .topbar-links {
-    @media (max-width: 1055px) {
-    display: none !important;
-    transition: 1s ease;
-  }
+    @include respond(tab-land) {
+      display: none !important;
+      transition: 1s ease;
+    }
   }
 
   @include paddingY(0);

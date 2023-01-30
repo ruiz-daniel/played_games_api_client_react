@@ -1,6 +1,6 @@
 @mixin respond($breakpoint) {
   @if $breakpoint == phone {
-    @media (max-width: 600px) {
+    @media (max-width: 678px) {
       @content;
     }
   }
@@ -14,18 +14,16 @@
       @content;
     }
   }
-  @if $breakpoint == big-desktop {
-    @media (min-width: 1500px) {
+  @if $breakpoint == desktop {
+    @media (max-width: 1400px) {
       @content;
     }
   }
-}
-
-@mixin crystalBox() {
-  background-color: $background-color-dark2;
-  color: $background-color-light;
-  border: solid 1px;
-  border-color: $background-color-dark;
+  @if $breakpoint == big-desktop {
+    @media (min-width: 1400px) {
+      @content;
+    }
+  }
 }
 
 @mixin centerContent($width: 80%) {
@@ -33,35 +31,6 @@
     margin-left: auto;
     margin-right: auto;
     width: $width;
-  }
-}
-
-@mixin blackButton() {
-  border: none;
-  background-color: black;
-  color: white;
-  &:hover {
-    background-color: $background-color-purple;
-  }
-  &:focus {
-    border: none !important;
-    outline: none !important;
-  }
-}
-
-@mixin purpleButton() {
-  border: none;
-  background-color: $text-color-purple;
-  &:hover {
-    background-color: darken($color: $text-color-purple, $amount: 20);
-  }
-}
-
-@mixin redButton() {
-  border: none;
-  background-color: $text-color-red;
-  &:hover {
-    background-color: darken($color: $text-color-red, $amount: 20);
   }
 }
 

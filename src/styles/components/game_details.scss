@@ -26,14 +26,14 @@
 
     .p-image,
     .game-details-buttons {
-      width: 40%;
-
-      @media (max-width: 1200px) {
-        width: 50%;
-      }
-
-      @media (max-width: 900px) {
+      @include respond(tab-land) {
         width: 100%;
+      }
+      @include respond(desktop) {
+        width: 60%;
+      }
+      @include respond(big-desktop) {
+        width: 40%;
       }
     }
 

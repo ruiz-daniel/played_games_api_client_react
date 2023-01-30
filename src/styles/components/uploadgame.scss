@@ -19,7 +19,7 @@
     border-radius: 10px;
     padding: 3rem;
     margin-top: 1rem;
-    @media (max-width: 768px) {
+    @include respond (tab-port) {
       width: 90%;
       @include paddingX(1rem);
       @include marginX(10%);
@@ -90,14 +90,14 @@
       &:hover {
         color: $text-color-pink;
       }
-      @media (max-width: 900px) {
+      @include respond (tab-land) {
         float: none;
         margin-top: 3rem;
       }
     }
 
     .form-last-step-buton {
-      @media (max-width: 900px) {
+      @include respond (tab-land) {
         float: none;
         margin-top: 3rem;
       }

@@ -41,20 +41,13 @@
 
     .p-button {
       width: 80px;
-      border: none;
     }
     .clear-button {
-      background-color: $text-color-red;
-      &:hover {
-        background-color: darken($color: $text-color-red, $amount: 20);
-      }
+      @include redButton()
     }
     .filter-button {
       margin-left: 1rem;
-      background-color: $text-color-purple;
-      &:hover {
-        background-color: darken($color: $text-color-purple, $amount: 20);
-      }
+      @include purpleButton()
     }
   }
   .filter-buttons {

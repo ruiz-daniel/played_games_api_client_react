@@ -6,7 +6,7 @@
   }
   .p-carousel-next,
   .p-carousel-prev {
-    @media (max-width: 600px) {
+    @include respond(phone) {
       display: none;
     }
   }
@@ -43,7 +43,7 @@
         color: $text-color-yellow;
       }
 
-      @media (max-width: 600px) {
+      @include respond(phone) {
         display: none;
       }
     }

@@ -1,6 +1,5 @@
 .home-header {
   font-family: 'Roboto';
-  // color: $text-color-purple;
   height: 50vh;
   background-image: url('../../images/electric controller.png');
   background-size: cover;
@@ -8,7 +7,7 @@
   display: flex;
   align-items: center;
   @include paddingX(2rem);
-  
+
   h1 {
     margin: 0;
     font-size: 50px;
@@ -19,27 +18,22 @@
       font-size: 35px;
       font-weight: 700;
     }
-
     span {
       cursor: pointer;
       color: $text-color-silver;
     }
   }
 
-  @media (max-width: 678px) {
+  @include respond(phone) {
     height: 30vh;
     color: $text-color-gold;
     padding: 1rem;
     h1 {
       display: none;
-      font-size: 30px;
     }
     .home-header-description {
       display: none;
-    p {
-      font-size: 20px !important;
     }
-  }
   }
 }
 
@@ -57,7 +51,7 @@
   }
   .home-section-img {
     padding: 5rem;
-    @media (max-width: 900px) {
+    @include respond(tab-land) {
       padding: 0 !important;
     }
     opacity: 0;

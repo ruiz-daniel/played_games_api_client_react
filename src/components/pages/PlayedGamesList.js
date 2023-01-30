@@ -49,7 +49,7 @@ const PlayedGamesList = () => {
           } else if (game[key].length) {
             // Array
             if (game[key].toString().includes(value)) {
-              console.log(key);
+              console.log(key)
               found = true
             }
           } else {
@@ -124,6 +124,8 @@ const PlayedGamesList = () => {
           icon="pi pi-times"
           label="Clear Filters"
           onClick={resetFilter}
+          onMouseLeave={(e) => e.target.blur()}
+          onTouchEnd={(e) => e.target.blur()}
         />
       </div>
       <h3>Showing: {games.length}</h3>

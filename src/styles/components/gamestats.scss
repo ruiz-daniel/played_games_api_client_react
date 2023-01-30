@@ -11,7 +11,7 @@
     position: relative;
     width: 20%;
 
-    @media (max-width: 678px) {
+    @include respond(phone) {
       width: 80%;
     }
   }

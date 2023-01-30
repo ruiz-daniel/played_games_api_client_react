@@ -19,8 +19,9 @@
   }
 }
 .dashboard-user-details {
-  @media (min-width: 990px) {
-    padding-right: 10%;
+  padding-right: 10%;
+  @include respond (desktop) {
+    padding-right: 0;
   }
   
   .p-card {

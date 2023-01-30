@@ -36,12 +36,11 @@
     @include blackButton();
   }
   .p-inputtext {
-      margin-right: 1rem;
-      border-color: $background-color-dark;
-      @include darkInput();
-      
-    }
-  @media (max-width: 600px) {
+    margin-right: 1rem;
+    border-color: $background-color-dark;
+    @include darkInput();
+  }
+  @include respond(phone) {
     .p-inputtext {
       width: 60%;
     }
