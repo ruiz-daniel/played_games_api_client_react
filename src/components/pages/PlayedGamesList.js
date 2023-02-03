@@ -112,7 +112,7 @@ const PlayedGamesList = () => {
       <div className="options-container flex">
         <InputText
           placeholder="Search"
-          className="p-inputtext-sm"
+          className="p-inputtext-sm search-input"
           onChange={(e) => localFilter(e.target.value)}
         />
         <Button

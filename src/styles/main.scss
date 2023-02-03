@@ -1,24 +1,29 @@
 @import './mixins.scss';
 @import './mixins_buttons.scss';
+@import './mixins_inputs.scss';
 @import './variables.scss';
 @import './base.scss';
 @import './animations.scss';
 
+@import './components.scss';
+
+@import './pages/dashboard.scss';
+@import './pages/played_games.scss';
+@import './pages/gamestats.scss';
+@import './pages/uploadgame.scss';
+@import './pages/top10games.scss';
+@import './pages/top10characters.scss';
+@import './pages/homepage.scss';
+@import './pages/game_details.scss';
+
+@import './components/edit_game.scss';
 @import './components/topbar.scss';
 @import './components/playing_carrousel.scss';
-@import './components/played_games.scss';
 @import './components/gamebox.scss';
-@import './components/gamestats.scss';
-@import './components/uploadgame.scss';
-@import './components/top10games.scss';
-@import './components/top10characters.scss';
-@import './components/homepage.scss';
-@import './components/game_details.scss';
 @import './components//character_box.scss';
 @import './components/login.scss';
 @import './components/sidebar.scss';
 @import './components/filter_form.scss';
 @import './components/favorites_list.scss';
 @import './components/game_info_box.scss';
-@import './components/dashboard.scss';
-@import './components/edit_game.scss';
+

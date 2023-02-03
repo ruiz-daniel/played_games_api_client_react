@@ -1,4 +1,10 @@
-@mixin blackButton() {
+@mixin removeFocusBorder {
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+@mixin blackButton {
   border: none;
   background-color: black;
   color: white;
@@ -11,7 +17,7 @@
   }
 }
 
-@mixin purpleButton() {
+@mixin purpleButton {
   border: none;
   background-color: $background-color-purple;
   &:hover {
@@ -19,7 +25,7 @@
   }
 }
 
-@mixin redButton() {
+@mixin redButton {
   border: none;
   background-color: $text-color-red;
   &:hover {

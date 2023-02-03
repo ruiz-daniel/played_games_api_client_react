@@ -1,0 +1,23 @@
+@mixin darkInput {
+  color: white !important;
+  font-weight: 400 !important;
+  @include fontSizeMid;
+  border-color: $background-color-dark;
+  background-color: $background-transparent-darker;
+}
+
+@mixin darkChips {
+  border-color: $background-color-dark;
+  .p-inputtext {
+    border: none;
+    width: 100%;
+  }
+  input {
+    color: white;
+  }
+  .p-chips-token {
+    background-color: white;
+    border-radius: 10px;
+    @include fontSizeMid;
+  }
+}

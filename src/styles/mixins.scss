@@ -63,45 +63,14 @@
   margin-bottom: $length;
 }
 
-@mixin removeFocusBehavior {
-  outline: none !important;
-  border: solid 1px $text-color-dark-gray !important;
-  box-shadow: none !important;
-}
-
 @mixin darkBackground {
   background-color: $background-color-dark2 !important;
   color: white !important;
 }
 
-@mixin bottomBorder($color) {
-  border: none !important;
-  border-bottom: solid 1px $color !important;
+@mixin fontSizeMid {
+  font-size: 16px !important;
 }
-
-@mixin darkInput {
-  color: white;
-  font-weight: 400;
-  font-size: larger;
-  background-color: $background-transparent-darker;
-}
-
-@mixin darkChips {
-  .p-inputtext {
-    border: none;
-    width: 100%;
-    &:focus,
-    &:hover {
-      box-shadow: none !important;
-      border-color: $text-color-silver !important;
-    }
-  }
-  input {
-    color: white;
-  }
-  .p-chips-token {
-    background-color: white;
-    border-radius: 10px;
-    font-size: 19px;
-  }
+@mixin fontSizeLarge {
+  font-size: 19.3px !important;
 }

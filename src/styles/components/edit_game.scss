@@ -3,47 +3,4 @@
   @include paddingX(5%);
   @include paddingY(2%);
   color: white;
-  .item {
-    margin-bottom: 3rem;
-    label {
-      font-size: 20px;
-    }
-    input,
-    .p-dropdown,
-    .p-inputtextarea,
-    .p-chips {
-      margin-top: 5px;
-      color: white;
-      font-weight: 400;
-      font-size: larger;
-      background-color: $background-transparent-darker;
-      border: none;
-
-      &:focus,
-      &:hover {
-        box-shadow: none !important;
-        border-color: $text-color-silver !important;
-      }
-
-      .p-inputtext {
-        text-align: start;
-        color: white;
-        font-weight: 400;
-        font-size: large;
-        background-color: $background-transparent-darker;
-      }
-    }
-    .p-chips {
-      @include darkChips()
-    }
-    .p-fileupload-buttonbar {
-      background-color: $background-transparent-darker !important;
-
-      span,
-      button {
-        background: $text-color-pink !important;
-        border-color: white;
-      }
-    }
-  }
 }

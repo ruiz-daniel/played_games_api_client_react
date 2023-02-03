@@ -1,0 +1,35 @@
+.dashboard-user-info {
+  .p-avatar,
+  .p-avatar-image {
+    width: 140px;
+    height: 140px;
+  }
+  h1 {
+    @include marginY(0);
+  }
+  h3 {
+    margin-top: 10px;
+  }
+  .dashboard-user-stats {
+    p {
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 18px;
+    }
+  }
+}
+.dashboard-user-details {
+  padding-right: 10%;
+  @include respond(desktop) {
+    padding-right: 0;
+  }
+
+  .p-card {
+    background-color: $background-transparent;
+  }
+
+  .text-only-button {
+    font-size: 25px;
+    font-weight: 600;
+  }
+}

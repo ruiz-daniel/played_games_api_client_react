@@ -140,7 +140,7 @@ const Dashboard = () => {
                     />
                   </div>
                   <div className="item flex flex-row-reverse">
-                    <Button label="Save Changes" type="submit" />
+                    <Button label="Save Changes" type="submit" className='button-span text-only-button' />
                   </div>
                 </form>
               </Card>

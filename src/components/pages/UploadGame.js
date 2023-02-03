@@ -451,7 +451,7 @@ const UploadGame = () => {
               </table>
               <div className="upload-game-form-footer">
                 <span
-                  className="button-span form-button-left form-last-step-buton"
+                  className="button-span form-button-left"
                   onClick={async () => {
                     moveStep('backwards')
                   }}
@@ -459,8 +459,8 @@ const UploadGame = () => {
                   Back
                 </span>
                 <Button
-                  className="upload-button form-button-right"
-                  label="Upload Game"
+                  className="button-span text-only-button form-button-right"
+                  label="Finish"
                   type="submit"
                 ></Button>
               </div>
