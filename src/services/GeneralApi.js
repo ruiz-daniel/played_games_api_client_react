@@ -4,7 +4,7 @@ import NProgress from 'nprogress'
 import { sr_images } from '../routes'
 
 export const apiClient = axios.create({
-  baseURL: 'https://game-shelf-backend.onrender.com',
+  baseURL: 'http://localhost:3001',
   headers: {
     Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
   },
