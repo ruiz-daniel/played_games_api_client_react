@@ -13,6 +13,7 @@ import { Chips } from 'primereact/chips'
 import { Toast } from 'primereact/toast'
 
 import * as routes from '../../routes'
+import { sr_played_games_folder, sr_images_games } from '../../routes'
 
 var step = 0
 
@@ -36,10 +37,15 @@ const UploadGame = () => {
   const toast = useRef(null)
 
   const onSubmit = async (data) => {
-    // await api.GeneralApi.uploadImage(
-    //   gameImage,
-    //   sessionStorage.getItem('userid'),
-    // )
+    if (gameImage) {
+      await api.GeneralApi.uploadImage(
+        gameImage,
+        sessionStorage.getItem('username'),
+        sr_played_games_folder,
+      )
+      data.cover =
+        sr_images_games(sessionStorage.getItem('username')) + gameImage.name
+    }
     api.PlayedGamesApi.postPlayedGame(data, () => {
       toast.current.show({
         severity: 'success',
@@ -292,10 +298,7 @@ const UploadGame = () => {
                 <span
                   className="button-span form-button-right"
                   onClick={async () => {
-                    const result = await trigger([
-                      'completion',
-                      'score',
-                    ])
+                    const result = await trigger(['completion', 'score'])
                     if (result) {
                       clearErrors()
                       moveStep('forward')

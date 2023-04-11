@@ -114,9 +114,9 @@ const TopBar = () => {
             <div className="topbar-element">
               <Link to={routes.stats}>Stats</Link>
             </div>
-            <div className="topbar-element">
+            {/* <div className="topbar-element">
               <Link to={routes.top10games}>Favorites</Link>
-            </div>
+            </div> */}
           </div>
         )}
       </div>
