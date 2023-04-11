@@ -2,9 +2,7 @@
   background-color: $background-color-dark2;
   color: white;
   width: 100vw;
-  @media (min-width: 900px) {
-    padding-right: 3rem;
-  }
+  padding-right: 3rem;
 
   .sidemenu-icon {
     @media (min-width: 1055px) {
@@ -12,10 +10,10 @@
     }
   }
   .topbar-links {
-    @media (max-width: 1055px) {
-    display: none !important;
-    transition: 1s ease;
-  }
+    @include respond(tab-land) {
+      display: none !important;
+      transition: 1s ease;
+    }
   }
 
   @include paddingY(0);
@@ -30,7 +28,7 @@
   }
   a {
     color: $text-color-light;
-    font-size: 20px;
+    @include fontSizeLarge;
     font-weight: 600;
     @include paddingX(10px);
     @include paddingY(5px);
@@ -45,9 +43,6 @@
   .p-avatar {
     cursor: pointer;
   }
-}
-.p-dialog-content {
-  padding: 0 !important;
 }
 
 .sticky-section {

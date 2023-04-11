@@ -1,6 +1,4 @@
 .login-form {
-  // @include centerContent();
-
   .login-form-content {
     text-align: center;
   }
@@ -21,25 +19,10 @@
     @include darkBackground();
   }
 
-  .error-message {
-    color: red;
-    margin-top: 5px;
-  }
-
   .upload-button {
     border-radius: 5px;
-    border: none !important;
-    background-color: $background-color-purple !important;
-    padding: 0.5rem;
-    text-align: center;
+    @include purpleButton;
     width: 30%;
     align-self: center;
-
-    &:hover {
-      background-color: lighten(
-        $color: $background-color-purple,
-        $amount: 2
-      ) !important;
-    }
   }
 }

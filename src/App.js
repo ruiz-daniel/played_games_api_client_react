@@ -9,8 +9,7 @@ import PlayedGames from './components/pages/PlayedGamesList'
 import UploadGame from './components/pages/UploadGame'
 import GameDetails from './components/pages/GameDetails'
 import GameStats from './components/pages/GameStats'
-import Top10Games from './components/pages/Top10Games'
-import Top10Characters from './components/pages/Top10Characters'
+// import FavoriteGames from './components/pages/FavoriteGames'
 import Home from './components/pages/Home'
 import Dashboard from './components/pages/Dashboard'
 
@@ -48,12 +47,9 @@ function App() {
               <Route path={routes.stats}>
                 <GameStats />
               </Route>
-              <Route path={routes.top10games}>
-                <Top10Games />
-              </Route>
-              <Route path={routes.top10characters}>
-                <Top10Characters />
-              </Route>
+              {/* <Route path={routes.top10games}>
+                <FavoriteGames />
+              </Route> */}
             </Switch>
           }
         </div>

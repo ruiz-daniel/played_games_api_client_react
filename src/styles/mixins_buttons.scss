@@ -1,0 +1,34 @@
+@mixin removeFocusBorder {
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+@mixin blackButton {
+  border: none;
+  background-color: black;
+  color: white;
+  &:hover {
+    background-color: $background-color-purple;
+  }
+  &:focus {
+    background-color: $background-color-purple;
+    box-shadow: none;
+  }
+}
+
+@mixin purpleButton {
+  border: none;
+  background-color: $background-color-purple;
+  &:hover {
+    background-color: darken($color: $background-color-purple, $amount: 20);
+  }
+}
+
+@mixin redButton {
+  border: none;
+  background-color: $text-color-red;
+  &:hover {
+    background-color: darken($color: $text-color-red, $amount: 30);
+  }
+}

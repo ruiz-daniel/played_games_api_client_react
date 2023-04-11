@@ -7,13 +7,19 @@ $background-gray-gradient: radial-gradient(
 $background-transparent: rgba(75, 72, 72, 0.116);
 $background-transparent-darker: rgba(10, 10, 10, 0.64);
 $background-color-semi-transparent-light: rgba(170, 170, 170, 0.4);
+$background-gray-efect: linear-gradient(
+  200deg,
+  rgba(137, 137, 137, 0.64) 14%,
+  rgba(3, 10, 0, 0.95) 100%
+);
 
-$background-color-dark2: #01060c;
+$background-color-dark2: #000000;
 $background-color-dark: #0f0f0f;
 $background-color-light: #edf1f5;
-$background-color-purple: rgb(134, 9, 143);
+$background-color-purple: #86098f;
 $background-color-green: #25b838;
-$background-color-yellow: #e7fa00;
+$background-color-yellow: #c9d451;
+$background-color-dark-yellow: #a27d21;
 
 $text-color-light: #fbfaf8;
 $text-color-green: #36b246;

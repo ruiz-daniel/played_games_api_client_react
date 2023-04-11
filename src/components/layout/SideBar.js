@@ -172,10 +172,7 @@ const SideBar = ({ toggleSidebar }) => {
               onClick={() => {
                 toggleSidebar(false)
               }}
-              to={{
-                pathname: routes.top10games,
-                state: { top10name: 'All Time' },
-              }}
+              to={routes.top10games}
             >
               <h3
                 className={
@@ -185,27 +182,6 @@ const SideBar = ({ toggleSidebar }) => {
                 }
               >
                 <i className="pi pi-star"></i> Favorite Games
-              </h3>
-            </Link>
-          </div>
-          <div className="menu-item">
-            <Link
-              onClick={() => {
-                toggleSidebar(false)
-              }}
-              to={{
-                pathname: routes.top10characters,
-                state: { top10name: 'All Time' },
-              }}
-            >
-              <h3
-                className={
-                  location.pathname.includes(routes.top10characters)
-                    ? 'router-view'
-                    : ''
-                }
-              >
-                <i className="pi pi-star"></i> Favorite Characters
               </h3>
             </Link>
           </div>

@@ -1,0 +1,49 @@
+.upload-game-wrapper {
+  text-align: center;
+  overflow-x: hidden;
+
+  #form-wrapper {
+    display: inline-flex;
+    transition: all 500ms;
+    min-width: 100vw;
+
+    .upload-game-step {
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .upload-game-form {
+    background-color: $background-transparent;
+    border-radius: 10px;
+    padding: 3rem;
+    margin-top: 1rem;
+    @include respond(tab-port) {
+      width: 90%;
+      @include paddingX(1rem);
+      @include marginX(10%);
+    }
+    width: 50%;
+    @include marginX(25%);
+    box-shadow: 0 0.5rem 1rem 0 rgba(216, 118, 192, 0.1);
+
+    table {
+      margin-bottom: 3rem;
+      font-size: 20px;
+      td {
+        padding: 0.5rem;
+      }
+    }
+
+    .button-span {
+      font-size: 30px;
+      font-weight: 800;
+    }
+    .text-only-button {
+      &:hover {
+        color: $text-color-silver !important;
+      }
+    }
+  }
+}

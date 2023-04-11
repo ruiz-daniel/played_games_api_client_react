@@ -37,13 +37,19 @@ const PlayedGamesList = () => {
     gamesBackup.forEach((game) => {
       let found = false
       Object.keys(game).forEach((key) => {
-        if (!['played_hours', 'id'].includes(key)) {
-          if (['status', 'platform'].includes(key)) {
+        if (!['played_hours', 'id', '_id'].includes(key)) {
+          if (['completion', 'platform'].includes(key)) {
             if (game[key].name == value) {
               found = true
             }
           } else if (typeof game[key] === 'string') {
             if (game[key].includes(value)) {
+              found = true
+            }
+          } else if (game[key].length) {
+            // Array
+            if (game[key].toString().includes(value)) {
+              console.log(key)
               found = true
             }
           } else {
@@ -106,7 +112,7 @@ const PlayedGamesList = () => {
       <div className="options-container flex">
         <InputText
           placeholder="Search"
-          className="p-inputtext-sm"
+          className="p-inputtext-sm search-input"
           onChange={(e) => localFilter(e.target.value)}
         />
         <Button
@@ -118,6 +124,8 @@ const PlayedGamesList = () => {
           icon="pi pi-times"
           label="Clear Filters"
           onClick={resetFilter}
+          onMouseLeave={(e) => e.target.blur()}
+          onTouchEnd={(e) => e.target.blur()}
         />
       </div>
       <h3>Showing: {games.length}</h3>

@@ -3,7 +3,6 @@
   .p-avatar-image {
     width: 140px;
     height: 140px;
-    
   }
   h1 {
     @include marginY(0);
@@ -17,5 +16,20 @@
       font-weight: 600;
       font-size: 18px;
     }
+  }
+}
+.dashboard-user-details {
+  padding-right: 10%;
+  @include respond(desktop) {
+    padding-right: 0;
+  }
+
+  .p-card {
+    background-color: $background-transparent;
+  }
+
+  .text-only-button {
+    font-size: 25px;
+    font-weight: 600;
   }
 }

@@ -24,7 +24,7 @@ const GameInfoBox = ({ type, text, style, game }) => {
         <div>
           <i className="pi pi-calendar"></i>
           <p>
-            Released: <span>{game ? game.year : ''}</span>
+            Released: <span>{game ? game.release_year : ''}</span>
           </p>
         </div>
       )}
@@ -39,7 +39,7 @@ const GameInfoBox = ({ type, text, style, game }) => {
       {type === 'score' && (
         <div className="game-info-box-number">
           <p className="info-number">
-            <Score score={game.rating} />
+            <Score score={game.score} />
           </p>
           Score
         </div>

@@ -8,10 +8,11 @@ import { Dropdown } from 'primereact/dropdown'
 import { FileUpload } from 'primereact/fileupload'
 import { Button } from 'primereact/button'
 import { InputTextarea } from 'primereact/inputtextarea'
+import { Chips } from 'primereact/chips'
 
 import { Toast } from 'primereact/toast'
 
-import { sr_images } from '../../routes'
+import { sr_played_games_folder, sr_images_games } from '../../routes'
 
 const EditGame = ({ game, callback }) => {
   const toast = useRef(null)
@@ -26,27 +27,17 @@ const EditGame = ({ game, callback }) => {
   } = useForm({})
 
   const onSubmit = async (data) => {
+    let cover = undefined
     if (image) {
-      await api.GeneralApi.uploadImage(image, sessionStorage.getItem('userid'))
+      await api.GeneralApi.uploadImage(image, sessionStorage.getItem('username'), sr_played_games_folder)
+      cover = sr_images_games(sessionStorage.getItem('username')) + image.name
     }
-    
-    api.PlayedGamesApi.putPlayedGame(
+
+    api.PlayedGamesApi.patchPlayedGame(
       {
-        id: game.id,
-        name: data.name,
-        developer: data.developer,
-        publisher: data.publisher,
-        year: data.year,
-        played_year: data.played_year,
-        genre: data.genre,
-        played_hours: data.played_hours,
-        rating: data.rating,
-        platformid: data.platform.id,
-        statusid: data.status.id,
-        image: image ? sr_images + sessionStorage.getItem('userid') + '/' + image.name : game.image,
-        description: data.description,
-        steam_page: data.steam_page,
-        userid: sessionStorage.getItem('userid'),
+        _id: game._id,
+        cover,
+        ...data,
       },
       () => {
         toast.current.show({
@@ -78,7 +69,7 @@ const EditGame = ({ game, callback }) => {
   return (
     <div style={{ width: '100%' }}>
       <Toast ref={toast} />
-      
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <div
           className="flex flex-column edit-game-form"
@@ -87,28 +78,59 @@ const EditGame = ({ game, callback }) => {
           <h2>Edit Game</h2>
           <div className="item flex flex-column">
             <label htmlFor="gname">Name*</label>
-            <InputText id="gname" defaultValue={game.name} {...register('name', { required: true })} />
+            <InputText
+              id="gname"
+              defaultValue={game.name}
+              {...register('name', { required: true })}
+            />
             {errors.name && (
               <div className="error-message">Name is required</div>
             )}
           </div>
           <div className="item flex flex-column">
-            <label htmlFor="gdev">Developer</label>
-            <InputText id="gdev" defaultValue={game.developer} {...register('developer')} />
+            <label htmlFor="gdev">Developers</label>
+            <Controller
+              name="developers"
+              defaultValue={game.developers || []}
+              control={control}
+              render={({ field, fieldState }) => (
+                <Chips
+                  id="gdev"
+                  allowDuplicate={false}
+                  separator=","
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.value)}
+                />
+              )}
+            />
           </div>
           <div className="item flex flex-column">
             <label htmlFor="gpub">Publisher</label>
-            <InputText id="gpub" defaultValue={game.publisher} {...register('publisher')} />
+            <Controller
+              name="publishers"
+              defaultValue={game.publishers || []}
+              control={control}
+              render={({ field, fieldState }) => (
+                <Chips
+                  id="gdev"
+                  allowDuplicate={false}
+                  separator=","
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.value)}
+                />
+              )}
+            />
           </div>
           <div className="item flex flex-column">
-            <label htmlFor="gyear">Year</label>
+            <label htmlFor="gyear">Release Year</label>
             <InputText
               id="gyear"
               type="number"
-              defaultValue={game.year}
-              {...register('year', { min: 1970, max: 2030 })}
+              onWheel={(e) => {e.target.blur()}}
+              defaultValue={game.release_year}
+              {...register('release_year', { min: 1970, max: 2030 })}
             />
-            {errors.year && (
+            {errors.release_year && (
               <div className="error-message">Requires a valid year</div>
             )}
           </div>
@@ -117,6 +139,7 @@ const EditGame = ({ game, callback }) => {
             <InputText
               id="gplayedyear"
               type="number"
+              onWheel={(e) => {e.target.blur()}}
               defaultValue={game.played_year}
               {...register('played_year', { min: 1970, max: 2030 })}
             />
@@ -125,16 +148,45 @@ const EditGame = ({ game, callback }) => {
             )}
           </div>
           <div className="item flex flex-column">
-            <label htmlFor="ggenre">Genre</label>
-            <InputText id="ggenre" defaultValue={game.genre} {...register('genre')} />
+            <label htmlFor="ggenre">Genres</label>
+            <Controller
+              name="genres"
+              defaultValue={game.genres || []}
+              control={control}
+              render={({ field, fieldState }) => (
+                <Chips
+                  id="gdev"
+                  allowDuplicate={false}
+                  separator=","
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.value)}
+                />
+              )}
+            />
           </div>
           <div className="item flex flex-column">
-            <label htmlFor="platform">Platform*</label>
+            <label htmlFor="gtags">Tags</label>
+            <Controller
+              name="tags"
+              defaultValue={game.tags || []}
+              control={control}
+              render={({ field, fieldState }) => (
+                <Chips
+                  id="gtags"
+                  allowDuplicate={false}
+                  separator=","
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.value)}
+                />
+              )}
+            />
+          </div>
+          <div className="item flex flex-column">
+            <label htmlFor="platform">Platform</label>
             <Controller
               name="platform"
               defaultValue={game.platform}
               control={control}
-              rules={{ required: 'Platform is required' }}
               render={({ field, fieldState }) => (
                 <Dropdown
                   id={field.name}
@@ -142,21 +194,17 @@ const EditGame = ({ game, callback }) => {
                   onChange={(e) => field.onChange(e.value)}
                   options={platformList}
                   optionLabel="name"
-                  
                 />
               )}
             />
-            {errors.platform && (
-              <div className="error-message">Platform is required</div>
-            )}
           </div>
           <div className="item flex flex-column">
             <label htmlFor="status">Completion*</label>
             <Controller
-              name="status"
+              name="completion"
               control={control}
-              defaultValue={game.status}
-              rules={{ required: 'Status is required' }}
+              defaultValue={game.completion}
+              rules={{ required: 'Completion is required' }}
               render={({ field, fieldState }) => (
                 <Dropdown
                   id={field.name}
@@ -167,22 +215,20 @@ const EditGame = ({ game, callback }) => {
                 />
               )}
             />
-            {errors.status && (
-              <div className="error-message">Status is required</div>
-            )}
           </div>
           <div className="item flex flex-column">
-            <label htmlFor="grating">Rating*</label>
+            <label htmlFor="grating">Score</label>
             <InputText
               id="grating"
               type="number"
-              defaultValue={game.rating}
+              onWheel={(e) => {e.target.blur()}}
+              defaultValue={game.score}
               min={1}
               max={10}
-              {...register('rating', { min: 1, max: 10, required: true })}
+              {...register('score', { min: 1, max: 10 })}
             />
             {errors.rating && (
-              <div className="error-message">Requires a valid rating</div>
+              <div className="error-message">Requires a valid score</div>
             )}
           </div>
           <div className="item flex flex-column">
@@ -192,6 +238,7 @@ const EditGame = ({ game, callback }) => {
               type="number"
               defaultValue={game.played_hours}
               min={0}
+              onWheel={(e) => {e.target.blur()}}
               {...register('played_hours')}
             />
             {errors.played_hours && (
@@ -202,7 +249,19 @@ const EditGame = ({ game, callback }) => {
           </div>
           <div className="item flex flex-column">
             <label htmlFor="gsteam">Steam Page URL</label>
-            <InputText id="gsteam" defaultValue={game.steam_page} {...register('steam_page')} />
+            <InputText
+              id="gsteam"
+              defaultValue={game.steam_page}
+              {...register('steam_page')}
+            />
+          </div>
+          <div className="item flex flex-column">
+            <label htmlFor="gepic">Epic Store Page URL</label>
+            <InputText
+              id="gepic"
+              defaultValue={game.epic_page}
+              {...register('epic_page')}
+            />
           </div>
           <div className="item flex flex-column">
             <label htmlFor="gdesc">Description (optional)</label>
@@ -223,7 +282,9 @@ const EditGame = ({ game, callback }) => {
               accept="image/*"
               chooseLabel="File"
               auto
-              onRemove={() => {setImage(null)}}
+              onRemove={() => {
+                setImage(null)
+              }}
               emptyTemplate={
                 <p className="p-m-0">Drag and drop files to here to upload.</p>
               }

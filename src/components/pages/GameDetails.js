@@ -6,6 +6,7 @@ import { Image } from 'primereact/image'
 import { Button } from 'primereact/button'
 import { confirmDialog } from 'primereact/confirmdialog'
 import { Dialog } from 'primereact/dialog'
+import { Chip } from 'primereact/chip'
 
 import Status from '../utils/status'
 import EditGame from '../utils/EditGame'
@@ -16,19 +17,13 @@ import { playedgames } from '../../routes'
 import { Toast } from 'primereact/toast'
 import GameInfoBox from '../utils/GameInfoBox'
 
+import  no_cover  from '../../images/no-cover.jpg'
+
 const GameDetails = () => {
   const location = useLocation()
   const history = useHistory()
   const [game, setGame] = useState({
-    id: '',
-    name: '',
-    year: '',
-    developer: '',
-    publisher: '',
-    genre: '',
-    rating: 0,
-    played_hours: 0,
-    status: {
+    completion: {
       id: '',
       name: '',
     },
@@ -36,7 +31,6 @@ const GameDetails = () => {
       id: '',
       name: '',
     },
-    description: '',
   })
   const [image, setImage] = useState()
   const toast = useRef(null)
@@ -48,7 +42,7 @@ const GameDetails = () => {
   }
   const onGetGame = (data) => {
     setGame(data)
-    setImage(data.image)
+    setImage(data.cover)
   }
   const onErrorGetGame = (error) => {
     toast.current.show({
@@ -63,7 +57,7 @@ const GameDetails = () => {
   }
 
   const deleteGame = () => {
-    api.PlayedGamesApi.deletePlayedGame({ id: game.id }, () => {
+    api.PlayedGamesApi.deletePlayedGame(game._id, () => {
       toast.current.show({
         severity: 'error',
         summary: 'Game Deleted Successfully',
@@ -106,7 +100,8 @@ const GameDetails = () => {
       </Dialog>
       <h2>{game.name}</h2>
       <div className="game-details-image flex flex-column ">
-        <Image src={image} alt={game.name} preview />
+        <Image src={image || no_cover} alt={game.name} preview />
+
         <div className="game-details-buttons flex justify-content-end mt-2">
           <Button
             icon={editing ? 'pi pi-times' : 'pi pi-pencil'}
@@ -124,28 +119,32 @@ const GameDetails = () => {
       </div>
 
       <div className="game-details-fields">
-        {game.developer && (
+        {game.developers?.length > 0 && (
           <p>
-            Developed by <span>{game.developer}</span>
+            Developed by <span>{game.developers.join(', ')}</span>
           </p>
         )}
-        {game.publisher && (
+        {game.publishers?.length > 0 && (
           <p>
-            Published by <span>{game.publisher}</span>
+            Published by <span>{game.publishers.join(', ')}</span>
           </p>
         )}
-        {game.genre && (
-          <p>
-            Genre: <span>{game.genre}</span>
-          </p>
+        {game.genres?.length > 0 && (
+          <div className="flex flex-wrap mb-3">
+            {game.genres.map((genre) => (
+              <Chip className="mr-2" label={genre} />
+            ))}{' '}
+          </div>
         )}
         <div className="flex flex-wrap game-details-info-box">
-          <GameInfoBox
-            type="platform"
-            style={{ marginRight: '10px' }}
-            game={game}
-          />
-          {game.year && (
+          {game.platform && (
+            <GameInfoBox
+              type="platform"
+              style={{ marginRight: '10px' }}
+              game={game}
+            />
+          )}
+          {game.release_year && (
             <GameInfoBox
               type="year"
               style={{ marginRight: '10px' }}
@@ -159,7 +158,7 @@ const GameDetails = () => {
               game={game}
             />
           )}
-          {game.rating && (
+          {game.score && (
             <GameInfoBox
               type="score"
               style={{ marginRight: '10px' }}
@@ -182,9 +181,11 @@ const GameDetails = () => {
           )}
         </div>
 
-        <p>
-          <Status status={game.status.name} />{' '}
-        </p>
+        {game.completion && (
+          <p>
+            <Status status={game.completion.name} />
+          </p>
+        )}
         {game.description && game.description !== '' && (
           <p>{game.description}</p>
         )}

@@ -15,7 +15,7 @@ var filterRecord = {
   year: '',
   genre: '',
   rating: '',
-  status: undefined,
+  completion: undefined,
   platform: undefined,
   played_year: '',
   played_hours: '',
@@ -28,7 +28,7 @@ var filterOutRecord = {
   year: '',
   genre: '',
   rating: '',
-  status: undefined,
+  completion: undefined,
   platform: undefined,
   played_year: '',
   played_hours: '',
@@ -43,7 +43,7 @@ const FilterForm = ({ list, onFilter }) => {
   const [publisher, setPublisher] = useState(filterRecord.publisher)
   const [genre, setGenre] = useState(filterRecord.genre)
   const [rating, setRating] = useState(filterRecord.rating)
-  const [status, setStatus] = useState(filterRecord.status)
+  const [completion, setCompletion] = useState(filterRecord.completion)
   const [platform, setPlatform] = useState(filterRecord.platform)
 
   const [nameOut, setNameOut] = useState(filterOutRecord.name)
@@ -58,11 +58,11 @@ const FilterForm = ({ list, onFilter }) => {
   const [publisherOut, setPublisherOut] = useState(filterOutRecord.publisher)
   const [genreOut, setGenreOut] = useState(filterOutRecord.genre)
   const [ratingOut, setRatingOut] = useState(filterOutRecord.rating)
-  const [statusOut, setStatusOut] = useState(filterOutRecord.status)
+  const [completionOut, setCompletionOut] = useState(filterOutRecord.completion)
   const [platformOut, setPlatformOut] = useState(filterOutRecord.platform)
 
   const [platformList, setPlatformList] = useState([])
-  const [statusList, setStatusList] = useState([])
+  const [completionList, setStatusList] = useState([])
 
   const filter = () => {
     var filtered = []
@@ -71,13 +71,13 @@ const FilterForm = ({ list, onFilter }) => {
       // Compare filters using include. Empty filters will not have effect
       if (
         compareIgnoreCase(game.name, name) &&
-        compareIgnoreCase(game.developer, dev) &&
-        compareIgnoreCase(game.publisher, publisher) &&
-        compare(year, game.year) &&
+        compareIgnoreCase(game.developers.toString(), dev) &&
+        compareIgnoreCase(game.publishers.toString(), publisher) &&
+        compare(year, game.release_year) &&
         compare(played_year, game.played_year) &&
         compare(played_hours, game.played_hours, 'ge') &&
-        compareIgnoreCase(game.genre, genre) &&
-        compare(rating, game.rating) &&
+        compareIgnoreCase(game.genres.toString(), genre) &&
+        compare(rating, game.score) &&
         compareIgnoreCase(
           game.platform.name,
           platform
@@ -87,35 +87,35 @@ const FilterForm = ({ list, onFilter }) => {
             : '',
         ) &&
         compareIgnoreCase(
-          game.status.name,
-          status ? (typeof status === 'string' ? status : status.name) : '',
+          game.completion.name,
+          completion ? (typeof completion === 'string' ? completion : completion.name) : '',
         )
       ) {
         filtered.push(game)
         // Immediately pop out if it matches a filter-out condition
         if (
           (nameOut !== '' && compareIgnoreCase(game.name, nameOut)) ||
-          (devOut !== '' && compareIgnoreCase(game.developer, devOut)) ||
+          (devOut !== '' && compareIgnoreCase(game.developers.toString(), devOut)) ||
           (publisherOut !== '' &&
-            compareIgnoreCase(game.publisher, publisherOut)) ||
-          (yearOut !== '' && (game.year?.includes(yearOut) || !game.year)) ||
+            compareIgnoreCase(game.publishers.toString(), publisherOut)) ||
+          (yearOut !== '' && (game.release_year?.includes(yearOut) || !game.release_year)) ||
           (played_yearOut !== '' &&
             (game.played_year?.includes(played_yearOut) ||
               !game.played_year)) ||
           (played_hoursOut !== '' && game.played_hours
             ? Number(game.played_hours) > Number(played_hoursOut)
             : false) ||
-          (genreOut !== '' && compareIgnoreCase(game.genre, genreOut)) ||
-          (ratingOut !== '' && game.rating == ratingOut) ||
+          (genreOut !== '' && compareIgnoreCase(game.genres.toString(), genreOut)) ||
+          (ratingOut !== '' && game.score == ratingOut) ||
           (platformOut !== undefined &&
             compareIgnoreCase(
               game.platform.name,
               typeof platformOut === 'string' ? platformOut : platformOut.name,
             )) ||
-          (statusOut !== undefined &&
+          (completionOut !== undefined &&
             compareIgnoreCase(
-              game.status.name,
-              typeof statusOut === 'string' ? statusOut : statusOut.name,
+              game.completion.name,
+              typeof completionOut === 'string' ? completionOut : completionOut.name,
             ))
         )
           filtered.pop()
@@ -172,7 +172,7 @@ const FilterForm = ({ list, onFilter }) => {
     setPlayedHours('')
     setPlayedHoursOut('')
     setGenre('')
-    setStatus()
+    setCompletion()
     setPlatform()
     setRating('')
 
@@ -185,7 +185,7 @@ const FilterForm = ({ list, onFilter }) => {
     setYearOut('')
     setPlayedYearOut('')
     setGenreOut('')
-    setStatusOut()
+    setCompletionOut()
     setPlatformOut()
     setRatingOut('')
 
@@ -210,7 +210,7 @@ const FilterForm = ({ list, onFilter }) => {
       year,
       genre,
       rating,
-      status,
+      completion,
       platform,
       played_year,
       played_hours,
@@ -223,7 +223,7 @@ const FilterForm = ({ list, onFilter }) => {
       year: yearOut,
       genre: genreOut,
       rating: ratingOut,
-      status: statusOut,
+      completion: completionOut,
       platform: platformOut,
       played_year: played_yearOut,
       played_hours: played_hoursOut,
@@ -238,7 +238,7 @@ const FilterForm = ({ list, onFilter }) => {
       year: '',
       genre: '',
       rating: '',
-      status: undefined,
+      completion: undefined,
       platform: undefined,
       played_year: '',
       played_hours: '',
@@ -252,7 +252,7 @@ const FilterForm = ({ list, onFilter }) => {
       year: '',
       genre: '',
       rating: '',
-      status: undefined,
+      completion: undefined,
       platform: undefined,
       played_year: '',
       played_hours: '',
@@ -264,9 +264,9 @@ const FilterForm = ({ list, onFilter }) => {
       const response_platforms = await api.fetchPlatforms()
       const platforms = await response_platforms.data
       setPlatformList(platforms)
-      const response_status = await api.fetchStatuses()
-      const statuses = await response_status.data
-      setStatusList(statuses)
+      const response_completion = await api.fetchStatuses()
+      const completiones = await response_completion.data
+      setStatusList(completiones)
     })()
   }, [])
   return (
@@ -327,13 +327,13 @@ const FilterForm = ({ list, onFilter }) => {
           onChange={(e) => setPlatform(e.value)}
         />
         <Dropdown
-          placeholder="Status"
+          placeholder="Completion"
           className="p-inputtext-sm"
-          options={statusList}
+          options={completionList}
           optionLabel="name"
-          value={status}
+          value={completion}
           editable
-          onChange={(e) => setStatus(e.value)}
+          onChange={(e) => setCompletion(e.value)}
         />
         <InputText
           placeholder="Rating"
@@ -406,11 +406,11 @@ const FilterForm = ({ list, onFilter }) => {
         <Dropdown
           placeholder="Status"
           className="p-inputtext-sm"
-          options={statusList}
+          options={completionList}
           optionLabel="name"
-          value={statusOut}
+          value={completionOut}
           editable
-          onChange={(e) => setStatusOut(e.value)}
+          onChange={(e) => setCompletionOut(e.value)}
         />
         <InputText
           placeholder="Rating"

@@ -5,6 +5,7 @@ import { Dialog } from 'primereact/dialog'
 import { Toast } from 'primereact/toast'
 
 import LoginForm from '../utils/LoginForm'
+import RegisterForm from '../utils/RegisterForm'
 import listImage from '../../images/games_shelf_games_list.png'
 import detailsImage from '../../images/games_shelf_game_details.png'
 
@@ -16,6 +17,7 @@ const Home = () => {
   const toast = useRef(null)
   const history = useHistory()
   const [loginVisible, showLogin] = useState(false)
+  const [registerVisible, showRegister] = useState(false)
 
   const handleLogin = (username, password) => {
     api.UserApi.login({ username, password }, onLogin, handleError)
@@ -53,6 +55,39 @@ const Home = () => {
       detail: error.response.data.message,
       life: 3000,
     })
+  }
+
+  const toggleRegister = () => {
+    let logged = sessionStorage.getItem('userid')
+    if (!logged) {
+      showRegister(true)
+    }
+  }
+
+  const onRegister = (data) => {
+    api.UserApi.register(
+      {
+        username: data.username,
+        display_name: data.display_name,
+        email: data.email,
+        password: data.password,
+      },
+      (data) => {
+        toast.current.show({
+          severity: 'success',
+          summary: 'Registered with success',
+          life: 3000,
+        })
+        window.location.reload()
+      },
+      (error) =>
+        toast.current.show({
+          severity: 'error',
+          summary: 'Error with login',
+          detail: error.message,
+          life: 3000,
+        }),
+    )
   }
 
   useEffect(() => {
@@ -94,6 +129,19 @@ const Home = () => {
           }}
         />
       </Dialog>
+      <Dialog
+        visible={registerVisible}
+        className="login-dialog"
+        showHeader={false}
+        dismissableMask
+        onHide={() => {
+          showRegister(false)
+        }}
+      >
+        <RegisterForm
+          onSubmit={onRegister}
+        />
+      </Dialog>
       <div className="home-header">
         <div className="home-header-text flex flex-column">
           <h1>
@@ -101,8 +149,9 @@ const Home = () => {
           </h1>
           <div className="home-header-description">
             <p>
-              <span onClick={toggleLogin}>Login</span> or <span>Register</span>{' '}
-              to start organizing your games{' '}
+              <span onClick={toggleLogin}>Login</span> or{' '}
+              <span onClick={toggleRegister}>Register</span> to start organizing
+              your games{' '}
             </p>
           </div>
         </div>

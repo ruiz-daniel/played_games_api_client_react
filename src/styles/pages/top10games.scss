@@ -2,7 +2,7 @@
   padding-left: 4rem;
   padding-bottom: 5px;
 
-  @media (max-width: 600px) {
+  @include respond(phone) {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,7 +16,7 @@
 .top10games {
   @include marginX(20px);
   margin-bottom: 60px;
-  @media (max-width: 600px) {
+  @include respond(phone) {
     @include marginX(0);
   }
 }

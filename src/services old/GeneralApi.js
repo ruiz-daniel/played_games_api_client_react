@@ -1,12 +1,11 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from 'axios'
 import NProgress from 'nprogress'
-import { sr_images } from '../routes'
 
 export const apiClient = axios.create({
-  baseURL: 'https://game-shelf-backend.onrender.com',
+  baseURL: 'https://localhost:5001/drgapi/',
   headers: {
-    Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+    Authorization: `Bearer ${sessionStorage.getItem('access_token_v1')}`,
   },
 })
 
@@ -32,7 +31,7 @@ export default {
     apiClient
       .request({
         method: 'get',
-        url: '/platforms',
+        url: 'PlayedGames/platforms',
       })
       .then((response) => {
         callback(response.data)
@@ -42,23 +41,23 @@ export default {
     apiClient
       .request({
         method: 'get',
-        url: '/completions',
+        url: 'PlayedGames/statuses',
       })
       .then((response) => {
         callback(response.data)
       })
   },
   fetchPlatforms() {
-    return apiClient.get('/platforms')
+    return apiClient.get('PlayedGames/platforms')
   },
   fetchStatuses() {
-    return apiClient.get('/completions')
+    return apiClient.get('PlayedGames/statuses')
   },
-  uploadImage(gameImage, username, folder) {
+  uploadImage(gameImage, userid) {
     const formData = new FormData()
 
-    formData.append('image', gameImage,)
-    return axios.post(`${sr_images}${username}/${folder}`, formData, {
+    formData.append('image', gameImage)
+    return apiClient.post(`Images/${userid}`, formData, {
       headers: {
         'content-type': 'multipart/form-data',
       },

@@ -1,18 +1,24 @@
 import React, { useState, useRef, useEffect } from 'react'
 import api from '../../services/IApi'
 import { useForm, Controller } from 'react-hook-form'
+import { useHistory } from 'react-router-dom'
 
 import { InputText } from 'primereact/inputtext'
 import { Dropdown } from 'primereact/dropdown'
 import { FileUpload } from 'primereact/fileupload'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { Button } from 'primereact/button'
+import { Chips } from 'primereact/chips'
 
 import { Toast } from 'primereact/toast'
+
+import * as routes from '../../routes'
+import { sr_played_games_folder, sr_images_games } from '../../routes'
 
 var step = 0
 
 const UploadGame = () => {
+  const history = useHistory()
   const [platformList, setPlatformList] = useState([])
   const [statusList, setStatusList] = useState([])
   const [gameImage, setGameImage] = useState()
@@ -31,35 +37,23 @@ const UploadGame = () => {
   const toast = useRef(null)
 
   const onSubmit = async (data) => {
-    await api.GeneralApi.uploadImage(
-      gameImage,
-      sessionStorage.getItem('userid'),
-    )
-    api.PlayedGamesApi.postPlayedGame(
-      {
-        name: data.name,
-        developer: data.dev ? data.dev : 'Unknown',
-        publisher: data.publisher ? data.publisher : 'Unknown',
-        year: data.year ? data.year : 'Unknown',
-        played_year: data.played_year ? data.played_year : 'Unknown',
-        genre: data.genre ? data.genre : 'Unknown',
-        played_hours: data.played_hours || 0,
-        rating: data.rating,
-        description: data.description,
-        platformid: data.platform.id,
-        statusid: data.status.id,
-        steam_page: data.steam_page,
-        image: gameImage ? gameImage.name : 'no-cover.jpg',
-        userid: sessionStorage.getItem('userid'),
-      },
-      () => {
-        toast.current.show({
-          severity: 'success',
-          summary: 'Game Uploaded Successfully',
-          life: 3000,
-        })
-      },
-    )
+    if (gameImage) {
+      await api.GeneralApi.uploadImage(
+        gameImage,
+        sessionStorage.getItem('username'),
+        sr_played_games_folder,
+      )
+      data.cover =
+        sr_images_games(sessionStorage.getItem('username')) + gameImage.name
+    }
+    api.PlayedGamesApi.postPlayedGame(data, () => {
+      toast.current.show({
+        severity: 'success',
+        summary: 'Game Uploaded Successfully',
+        life: 3000,
+      })
+      history.push(routes.playedgames)
+    })
   }
 
   //FETCH PLATFORMS AND STATUSES WHEN THE COMPONENT MOUNTS
@@ -91,15 +85,18 @@ const UploadGame = () => {
   }
 
   const checkKeyDown = (e) => {
-    if (e.code === 'Enter') e.preventDefault();
-  };
+    if (e.code === 'Enter') e.preventDefault()
+  }
 
   //HTML CODE
   return (
     <div className="flex flex-column upload-game-wrapper">
       <Toast ref={toast} />
       <h2>Upload new game</h2>
-      <form onSubmit={handleSubmit(onSubmit)} onKeyDown={(e) => checkKeyDown(e)}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        onKeyDown={(e) => checkKeyDown(e)}
+      >
         <div id="form-wrapper">
           {/* STEP 1 */}
           <div className="upload-game-step">
@@ -115,19 +112,43 @@ const UploadGame = () => {
                 )}
               </div>
               <div className="item flex flex-column">
-                <label htmlFor="gdev">Developer</label>
-                <InputText id="gdev" {...register('dev')} />
+                <label htmlFor="gdev">Developers</label>
+                <Controller
+                  name="developers"
+                  control={control}
+                  render={({ field, fieldState }) => (
+                    <Chips
+                      id="gdev"
+                      allowDuplicate={false}
+                      separator=","
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.value)}
+                    />
+                  )}
+                />
               </div>
               <div className="item flex flex-column">
-                <label htmlFor="gpub">Publisher</label>
-                <InputText id="gpub" {...register('publisher')} />
+                <label htmlFor="gpub">Publishers</label>
+                <Controller
+                  name="publishers"
+                  control={control}
+                  render={({ field, fieldState }) => (
+                    <Chips
+                      id="gpub"
+                      allowDuplicate={false}
+                      separator=","
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.value)}
+                    />
+                  )}
+                />
               </div>
               <div className="item flex flex-column">
-                <label htmlFor="gyear">Year</label>
+                <label htmlFor="gyear">Release Year</label>
                 <InputText
                   id="gyear"
                   type="number"
-                  {...register('year', { min: 1970, max: 2030 })}
+                  {...register('release_year', { min: 1970, max: 2030 })}
                 />
                 {errors.year && (
                   <div className="error-message">Requires a valid year</div>
@@ -151,7 +172,7 @@ const UploadGame = () => {
                   onClick={async () => {
                     const result = await trigger([
                       'name',
-                      'year',
+                      'release_year',
                       'played_year',
                     ])
                     if (result) {
@@ -170,15 +191,42 @@ const UploadGame = () => {
           <div className="upload-game-step">
             <div className="flex flex-column upload-game-form">
               <div className="item flex flex-column">
-                <label htmlFor="ggenre">Genre</label>
-                <InputText id="ggenre" {...register('genre')} />
+                <label htmlFor="ggenre">Genres</label>
+                <Controller
+                  name="genres"
+                  control={control}
+                  render={({ field, fieldState }) => (
+                    <Chips
+                      id="gdev"
+                      allowDuplicate={false}
+                      separator=","
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.value)}
+                    />
+                  )}
+                />
               </div>
               <div className="item flex flex-column">
-                <label htmlFor="platform">Platform*</label>
+                <label htmlFor="gtags">Tags</label>
+                <Controller
+                  name="tags"
+                  control={control}
+                  render={({ field, fieldState }) => (
+                    <Chips
+                      id="gtags"
+                      allowDuplicate={false}
+                      separator=","
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.value)}
+                    />
+                  )}
+                />
+              </div>
+              <div className="item flex flex-column">
+                <label htmlFor="platform">Platform</label>
                 <Controller
                   name="platform"
                   control={control}
-                  rules={{ required: 'Platform is required' }}
                   render={({ field, fieldState }) => (
                     <Dropdown
                       id={field.name}
@@ -189,16 +237,13 @@ const UploadGame = () => {
                     />
                   )}
                 />
-                {errors.platform && (
-                  <div className="error-message">Platform is required</div>
-                )}
               </div>
               <div className="item flex flex-column">
-                <label htmlFor="status">Completion*</label>
+                <label htmlFor="completion">Completion*</label>
                 <Controller
-                  name="status"
+                  name="completion"
                   control={control}
-                  rules={{ required: 'Status is required' }}
+                  rules={{ required: 'Completion is required' }}
                   render={({ field, fieldState }) => (
                     <Dropdown
                       id={field.name}
@@ -209,21 +254,21 @@ const UploadGame = () => {
                     />
                   )}
                 />
-                {errors.status && (
-                  <div className="error-message">Status is required</div>
+                {errors.completion && (
+                  <div className="error-message">Completion is required</div>
                 )}
               </div>
               <div className="item flex flex-column">
-                <label htmlFor="grating">Rating*</label>
+                <label htmlFor="gscore">Score</label>
                 <InputText
-                  id="grating"
+                  id="gscore"
                   type="number"
                   min={1}
                   max={10}
-                  {...register('rating', { min: 1, max: 10, required: true })}
+                  {...register('score', { min: 1, max: 10 })}
                 />
-                {errors.rating && (
-                  <div className="error-message">Requires a valid rating</div>
+                {errors.score && (
+                  <div className="error-message">Requires a valid score</div>
                 )}
               </div>
               <div className="item flex flex-column">
@@ -253,11 +298,7 @@ const UploadGame = () => {
                 <span
                   className="button-span form-button-right"
                   onClick={async () => {
-                    const result = await trigger([
-                      'platform',
-                      'status',
-                      'rating',
-                    ])
+                    const result = await trigger(['completion', 'score'])
                     if (result) {
                       clearErrors()
                       moveStep('forward')
@@ -275,6 +316,26 @@ const UploadGame = () => {
               <div className="item flex flex-column">
                 <label htmlFor="gsteam">Steam Page URL</label>
                 <InputText id="gsteam" {...register('steam_page')} />
+              </div>
+              <div className="item flex flex-column">
+                <label htmlFor="gepic">Epic Store Page URL</label>
+                <InputText id="gepic" {...register('epic_page')} />
+              </div>
+              <div className="item flex flex-column">
+                <label htmlFor="gstores">Other Stores URLs</label>
+                <Controller
+                  name="other_stores"
+                  control={control}
+                  render={({ field, fieldState }) => (
+                    <Chips
+                      id="gstores"
+                      allowDuplicate={false}
+                      separator=","
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.value)}
+                    />
+                  )}
+                />
               </div>
               <div className="item flex flex-column">
                 <label htmlFor="gdesc">Description (optional)</label>
@@ -342,32 +403,44 @@ const UploadGame = () => {
                     <td>{watchData.name || 'Not specified'}</td>
                   </tr>
                   <tr>
-                    <td>Developer</td>
-                    <td>{watchData.publisher || 'Not specified'}</td>
+                    <td>Developers</td>
+                    <td>
+                      {watchData.developers?.join(',') || 'Not specified'}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Publishers</td>
+                    <td>
+                      {watchData.publishers?.join(',') || 'Not specified'}
+                    </td>
                   </tr>
                   <tr>
                     <td>Year</td>
-                    <td>{watchData.year || 'Not specified'}</td>
+                    <td>{watchData.release_year || 'Not specified'}</td>
                   </tr>
                   <tr>
                     <td>Played Year</td>
                     <td>{watchData.played_year || 'Not specified'}</td>
                   </tr>
                   <tr>
-                    <td>Genre</td>
-                    <td>{watchData.genre || 'Not specified'}</td>
+                    <td>Genres</td>
+                    <td>{watchData.genres?.join(',') || 'Not specified'}</td>
+                  </tr>
+                  <tr>
+                    <td>Tags</td>
+                    <td>{watchData.tags?.join(',') || 'Not specified'}</td>
                   </tr>
                   <tr>
                     <td>Platform</td>
-                    <td>{watchData.platform?.name}</td>
+                    <td>{watchData.platform?.name || 'Not specified'}</td>
                   </tr>
                   <tr>
                     <td>Completion</td>
-                    <td>{watchData.status?.name}</td>
+                    <td>{watchData.completion?.name || 'Not specified'}</td>
                   </tr>
                   <tr>
-                    <td>Rating</td>
-                    <td>{watchData.rating}</td>
+                    <td>Score</td>
+                    <td>{watchData.score || 'Not specified'}</td>
                   </tr>
                   <tr>
                     <td>Played Hours</td>
@@ -381,7 +454,7 @@ const UploadGame = () => {
               </table>
               <div className="upload-game-form-footer">
                 <span
-                  className="button-span form-button-left form-last-step-buton"
+                  className="button-span form-button-left"
                   onClick={async () => {
                     moveStep('backwards')
                   }}
@@ -389,8 +462,8 @@ const UploadGame = () => {
                   Back
                 </span>
                 <Button
-                  className="upload-button form-button-right"
-                  label="Upload Game"
+                  className="button-span text-only-button form-button-right"
+                  label="Finish"
                   type="submit"
                 ></Button>
               </div>
