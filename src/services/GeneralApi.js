@@ -1,7 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from 'axios'
 import NProgress from 'nprogress'
-import { sr_images } from '../routes'
 
 export const apiClient = axios.create({
   baseURL: 'https://game-shelf-backend.onrender.com',
@@ -54,14 +53,14 @@ export default {
   fetchStatuses() {
     return apiClient.get('/completions')
   },
-  uploadImage(gameImage, username, folder) {
+  uploadImage(gameImage) {
     const formData = new FormData()
-
     formData.append('image', gameImage,)
-    return axios.post(`${sr_images}${username}/${folder}`, formData, {
+
+    return apiClient.post(`/images/${sessionStorage.getItem('userid')}`, formData, {
       headers: {
         'content-type': 'multipart/form-data',
-      },
+      }
     })
   },
 }
