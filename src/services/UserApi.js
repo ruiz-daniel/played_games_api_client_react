@@ -2,12 +2,9 @@
 import { apiClient } from './GeneralApi'
 
 const handleUserData = (data) => {
-  sessionStorage.setItem('username', data.username)
-  sessionStorage.setItem('userid', data._id)
-  sessionStorage.setItem('display_name', data.display_name)
-  sessionStorage.setItem('premium', data.premium)
-  sessionStorage.setItem('admin', data.admin)
-  sessionStorage.setItem('userpfp', data.profile_picture)
+  localStorage.setItem('userid', data._id)
+  localStorage.setItem('access_token', data.access_token)
+  delete data.access_token
 }
 
 export default {
@@ -19,9 +16,8 @@ export default {
         data: credentials,
       })
       .then((response) => {
-        sessionStorage.setItem('access_token', response.data.access_token)
         handleUserData(response.data)
-        callback(response.data)
+        callback(response)
       })
       .catch((error) => {
         errorFunction(error)
@@ -34,7 +30,6 @@ export default {
         url: `users/${userid}`,
       })
       .then((response) => {
-        handleUserData(response.data)
         callback(response.data)
       })
   },
