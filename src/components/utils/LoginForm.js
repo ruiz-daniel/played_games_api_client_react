@@ -6,16 +6,12 @@ import { Panel } from 'primereact/panel'
 
 import { useForm } from 'react-hook-form'
 
-const LoginForm = ({ onLogin }) => {
+const LoginForm = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm()
-
-  const onSubmit = (data) => {
-    if (onLogin) onLogin(data.username, data.password)
-  }
 
   return (
     <div>
