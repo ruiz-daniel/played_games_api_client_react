@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import api from '../../services/IApi'
+import React from 'react'
 
 import { Avatar } from 'primereact/avatar'
 import { Card } from 'primereact/card'
@@ -9,61 +8,26 @@ import { Button } from 'primereact/button'
 
 import { useForm } from 'react-hook-form'
 
-import { sr_played_pfp_folder, sr_images_pfp } from '../../routes'
-
-import PlayingGames from '../utils/PlayingGames'
-
 import weissIcon from '../../images/KUIYU.png'
+import { useUser } from '../../hooks/useUser'
 
 const Dashboard = () => {
-  const [userGamesInfo, setUserGamesInfo] = useState()
-  const [user, setUser] = useState()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({})
 
+  const context = useUser()
+  const user = context.user
+
   const onSubmit = (data) => {
     console.log(data)
-    api.UserApi.updateUser({ _id: user._id, ...data }, setUser)
   }
 
-  const onUpload = async (e) => {
-    await api.GeneralApi.uploadImage(
-      e.files[0],
-      user.username,
-      sr_played_pfp_folder,
-    )
-    api.UserApi.updateUser(
-      {
-        _id: user._id,
-        profile_picture: `${sr_images_pfp(user.username)}${e.files[0].name}`,
-      },
-      setUser,
-    )
-  }
+  const onUpload = () => {}
 
-  const getUser = () => {
-    api.UserApi.getUser(sessionStorage.getItem('userid'), setUser)
-  }
-
-  useEffect(() => {
-    getUser()
-    // api.PlayedGamesApi.getUserGamesInfo(
-    //   sessionStorage.getItem('userid'),
-    //   (data) => {
-    //     setUserGamesInfo(data)
-    //   },
-    //   (error) => {
-    //     console.log(
-    //       '🚀 ~ file: PlayedGamesList.js ~ line 56 ~ useEffect ~ error',
-    //       error,
-    //     )
-    //   },
-    // )
-  }, [])
-
+  
   return (
     <>
       <div className="grid pt-4 md:pt-8">
@@ -80,18 +44,7 @@ const Dashboard = () => {
           </div>
           <div className="col-12 text-center">
             <h2>Playing Games</h2>
-            <PlayingGames />
           </div>
-
-          {userGamesInfo?.userid && (
-            <div className="dashboard-user-stats flex flex-column">
-              <p>Total Played Games: {userGamesInfo.playedgames}</p>
-
-              <p>Completed Games: {userGamesInfo.completedGames}</p>
-
-              <p>Currently Playing Games: {userGamesInfo.playingGames}</p>
-            </div>
-          )}
         </div>
         <div className="px-3 col-12 lg:col-7">
           {user && (

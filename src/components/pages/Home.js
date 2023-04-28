@@ -8,6 +8,7 @@ import LoginForm from '../utils/LoginForm'
 import RegisterForm from '../utils/RegisterForm'
 import listImage from '../../images/games_shelf_games_list.png'
 import detailsImage from '../../images/games_shelf_game_details.png'
+import { useUser } from '../../hooks/useUser'
 
 import api from '../../services/IApi'
 

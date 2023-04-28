@@ -11,7 +11,7 @@ import TopBar from './components/layout/TopBar'
 // import GameStats from './components/pages/GameStats'
 // import FavoriteGames from './components/pages/FavoriteGames'
 import Home from './components/pages/Home'
-// import Dashboard from './components/pages/Dashboard'
+import Dashboard from './components/pages/Dashboard'
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import * as routes from './routes'
@@ -19,39 +19,23 @@ import './styles/main.scss'
 
 import 'nprogress/nprogress.css'
 
+import { UserProvider } from './contexts/user'
+
 function App() {
-  // const checkLoggedInRoutes = () => {
-  //   return routes.loggedRoutes.some(route => window.location.href.includes(route))
-  // }
   return (
-    <Router>
-        <TopBar></TopBar>
-        <div className="content-container">
-          {
-            <Routes>
-              <Route path={routes.home} element={<Home />}/>
-              {/* <Route exact path={routes.dashboard}>
-                <Dashboard />
-              </Route>
-              <Route exact path={routes.playedgames}>
-                <PlayedGames />
-              </Route>
-              <Route path={routes.uploadgame}>
-                <UploadGame />
-              </Route>
-              <Route path={routes.gamedetails}>
-                <GameDetails />
-              </Route>
-              <Route path={routes.stats}>
-                <GameStats />
-              </Route> */}
-              {/* <Route path={routes.top10games}>
-                <FavoriteGames />
-              </Route> */}
-            </Routes>
-          }
-        </div>
-    </Router>
+    <UserProvider>
+      <Router>
+          <TopBar></TopBar>
+          <div className="content-container">
+            {
+              <Routes>
+                <Route path={routes.home} element={<Home />}/>
+                <Route path={routes.dashboard} element={<Dashboard />}/>
+              </Routes>
+            }
+          </div>
+      </Router>
+    </UserProvider>
   )
 }
 
