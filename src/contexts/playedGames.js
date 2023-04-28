@@ -64,4 +64,16 @@ export function PlayedGamesProvider({ children }) {
     filteringGames = filtered
     setGames(filtered)
   }
+
+  const sharedContent = {
+    games,
+    getGames,
+    localFilter
+  }
+
+  return (
+    <PlayedGamesContext.Provider value={sharedContent}>
+      {children}
+    </PlayedGamesContext.Provider>
+  )
 }
