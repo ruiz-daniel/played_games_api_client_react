@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { PlayedGamesContext } from "../contexts/playedGames";
+import { PlayedGamesContext } from "../../contexts/playedGames";
 
 export function usePlayedGamesContext() {
   const context = useContext(PlayedGamesContext)

@@ -9,7 +9,7 @@ import { Button } from 'primereact/button'
 import { useForm } from 'react-hook-form'
 
 import weissIcon from '../../images/KUIYU.png'
-import { useUserContext } from '../../hooks/useUserContext'
+import { useUserContext } from '../../hooks/contexts/useUserContext'
 
 const Dashboard = () => {
   const {
