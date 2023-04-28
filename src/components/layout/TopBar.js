@@ -5,19 +5,18 @@ import { Avatar } from 'primereact/avatar'
 import { Dialog } from 'primereact/dialog'
 import { Toast } from 'primereact/toast'
 import { Menu } from 'primereact/menu'
-import { Sidebar } from 'primereact/sidebar'
-import SidebarContent from './SideBar'
+// import { Sidebar } from 'primereact/sidebar'
+// import SidebarContent from './SideBar'
 
 import LoginForm from '../utils/LoginForm'
 
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import * as routes from '../../routes'
 import api from '../../services/IApi'
 
 import weissIcon from '../../images/KUIYU.png'
 
 const TopBar = () => {
-  const history = useHistory()
   const toast = useRef(null)
   const menu = useRef(null)
   const [loginVisible, showLogin] = useState(false)
@@ -35,7 +34,6 @@ const TopBar = () => {
     if (logged !== null) {
       //LOGOUT
       sessionStorage.clear()
-      history.push('/')
       window.location.reload()
     } else {
       //LOGIN
@@ -65,9 +63,7 @@ const TopBar = () => {
 
   const handleLogoClick = () => {
     if (sessionStorage.getItem('userid')) {
-      history.push(routes.dashboard)
     } else {
-      history.push(routes.home)
     }
   }
 
@@ -76,11 +72,6 @@ const TopBar = () => {
       label: sessionStorage.getItem('username')
         ? sessionStorage.getItem('display_name')
         : 'Guest',
-      command: () => {
-        sessionStorage.getItem('username')
-          ? history.push(routes.dashboard)
-          : history.push(routes.home)
-      },
     },
     {
       label: sessionStorage.getItem('userid') ? 'Logout' : 'Login',
@@ -156,14 +147,14 @@ const TopBar = () => {
           }}
         />
       </Dialog>
-      <Sidebar
+      {/* <Sidebar
         className="menu-sidebar"
         visible={sideMenu}
         onHide={() => toggleSideMenu(false)}
         showCloseIcon={false}
       >
         <SidebarContent toggleSidebar={toggleSideMenu} />
-      </Sidebar>
+      </Sidebar> */}
     </div>
   )
 }

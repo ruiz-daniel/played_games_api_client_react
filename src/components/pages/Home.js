@@ -9,13 +9,10 @@ import RegisterForm from '../utils/RegisterForm'
 import listImage from '../../images/games_shelf_games_list.png'
 import detailsImage from '../../images/games_shelf_game_details.png'
 
-import { useHistory } from 'react-router-dom'
-
 import api from '../../services/IApi'
 
 const Home = () => {
   const toast = useRef(null)
-  const history = useHistory()
   const [loginVisible, showLogin] = useState(false)
   const [registerVisible, showRegister] = useState(false)
 
@@ -30,7 +27,6 @@ const Home = () => {
       //LOGOUT
       sessionStorage.clear()
       window.location.reload()
-      history.push('/')
     } else {
       //LOGIN
       showLogin(true)
@@ -43,7 +39,6 @@ const Home = () => {
       life: 3000,
     })
     showLogin(false)
-    history.push(routes.dashboard)
     window.location.reload()
   }
   const handleError = (error) => {

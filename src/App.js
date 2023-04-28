@@ -28,29 +28,27 @@ function App() {
         <TopBar></TopBar>
         <div className="content-container">
           {
-            <Router>
-              <Routes>
-                <Route path={routes.home} element={<Home />}/>
-                {/* <Route exact path={routes.dashboard}>
-                  <Dashboard />
-                </Route>
-                <Route exact path={routes.playedgames}>
-                  <PlayedGames />
-                </Route>
-                <Route path={routes.uploadgame}>
-                  <UploadGame />
-                </Route>
-                <Route path={routes.gamedetails}>
-                  <GameDetails />
-                </Route>
-                <Route path={routes.stats}>
-                  <GameStats />
-                </Route> */}
-                {/* <Route path={routes.top10games}>
-                  <FavoriteGames />
-                </Route> */}
-              </Routes>
-            </Router>
+            <Routes>
+              <Route path={routes.home} element={<Home />}/>
+              {/* <Route exact path={routes.dashboard}>
+                <Dashboard />
+              </Route>
+              <Route exact path={routes.playedgames}>
+                <PlayedGames />
+              </Route>
+              <Route path={routes.uploadgame}>
+                <UploadGame />
+              </Route>
+              <Route path={routes.gamedetails}>
+                <GameDetails />
+              </Route>
+              <Route path={routes.stats}>
+                <GameStats />
+              </Route> */}
+              {/* <Route path={routes.top10games}>
+                <FavoriteGames />
+              </Route> */}
+            </Routes>
           }
         </div>
     </Router>
