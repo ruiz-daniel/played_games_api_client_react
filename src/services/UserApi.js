@@ -7,8 +7,12 @@ const handleUserData = (data) => {
   delete data.access_token
 }
 
+const defaultErrorFunction = (error) => {
+  console.log(error)
+}
+
 export default {
-  login(credentials, callback, errorFunction) {
+  login(credentials, callback, errorFunction = defaultErrorFunction) {
     apiClient
       .request({
         method: 'post',

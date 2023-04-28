@@ -20,21 +20,24 @@ import './styles/main.scss'
 import 'nprogress/nprogress.css'
 
 import { UserProvider } from './contexts/user'
+import { ModalsProvider } from './contexts/modals'
 
 function App() {
   return (
     <UserProvider>
-      <Router>
-        <TopBar></TopBar>
-        <div className="content-container">
-          {
-            <Routes>
-              <Route path={routes.home} element={<Home />} />
-              <Route path={routes.dashboard} element={<Dashboard />} />
-            </Routes>
-          }
-        </div>
-      </Router>
+      <ModalsProvider>
+        <Router>
+          <TopBar></TopBar>
+          <div className="content-container">
+            {
+              <Routes>
+                <Route path={routes.home} element={<Home />} />
+                <Route path={routes.dashboard} element={<Dashboard />} />
+              </Routes>
+            }
+          </div>
+        </Router>
+      </ModalsProvider>
     </UserProvider>
   )
 }
