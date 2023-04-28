@@ -9,7 +9,7 @@ import { Button } from 'primereact/button'
 import { useForm } from 'react-hook-form'
 
 import weissIcon from '../../images/KUIYU.png'
-import { useUser } from '../../hooks/useUser'
+import { useUserContext } from '../../hooks/useUserContext'
 
 const Dashboard = () => {
   const {
@@ -18,8 +18,7 @@ const Dashboard = () => {
     formState: { errors },
   } = useForm({})
 
-  const context = useUser()
-  const user = context.user
+  const { user } = useUserContext()
 
   const onSubmit = (data) => {
     console.log(data)
