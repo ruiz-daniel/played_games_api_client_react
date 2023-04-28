@@ -25,15 +25,15 @@ function App() {
   return (
     <UserProvider>
       <Router>
-          <TopBar></TopBar>
-          <div className="content-container">
-            {
-              <Routes>
-                <Route path={routes.home} element={<Home />}/>
-                <Route path={routes.dashboard} element={<Dashboard />}/>
-              </Routes>
-            }
-          </div>
+        <TopBar></TopBar>
+        <div className="content-container">
+          {
+            <Routes>
+              <Route path={routes.home} element={<Home />} />
+              <Route path={routes.dashboard} element={<Dashboard />} />
+            </Routes>
+          }
+        </div>
       </Router>
     </UserProvider>
   )
