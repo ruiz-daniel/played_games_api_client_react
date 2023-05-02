@@ -1,12 +1,11 @@
 /* eslint-disable eqeqeq */
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import api from '../../services/IApi'
+import { useMessages } from '../../hooks/useMessages'
 
 import FilterForm from '../utils/forms/FilterForm'
 import { Sidebar } from 'primereact/sidebar'
 import { InputText } from 'primereact/inputtext'
-
-import { Toast } from 'primereact/toast'
 import { Button } from 'primereact/button'
 import GamesList from '../utils/lists/GamesList'
 
@@ -17,8 +16,7 @@ var filteringGames = []
 const PlayedGamesList = () => {
   const [games, setGames] = useState([])
   const [filter, setFilter] = useState(false)
-
-  const toast = useRef(null)
+  const {message} = useMessages()
 
   const resetFilter = () => {
     filteringGames = []
@@ -82,18 +80,13 @@ const PlayedGamesList = () => {
           '🚀 ~ file: PlayedGamesList.js ~ line 56 ~ useEffect ~ error',
           error,
         )
-        toast.current.show({
-          severity: 'error',
-          summary: error.message,
-          life: 3000,
-        })
+        message('error', error.message)
       },
     )
   }, [])
 
   return (
     <div className="played-games-list">
-      <Toast ref={toast} position="top-center" />
       <Sidebar
         visible={filter}
         position="right"

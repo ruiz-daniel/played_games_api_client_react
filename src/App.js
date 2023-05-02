@@ -22,6 +22,7 @@ import './styles/main.scss'
 import 'nprogress/nprogress.css'
 
 import { UserProvider } from './contexts/user'
+import { MessagesProvider } from './contexts/messages'
 
 function App() {
   return (
@@ -30,13 +31,15 @@ function App() {
         <TopBar />
         <div className="content-container">
           {
-            <Routes>
-              <Route path={routes.home} element={<Home />} />
-              <Route path={routes.dashboard} element={<Dashboard />} />
-              <Route path={routes.login} element={<Login />} />
-              <Route path={routes.register} element={<SignUp />} />
-              <Route path={routes.playedgames} element={<PlayedGames />} />
-            </Routes>
+            <MessagesProvider>
+              <Routes>
+                <Route path={routes.home} element={<Home />} />
+                <Route path={routes.dashboard} element={<Dashboard />} />
+                <Route path={routes.login} element={<Login />} />
+                <Route path={routes.register} element={<SignUp />} />
+                <Route path={routes.playedgames} element={<PlayedGames />} />
+              </Routes>
+            </MessagesProvider>
           }
         </div>
       </UserProvider>
