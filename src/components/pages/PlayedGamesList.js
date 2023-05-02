@@ -69,7 +69,7 @@ const PlayedGamesList = () => {
 
   useEffect(() => {
     api.PlayedGamesApi.getPlayedGames(
-      sessionStorage.getItem('userid'),
+      localStorage.getItem('userid'),
       (data) => {
         if (filteringGames.length) {
           setGames(filteringGames)

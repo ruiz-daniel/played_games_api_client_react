@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import * as routes from '../../routes'
 import  no_cover  from '../../images/no-cover.jpg'
 
@@ -7,15 +7,9 @@ import Score from './score'
 import Status from './status'
 
 const GameBox = (props) => {
-  const history = useHistory()
+  const navigator = useNavigate()
   const editEvent = () => {
-    history.push({
-      pathname: routes.gamedetails,
-      state: {
-        // location state
-        gameid: props.game._id,
-      },
-    })
+    // navigator(routes)
   }
 
   return (

@@ -5,7 +5,7 @@ import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primeflex/primeflex.css'
 
 import TopBar from './components/layout/TopBar'
-// import PlayedGames from './components/pages/PlayedGamesList'
+import PlayedGames from './components/pages/PlayedGamesList'
 // import UploadGame from './components/pages/UploadGame'
 // import GameDetails from './components/pages/GameDetails'
 // import GameStats from './components/pages/GameStats'
@@ -35,6 +35,7 @@ function App() {
               <Route path={routes.dashboard} element={<Dashboard />} />
               <Route path={routes.login} element={<Login />} />
               <Route path={routes.register} element={<SignUp />} />
+              <Route path={routes.playedgames} element={<PlayedGames />} />
             </Routes>
           }
         </div>
