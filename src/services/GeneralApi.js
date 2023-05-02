@@ -4,16 +4,18 @@ import NProgress from 'nprogress'
 
 export let apiClient = axios.create({
   baseURL: 'https://game-shelf-backend.onrender.com',
+  // baseURL: 'http://localhost:3001',
   headers: {
-    Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
   },
 })
 
 export const updateClient = () => {
   apiClient = axios.create({
     baseURL: 'https://game-shelf-backend.onrender.com',
+    // baseURL: 'http://localhost:3001',
     headers: {
-      Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     },
   })
 }
@@ -70,7 +72,7 @@ export default {
     const formData = new FormData()
     formData.append('image', gameImage,)
 
-    return apiClient.post(`/images/${sessionStorage.getItem('userid')}`, formData, {
+    return apiClient.post(`/images/${localStorage.getItem('userid')}`, formData, {
       headers: {
         'content-type': 'multipart/form-data',
       }

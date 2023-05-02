@@ -40,6 +40,9 @@ export default {
       .then((response) => {
         callback(response)
       })
+      .catch(error => {
+        errorFunction(error)
+      })
   },
   updateUser(user, callback, errorFunction = defaultErrorFunction) {
     apiClient
@@ -49,7 +52,10 @@ export default {
         data: user,
       })
       .then((response) => {
-        callback(response.data)
+        callback(response)
+      })
+      .catch(error => {
+        errorFunction(error)
       })
   },
   register(user, callback, errorFunction = defaultErrorFunction) {
@@ -60,7 +66,7 @@ export default {
         data: user,
       })
       .then((response) => {
-        callback(response.data)
+        callback(response)
       })
       .catch((error) => {
         errorFunction(error)

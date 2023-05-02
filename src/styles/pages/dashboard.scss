@@ -19,10 +19,7 @@
   }
 }
 .dashboard-user-details {
-  padding-right: 10%;
-  @include respond(desktop) {
-    padding-right: 0;
-  }
+  width: 100%;
 
   .p-card {
     background-color: $background-transparent;
