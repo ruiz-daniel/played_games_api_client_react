@@ -1,10 +1,10 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import * as routes from '../../routes'
-import  no_cover  from '../../images/no-cover.jpg'
+import * as routes from '../../../routes'
+import  no_cover  from '../../../images/no-cover.jpg'
 
-import Score from './score'
-import Status from './status'
+import Score from '../score'
+import Status from '../status'
 
 const GameBox = (props) => {
   const navigator = useNavigate()

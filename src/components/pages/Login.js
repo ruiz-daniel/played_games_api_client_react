@@ -1,6 +1,6 @@
 import { useUser } from '../../hooks/useUser'
 import { useNavigate } from 'react-router-dom'
-import LoginForm from '../utils/LoginForm'
+import LoginForm from '../utils/forms/LoginForm'
 import { dashboard } from '../../routes'
 
 function Login() {

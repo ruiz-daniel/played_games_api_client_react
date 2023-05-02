@@ -1,8 +1,8 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect, useRef } from 'react'
 import api from '../../services/IApi'
-import GameBox from '../utils/GameBox'
-import FilterForm from '../utils/FilterForm'
+import GameBox from '../utils/cards/GameBox'
+import FilterForm from '../utils/forms/FilterForm'
 import { ScrollPanel } from 'primereact/scrollpanel'
 import { ScrollTop } from 'primereact/scrolltop'
 import { Sidebar } from 'primereact/sidebar'

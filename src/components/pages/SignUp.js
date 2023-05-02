@@ -1,6 +1,6 @@
 import { useUser } from '../../hooks/useUser'
 import { useNavigate } from 'react-router-dom'
-import RegisterForm from '../utils/RegisterForm'
+import RegisterForm from '../utils/forms/RegisterForm'
 import { dashboard } from '../../routes'
 
 function SignUp() {
