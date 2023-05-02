@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import api from '../../services/IApi'
+import api from '../../../services/IApi'
 
 import { Dropdown } from 'primereact/dropdown'
 import { InputText } from 'primereact/inputtext'

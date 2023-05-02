@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import api from '../../services/IApi'
+import api from '../../../services/IApi'
 
 import { useForm, Controller } from 'react-hook-form'
 
@@ -12,7 +12,7 @@ import { Chips } from 'primereact/chips'
 
 import { Toast } from 'primereact/toast'
 
-import { sr_played_games_folder, sr_images_games } from '../../routes'
+import { sr_played_games_folder, sr_images_games } from '../../../routes'
 
 const EditGame = ({ game, callback }) => {
   const toast = useRef(null)

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Score from './score'
+import Score from '../score'
 
 const GameInfoBox = ({ type, text, style, game }) => {
   return (
