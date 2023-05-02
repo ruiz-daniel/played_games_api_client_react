@@ -1,15 +1,14 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect, useRef } from 'react'
 import api from '../../services/IApi'
-import GameBox from '../utils/cards/GameBox'
+
 import FilterForm from '../utils/forms/FilterForm'
-import { ScrollPanel } from 'primereact/scrollpanel'
-import { ScrollTop } from 'primereact/scrolltop'
 import { Sidebar } from 'primereact/sidebar'
 import { InputText } from 'primereact/inputtext'
 
 import { Toast } from 'primereact/toast'
 import { Button } from 'primereact/button'
+import GamesList from '../utils/lists/GamesList'
 
 var gamesBackup = []
 // Keep the filtered games when component unmounts
@@ -129,19 +128,7 @@ const PlayedGamesList = () => {
         />
       </div>
       <h3>Showing: {games.length}</h3>
-      <ScrollPanel style={{ width: '100%', height: '75vh' }}>
-        <div className="games-container flex flex-wrap justify-content-evenly">
-          {games.map((game) => {
-            return <GameBox key={game.id} game={game} />
-          })}
-        </div>
-        <ScrollTop
-          target="parent"
-          threshold={100}
-          className="custom-scrolltop"
-          icon="pi pi-arrow-up"
-        />
-      </ScrollPanel>
+      <GamesList games={games} />
     </div>
   )
 }
