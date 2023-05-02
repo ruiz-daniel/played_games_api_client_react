@@ -2,7 +2,6 @@ import React from 'react'
 
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
-import { Panel } from 'primereact/panel'
 
 import { useForm } from 'react-hook-form'
 
@@ -15,7 +14,6 @@ const LoginForm = ({ onSubmit }) => {
 
   return (
     <div>
-      <Panel header="Login" className="login-form">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-column login-form-content">
             <h5>Username</h5>
@@ -40,7 +38,6 @@ const LoginForm = ({ onSubmit }) => {
             </Button>
           </div>
         </form>
-      </Panel>
     </div>
   )
 }

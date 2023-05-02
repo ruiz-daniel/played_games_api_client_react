@@ -1,14 +1,18 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { apiClient } from './GeneralApi'
+import { apiClient, updateClient, defaultErrorFunction } from './GeneralApi'
 
 const handleUserData = (data) => {
+  // local persistance
   localStorage.setItem('userid', data._id)
   localStorage.setItem('access_token', data.access_token)
-  delete data.access_token
-}
+  localStorage.setItem('username', data.username)
+  localStorage.setItem('display_name', data.display_name)
+  localStorage.setItem('profile_picture', data.profile_picture)
 
-const defaultErrorFunction = (error) => {
-  console.log(error)
+  // update api client with new JWT Token
+  updateClient()
+  // delete JWT token from response data
+  delete data.access_token
 }
 
 export default {
@@ -27,17 +31,17 @@ export default {
         errorFunction(error)
       })
   },
-  getUser(userid, callback) {
+  getUser(userid, callback, errorFunction = defaultErrorFunction) {
     apiClient
       .request({
         method: 'get',
         url: `users/${userid}`,
       })
       .then((response) => {
-        callback(response.data)
+        callback(response)
       })
   },
-  updateUser(user, callback) {
+  updateUser(user, callback, errorFunction = defaultErrorFunction) {
     apiClient
       .request({
         method: 'patch',
@@ -48,7 +52,7 @@ export default {
         callback(response.data)
       })
   },
-  register(user, callback, errorFunction) {
+  register(user, callback, errorFunction = defaultErrorFunction) {
     apiClient
       .request({
         method: 'post',

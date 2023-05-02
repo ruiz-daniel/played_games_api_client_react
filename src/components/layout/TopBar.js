@@ -1,11 +1,9 @@
 import React, { useState, useRef } from 'react'
-
-import { useModalsContext } from '../../hooks/contexts/useModalsContext'
+import { useNavigate } from 'react-router-dom'
+import { useUser } from '../../hooks/useUser'
 
 import { Toolbar } from 'primereact/toolbar'
 import { Avatar } from 'primereact/avatar'
-import { Dialog } from 'primereact/dialog'
-import { Toast } from 'primereact/toast'
 import { Menu } from 'primereact/menu'
 // import { Sidebar } from 'primereact/sidebar'
 // import SidebarContent from './SideBar'
@@ -17,26 +15,38 @@ import weissIcon from '../../images/KUIYU.png'
 
 const TopBar = () => {
   const menu = useRef(null)
+  const navigator = useNavigate()
   const [sideMenu, toggleSideMenu] = useState(false)
-  const {toggleLogin, toggleRegister} = useModalsContext()
+
+  const { user, logout } = useUser()
 
   // var isMobile = navigator.userAgent.toLowerCase().match(/mobile/i)
 
   const handleLogoClick = () => {
-    if (sessionStorage.getItem('userid')) {
-    } else {
-    }
+    navigator(routes.home)
+  }
+
+  const goToDashboard = () => {
+    user?._id &&  navigator(routes.dashboard)
+  }
+  const handleLoginOrOut = () => {
+    user?._id ? logout(() => {
+      goHome()
+    }) : navigator(routes.login)
+    
+  }
+  const goHome = () => {
+    navigator(routes.home)
   }
 
   const userMenuItems = [
     {
-      label: sessionStorage.getItem('username')
-        ? sessionStorage.getItem('display_name')
-        : 'Guest',
+      label: user?.display_name ?? 'Guest',
+      command: goToDashboard
     },
     {
-      label: localStorage.getItem('userid') ? 'Logout' : 'Login',
-      command: toggleLogin,
+      label: user?._id ? 'Logout' : 'Login',
+      command: handleLoginOrOut
     },
   ]
 
@@ -55,7 +65,7 @@ const TopBar = () => {
           My Game Shelf
         </h2>
 
-        {sessionStorage.getItem('userid') && (
+        {user?._id && (
           <div className="flex topbar-links">
             <div className="topbar-element">
               <Link to={routes.playedgames}>Games List</Link>
@@ -79,7 +89,7 @@ const TopBar = () => {
     <React.Fragment>
       {!sideMenu && (
         <Avatar
-          image={sessionStorage.getItem('userpfp') || weissIcon}
+          image={user?.profile_picture || weissIcon}
           shape="circle"
           size="large"
           onClick={(e) => menu.current.toggle(e)}

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { useModalsContext } from '../../hooks/contexts/useModalsContext'
 
 import listImage from '../../images/games_shelf_games_list.png'
 import detailsImage from '../../images/games_shelf_game_details.png'
+import { Link } from 'react-router-dom'
+import { login as loginRoute, register as registerRoute } from '../../routes'
 
 const Home = () => {
-  const {toggleLogin, toggleRegister} = useModalsContext()
 
   useEffect(() => {
     var sections = document.querySelectorAll('section')
@@ -37,8 +37,8 @@ const Home = () => {
           </h1>
           <div className="home-header-description">
             <p>
-              <span onClick={toggleLogin}>Login</span> or{' '}
-              <span onClick={toggleRegister}>Register</span> to start organizing
+              <Link to={loginRoute}><span>Login</span></Link> or{' '}
+              <Link to={registerRoute}><span>Register</span></Link> to start organizing
               your games{' '}
             </p>
           </div>

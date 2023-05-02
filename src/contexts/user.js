@@ -1,4 +1,4 @@
-import { useState, createContext } from 'react'
+import { useState, useEffect, createContext } from 'react'
 import api from '../services/IApi'
 
 export const UserContext = createContext()
@@ -6,28 +6,43 @@ export const UserContext = createContext()
 export function UserProvider({ children }) {
   const [user, setUser] = useState()
 
-  function login(data, callback) {
+  useEffect(() => {
+    const userid = localStorage.getItem('userid')
+    userid && api.UserApi.getUser(userid, (response) => {
+      setUser(response.data)
+      console.log(response.data)
+    })
+  }, [])
+
+  const login = (data, callback) => {
     api.UserApi.login(data, (response) => {
       setUser(response.data)
       callback && callback(response.data)
     })
   }
-  function register(data, callback) {
+  const signup = (data, callback) => {
     api.UserApi.register(data, (response) => {
       login(data, callback)
     })
   }
-  function update(data, callback) {
+  const update = (data, callback) => {
     api.UserApi.updateUser(data, (response) => {
       setUser(response.data)
       callback && callback(response.data)
     })
   }
 
+  const logout = (callback) => {
+    localStorage.clear()
+    setUser(null)
+    callback()
+  }
+
   const sharedContent = {
     user,
     login,
-    register,
+    logout,
+    signup,
     update
   }
 

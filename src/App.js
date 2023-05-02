@@ -12,6 +12,8 @@ import TopBar from './components/layout/TopBar'
 // import FavoriteGames from './components/pages/FavoriteGames'
 import Home from './components/pages/Home'
 import Dashboard from './components/pages/Dashboard'
+import Login from './components/pages/Login'
+import SignUp from './components/pages/SignUp'
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import * as routes from './routes'
@@ -20,25 +22,24 @@ import './styles/main.scss'
 import 'nprogress/nprogress.css'
 
 import { UserProvider } from './contexts/user'
-import { ModalsProvider } from './contexts/modals'
 
 function App() {
   return (
-    <UserProvider>
-      <ModalsProvider>
-        <Router>
-          <TopBar></TopBar>
-          <div className="content-container">
-            {
-              <Routes>
-                <Route path={routes.home} element={<Home />} />
-                <Route path={routes.dashboard} element={<Dashboard />} />
-              </Routes>
-            }
-          </div>
-        </Router>
-      </ModalsProvider>
-    </UserProvider>
+    <Router>
+      <UserProvider>
+        <TopBar />
+        <div className="content-container">
+          {
+            <Routes>
+              <Route path={routes.home} element={<Home />} />
+              <Route path={routes.dashboard} element={<Dashboard />} />
+              <Route path={routes.login} element={<Login />} />
+              <Route path={routes.register} element={<SignUp />} />
+            </Routes>
+          }
+        </div>
+      </UserProvider>
+    </Router>
   )
 }
 

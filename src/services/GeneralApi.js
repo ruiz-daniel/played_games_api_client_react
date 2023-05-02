@@ -2,12 +2,21 @@
 import axios from 'axios'
 import NProgress from 'nprogress'
 
-export const apiClient = axios.create({
+export let apiClient = axios.create({
   baseURL: 'https://game-shelf-backend.onrender.com',
   headers: {
     Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
   },
 })
+
+export const updateClient = () => {
+  apiClient = axios.create({
+    baseURL: 'https://game-shelf-backend.onrender.com',
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+    },
+  })
+}
 
 // Interceptors to initiate and stop progress bar during axios requests
 apiClient.interceptors.request.use((config) => {
@@ -25,6 +34,10 @@ apiClient.interceptors.response.use(
     return Promise.reject(error)
   },
 )
+
+export const defaultErrorFunction = (error) => {
+  console.log(error)
+}
 
 export default {
   getPlatforms(callback) {
