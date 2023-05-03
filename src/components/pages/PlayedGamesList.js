@@ -1,7 +1,6 @@
 /* eslint-disable eqeqeq */
-import React, { useState, useEffect } from 'react'
-import api from '../../services/IApi'
-import { useMessages } from '../../hooks/useMessages'
+import { useState } from 'react'
+import { usePlayedGames, gamesBackup } from '../../hooks/usePlayedGames'
 
 import FilterForm from '../utils/forms/FilterForm'
 import { Sidebar } from 'primereact/sidebar'
@@ -9,82 +8,11 @@ import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
 import GamesList from '../utils/lists/GamesList'
 
-var gamesBackup = []
-// Keep the filtered games when component unmounts
-var filteringGames = []
+
 
 const PlayedGamesList = () => {
-  const [games, setGames] = useState([])
   const [filter, setFilter] = useState(false)
-  const {message} = useMessages()
-
-  const resetFilter = () => {
-    filteringGames = []
-    setGames(gamesBackup)
-  }
-
-  const onFilter = (games) => {
-    filteringGames = games
-    setGames(games)
-    setFilter(false)
-  }
-
-  const localFilter = (value) => {
-    const filtered = []
-    gamesBackup.forEach((game) => {
-      let found = false
-      Object.keys(game).forEach((key) => {
-        if (!['played_hours', 'id', '_id'].includes(key)) {
-          if (['completion', 'platform'].includes(key)) {
-            if (game[key].name == value) {
-              found = true
-            }
-          } else if (typeof game[key] === 'string') {
-            if (game[key].includes(value)) {
-              found = true
-            }
-          } else if (game[key].length) {
-            // Array
-            if (game[key].toString().includes(value)) {
-              console.log(key)
-              found = true
-            }
-          } else {
-            if (game[key] == value) {
-              found = true
-            }
-          }
-        }
-      })
-      if (found) {
-        filtered.push(game)
-      }
-    })
-    filteringGames = filtered
-    setGames(filtered)
-  }
-
-  useEffect(() => {
-    api.PlayedGamesApi.getPlayedGames(
-      localStorage.getItem('userid'),
-      (data) => {
-        if (filteringGames.length) {
-          setGames(filteringGames)
-        } else {
-          setGames(data)
-        }
-        gamesBackup = data
-      },
-      (error) => {
-        console.log(
-          '🚀 ~ file: PlayedGamesList.js ~ line 56 ~ useEffect ~ error',
-          error,
-        )
-        message('error', error.message)
-      },
-    )
-  }, [])
-
+  const {games, onFilter, localFilter, resetFilter} = usePlayedGames()
   return (
     <div className="played-games-list">
       <Sidebar
