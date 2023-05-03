@@ -1,9 +1,10 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect } from 'react'
-import api from '../../services/IApi'
+import { usePlayedGames } from '../../hooks/usePlayedGames'
 import { Chart } from 'primereact/chart'
 
 const GameStats = () => {
+  const {games} = usePlayedGames()
   const [total_games, setTotalGames] = useState()
   const [avg_score, setAvgScore] = useState(0)
   const color = '#fbfaf8'
@@ -49,34 +50,26 @@ const GameStats = () => {
   })
 
   useEffect(() => {
-    api.PlayedGamesApi.getPlayedGames(
-      sessionStorage.getItem('userid'),
-      (data) => {
-        setTotalGames(data.length)
-        getStats(data)
-        getCompletionStats(data.length)
-        setBarChartStats()
-      },
-      (error) => {
-        console.log(error)
-      },
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    setTotalGames(games.length)
+    getStats(games)
+    getCompletionStats(games.length)
+    setBarChartStats()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [games])
 
   // VARIABLES FOR DATA
-  var completed = 0
-  var dropped = 0
-  var played = 0
-  var onHold = 0
+  let completed = 0
+  let dropped = 0
+  let played = 0
+  let onHold = 0
 
-  var playedYearDatasets = {}
-  var yearDatasets = {}
-  var platformDatasets = {}
-  var scoreDatasets = {}
-  var genreDatasets = {}
-  var developerDataset = {}
-  var publisherDataset = {}
+  let playedYearDatasets = {}
+  let yearDatasets = {}
+  let platformDatasets = {}
+  let scoreDatasets = {}
+  let genreDatasets = {}
+  let developerDataset = {}
+  let publisherDataset = {}
 
   const completionOptions = {
     plugins: {
