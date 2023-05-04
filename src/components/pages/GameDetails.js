@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react'
-import { usePlayedGames } from '../../hooks/usePlayedGames'
+import React, { useState } from 'react'
+import { useGame } from '../../hooks/useGame'
 
 import { Image } from 'primereact/image'
 import { Button } from 'primereact/button'
@@ -22,20 +22,18 @@ const GameDetails = () => {
   const navigator = useNavigate()
   const [queryParams] = useSearchParams()
   const gameid = queryParams.get('id')
-  const [game, setGame] = useState()
-  const {getGame, updateGame, removeGame} = usePlayedGames()
+  const { game, update, remove} = useGame(gameid)
+  
   const [editing, setEditing] = useState(false)
 
   const onUpdate = (data) => {
-    data._id = gameid
-    updateGame(data, () => {
+    update(data, () => {
       setEditing(false)
     })
-    
   }
 
   const deleteGame = () => {
-    removeGame(gameid, () => {
+    remove(() => {
       navigator(playedgames)
     })
   }
@@ -49,10 +47,6 @@ const GameDetails = () => {
       accept: () => deleteGame(),
     })
   }
-  
-  useEffect(() => {
-    setGame(getGame(gameid))
-  })
   
 
   return (
