@@ -10,7 +10,6 @@ export function UserProvider({ children }) {
     const userid = localStorage.getItem('userid')
     userid && api.UserApi.getUser(userid, (response) => {
       setUser(response.data)
-      console.log(response.data)
     })
   }, [])
 

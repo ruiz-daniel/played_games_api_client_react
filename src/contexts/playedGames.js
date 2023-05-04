@@ -2,6 +2,7 @@
 import { useState, useEffect, createContext } from 'react'
 import api from '../services/IApi'
 import { useMessages } from '../hooks/useMessages'
+import { useUser } from '../hooks/useUser'
 
 export const PlayedGamesContext = createContext()
 
@@ -11,6 +12,7 @@ let filteringGames = []
 
 export function PlayedGamesProvider({ children }) {
   const [games, setGames] = useState([])
+  const { user } = useUser()
 
   const { message } = useMessages()
 
@@ -80,42 +82,47 @@ export function PlayedGamesProvider({ children }) {
     setGames(filtered)
   }
 
-  const uploadGame = (game) => {
+  const uploadGame = (game, callback) => {
     api.PlayedGamesApi.postPlayedGame(game, (response) => {
       message('info', "Game Uploaded Successfully")
       const updatedGames = [...games, response.data]
       setGames(updatedGames)
       gamesBackup = updatedGames
+      callback && callback()
     })
   }
 
-  const updateGame = (game) => {
+  const updateGame = (game, callback) => {
     api.PlayedGamesApi.patchPlayedGame(game, (response) => {
+      message('info', "Game Updated Successfully")
       const updatedGames = games.map((game) => 
         game._id === response.data._id ? response.data : game
       )
       setGames(updatedGames)
       gamesBackup = updatedGames
+      callback && callback()
     })
   }
 
   const getGame = (id) => {
-    return games.find(game => game._id = id)
+    return games.find(game => game._id === id)
   }
 
-  const removeGame = (id) => {
+  const removeGame = (id, callback) => {
     api.PlayedGamesApi.deletePlayedGame(id, (response) => {
+      message('info', "Game Deleted Successfully")
       const updatedGames = games.filter(game => game._id !== id)
       setGames(updatedGames)
       gamesBackup = updatedGames
+      callback && callback()
     })
   }
 
   useEffect(() => {
-    const userid = localStorage.getItem('userid')
-    userid && getGames()
+    const userid = user?._id
+    userid ? getGames() : setGames([])
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [user])
 
   const sharedContent = {
     games,
