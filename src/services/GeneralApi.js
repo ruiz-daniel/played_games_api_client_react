@@ -42,24 +42,30 @@ export const defaultErrorFunction = (error) => {
 }
 
 export default {
-  getPlatforms(callback) {
+  getPlatforms(callback, errorFunction = defaultErrorFunction) {
     apiClient
       .request({
         method: 'get',
         url: '/platforms',
       })
       .then((response) => {
-        callback(response.data)
+        callback(response)
+      })
+      .catch((error) => {
+        errorFunction(error)
       })
   },
-  getStatuses(callback) {
+  getCompletions(callback, errorFunction = defaultErrorFunction) {
     apiClient
       .request({
         method: 'get',
         url: '/completions',
       })
       .then((response) => {
-        callback(response.data)
+        callback(response)
+      })
+      .catch((error) => {
+        errorFunction(error)
       })
   },
   fetchPlatforms() {
