@@ -64,7 +64,6 @@ export function PlayedGamesProvider({ children }) {
           } else if (game[key].length) {
             // Array
             if (game[key].toString().includes(value)) {
-              console.log(key)
               found = true
             }
           } else {
