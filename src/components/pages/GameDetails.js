@@ -4,7 +4,7 @@ import { useGame } from '../../hooks/useGame'
 
 import { Image } from 'primereact/image'
 import { Button } from 'primereact/button'
-import { confirmDialog } from 'primereact/confirmdialog'
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
 import { Dialog } from 'primereact/dialog'
 import { Chip } from 'primereact/chip'
 
@@ -23,7 +23,7 @@ const GameDetails = () => {
   const [queryParams] = useSearchParams()
   const gameid = queryParams.get('id')
   const { game, update, remove} = useGame(gameid)
-  
+
   const [editing, setEditing] = useState(false)
 
   const onUpdate = (data) => {
@@ -81,6 +81,7 @@ const GameDetails = () => {
               className="p-button-rounded p-button-outlined p-button-danger ml-3 delete-button"
               onClick={confirm}
             />
+            <ConfirmDialog />
           </div>
         </div>
 
