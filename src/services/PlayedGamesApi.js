@@ -10,7 +10,7 @@ export default {
         url: `PlayedGames/user/${userid}`,
       })
       .then((response) => {
-        callback(response.data)
+        callback(response)
       })
       .catch((error) => {
         errorFunction(error)
@@ -23,7 +23,7 @@ export default {
         url: `PlayedGames/game/${gameid}`,
       })
       .then((response) => {
-        callback(response.data)
+        callback(response)
       })
       .catch((error) => {
         errorFunction(error)
@@ -36,7 +36,7 @@ export default {
         url: `PlayedGames`,
       })
       .then((response) => {
-        callback(response.data)
+        callback(response)
       })
       .catch((error) => {
         errorFunction(error)
@@ -50,7 +50,7 @@ export default {
         data: game,
       })
       .then((response) => {
-        callback(response.data)
+        callback(response)
       })
   },
   patchPlayedGame(game, callback) {
@@ -61,7 +61,7 @@ export default {
         data: game,
       })
       .then((response) => {
-        callback(response.data)
+        callback(response)
       })
   },
   deletePlayedGame(id, callback) {
@@ -71,7 +71,7 @@ export default {
         url: `PlayedGames/${id}`,
       })
       .then((response) => {
-        callback(response.data)
+        callback(response)
       })
   },
   getPlayingGames(callback) {
@@ -81,7 +81,7 @@ export default {
         url: `PlayedGames/playing/`,
       })
       .then((response) => {
-        callback(response.data)
+        callback(response)
       })
   },
   getUserGamesInfo(userid, callback, errorFunction) {
@@ -91,7 +91,7 @@ export default {
         url: `PlayedGames/gamesinfo/${userid}`,
       })
       .then((response) => {
-        callback(response.data)
+        callback(response)
       })
       .catch((error) => {
         errorFunction(error)

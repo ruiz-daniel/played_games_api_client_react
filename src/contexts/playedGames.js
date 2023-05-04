@@ -1,5 +1,7 @@
-import { useState, createContext } from 'react'
+/* eslint-disable eqeqeq */
+import { useState, useEffect, createContext } from 'react'
 import api from '../services/IApi'
+import { useMessages } from '../hooks/useMessages'
 
 export const PlayedGamesContext = createContext()
 
@@ -10,22 +12,35 @@ let filteringGames = []
 export function PlayedGamesProvider({ children }) {
   const [games, setGames] = useState([])
 
+  const { message } = useMessages()
+
+  const resetFilter = () => {
+    filteringGames = []
+    setGames(gamesBackup)
+  }
+
+  const onFilter = (games) => {
+    filteringGames = games
+    setGames(games)
+  }
+
   function getGames(callback) {
     api.PlayedGamesApi.getPlayedGames(
       localStorage.getItem('userid'),
-      (data) => {
+      (response) => {
         if (filteringGames.length) {
           setGames(filteringGames)
         } else {
-          setGames(data)
+          setGames(response.data)
         }
-        gamesBackup = data
+        gamesBackup = response.data
       },
       (error) => {
         console.log(
           '🚀 ~ file: PlayedGamesList.js ~ line 56 ~ useEffect ~ error',
           error,
         )
+        message('error', error.message)
       }
     )
   }
@@ -65,10 +80,54 @@ export function PlayedGamesProvider({ children }) {
     setGames(filtered)
   }
 
+  const uploadGame = (game) => {
+    api.PlayedGamesApi.postPlayedGame(game, (response) => {
+      message('info', "Game Uploaded Successfully")
+      const updatedGames = [...games, response.data]
+      setGames(updatedGames)
+      gamesBackup = updatedGames
+    })
+  }
+
+  const updateGame = (game) => {
+    api.PlayedGamesApi.patchPlayedGame(game, (response) => {
+      const updatedGames = games.map((game) => 
+        game._id === response.data._id ? response.data : game
+      )
+      setGames(updatedGames)
+      gamesBackup = updatedGames
+    })
+  }
+
+  const getGame = (id) => {
+    return games.find(game => game._id = id)
+  }
+
+  const removeGame = (id) => {
+    api.PlayedGamesApi.deletePlayedGame(id, (response) => {
+      const updatedGames = games.filter(game => game._id !== id)
+      setGames(updatedGames)
+      gamesBackup = updatedGames
+    })
+  }
+
+  useEffect(() => {
+    const userid = localStorage.getItem('userid')
+    userid && getGames()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const sharedContent = {
     games,
     getGames,
-    localFilter
+    localFilter,
+    resetFilter,
+    onFilter,
+    gamesBackup,
+    uploadGame,
+    updateGame,
+    getGame,
+    removeGame
   }
 
   return (
