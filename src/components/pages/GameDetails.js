@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useRef, useEffect } from 'react'
-import api from '../../services/IApi'
+import React, { useState, useEffect } from 'react'
+import { usePlayedGames } from '../../hooks/usePlayedGames'
 
 import { Image } from 'primereact/image'
 import { Button } from 'primereact/button'
@@ -9,63 +9,34 @@ import { Dialog } from 'primereact/dialog'
 import { Chip } from 'primereact/chip'
 
 import Status from '../utils/status'
-import EditGame from '../utils/EditGame'
+import EditGame from '../utils/forms/EditGame'
 
-import { useLocation, useHistory } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { playedgames } from '../../routes'
 
-import { Toast } from 'primereact/toast'
-import GameInfoBox from '../utils/GameInfoBox'
+import GameInfoBox from '../utils/cards/GameInfoBox'
 
 import  no_cover  from '../../images/no-cover.jpg'
 
 const GameDetails = () => {
-  const location = useLocation()
-  const history = useHistory()
-  const [game, setGame] = useState({
-    completion: {
-      id: '',
-      name: '',
-    },
-    platform: {
-      id: '',
-      name: '',
-    },
-  })
-  const [image, setImage] = useState()
-  const toast = useRef(null)
+  const navigator = useNavigate()
+  const [queryParams] = useSearchParams()
+  const gameid = queryParams.get('id')
+  const [game, setGame] = useState()
+  const {getGame, updateGame, removeGame} = usePlayedGames()
   const [editing, setEditing] = useState(false)
 
-  const getGame = () => {
-    var gameid = location.state.gameid
-    api.PlayedGamesApi.getPlayedGameById(gameid, onGetGame, onErrorGetGame)
-  }
-  const onGetGame = (data) => {
-    setGame(data)
-    setImage(data.cover)
-  }
-  const onErrorGetGame = (error) => {
-    toast.current.show({
-      severity: 'error',
-      summary: error.message,
-      life: 3000,
+  const onUpdate = (data) => {
+    data._id = gameid
+    updateGame(data, () => {
+      setEditing(false)
     })
-  }
-  const onUpdate = () => {
-    setEditing(false)
-    getGame()
+    
   }
 
   const deleteGame = () => {
-    api.PlayedGamesApi.deletePlayedGame(game._id, () => {
-      toast.current.show({
-        severity: 'error',
-        summary: 'Game Deleted Successfully',
-        life: 3000,
-      })
-      setTimeout(function () {
-        history.push(playedgames)
-      }, 3000)
+    removeGame(gameid, () => {
+      navigator(playedgames)
     })
   }
 
@@ -78,119 +49,121 @@ const GameDetails = () => {
       accept: () => deleteGame(),
     })
   }
-
+  
   useEffect(() => {
-    getGame()
-  }, [])
+    setGame(getGame(gameid))
+  })
+  
 
   return (
-    <div className="game-details-wrapper">
-      <Toast ref={toast} />
-      <Dialog
-        visible={editing}
-        showHeader={false}
-        onHide={() => {
-          setEditing(false)
-        }}
-        dismissableMask
-        breakpoints={{ '960px': '70vw', '640px': '100vw' }}
-        style={{ width: '50vw' }}
-      >
-        <EditGame game={game} callback={onUpdate} />
-      </Dialog>
-      <h2>{game.name}</h2>
-      <div className="game-details-image flex flex-column ">
-        <Image src={image || no_cover} alt={game.name} preview />
+    <>
+      {game && <div className="game-details-wrapper">
+        <Dialog
+          visible={editing}
+          showHeader={false}
+          onHide={() => {
+            setEditing(false)
+          }}
+          dismissableMask
+          breakpoints={{ '960px': '70vw', '640px': '100vw' }}
+          style={{ width: '50vw' }}
+        >
+          <EditGame game={game} onSubmit={onUpdate} />
+        </Dialog>
+        <h2>{game.name}</h2>
+        <div className="game-details-image flex flex-column ">
+          <Image src={game.cover || no_cover} alt={game.name} preview />
 
-        <div className="game-details-buttons flex justify-content-end mt-2">
-          <Button
-            icon={editing ? 'pi pi-times' : 'pi pi-pencil'}
-            className="p-button-outlined p-button-rounded p-button-warning edit-button"
-            onClick={() => {
-              setEditing(!editing)
-            }}
-          />
-          <Button
-            icon="pi pi-trash"
-            className="p-button-rounded p-button-outlined p-button-danger ml-3 delete-button"
-            onClick={confirm}
-          />
-        </div>
-      </div>
-
-      <div className="game-details-fields">
-        {game.developers?.length > 0 && (
-          <p>
-            Developed by <span>{game.developers.join(', ')}</span>
-          </p>
-        )}
-        {game.publishers?.length > 0 && (
-          <p>
-            Published by <span>{game.publishers.join(', ')}</span>
-          </p>
-        )}
-        {game.genres?.length > 0 && (
-          <div className="flex flex-wrap mb-3">
-            {game.genres.map((genre) => (
-              <Chip className="mr-2" label={genre} />
-            ))}{' '}
+          <div className="game-details-buttons flex justify-content-end mt-2">
+            <Button
+              icon={editing ? 'pi pi-times' : 'pi pi-pencil'}
+              className="p-button-outlined p-button-rounded p-button-warning edit-button"
+              onClick={() => {
+                setEditing(!editing)
+              }}
+            />
+            <Button
+              icon="pi pi-trash"
+              className="p-button-rounded p-button-outlined p-button-danger ml-3 delete-button"
+              onClick={confirm}
+            />
           </div>
-        )}
-        <div className="flex flex-wrap game-details-info-box">
-          {game.platform && (
-            <GameInfoBox
-              type="platform"
-              style={{ marginRight: '10px' }}
-              game={game}
-            />
-          )}
-          {game.release_year && (
-            <GameInfoBox
-              type="year"
-              style={{ marginRight: '10px' }}
-              game={game}
-            />
-          )}
-          {game.played_year && (
-            <GameInfoBox
-              type="played_year"
-              style={{ marginRight: '10px' }}
-              game={game}
-            />
-          )}
-          {game.score && (
-            <GameInfoBox
-              type="score"
-              style={{ marginRight: '10px' }}
-              game={game}
-            />
-          )}
-          {game.played_hours > 0 && (
-            <GameInfoBox
-              type="hours"
-              style={{ marginRight: '10px' }}
-              game={game}
-            />
-          )}
-          {game.steam_page && (
-            <GameInfoBox
-              type="steam"
-              style={{ marginRight: '10px' }}
-              game={game}
-            />
-          )}
         </div>
 
-        {game.completion && (
-          <p>
-            <Status status={game.completion.name} />
-          </p>
-        )}
-        {game.description && game.description !== '' && (
-          <p>{game.description}</p>
-        )}
-      </div>
-    </div>
+        <div className="game-details-fields">
+          {game.developers?.length > 0 && (
+            <p>
+              Developed by <span>{game.developers.join(', ')}</span>
+            </p>
+          )}
+          {game.publishers?.length > 0 && (
+            <p>
+              Published by <span>{game.publishers.join(', ')}</span>
+            </p>
+          )}
+          {game.genres?.length > 0 && (
+            <div className="flex flex-wrap mb-3">
+              {game.genres.map((genre) => (
+                <Chip key={genre} className="mr-2" label={genre} />
+              ))}{' '}
+            </div>
+          )}
+          <div className="flex flex-wrap game-details-info-box">
+            {game?.platform && (
+              <GameInfoBox
+                type="platform"
+                style={{ marginRight: '10px' }}
+                game={game}
+              />
+            )}
+            {game.release_year && (
+              <GameInfoBox
+                type="year"
+                style={{ marginRight: '10px' }}
+                game={game}
+              />
+            )}
+            {game.played_year && (
+              <GameInfoBox
+                type="played_year"
+                style={{ marginRight: '10px' }}
+                game={game}
+              />
+            )}
+            {game.score && (
+              <GameInfoBox
+                type="score"
+                style={{ marginRight: '10px' }}
+                game={game}
+              />
+            )}
+            {game.played_hours > 0 && (
+              <GameInfoBox
+                type="hours"
+                style={{ marginRight: '10px' }}
+                game={game}
+              />
+            )}
+            {game.steam_page && (
+              <GameInfoBox
+                type="steam"
+                style={{ marginRight: '10px' }}
+                game={game}
+              />
+            )}
+          </div>
+
+          {game.completion && (
+            <p>
+              <Status status={game.completion.name} />
+            </p>
+          )}
+          {game.description && game.description !== '' && (
+            <p>{game.description}</p>
+          )}
+        </div>
+      </div>}
+    </>
   )
 }
 

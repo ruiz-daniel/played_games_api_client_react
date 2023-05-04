@@ -2,7 +2,7 @@ import React from 'react'
 
 import Score from '../score'
 
-const GameInfoBox = ({ type, text, style, game }) => {
+const GameInfoBox = ({ type, style, game }) => {
   return (
     <div className="game-info-box-container" style={style || null}>
       {type === 'platform' && (

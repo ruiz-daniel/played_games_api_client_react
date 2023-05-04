@@ -7,7 +7,7 @@ import 'primeflex/primeflex.css'
 import TopBar from './components/layout/TopBar'
 import PlayedGames from './components/pages/PlayedGamesList'
 // import UploadGame from './components/pages/UploadGame'
-// import GameDetails from './components/pages/GameDetails'
+import GameDetails from './components/pages/GameDetails'
 import GameStats from './components/pages/GameStats'
 // import FavoriteGames from './components/pages/FavoriteGames'
 import Home from './components/pages/Home'
@@ -41,6 +41,7 @@ function App() {
                   <Route path={routes.register} element={<SignUp />} />
                   <Route path={routes.playedgames} element={<PlayedGames />} />
                   <Route path={routes.stats} element={<GameStats />} />
+                  <Route path={routes.gamedetails} element={<GameDetails />} />
                 </Routes>
               </PlayedGamesProvider>
             </MessagesProvider>

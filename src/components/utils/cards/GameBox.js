@@ -6,28 +6,28 @@ import  no_cover  from '../../../images/no-cover.jpg'
 import Score from '../score'
 import Status from '../status'
 
-const GameBox = (props) => {
+const GameBox = ({ game }) => {
   const navigator = useNavigate()
   const editEvent = () => {
-    // navigator(routes)
+    navigator(`${routes.gamedetails}/?id=${game._id}`)
   }
 
   return (
     <div className="game-box-container">
       <div className="game-box-img" onClick={editEvent}>
-        <img alt="Game Cover" src={props.game?.cover || no_cover} />
+        <img alt="Game Cover" src={game?.cover || no_cover} />
         <div className="game-details-panel">
           <div className="details-icon">
             <span className="pi pi-pencil"></span>
           </div>
         </div>
-        {props.game.completion && (
-          <Status status={props.game.completion.name}></Status>
+        {game.completion && (
+          <Status status={game.completion.name}></Status>
         )}
-        {props.game.score && <Score score={props.game.score}></Score>}
+        {game.score && <Score score={game.score}></Score>}
       </div>
 
-      <p>{props.game.name}</p>
+      <p>{game.name}</p>
     </div>
   )
 }
