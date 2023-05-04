@@ -7,6 +7,7 @@ import { Button } from 'primereact/button'
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
 import { Dialog } from 'primereact/dialog'
 import { Chip } from 'primereact/chip'
+import { FileUpload } from 'primereact/fileupload'
 
 import Status from '../utils/status'
 import EditGame from '../utils/forms/EditGame'
@@ -22,7 +23,7 @@ const GameDetails = () => {
   const navigator = useNavigate()
   const [queryParams] = useSearchParams()
   const gameid = queryParams.get('id')
-  const { game, update, remove} = useGame(gameid)
+  const { game, update, remove, updateImage } = useGame(gameid)
 
   const [editing, setEditing] = useState(false)
 
@@ -47,6 +48,10 @@ const GameDetails = () => {
       accept: () => deleteGame(),
     })
   }
+
+  const onUpload = (data) => {
+    updateImage(data)
+  }
   
 
   return (
@@ -69,6 +74,15 @@ const GameDetails = () => {
           <Image src={game.cover || no_cover} alt={game.name} preview />
 
           <div className="game-details-buttons flex justify-content-end mt-2">
+            <FileUpload
+            className='mr-3'
+              customUpload
+              auto
+              mode="basic"
+              uploadHandler={onUpload}
+              accept="image/*"
+              chooseLabel="Change Cover"
+            />
             <Button
               icon={editing ? 'pi pi-times' : 'pi pi-pencil'}
               className="p-button-outlined p-button-rounded p-button-warning edit-button"
