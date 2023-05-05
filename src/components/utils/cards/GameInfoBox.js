@@ -9,8 +9,7 @@ const GameInfoBox = ({ type, style, game }) => {
         <div>
           <i className="pi pi-desktop"></i>
           <p>
-            Played On:
-            <span>
+            Played On: <span>
               {game
                 ? game.platform.name.length > 12
                   ? game.platform.short_name
