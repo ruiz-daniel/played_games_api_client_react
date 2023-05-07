@@ -2,9 +2,13 @@
 import React, { useState, useEffect } from 'react'
 import { usePlayedGames } from '../../hooks/usePlayedGames'
 import { Chart } from 'primereact/chart'
+import FilterForm from '../utils/forms/FilterForm'
+import { Sidebar } from 'primereact/sidebar'
+import { Button } from 'primereact/button'
 
 const GameStats = () => {
-  const {games} = usePlayedGames()
+  const { games, externalFilter, resetFilter } = usePlayedGames()
+  const [filter, setFilter] = useState(false)
   const [total_games, setTotalGames] = useState()
   const [avg_score, setAvgScore] = useState(0)
   const color = '#fbfaf8'
@@ -60,7 +64,8 @@ const GameStats = () => {
   // VARIABLES FOR DATA
   let completed = 0
   let dropped = 0
-  let played = 0
+  let na = 0
+  let online = 0
   let onHold = 0
 
   let playedYearDatasets = {}
@@ -165,9 +170,11 @@ const GameStats = () => {
         completed++
       } else if (element.completion.name === 'Dropped') {
         dropped++
-      } else if (element.completion.name === 'Played') {
-        played++
-      } else if (element.completion.name === 'On Hold') {
+      } else if (element.completion.name === 'N/A') {
+        na++
+      } else if (element.completion.name === 'Online') {
+        online++
+      }else if (element.completion.name === 'On Hold') {
         onHold++
       }
 
@@ -262,22 +269,22 @@ const GameStats = () => {
 
   const getCompletionStats = (total_games) => {
     setcompletionChart({
-      labels: ['Completed', 'Played', 'Dropped', 'On Hold'],
+      labels: ['Completed', 'Online', 'Dropped', 'On Hold'],
       datasets: [
         {
-          data: [completed, played, dropped, onHold],
+          data: [completed, online, dropped, onHold],
           backgroundColor: ['#12c941', '#ffff00', '#d71c2f', '#fea604'],
           hoverBackgroundColor: ['#12b13a', '#d4d401', '#c51d2e', '#e39506'],
         },
       ],
     })
     setcompletionPercent({
-      labels: ['Completed', 'Played', 'Dropped', 'On Hold'],
+      labels: ['Completed', 'Online', 'Dropped', 'On Hold'],
       datasets: [
         {
           data: [
             (completed / total_games) * 100,
-            (played / total_games) * 100,
+            (online / total_games) * 100,
             (dropped / total_games) * 100,
             (onHold / total_games) * 100,
           ],
@@ -383,7 +390,36 @@ const GameStats = () => {
 
   return (
     <div className="stats-wrapper">
+      <Sidebar
+        visible={filter}
+        position="right"
+        showCloseIcon={false}
+        onHide={() => setFilter(false)}
+        className="filter-sidebar"
+      >
+        <FilterForm
+          onSubmit={(data) => {
+            externalFilter(data)
+            setFilter(false)
+          }}
+        />
+      </Sidebar>
       <h1>Played Games Stats</h1>
+      <div className='flex gap-4'>
+        <Button
+          icon="pi pi-filter"
+          label="Advanced Filter"
+          onClick={() => setFilter(!filter)}
+        />
+        <Button
+          icon="pi pi-times"
+          label="Clear Filters"
+          onClick={resetFilter}
+          onMouseLeave={(e) => e.target.blur()}
+          onTouchEnd={(e) => e.target.blur()}
+        />
+      </div>
+      
       <div className="text-center mb-5">
         <h3>Total played games: {total_games}</h3>
         <h3>Avg Score: {avg_score.toFixed(2)}</h3>
