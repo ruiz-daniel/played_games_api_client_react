@@ -21,7 +21,7 @@
   border: none;
   background-color: $background-color-purple;
   &:hover {
-    background-color: darken($color: $background-color-purple, $amount: 20);
+    background-color: darken($color: $background-color-purple, $amount: 20) !important;
   }
 }
 

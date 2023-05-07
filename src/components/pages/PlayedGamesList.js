@@ -12,7 +12,7 @@ import GamesList from '../utils/lists/GamesList'
 
 const PlayedGamesList = () => {
   const [filter, setFilter] = useState(false)
-  const {games, onFilter, localFilter, resetFilter, gamesBackup } = usePlayedGames()
+  const {games, localFilter, resetFilter, externalFilter } = usePlayedGames()
   return (
     <div className="played-games-list">
       <Sidebar
@@ -23,9 +23,9 @@ const PlayedGamesList = () => {
         className="filter-sidebar"
       >
         <FilterForm
-          list={gamesBackup}
-          onFilter={(games) => {
-            onFilter(games)
+          onSubmit={(data) => {
+            externalFilter(data)
+            setFilter(false)
           }}
         />
       </Sidebar>
