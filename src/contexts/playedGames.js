@@ -181,7 +181,27 @@ export function PlayedGamesProvider({ children }) {
     return valueA == valueB
   }
 
-  const uploadGame = (game, callback) => {
+  const uploadImageRecursive = async (gallery, files, index) => {
+    if (index === files.length) return
+    const image = await api.GeneralApi.uploadImage(files[index])
+    gallery.push(image.data)
+    return uploadImageRecursive(gallery, files, index + 1)
+  }
+
+  const uploadGame = async (game, callback) => {
+    if (game.images?.cover) {
+      const cover = await api.GeneralApi.uploadImage(game.images.cover)
+      game.cover = cover.data
+    }
+    if (game.images?.coverBox) {
+      const coverBox = await api.GeneralApi.uploadImage(game.images.coverBox)
+      game.cover_box = coverBox.data
+    }
+    if (game.images?.gallery?.length) {
+      game.gallery = []
+      await uploadImageRecursive(game.gallery, game.images.gallery, 0)
+    }
+    delete game.images
     api.PlayedGamesApi.postPlayedGame(game, (response) => {
       message('info', "Game Uploaded Successfully")
       const updatedGames = [...games, response.data]
