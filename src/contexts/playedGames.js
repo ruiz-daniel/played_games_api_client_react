@@ -188,20 +188,26 @@ export function PlayedGamesProvider({ children }) {
     return uploadImageRecursive(gallery, files, index + 1)
   }
 
-  const uploadGame = async (game, callback) => {
-    if (game.images?.cover) {
-      const cover = await api.GeneralApi.uploadImage(game.images.cover)
+  const handleImages = async (images, game) => {
+    if (images?.cover) {
+      const cover = await api.GeneralApi.uploadImage(images.cover)
       game.cover = cover.data
     }
-    if (game.images?.coverBox) {
-      const coverBox = await api.GeneralApi.uploadImage(game.images.coverBox)
+    if (images?.coverBox) {
+      const coverBox = await api.GeneralApi.uploadImage(images.coverBox)
       game.cover_box = coverBox.data
     }
-    if (game.images?.gallery?.length) {
+    if (images?.gallery?.length) {
       game.gallery = []
-      await uploadImageRecursive(game.gallery, game.images.gallery, 0)
+      await uploadImageRecursive(game.gallery, images.gallery, 0)
     }
-    delete game.images
+  }
+
+  const uploadGame = async (game, callback) => {
+    if (game.images) {
+      await handleImages(game.images, game)
+      delete game.images
+    }
     api.PlayedGamesApi.postPlayedGame(game, (response) => {
       message('info', "Game Uploaded Successfully")
       const updatedGames = [...games, response.data]
@@ -254,7 +260,8 @@ export function PlayedGamesProvider({ children }) {
     uploadGame,
     updateGame,
     getGame,
-    removeGame
+    removeGame,
+    handleImages
   }
 
   return (

@@ -8,8 +8,8 @@ import { Button } from 'primereact/button'
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
 import { Dialog } from 'primereact/dialog'
 import { Chip } from 'primereact/chip'
-import { FileUpload } from 'primereact/fileupload'
 
+import GameImages from '../utils/forms/GameImages'
 import Status from '../utils/status'
 import EditGame from '../utils/forms/EditGame'
 import GameInfoBox from '../utils/cards/GameInfoBox'
@@ -19,9 +19,10 @@ const GameDetails = () => {
   const navigator = useNavigate()
   const [queryParams] = useSearchParams()
   const gameid = queryParams.get('id')
-  const { game, update, remove, updateImage } = useGame(gameid)
+  const { game, update, remove, updateImages } = useGame(gameid)
 
   const editing = useToggle()
+  const images = useToggle()
 
   const onUpdate = (data) => {
     update(data, editing.toggle)
@@ -43,11 +44,11 @@ const GameDetails = () => {
     })
   }
 
-  const onUpload = (data) => {
-    updateImage(data)
+  const handleImagesSubmit = (data) => {
+    updateImages(data)
+    images.toggle()
   }
   
-
   return (
     <>
       {game && <div className="game-details-wrapper">
@@ -61,20 +62,21 @@ const GameDetails = () => {
         >
           <EditGame game={game} onSubmit={onUpdate} />
         </Dialog>
+        <Dialog 
+          header="Game Images" 
+          visible={images.toggleValue} 
+          style={{ width: '50vw' }} 
+          onHide={images.toggle}
+        >
+          <GameImages onSubmit={handleImagesSubmit} />
+        </Dialog>
+        
         <h2>{game.name}</h2>
         <div className="game-details-image flex flex-column ">
           <Image src={game.cover || no_cover} alt={game.name} preview />
 
           <div className="game-details-buttons flex justify-content-end mt-2">
-            <FileUpload
-              className='mr-3'
-              customUpload
-              auto
-              mode="basic"
-              uploadHandler={onUpload}
-              accept="image/*"
-              chooseLabel="Change Cover"
-            />
+            <Button className='pink-button' label='Channge Images' onClick={images.toggle} />
             <Button
               icon='pi pi-pencil'
               className="p-button-outlined p-button-rounded p-button-warning edit-button"
