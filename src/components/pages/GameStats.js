@@ -166,16 +166,29 @@ const GameStats = () => {
   const getStats = (data) => {
     data.forEach((element) => {
       // COMPLETION
-      if (element.completion.name === 'Completed') {
-        completed++
-      } else if (element.completion.name === 'Dropped') {
-        dropped++
-      } else if (element.completion.name === 'N/A') {
-        na++
-      } else if (element.completion.name === 'Online') {
-        online++
-      }else if (element.completion.name === 'On Hold') {
-        onHold++
+      if (element.completion) {
+        switch (element.completion.name) {
+          case 'Completed':
+            completed++
+            break;
+          case 'Replaying':
+            completed++
+            break
+          case 'Dropped':
+            dropped++
+            break
+          case 'N/A':
+            na++
+            break
+          case 'Online':
+            online++
+            break
+          case 'On Hold':
+            onHold++
+            break
+          default:
+            break;
+        }
       }
 
       // PLATFORMS
@@ -269,17 +282,17 @@ const GameStats = () => {
 
   const getCompletionStats = (total_games) => {
     setcompletionChart({
-      labels: ['Completed', 'Online', 'Dropped', 'On Hold'],
+      labels: ['Completed', 'Online', 'Dropped', 'On Hold', 'N/A'],
       datasets: [
         {
-          data: [completed, online, dropped, onHold],
-          backgroundColor: ['#12c941', '#ffff00', '#d71c2f', '#fea604'],
-          hoverBackgroundColor: ['#12b13a', '#d4d401', '#c51d2e', '#e39506'],
+          data: [completed, online, dropped, onHold, na],
+          backgroundColor: ['#12c941', '#ffff00', '#d71c2f', '#fea604', '#2196f3'],
+          hoverBackgroundColor: ['#12b13a', '#d4d401', '#c51d2e', '#e39506', '#2196f3'],
         },
       ],
     })
     setcompletionPercent({
-      labels: ['Completed', 'Online', 'Dropped', 'On Hold'],
+      labels: ['Completed', 'Online', 'Dropped', 'On Hold', 'N/A'],
       datasets: [
         {
           data: [
@@ -287,9 +300,10 @@ const GameStats = () => {
             (online / total_games) * 100,
             (dropped / total_games) * 100,
             (onHold / total_games) * 100,
+            (na / total_games) * 100
           ],
-          backgroundColor: ['#12c941', '#ffff00', '#d71c2f', '#fea604'],
-          hoverBackgroundColor: ['#12b13a', '#d4d401', '#c51d2e', '#e39506'],
+          backgroundColor: ['#12c941', '#ffff00', '#d71c2f', '#fea604', '#2196f3'],
+          hoverBackgroundColor: ['#12b13a', '#d4d401', '#c51d2e', '#e39506', '#2196f3'],
         },
       ],
     })
