@@ -1,7 +1,7 @@
 # Personal project by the author
 
 Client app for displaying info about a personal library of played videogames .\
-Includes all time played games, currently played games, favorite games and favorite characters, and a stats page.
+Includes all time played games, currently playing games, favorite games and lists, and a stats page.
 
 Uses SCSS for styling and Primereact (https://primefaces.org/primereact/showcase/#/) as a UI components library
 
