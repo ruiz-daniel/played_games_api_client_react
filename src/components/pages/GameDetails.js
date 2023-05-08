@@ -1,6 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from 'react'
 import { useGame } from '../../hooks/useGame'
+import { useToggle } from '../../hooks/useToggle'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { playedgames } from '../../routes'
 
 import { Image } from 'primereact/image'
 import { Button } from 'primereact/button'
@@ -11,12 +12,7 @@ import { FileUpload } from 'primereact/fileupload'
 
 import Status from '../utils/status'
 import EditGame from '../utils/forms/EditGame'
-
-import { useNavigate, useSearchParams } from 'react-router-dom'
-import { playedgames } from '../../routes'
-
 import GameInfoBox from '../utils/cards/GameInfoBox'
-
 import  no_cover  from '../../images/no-cover.jpg'
 
 const GameDetails = () => {
@@ -25,12 +21,10 @@ const GameDetails = () => {
   const gameid = queryParams.get('id')
   const { game, update, remove, updateImage } = useGame(gameid)
 
-  const [editing, setEditing] = useState(false)
+  const editing = useToggle()
 
   const onUpdate = (data) => {
-    update(data, () => {
-      setEditing(false)
-    })
+    update(data, editing.toggle)
   }
 
   const deleteGame = () => {
@@ -58,11 +52,9 @@ const GameDetails = () => {
     <>
       {game && <div className="game-details-wrapper">
         <Dialog
-          visible={editing}
+          visible={editing.toggleValue}
           showHeader={false}
-          onHide={() => {
-            setEditing(false)
-          }}
+          onHide={editing.toggle}
           dismissableMask
           breakpoints={{ '960px': '70vw', '640px': '100vw' }}
           style={{ width: '50vw' }}
@@ -75,7 +67,7 @@ const GameDetails = () => {
 
           <div className="game-details-buttons flex justify-content-end mt-2">
             <FileUpload
-            className='mr-3'
+              className='mr-3'
               customUpload
               auto
               mode="basic"
@@ -84,11 +76,9 @@ const GameDetails = () => {
               chooseLabel="Change Cover"
             />
             <Button
-              icon={editing ? 'pi pi-times' : 'pi pi-pencil'}
+              icon='pi pi-pencil'
               className="p-button-outlined p-button-rounded p-button-warning edit-button"
-              onClick={() => {
-                setEditing(!editing)
-              }}
+              onClick={editing.toggle}
             />
             <Button
               icon="pi pi-trash"

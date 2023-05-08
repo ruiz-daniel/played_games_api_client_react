@@ -1,6 +1,5 @@
-/* eslint-disable eqeqeq */
-import { useState } from 'react'
 import { usePlayedGames } from '../../hooks/usePlayedGames'
+import { useToggle } from '../../hooks/useToggle'
 
 import FilterForm from '../utils/forms/FilterForm'
 import { Sidebar } from 'primereact/sidebar'
@@ -11,21 +10,21 @@ import GamesList from '../utils/lists/GamesList'
 
 
 const PlayedGamesList = () => {
-  const [filter, setFilter] = useState(false)
+  const { toggleValue, toggle } = useToggle()
   const {games, localFilter, resetFilter, externalFilter } = usePlayedGames()
   return (
     <div className="played-games-list">
       <Sidebar
-        visible={filter}
+        visible={toggleValue}
         position="right"
         showCloseIcon={false}
-        onHide={() => setFilter(false)}
+        onHide={toggle}
         className="filter-sidebar"
       >
         <FilterForm
           onSubmit={(data) => {
             externalFilter(data)
-            setFilter(false)
+            toggle()
           }}
         />
       </Sidebar>
@@ -38,7 +37,7 @@ const PlayedGamesList = () => {
         <Button
           icon="pi pi-filter"
           label="Advanced Filter"
-          onClick={() => setFilter(!filter)}
+          onClick={toggle}
         />
         <Button
           icon="pi pi-times"

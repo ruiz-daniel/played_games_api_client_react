@@ -1,6 +1,7 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect } from 'react'
 import { usePlayedGames } from '../../hooks/usePlayedGames'
+import { useToggle } from '../../hooks/useToggle'
 import { Chart } from 'primereact/chart'
 import FilterForm from '../utils/forms/FilterForm'
 import { Sidebar } from 'primereact/sidebar'
@@ -8,7 +9,7 @@ import { Button } from 'primereact/button'
 
 const GameStats = () => {
   const { games, externalFilter, resetFilter } = usePlayedGames()
-  const [filter, setFilter] = useState(false)
+  const { toggleValue, toggle } = useToggle()
   const [total_games, setTotalGames] = useState()
   const [avg_score, setAvgScore] = useState(0)
   const color = '#fbfaf8'
@@ -405,16 +406,16 @@ const GameStats = () => {
   return (
     <div className="stats-wrapper">
       <Sidebar
-        visible={filter}
+        visible={toggleValue}
         position="right"
         showCloseIcon={false}
-        onHide={() => setFilter(false)}
+        onHide={toggle}
         className="filter-sidebar"
       >
         <FilterForm
           onSubmit={(data) => {
             externalFilter(data)
-            setFilter(false)
+            toggle()
           }}
         />
       </Sidebar>
@@ -423,7 +424,7 @@ const GameStats = () => {
         <Button
           icon="pi pi-filter"
           label="Advanced Filter"
-          onClick={() => setFilter(!filter)}
+          onClick={toggle}
         />
         <Button
           icon="pi pi-times"

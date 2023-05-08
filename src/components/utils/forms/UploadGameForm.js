@@ -3,6 +3,7 @@ import { usePlatforms } from '../../../hooks/usePlatforms'
 import { useCompletions } from '../../../hooks/useCompletions'
 import { useForm, Controller } from 'react-hook-form'
 import { useMessages } from '../../../hooks/useMessages'
+import { useToggle } from '../../../hooks/useToggle'
 
 import { InputText } from 'primereact/inputtext'
 import { Dropdown } from 'primereact/dropdown'
@@ -23,7 +24,7 @@ const UploadGameForm = ({ onSubmit }) => {
     formState: { errors },
   } = useForm({})
 
-  const [showUploader, setShowUploader] = useState()
+  const { toggleValue, toggle } = useToggle()
   const [images, setImages] = useState()
 
   const prepareSubmit = (data) => {
@@ -35,13 +36,13 @@ const UploadGameForm = ({ onSubmit }) => {
 
   const handleImagesSubmit = (images) => {
     setImages(images)
-    setShowUploader(false)
+    toggle()
     message('info', 'Saved Images')
   }
 
   return (
     <div style={{ width: '100%' }}>
-      <Dialog header="Game Images" visible={showUploader} style={{ width: '50vw' }} onHide={() => setShowUploader(false)}>
+      <Dialog header="Game Images" visible={toggleValue} style={{ width: '50vw' }} onHide={toggle}>
         <GameImages onSubmit={handleImagesSubmit} />
       </Dialog>
       <form onSubmit={handleSubmit(prepareSubmit)}>
@@ -254,7 +255,7 @@ const UploadGameForm = ({ onSubmit }) => {
               type='button'
               icon="pi pi-camera"
               className="pink-button"
-              onClick={() => setShowUploader(true)}
+              onClick={toggle}
             />
             <Button
               label="Upload"
