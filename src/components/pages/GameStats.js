@@ -1,9 +1,15 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect } from 'react'
-import api from '../../services/IApi'
+import { usePlayedGames } from '../../hooks/usePlayedGames'
+import { useToggle } from '../../hooks/useToggle'
 import { Chart } from 'primereact/chart'
+import FilterForm from '../utils/forms/FilterForm'
+import { Sidebar } from 'primereact/sidebar'
+import { Button } from 'primereact/button'
 
 const GameStats = () => {
+  const { games, externalFilter, resetFilter } = usePlayedGames()
+  const { toggleValue, toggle } = useToggle()
   const [total_games, setTotalGames] = useState()
   const [avg_score, setAvgScore] = useState(0)
   const color = '#fbfaf8'
@@ -49,34 +55,27 @@ const GameStats = () => {
   })
 
   useEffect(() => {
-    api.PlayedGamesApi.getPlayedGames(
-      sessionStorage.getItem('userid'),
-      (data) => {
-        setTotalGames(data.length)
-        getStats(data)
-        getCompletionStats(data.length)
-        setBarChartStats()
-      },
-      (error) => {
-        console.log(error)
-      },
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    setTotalGames(games.length)
+    getStats(games)
+    getCompletionStats(games.length)
+    setBarChartStats()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [games])
 
   // VARIABLES FOR DATA
-  var completed = 0
-  var dropped = 0
-  var played = 0
-  var onHold = 0
+  let completed = 0
+  let dropped = 0
+  let na = 0
+  let online = 0
+  let onHold = 0
 
-  var playedYearDatasets = {}
-  var yearDatasets = {}
-  var platformDatasets = {}
-  var scoreDatasets = {}
-  var genreDatasets = {}
-  var developerDataset = {}
-  var publisherDataset = {}
+  let playedYearDatasets = {}
+  let yearDatasets = {}
+  let platformDatasets = {}
+  let scoreDatasets = {}
+  let genreDatasets = {}
+  let developerDataset = {}
+  let publisherDataset = {}
 
   const completionOptions = {
     plugins: {
@@ -168,14 +167,29 @@ const GameStats = () => {
   const getStats = (data) => {
     data.forEach((element) => {
       // COMPLETION
-      if (element.completion.name === 'Completed') {
-        completed++
-      } else if (element.completion.name === 'Dropped') {
-        dropped++
-      } else if (element.completion.name === 'Played') {
-        played++
-      } else if (element.completion.name === 'On Hold') {
-        onHold++
+      if (element.completion) {
+        switch (element.completion.name) {
+          case 'Completed':
+            completed++
+            break;
+          case 'Replaying':
+            completed++
+            break
+          case 'Dropped':
+            dropped++
+            break
+          case 'N/A':
+            na++
+            break
+          case 'Online':
+            online++
+            break
+          case 'On Hold':
+            onHold++
+            break
+          default:
+            break;
+        }
       }
 
       // PLATFORMS
@@ -269,27 +283,28 @@ const GameStats = () => {
 
   const getCompletionStats = (total_games) => {
     setcompletionChart({
-      labels: ['Completed', 'Played', 'Dropped', 'On Hold'],
+      labels: ['Completed', 'Online', 'Dropped', 'On Hold', 'N/A'],
       datasets: [
         {
-          data: [completed, played, dropped, onHold],
-          backgroundColor: ['#12c941', '#ffff00', '#d71c2f', '#fea604'],
-          hoverBackgroundColor: ['#12b13a', '#d4d401', '#c51d2e', '#e39506'],
+          data: [completed, online, dropped, onHold, na],
+          backgroundColor: ['#12c941', '#ffff00', '#d71c2f', '#fea604', '#2196f3'],
+          hoverBackgroundColor: ['#12b13a', '#d4d401', '#c51d2e', '#e39506', '#2196f3'],
         },
       ],
     })
     setcompletionPercent({
-      labels: ['Completed', 'Played', 'Dropped', 'On Hold'],
+      labels: ['Completed', 'Online', 'Dropped', 'On Hold', 'N/A'],
       datasets: [
         {
           data: [
             (completed / total_games) * 100,
-            (played / total_games) * 100,
+            (online / total_games) * 100,
             (dropped / total_games) * 100,
             (onHold / total_games) * 100,
+            (na / total_games) * 100
           ],
-          backgroundColor: ['#12c941', '#ffff00', '#d71c2f', '#fea604'],
-          hoverBackgroundColor: ['#12b13a', '#d4d401', '#c51d2e', '#e39506'],
+          backgroundColor: ['#12c941', '#ffff00', '#d71c2f', '#fea604', '#2196f3'],
+          hoverBackgroundColor: ['#12b13a', '#d4d401', '#c51d2e', '#e39506', '#2196f3'],
         },
       ],
     })
@@ -390,7 +405,36 @@ const GameStats = () => {
 
   return (
     <div className="stats-wrapper">
+      <Sidebar
+        visible={toggleValue}
+        position="right"
+        showCloseIcon={false}
+        onHide={toggle}
+        className="filter-sidebar"
+      >
+        <FilterForm
+          onSubmit={(data) => {
+            externalFilter(data)
+            toggle()
+          }}
+        />
+      </Sidebar>
       <h1>Played Games Stats</h1>
+      <div className='flex gap-4'>
+        <Button
+          icon="pi pi-filter"
+          label="Advanced Filter"
+          onClick={toggle}
+        />
+        <Button
+          icon="pi pi-times"
+          label="Clear Filters"
+          onClick={resetFilter}
+          onMouseLeave={(e) => e.target.blur()}
+          onTouchEnd={(e) => e.target.blur()}
+        />
+      </div>
+      
       <div className="text-center mb-5">
         <h3>Total played games: {total_games}</h3>
         <h3>Avg Score: {avg_score.toFixed(2)}</h3>

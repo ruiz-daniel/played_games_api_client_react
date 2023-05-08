@@ -1,14 +1,24 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from 'axios'
 import NProgress from 'nprogress'
-import { sr_images } from '../routes'
 
-export const apiClient = axios.create({
+export let apiClient = axios.create({
   baseURL: 'https://game-shelf-backend.onrender.com',
+  // baseURL: 'http://localhost:3001',
   headers: {
-    Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
   },
 })
+
+export const updateClient = () => {
+  apiClient = axios.create({
+    baseURL: 'https://game-shelf-backend.onrender.com',
+    // baseURL: 'http://localhost:3001',
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    },
+  })
+}
 
 // Interceptors to initiate and stop progress bar during axios requests
 apiClient.interceptors.request.use((config) => {
@@ -27,25 +37,35 @@ apiClient.interceptors.response.use(
   },
 )
 
+export const defaultErrorFunction = (error) => {
+  console.log(error)
+}
+
 export default {
-  getPlatforms(callback) {
+  getPlatforms(callback, errorFunction = defaultErrorFunction) {
     apiClient
       .request({
         method: 'get',
         url: '/platforms',
       })
       .then((response) => {
-        callback(response.data)
+        callback(response)
+      })
+      .catch((error) => {
+        errorFunction(error)
       })
   },
-  getStatuses(callback) {
+  getCompletions(callback, errorFunction = defaultErrorFunction) {
     apiClient
       .request({
         method: 'get',
         url: '/completions',
       })
       .then((response) => {
-        callback(response.data)
+        callback(response)
+      })
+      .catch((error) => {
+        errorFunction(error)
       })
   },
   fetchPlatforms() {
@@ -54,14 +74,14 @@ export default {
   fetchStatuses() {
     return apiClient.get('/completions')
   },
-  uploadImage(gameImage, username, folder) {
+  uploadImage(gameImage) {
     const formData = new FormData()
-
     formData.append('image', gameImage,)
-    return axios.post(`${sr_images}${username}/${folder}`, formData, {
+
+    return apiClient.post(`/images/${localStorage.getItem('userid')}`, formData, {
       headers: {
         'content-type': 'multipart/form-data',
-      },
+      }
     })
   },
 }

@@ -1,17 +1,22 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { apiClient } from './GeneralApi'
+import { apiClient, updateClient, defaultErrorFunction } from './GeneralApi'
 
 const handleUserData = (data) => {
-  sessionStorage.setItem('username', data.username)
-  sessionStorage.setItem('userid', data._id)
-  sessionStorage.setItem('display_name', data.display_name)
-  sessionStorage.setItem('premium', data.premium)
-  sessionStorage.setItem('admin', data.admin)
-  sessionStorage.setItem('userpfp', data.profile_picture)
+  // local persistance
+  localStorage.setItem('userid', data._id)
+  localStorage.setItem('access_token', data.access_token)
+  localStorage.setItem('username', data.username)
+  localStorage.setItem('display_name', data.display_name)
+  localStorage.setItem('profile_picture', data.profile_picture)
+
+  // update api client with new JWT Token
+  updateClient()
+  // delete JWT token from response data
+  delete data.access_token
 }
 
 export default {
-  login(credentials, callback, errorFunction) {
+  login(credentials, callback, errorFunction = defaultErrorFunction) {
     apiClient
       .request({
         method: 'post',
@@ -19,26 +24,27 @@ export default {
         data: credentials,
       })
       .then((response) => {
-        sessionStorage.setItem('access_token', response.data.access_token)
         handleUserData(response.data)
-        callback(response.data)
+        callback(response)
       })
       .catch((error) => {
         errorFunction(error)
       })
   },
-  getUser(userid, callback) {
+  getUser(userid, callback, errorFunction = defaultErrorFunction) {
     apiClient
       .request({
         method: 'get',
         url: `users/${userid}`,
       })
       .then((response) => {
-        handleUserData(response.data)
-        callback(response.data)
+        callback(response)
+      })
+      .catch(error => {
+        errorFunction(error)
       })
   },
-  updateUser(user, callback) {
+  updateUser(user, callback, errorFunction = defaultErrorFunction) {
     apiClient
       .request({
         method: 'patch',
@@ -46,10 +52,13 @@ export default {
         data: user,
       })
       .then((response) => {
-        callback(response.data)
+        callback(response)
+      })
+      .catch(error => {
+        errorFunction(error)
       })
   },
-  register(user, callback, errorFunction) {
+  register(user, callback, errorFunction = defaultErrorFunction) {
     apiClient
       .request({
         method: 'post',
@@ -57,7 +66,7 @@ export default {
         data: user,
       })
       .then((response) => {
-        callback(response.data)
+        callback(response)
       })
       .catch((error) => {
         errorFunction(error)

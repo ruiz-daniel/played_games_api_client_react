@@ -1,12 +1,12 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect } from 'react'
-import api from '../../services/IApi'
+import api from '../../../services/IApi'
 import { useHistory } from 'react-router'
 
 import { Carousel } from 'primereact/carousel'
 
-import Score from './score'
-import * as routes from '../../routes'
+import Score from '../score'
+import * as routes from '../../../routes'
 
 const PlayingGames = () => {
   const history = useHistory()

@@ -9,7 +9,7 @@ import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
 import FavoritesList from '../utils/FavoritesList'
 
-const FavoriteGames = (props) => {
+const GamesLists = (props) => {
   const [list, setList] = useState([])
   const [addingGame, setAddingGame] = useState(null)
   const [gamesPanel, toogleGamesPanel] = useState(false)
@@ -139,4 +139,4 @@ const FavoriteGames = (props) => {
   )
 }
 
-export default FavoriteGames
+export default GamesLists

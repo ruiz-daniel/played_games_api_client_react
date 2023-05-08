@@ -1,24 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react'
-import api from '../../services/IApi'
-
+import { usePlatforms } from '../../../hooks/usePlatforms'
+import { useCompletions } from '../../../hooks/useCompletions'
 import { useForm, Controller } from 'react-hook-form'
 
 import { InputText } from 'primereact/inputtext'
 import { Dropdown } from 'primereact/dropdown'
-import { FileUpload } from 'primereact/fileupload'
 import { Button } from 'primereact/button'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { Chips } from 'primereact/chips'
 
-import { Toast } from 'primereact/toast'
-
-import { sr_played_games_folder, sr_images_games } from '../../routes'
-
-const EditGame = ({ game, callback }) => {
-  const toast = useRef(null)
-  const [image, setImage] = useState()
-  const [platformList, setPlatformList] = useState([])
-  const [statusList, setStatusList] = useState([])
+const EditGame = ({ game, onSubmit }) => {
+  const { platforms } = usePlatforms()
+  const { completions } = useCompletions()
   const {
     register,
     handleSubmit,
@@ -26,49 +18,8 @@ const EditGame = ({ game, callback }) => {
     formState: { errors },
   } = useForm({})
 
-  const onSubmit = async (data) => {
-    let cover = undefined
-    if (image) {
-      await api.GeneralApi.uploadImage(image, sessionStorage.getItem('username'), sr_played_games_folder)
-      cover = sr_images_games(sessionStorage.getItem('username')) + image.name
-    }
-
-    api.PlayedGamesApi.patchPlayedGame(
-      {
-        _id: game._id,
-        cover,
-        ...data,
-      },
-      () => {
-        toast.current.show({
-          severity: 'success',
-          summary: 'Game Uploaded Successfully',
-          life: 3000,
-        })
-        callback()
-      },
-    )
-  }
-
-  const onupload = async (e) => {
-    setImage(e.files[0])
-  }
-
-  //FETCH PLATFORMS AND STATUSES WHEN THE COMPONENT MOUNTS
-  useEffect(() => {
-    ;(async () => {
-      const response_platforms = await api.GeneralApi.fetchPlatforms()
-      const platforms = await response_platforms.data
-      setPlatformList(platforms)
-      const response_status = await api.GeneralApi.fetchStatuses()
-      const statuses = await response_status.data
-      setStatusList(statuses)
-    })()
-  }, [])
-
   return (
     <div style={{ width: '100%' }}>
-      <Toast ref={toast} />
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div
@@ -192,7 +143,7 @@ const EditGame = ({ game, callback }) => {
                   id={field.name}
                   value={field.value}
                   onChange={(e) => field.onChange(e.value)}
-                  options={platformList}
+                  options={platforms}
                   optionLabel="name"
                 />
               )}
@@ -210,7 +161,7 @@ const EditGame = ({ game, callback }) => {
                   id={field.name}
                   value={field.value}
                   onChange={(e) => field.onChange(e.value)}
-                  options={statusList}
+                  options={completions}
                   optionLabel="name"
                 />
               )}
@@ -271,23 +222,6 @@ const EditGame = ({ game, callback }) => {
               rows={5}
               {...register('description')}
               autoResize
-            />
-          </div>
-          <div className="item flex flex-column">
-            <h4>Cover Image</h4>
-            <FileUpload
-              name="gameImage"
-              customUpload
-              uploadHandler={onupload}
-              accept="image/*"
-              chooseLabel="File"
-              auto
-              onRemove={() => {
-                setImage(null)
-              }}
-              emptyTemplate={
-                <p className="p-m-0">Drag and drop files to here to upload.</p>
-              }
             />
           </div>
 

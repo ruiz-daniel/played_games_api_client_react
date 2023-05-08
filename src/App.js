@@ -9,50 +9,45 @@ import PlayedGames from './components/pages/PlayedGamesList'
 import UploadGame from './components/pages/UploadGame'
 import GameDetails from './components/pages/GameDetails'
 import GameStats from './components/pages/GameStats'
-// import FavoriteGames from './components/pages/FavoriteGames'
 import Home from './components/pages/Home'
 import Dashboard from './components/pages/Dashboard'
+import Login from './components/pages/Login'
+import SignUp from './components/pages/SignUp'
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import * as routes from './routes'
 import './styles/main.scss'
 
 import 'nprogress/nprogress.css'
 
+import { UserProvider } from './contexts/user'
+import { MessagesProvider } from './contexts/messages'
+import { PlayedGamesProvider } from './contexts/playedGames'
+
 function App() {
-  // const checkLoggedInRoutes = () => {
-  //   return routes.loggedRoutes.some(route => window.location.href.includes(route))
-  // }
   return (
     <Router>
-        <TopBar></TopBar>
+      <UserProvider>
+        <TopBar />
         <div className="content-container">
           {
-            <Switch>
-              <Route exact path={routes.home}>
-                <Home />
-              </Route>
-              <Route exact path={routes.dashboard}>
-                <Dashboard />
-              </Route>
-              <Route exact path={routes.playedgames}>
-                <PlayedGames />
-              </Route>
-              <Route path={routes.uploadgame}>
-                <UploadGame />
-              </Route>
-              <Route path={routes.gamedetails}>
-                <GameDetails />
-              </Route>
-              <Route path={routes.stats}>
-                <GameStats />
-              </Route>
-              {/* <Route path={routes.top10games}>
-                <FavoriteGames />
-              </Route> */}
-            </Switch>
+            <MessagesProvider>
+              <PlayedGamesProvider>
+                <Routes>
+                  <Route path={routes.home} element={<Home />} />
+                  <Route path={routes.dashboard} element={<Dashboard />} />
+                  <Route path={routes.login} element={<Login />} />
+                  <Route path={routes.register} element={<SignUp />} />
+                  <Route path={routes.playedgames} element={<PlayedGames />} />
+                  <Route path={routes.stats} element={<GameStats />} />
+                  <Route path={routes.gamedetails} element={<GameDetails />} />
+                  <Route path={routes.uploadgame} element={<UploadGame />} />
+                </Routes>
+              </PlayedGamesProvider>
+            </MessagesProvider>
           }
         </div>
+      </UserProvider>
     </Router>
   )
 }

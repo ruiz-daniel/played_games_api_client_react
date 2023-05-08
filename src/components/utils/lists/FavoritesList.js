@@ -1,6 +1,6 @@
 import { Button } from 'primereact/button'
 import React, { useState, useEffect } from 'react'
-import api from '../../services/IApi'
+import api from '../../../services/IApi'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 
