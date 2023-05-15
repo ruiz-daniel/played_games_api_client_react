@@ -7,7 +7,11 @@ const playedGamesSlice = createSlice({
     addGame(state, action) {
       state.push(action.payload)
     },
-    removeAction(state, action) {}
+    setGames(state, action) {
+      return action.payload
+    },
+    updateGame(state, action) {},
+    removeGame(state, action) {}
   }
 })
 

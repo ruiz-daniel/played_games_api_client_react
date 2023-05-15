@@ -22,7 +22,6 @@ import 'nprogress/nprogress.css'
 
 import { UserProvider } from './contexts/user'
 import { MessagesProvider } from './contexts/messages'
-import { PlayedGamesProvider } from './contexts/playedGames'
 
 function App() {
   return (
@@ -32,7 +31,6 @@ function App() {
         <div className="content-container">
           {
             <MessagesProvider>
-              <PlayedGamesProvider>
                 <Routes>
                   <Route path={routes.home} element={<Home />} />
                   <Route path={routes.dashboard} element={<Dashboard />} />
@@ -43,7 +41,6 @@ function App() {
                   <Route path={routes.gamedetails} element={<GameDetails />} />
                   <Route path={routes.uploadgame} element={<UploadGame />} />
                 </Routes>
-              </PlayedGamesProvider>
             </MessagesProvider>
           }
         </div>
