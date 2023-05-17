@@ -19,6 +19,24 @@ export function usePlayedGames() {
       payload: data
     })
   }
+  const addGameAction = (data) => {
+    dispatch({
+      type: "playedGames/addGame",
+      payload: data
+    })
+  }
+  const updateGameAction = (data) => {
+    dispatch({
+      type: "playedGames/updateGame",
+      payload: data
+    })
+  }
+  const removeGameAction = (data) => {
+    dispatch({
+      type: "playedGames/removeGame",
+      payload: data
+    })
+  }
   const getGames = (callback) => {
     api.PlayedGamesApi.getPlayedGames(
       localStorage.getItem('userid'),
@@ -205,9 +223,8 @@ export function usePlayedGames() {
     }
     api.PlayedGamesApi.postPlayedGame(game, (response) => {
       message('info', "Game Uploaded Successfully")
-      const updatedGames = [...games, response.data]
-      setGames(updatedGames)
-      gamesBackup = updatedGames
+      addGameAction(response.data)
+      gamesBackup.push(response.data)
       callback && callback()
     })
   }
@@ -215,11 +232,10 @@ export function usePlayedGames() {
   const updateGame = (game, callback) => {
     api.PlayedGamesApi.patchPlayedGame(game, (response) => {
       message('info', "Game Updated Successfully")
-      const updatedGames = games.map((game) => 
+      updateGameAction(response.data)
+      gamesBackup = games.map((game) => 
         game._id === response.data._id ? response.data : game
       )
-      setGames(updatedGames)
-      gamesBackup = updatedGames
       callback && callback()
     })
   }
@@ -232,7 +248,7 @@ export function usePlayedGames() {
     api.PlayedGamesApi.deletePlayedGame(id, (response) => {
       message('info', "Game Deleted Successfully")
       const updatedGames = games.filter(game => game._id !== id)
-      setGames(updatedGames)
+      removeGameAction({_id: id})
       gamesBackup = updatedGames
       callback && callback()
     })
