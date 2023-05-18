@@ -1,19 +1,17 @@
 /* eslint-disable eqeqeq */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useMessages } from "./useMessages";
 import api from '../services/IApi'
 
-let gamesBackup = []
-// Keep the filtered games when component unmounts
-let filteringGames = []
-
 export function usePlayedGames() {
   const dispatch = useDispatch()
-  const games = useSelector((state) => state.playedGames)
+  const gamesOnStore = useSelector((state) => state.playedGames)
+  const [games, setGames] = useState()
   const { message } = useMessages()
 
-  const setGames = (data) => {
+  // Store Actions...............................
+  const setGamesAction = (data) => {
     dispatch({
       type: "playedGames/setGames",
       payload: data
@@ -37,16 +35,13 @@ export function usePlayedGames() {
       payload: data
     })
   }
+  //...............................................
+
   const getGames = (callback) => {
     api.PlayedGamesApi.getPlayedGames(
       localStorage.getItem('userid'),
       (response) => {
-        if (filteringGames.length) {
-          setGames(filteringGames)
-        } else {
-          setGames(response.data)
-        }
-        gamesBackup = response.data
+        setGamesAction(response.data)
       },
       (error) => {
         if (error.response.status === 403 || error.response.status === 401) {
@@ -61,9 +56,10 @@ export function usePlayedGames() {
       }
     )
   }
+  // Filters..................................................
   const localFilter = (value) => {
     const filtered = []
-    gamesBackup.forEach((game) => {
+    gamesOnStore.forEach((game) => {
       let found = false
       Object.keys(game).forEach((key) => {
         if (!['played_hours', 'id', '_id'].includes(key)) {
@@ -91,7 +87,6 @@ export function usePlayedGames() {
         filtered.push(game)
       }
     })
-    filteringGames = filtered
     setGames(filtered)
   }
 
@@ -99,7 +94,7 @@ export function usePlayedGames() {
   const externalFilter = (data) => {
     let filtered = []
 
-    gamesBackup.forEach((game) => {
+    gamesOnStore.forEach((game) => {
       // Compare filters using include. Empty filters will not have effect
       if (
         compareIgnoreCase(game.name, data.name) &&
@@ -151,7 +146,6 @@ export function usePlayedGames() {
           filtered.pop()
       }
     })
-    filteringGames = filtered
     setGames(filtered)
   }
 
@@ -190,9 +184,9 @@ export function usePlayedGames() {
   }
 
   const resetFilter = () => {
-    filteringGames = []
-    setGames(gamesBackup)
+    setGames(gamesOnStore)
   }
+  //......................................................
 
   const uploadImageRecursive = async (gallery, files, index) => {
     if (index === files.length) return
@@ -224,7 +218,6 @@ export function usePlayedGames() {
     api.PlayedGamesApi.postPlayedGame(game, (response) => {
       message('info', "Game Uploaded Successfully")
       addGameAction(response.data)
-      gamesBackup.push(response.data)
       callback && callback()
     })
   }
@@ -233,31 +226,29 @@ export function usePlayedGames() {
     api.PlayedGamesApi.patchPlayedGame(game, (response) => {
       message('info', "Game Updated Successfully")
       updateGameAction(response.data)
-      gamesBackup = games.map((game) => 
-        game._id === response.data._id ? response.data : game
-      )
       callback && callback()
     })
   }
 
   const getGame = (id) => {
-    return games.find(game => game._id === id)
+    return gamesOnStore.find(game => game._id === id)
   }
 
   const removeGame = (id, callback) => {
     api.PlayedGamesApi.deletePlayedGame(id, (response) => {
       message('info', "Game Deleted Successfully")
-      const updatedGames = games.filter(game => game._id !== id)
       removeGameAction({_id: id})
-      gamesBackup = updatedGames
       callback && callback()
     })
   }
 
   useEffect(() => {
-    !games.length > 0 && getGames()
+    !gamesOnStore.length > 0 && getGames()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  useEffect(() => {
+    setGames(gamesOnStore)
+  }, [gamesOnStore])
 
   return {
     games,
