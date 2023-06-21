@@ -11,7 +11,13 @@ import GamesList from '../utils/lists/GamesList'
 
 const PlayedGamesList = () => {
   const { toggleValue, toggle } = useToggle()
-  const {games, localFilter, resetFilter, externalFilter } = usePlayedGames()
+  const {games, page, max, getGames, localFilter, resetFilter, externalFilter } = usePlayedGames()
+  const onScrollEnd = (e) => {
+    const { clientHeight, scrollHeight, scrollTop} = e.target
+    if (scrollHeight - scrollTop === clientHeight && games.length < max) {
+      getGames(Number(page) + 1)
+    }
+  }
   return (
     <div className="played-games-list">
       <Sidebar
@@ -47,8 +53,12 @@ const PlayedGamesList = () => {
           onTouchEnd={(e) => e.target.blur()}
         />
       </div>
-      <h3>Showing: {games?.length || 0}</h3>
-      <GamesList games={games} />
+      <div className='flex gap-3 mb-3'>
+        <h3>Showing: {games?.length || 0}</h3>
+        <h3>Page: {page || 0}</h3>
+      </div>
+      
+      <GamesList games={games} onScrollEnd={onScrollEnd} />
     </div>
   )
 }

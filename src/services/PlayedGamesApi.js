@@ -3,11 +3,11 @@ import { apiClient } from './GeneralApi'
 import oldApi from '../services old/IApi'
 
 export default {
-  getPlayedGames(userid, callback, errorFunction) {
+  getPlayedGames(userid, page = 1, limit, callback, errorFunction) {
     apiClient
       .request({
         method: 'get',
-        url: `PlayedGames/user/${userid}`,
+        url: `PlayedGames/user/${userid}/${page}`,
       })
       .then((response) => {
         callback(response)

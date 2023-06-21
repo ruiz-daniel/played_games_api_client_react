@@ -7,8 +7,10 @@ import api from '../services/IApi'
 export function usePlayedGames() {
   const dispatch = useDispatch()
   const gamesOnStore = useSelector((state) => state.playedGames)
-  const [games, setGames] = useState()
+  const [games, setGames] = useState([])
   const { message } = useMessages()
+  const [page, setPage] = useState(0)
+  const [max, setMax] = useState(0)
 
   // Store Actions...............................
   const setGamesAction = (data) => {
@@ -37,11 +39,15 @@ export function usePlayedGames() {
   }
   //...............................................
 
-  const getGames = (callback) => {
+  const getGames = (page, callback) => {
     api.PlayedGamesApi.getPlayedGames(
       localStorage.getItem('userid'),
+      page,
+      null,
       (response) => {
-        setGamesAction(response.data)
+        setGamesAction(response.data.games)
+        setPage(response.data.page)
+        setMax(response.data.max)
       },
       (error) => {
         if (error.response.status === 403 || error.response.status === 401) {
@@ -252,6 +258,7 @@ export function usePlayedGames() {
 
   return {
     games,
+    getGames,
     localFilter, 
     externalFilter, 
     resetFilter, 
@@ -259,6 +266,8 @@ export function usePlayedGames() {
     updateGame,
     getGame,
     removeGame,
-    handleImages
+    handleImages,
+    page,
+    max
   }
 }

@@ -55,7 +55,7 @@ const GameStats = () => {
   })
 
   useEffect(() => {
-    setTotalGames(games.length)
+    setTotalGames(games?.length || 0)
     getStats(games)
     getCompletionStats(games.length)
     setBarChartStats()

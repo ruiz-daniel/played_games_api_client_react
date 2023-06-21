@@ -3,8 +3,8 @@ import axios from 'axios'
 import NProgress from 'nprogress'
 
 export let apiClient = axios.create({
-  baseURL: 'https://game-shelf-backend.onrender.com',
-  // baseURL: 'http://localhost:3001',
+  // baseURL: 'https://game-shelf-backend.onrender.com',
+  baseURL: 'http://localhost:3001',
   headers: {
     Authorization: `Bearer ${localStorage.getItem('access_token')}`,
   },

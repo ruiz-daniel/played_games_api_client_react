@@ -3,10 +3,10 @@ import { ScrollTop } from 'primereact/scrolltop'
 import GameBox from '../../utils/cards/GameBox'
 
 
-function GamesList({games}) {
+function GamesList({games, onScrollEnd}) {
   
   return (
-    <ScrollPanel style={{ width: '100%', height: '75vh' }}>
+    <ScrollPanel style={{ width: '100%', height: '75vh' }} onScrollCapture={onScrollEnd}>
       <div className="games-container flex flex-wrap justify-content-evenly">
         {games && games.map((game) => 
           <GameBox key={game._id} game={game} />
@@ -17,6 +17,7 @@ function GamesList({games}) {
         threshold={100}
         className="custom-scrolltop"
         icon="pi pi-arrow-up"
+        onScroll={onScrollEnd}
       />
     </ScrollPanel>
   )
