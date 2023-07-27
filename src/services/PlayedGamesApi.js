@@ -3,11 +3,19 @@ import { apiClient } from './GeneralApi'
 import oldApi from '../services old/IApi'
 
 export default {
-  getPlayedGames(userid, page = 1, limit, callback, errorFunction) {
+  getPlayedGames(userid, page = 1, limit = 50, filterData, callback, errorFunction) {
+    // Delete falsey values from filter data so they don't affect the filter
+    if (filterData) {
+      Object.keys(filterData).forEach(key => {
+        if (!filterData[key]) {
+          delete filterData[key]
+        }
+      })
+    }
     apiClient
       .request({
         method: 'get',
-        url: `PlayedGames/user/${userid}/${page}`,
+        url: `PlayedGames/user/${userid}?page=${page}&limit=${limit}&filterData=${JSON.stringify(filterData)}`,
       })
       .then((response) => {
         callback(response)
