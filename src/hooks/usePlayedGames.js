@@ -66,42 +66,6 @@ export function usePlayedGames() {
     )
   }
   // Filters..................................................
-  const localFilter = (value) => {
-    const filtered = []
-    games.forEach((game) => {
-      let found = false
-      Object.keys(game).forEach((key) => {
-        if (!['played_hours', 'id', '_id'].includes(key)) {
-          if (['completion', 'platform'].includes(key)) {
-            if (game[key].name == value) {
-              found = true
-            }
-          } else if (typeof game[key] === 'string') {
-            if (game[key].includes(value)) {
-              found = true
-            }
-          } else if (game[key].length) {
-            // Array
-            if (game[key].toString().includes(value)) {
-              found = true
-            }
-          } else {
-            if (game[key] == value) {
-              found = true
-            }
-          }
-        }
-      })
-      if (found) {
-        filtered.push(game)
-      }
-    })
-    setGamesAction({
-      games: filtered,
-      page,
-      max
-    })
-  }
 
   const handleRangeForQuery = (data, filterData, queryKey, minValueKey, maxValueKey) => {
     /**
@@ -215,7 +179,6 @@ export function usePlayedGames() {
   return {
     games,
     getGames,
-    localFilter, 
     externalFilter, 
     resetFilter, 
     uploadGame,
