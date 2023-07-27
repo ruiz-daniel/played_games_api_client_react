@@ -15,7 +15,8 @@ export default {
     apiClient
       .request({
         method: 'get',
-        url: `PlayedGames/user/${userid}?page=${page}&limit=${limit}&filterData=${JSON.stringify(filterData)}`,
+        url: `PlayedGames/user/${userid}?page=${page}&limit=${limit}
+          &filterData=${JSON.stringify(filterData) ?? JSON.stringify({})}`,
       })
       .then((response) => {
         callback(response)
