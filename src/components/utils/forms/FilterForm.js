@@ -23,17 +23,17 @@ const FilterForm = ({ onSubmit }) => {
         <InputText
           placeholder="Developer"
           className="p-inputtext-sm"
-          {...register('developer')}
+          {...register('developers')}
         />
         <InputText
           placeholder="Publisher"
           className="p-inputtext-sm"
-          {...register('publisher')}
+          {...register('publishers')}
         />
         <InputText
-          placeholder="Year"
+          placeholder="Released Year"
           className="p-inputtext-sm"
-          {...register('year')}
+          {...register('release_year')}
         />
         <InputText
           placeholder="Played Year"
@@ -82,15 +82,15 @@ const FilterForm = ({ onSubmit }) => {
         <InputText
           placeholder="Played Hours (min)"
           className="p-inputtext-sm"
-          {...register('played_hoursMin')}
+          {...register('played_hours_min')}
         />
         <InputText
           placeholder="Played Hours (max)"
           className="p-inputtext-sm"
-          {...register('played_hoursMax')}
+          {...register('played_hours_max')}
         />
       </div>
-      <div className="filter-out">
+      {/* <div className="filter-out">
         <h3> Filter Out </h3>
         <InputText
           placeholder="Name"
@@ -155,7 +155,7 @@ const FilterForm = ({ onSubmit }) => {
           className="p-inputtext-sm"
           {...register('scoreOut')}
         />
-      </div>
+      </div> */}
       <div className="mt-2 flex flex-row-reverse">
         <Button type="submit" className="filter-button pink-button" label="Filter" />
       </div>

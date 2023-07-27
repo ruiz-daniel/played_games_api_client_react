@@ -103,108 +103,48 @@ export function usePlayedGames() {
     })
   }
 
+  const handleRangeForQuery = (data, filterData, queryKey, minValueKey, maxValueKey) => {
+    /**
+     * Check the data containing the filters for a min and max values key
+     * then depending on which one exists, give the filter data key a range or a single value
+     * 
+     * data: the one that comes from the form
+     * filterData: the one to be sent to the api
+     */
+    if (data[minValueKey] && data[maxValueKey]) {
+      filterData[queryKey] = {
+        $lte: data[maxValueKey], $gte: data[minValueKey] 
+      }
+    } else if (data[minValueKey]) {
+      filterData[queryKey] = {
+        $gte: data[minValueKey] 
+      }
+    } else if (data[maxValueKey]) {
+      filterData[queryKey] = {
+        $lte: data[maxValueKey]
+      }
+    }
+  }
 
-  // const externalFilter = (data) => {
-  //   let filtered = []
-
-  //   gamesOnStore.forEach((game) => {
-  //     // Compare filters using include. Empty filters will not have effect
-  //     if (
-  //       compareIgnoreCase(game.name, data.name) &&
-  //       compareIgnoreCase(game.developers.toString(), data.developer) &&
-  //       compareIgnoreCase(game.publishers.toString(), data.publisher) &&
-  //       compare(data.year, game.release_year) &&
-  //       compare(data.played_year, game.played_year) &&
-  //       compare(data.played_hoursMin, game.played_hours, 'le') &&
-  //       compare(data.played_hoursMax, game.played_hours, 'ge') &&
-  //       compareIgnoreCase(game.genres.toString(), data.genre) &&
-  //       compare(data.score, game.score) &&
-  //       compareIgnoreCase(
-  //         game.platform.name,
-  //         data.platform
-  //           ? typeof data.platform === 'string'
-  //             ? data.platform
-  //             : data.platform.name
-  //           : '',
-  //       ) &&
-  //       compareIgnoreCase(
-  //         game.completion.name,
-  //         data.completion ? (typeof data.completion === 'string' ? data.completion : data.completion.name) : '',
-  //       )
-  //     ) {
-  //       filtered.push(game)
-  //       // Immediately pop out if it matches a filter-out condition
-  //       if (
-  //         (data.nameOut !== '' && compareIgnoreCase(game.name, data.nameOut)) ||
-  //         (data.developerOut !== '' && compareIgnoreCase(game.developers.toString(), data.developerOut)) ||
-  //         (data.publisherOut !== '' &&
-  //           compareIgnoreCase(game.publishers.toString(), data.publisherOut)) ||
-  //         (data.yearOut !== '' && (game.release_year?.includes(data.yearOut) || !game.release_year)) ||
-  //         (data.played_yearOut !== '' &&
-  //           (game.played_year?.includes(data.played_yearOut) ||
-  //             !game.played_year)) ||
-  //         (data.genreOut !== '' && compareIgnoreCase(game.genres.toString(), data.genreOut)) ||
-  //         (data.scoreOut !== '' && game.score == data.scoreOut) ||
-  //         (data.platformOut !== undefined &&
-  //           compareIgnoreCase(
-  //             game.platform.name,
-  //             typeof platformOut === 'string' ? data.platformOut : data.platformOut.name,
-  //           )) ||
-  //         (data.completionOut !== undefined &&
-  //           compareIgnoreCase(
-  //             game.completion.name,
-  //             typeof completionOut === 'string' ? data.completionOut : data.completionOut.name,
-  //           ))
-  //       )
-  //         filtered.pop()
-  //     }
-  //   })
-  //   setGames(filtered)
-  // }
-
+  // Prepare filter for mongoose in the backend
   const externalFilter = (data) => {
     const filterData = {
       ...data,
-      played_hours: data.played_hours_min && { $gte: data.played_hours_min }
+      name: data.name && { $regex: data.name },
+      developers: data.developers && { $regex: data.developers },
+      publishers: data.publishers && { $regex: data.publishers },
     }
+    // Handle played hours, years and score possible range for mongoose query
+    handleRangeForQuery(data, filterData, 'played_hours', 'played_hours_min', 'played_hours_max')
+    handleRangeForQuery(data, filterData, 'played_year', 'played_year_min', 'played_year_max')
+    handleRangeForQuery(data, filterData, 'release_year', 'release_year_min', 'release_year_max')
+    handleRangeForQuery(data, filterData, 'score', 'score_min', 'score_max')
+
     setFilterData(filterData)
   }
 
-  const compareIgnoreCase = (stringA, stringB) => {
-    if (stringA === undefined || stringB === undefined) {
-      return false
-    }
-    return stringA.toUpperCase().includes(stringB.toUpperCase())
-  }
-  const compare = (valueA, valueB, comparison) => {
-    // Active filter but no value on game -> filter out
-    if (valueA && !valueB) {
-      return false
-    }
-    // No Active filter -> filter in
-    if (valueA === '') {
-      return true
-    }
-    switch (comparison) {
-      case 'lt':
-        return Number(valueA) < Number(valueB)
-        
-      case 'le':
-        return Number(valueA) <= Number(valueB)
-
-      case 'gt':
-        return Number(valueA) > Number(valueB)
-
-      case 'ge':
-        return Number(valueA) >= Number(valueB)
-
-      default:
-        break
-    }
-    return valueA == valueB
-  }
-
   const resetFilter = () => {
+    setFilterData(null)
     getGames()
   }
   //......................................................
@@ -267,6 +207,10 @@ export function usePlayedGames() {
     !games.length > 0 && getGames()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    filterData && Object.keys(filterData)?.length && getGames()
+  }, [filterData])
 
   return {
     games,
