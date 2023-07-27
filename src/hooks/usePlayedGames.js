@@ -6,11 +6,11 @@ import api from '../services/IApi'
 
 export function usePlayedGames() {
   const dispatch = useDispatch()
-  const gamesOnStore = useSelector((state) => state.playedGames)
-  const [games, setGames] = useState([])
+  const games = useSelector((state) => state.playedGames.games)
+  const page = useSelector((state) => state.playedGames.page)
+  const max = useSelector((state) => state.playedGames.max)
+  const [filterData, setFilterData] = useState()
   const { message } = useMessages()
-  const [page, setPage] = useState(0)
-  const [max, setMax] = useState(0)
 
   // Store Actions...............................
   const setGamesAction = (data) => {
@@ -43,12 +43,14 @@ export function usePlayedGames() {
     api.PlayedGamesApi.getPlayedGames(
       localStorage.getItem('userid'),
       page,
-      null,
-      null,
+      50,
+      filterData,
       (response) => {
-        setGamesAction(response.data.games)
-        setPage(response.data.page)
-        setMax(response.data.max)
+        setGamesAction({
+          games: response.data.games,
+          page: response.data.page,
+          max: response.data.max
+        })
       },
       (error) => {
         if (error.response.status === 403 || error.response.status === 401) {
@@ -66,7 +68,7 @@ export function usePlayedGames() {
   // Filters..................................................
   const localFilter = (value) => {
     const filtered = []
-    gamesOnStore.forEach((game) => {
+    games.forEach((game) => {
       let found = false
       Object.keys(game).forEach((key) => {
         if (!['played_hours', 'id', '_id'].includes(key)) {
@@ -94,7 +96,11 @@ export function usePlayedGames() {
         filtered.push(game)
       }
     })
-    setGames(filtered)
+    setGamesAction({
+      games: filtered,
+      page,
+      max
+    })
   }
 
 
@@ -158,38 +164,10 @@ export function usePlayedGames() {
 
   const externalFilter = (data) => {
     const filterData = {
-      name: data.name,
-      developers: data.developer,
-      publishers: data.publisher,
-      release_year: data.release_year,
-      played_year: data.played_year,
-      genre: data.genre,
-      score: data.score,
-      tags: data.tags,
-      played_hours: {$gte: data.played_hours_min}
+      ...data,
+      played_hours: data.played_hours_min && { $gte: data.played_hours_min }
     }
-    api.PlayedGamesApi.getPlayedGames(
-      localStorage.getItem('userid'),
-      page,
-      100000,
-      filterData,
-      (response) => {
-        setGamesAction(response.data.games)
-        setPage(response.data.page)
-        setMax(response.data.max)
-      },
-      (error) => {
-        if (error.response.status === 403 || error.response.status === 401) {
-          message('warn', 'Session Expired. Please Login')
-        } else {
-          console.log(
-          '🚀 ~ file: PlayedGamesList.js ~ line 56 ~ useEffect ~ error',
-          error,
-          )
-          message('error', error.message)
-        }
-      }
-    )
+    setFilterData(filterData)
   }
 
   const compareIgnoreCase = (stringA, stringB) => {
@@ -227,7 +205,7 @@ export function usePlayedGames() {
   }
 
   const resetFilter = () => {
-    setGames(gamesOnStore)
+    getGames()
   }
   //......................................................
 
@@ -274,7 +252,7 @@ export function usePlayedGames() {
   }
 
   const getGame = (id) => {
-    return gamesOnStore.find(game => game._id === id)
+    return games.find(game => game._id === id)
   }
 
   const removeGame = (id, callback) => {
@@ -286,12 +264,9 @@ export function usePlayedGames() {
   }
 
   useEffect(() => {
-    !gamesOnStore.length > 0 && getGames()
+    !games.length > 0 && getGames()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  useEffect(() => {
-    setGames(gamesOnStore)
-  }, [gamesOnStore])
 
   return {
     games,
