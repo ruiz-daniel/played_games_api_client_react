@@ -1,0 +1,9 @@
+.Loading-template {
+    position: fixed !important;
+    top: 45vh !important;
+    .loading-icon {
+        font-size: 40px;
+        font-weight: 600;
+        color: $text-color-silver;
+    }
+}

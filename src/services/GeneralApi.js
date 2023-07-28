@@ -2,9 +2,10 @@
 import axios from 'axios'
 import NProgress from 'nprogress'
 
+const apiURL = process.env.REACT_APP_API_HOST || "https://game-shelf-backend.onrender.com"
+
 export let apiClient = axios.create({
-  baseURL: 'https://game-shelf-backend.onrender.com',
-  // baseURL: 'http://localhost:3001',
+  baseURL: apiURL,
   headers: {
     Authorization: `Bearer ${localStorage.getItem('access_token')}`,
   },
@@ -12,8 +13,7 @@ export let apiClient = axios.create({
 
 export const updateClient = () => {
   apiClient = axios.create({
-    baseURL: 'https://game-shelf-backend.onrender.com',
-    // baseURL: 'http://localhost:3001',
+    baseURL: apiURL,
     headers: {
       Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     },

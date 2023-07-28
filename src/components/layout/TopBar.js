@@ -5,8 +5,8 @@ import { useUser } from '../../hooks/useUser'
 import { Toolbar } from 'primereact/toolbar'
 import { Avatar } from 'primereact/avatar'
 import { Menu } from 'primereact/menu'
-// import { Sidebar } from 'primereact/sidebar'
-// import SidebarContent from './SideBar'
+import { Sidebar } from 'primereact/sidebar'
+import SidebarContent from './SideBar'
 
 import { Link } from 'react-router-dom'
 import * as routes from '../../routes'
@@ -22,15 +22,12 @@ const TopBar = () => {
 
   // var isMobile = navigator.userAgent.toLowerCase().match(/mobile/i)
 
-  const handleLogoClick = () => {
-    navigator(routes.home)
-  }
-
   const goToDashboard = () => {
     user?._id &&  navigator(routes.dashboard)
   }
   const handleLoginOrOut = () => {
     user?._id ? logout(() => {
+      toggleSideMenu(false)
       goHome()
     }) : navigator(routes.login)
     
@@ -61,7 +58,7 @@ const TopBar = () => {
             <i className="pi pi-bars" />
           </div>
         }
-        <h2 className="logo" onClick={handleLogoClick}>
+        <h2 className="logo">
           My Game Shelf
         </h2>
 
@@ -102,14 +99,19 @@ const TopBar = () => {
   return (
     <div className="sticky-section">
       <Toolbar left={leftContents} right={rightContents} className="topbar" />
-      {/* <Sidebar
+      <Sidebar
         className="menu-sidebar"
         visible={sideMenu}
         onHide={() => toggleSideMenu(false)}
         showCloseIcon={false}
       >
-        <SidebarContent toggleSidebar={toggleSideMenu} />
-      </Sidebar> */}
+        <SidebarContent 
+          toggleSidebar={toggleSideMenu} 
+          user={user} 
+          handleLogInOrOut={handleLoginOrOut}
+          goToDashboard={goToDashboard} 
+        />
+      </Sidebar>
     </div>
   )
 }

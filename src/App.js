@@ -22,17 +22,17 @@ import 'nprogress/nprogress.css'
 
 import { UserProvider } from './contexts/user'
 import { MessagesProvider } from './contexts/messages'
-import { PlayedGamesProvider } from './contexts/playedGames'
+import { LoadingProvider } from './contexts/loading'
 
 function App() {
   return (
     <Router>
-      <UserProvider>
-        <TopBar />
-        <div className="content-container">
-          {
-            <MessagesProvider>
-              <PlayedGamesProvider>
+      <LoadingProvider>
+        <UserProvider>
+          <TopBar />
+          <div className="content-container">
+            {
+              <MessagesProvider>
                 <Routes>
                   <Route path={routes.home} element={<Home />} />
                   <Route path={routes.dashboard} element={<Dashboard />} />
@@ -43,11 +43,11 @@ function App() {
                   <Route path={routes.gamedetails} element={<GameDetails />} />
                   <Route path={routes.uploadgame} element={<UploadGame />} />
                 </Routes>
-              </PlayedGamesProvider>
-            </MessagesProvider>
-          }
-        </div>
-      </UserProvider>
+              </MessagesProvider>
+            }
+          </div>
+        </UserProvider>
+      </LoadingProvider>
     </Router>
   )
 }

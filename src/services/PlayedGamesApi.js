@@ -1,13 +1,21 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { apiClient } from './GeneralApi'
-import oldApi from '../services old/IApi'
 
 export default {
-  getPlayedGames(userid, callback, errorFunction) {
+  getPlayedGames(userid, page = 1, limit = 50, filterData, callback, errorFunction) {
+    // Delete falsey values from filter data so they don't affect the filter
+    if (filterData) {
+      Object.keys(filterData).forEach(key => {
+        if (!filterData[key]) {
+          delete filterData[key]
+        }
+      })
+    }
     apiClient
       .request({
         method: 'get',
-        url: `PlayedGames/user/${userid}`,
+        url: `PlayedGames/user/${userid}?page=${page}&limit=${limit}
+          &filterData=${JSON.stringify(filterData) ?? JSON.stringify({})}`,
       })
       .then((response) => {
         callback(response)
@@ -84,52 +92,17 @@ export default {
         callback(response)
       })
   },
-  getUserGamesInfo(userid, callback, errorFunction) {
+  getStats(userid, callback) {
     apiClient
       .request({
         method: 'get',
-        url: `PlayedGames/gamesinfo/${userid}`,
+        url: `PlayedGames/stats/${userid}`
       })
       .then((response) => {
         callback(response)
       })
       .catch((error) => {
-        errorFunction(error)
+        console.log(error)
       })
-  },
-  loginVersion1(oldCredentials, callback) {
-    oldApi.UserApi.login(
-      oldCredentials,
-      (data) => {
-        sessionStorage.setItem('access_token_v1', data.access_token)
-        sessionStorage.setItem('userid_v1', data.userid)
-        window.location.reload()
-      },
-      (error) => {
-        console.log(error.message)
-      },
-    )
-  },
-  importFromVersion1(userid) {
-    oldApi.PlayedGamesApi.getPlayedGames(
-      sessionStorage.getItem('userid_v1'),
-      (data) => {
-        data.forEach((game) => {
-          this.postPlayedGame(
-            {
-              name: game.name,
-              developers: game.developer.split(', '),
-              publishers: game.publisher.split(', '),
-              release_year: game.year,
-              score: game.rating,
-              description: game.description,
-              steam_page: game.steam_page || undefined,
-              played_hours: game.played_hours || undefined,
-            },
-            () => {},
-          )
-        })
-      },
-    )
   },
 }

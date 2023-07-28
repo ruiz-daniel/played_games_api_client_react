@@ -23,17 +23,17 @@ const FilterForm = ({ onSubmit }) => {
         <InputText
           placeholder="Developer"
           className="p-inputtext-sm"
-          {...register('developer')}
+          {...register('developers')}
         />
         <InputText
           placeholder="Publisher"
           className="p-inputtext-sm"
-          {...register('publisher')}
+          {...register('publishers')}
         />
         <InputText
-          placeholder="Year"
+          placeholder="Released Year"
           className="p-inputtext-sm"
-          {...register('year')}
+          {...register('release_year')}
         />
         <InputText
           placeholder="Played Year"
@@ -82,80 +82,15 @@ const FilterForm = ({ onSubmit }) => {
         <InputText
           placeholder="Played Hours (min)"
           className="p-inputtext-sm"
-          {...register('played_hoursMin')}
+          {...register('played_hours_min')}
         />
         <InputText
           placeholder="Played Hours (max)"
           className="p-inputtext-sm"
-          {...register('played_hoursMax')}
+          {...register('played_hours_max')}
         />
       </div>
-      <div className="filter-out">
-        <h3> Filter Out </h3>
-        <InputText
-          placeholder="Name"
-          className="p-inputtext-sm"
-          {...register('nameOut')}
-        />
-        <InputText
-          placeholder="Developer"
-          className="p-inputtext-sm"
-          {...register('developerOut')}
-        />
-        <InputText
-          placeholder="Publisher"
-          className="p-inputtext-sm"
-          {...register('publisherOut')}
-        />
-        <InputText
-          placeholder="Year"
-          className="p-inputtext-sm"
-          {...register('yearOut')}
-        />
-        <InputText
-          placeholder="Played Year"
-          className="p-inputtext-sm"
-          {...register('played_yearOut')}
-        />
-        <InputText
-          placeholder="Genre"
-          className="p-inputtext-sm"
-          {...register('genreOut')}
-        />
-        <Controller
-          name="platformOut"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Dropdown
-              id={field.name}
-              placeholder="Platform"
-              value={field.value}
-              onChange={(e) => field.onChange(e.value)}
-              options={platforms}
-              optionLabel="name"
-            />
-          )}
-        />
-        <Controller
-          name="completionOut"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Dropdown
-              id={field.name}
-              placeholder="Completion"
-              value={field.value}
-              onChange={(e) => field.onChange(e.value)}
-              options={completions}
-              optionLabel="name"
-            />
-          )}
-        />
-        <InputText
-          placeholder="Score"
-          className="p-inputtext-sm"
-          {...register('scoreOut')}
-        />
-      </div>
+      
       <div className="mt-2 flex flex-row-reverse">
         <Button type="submit" className="filter-button pink-button" label="Filter" />
       </div>
