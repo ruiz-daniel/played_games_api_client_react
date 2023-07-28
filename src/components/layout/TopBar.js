@@ -5,8 +5,8 @@ import { useUser } from '../../hooks/useUser'
 import { Toolbar } from 'primereact/toolbar'
 import { Avatar } from 'primereact/avatar'
 import { Menu } from 'primereact/menu'
-// import { Sidebar } from 'primereact/sidebar'
-// import SidebarContent from './SideBar'
+import { Sidebar } from 'primereact/sidebar'
+import SidebarContent from './SideBar'
 
 import { Link } from 'react-router-dom'
 import * as routes from '../../routes'
@@ -31,6 +31,7 @@ const TopBar = () => {
   }
   const handleLoginOrOut = () => {
     user?._id ? logout(() => {
+      toggleSideMenu(false)
       goHome()
     }) : navigator(routes.login)
     
@@ -102,14 +103,19 @@ const TopBar = () => {
   return (
     <div className="sticky-section">
       <Toolbar left={leftContents} right={rightContents} className="topbar" />
-      {/* <Sidebar
+      <Sidebar
         className="menu-sidebar"
         visible={sideMenu}
         onHide={() => toggleSideMenu(false)}
         showCloseIcon={false}
       >
-        <SidebarContent toggleSidebar={toggleSideMenu} />
-      </Sidebar> */}
+        <SidebarContent 
+          toggleSidebar={toggleSideMenu} 
+          user={user} 
+          handleLogInOrOut={handleLoginOrOut}
+          goToDashboard={goToDashboard} 
+        />
+      </Sidebar>
     </div>
   )
 }
