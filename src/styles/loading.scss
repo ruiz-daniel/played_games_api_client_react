@@ -1,8 +1,6 @@
 .Loading-template {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+    position: absolute !important;
+    top: 40vh !important;
     .loading-icon {
         font-size: 40px;
         font-weight: 600;
