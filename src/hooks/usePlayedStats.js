@@ -1,8 +1,23 @@
-import { usePlayedGames } from "./usePlayedGames";
+import { useEffect, useState } from "react";
+import PlayedGamesApi from "../services/PlayedGamesApi";
+import { useLoading } from "./useLoading";
 
 export function usePlayedStats() {
 
-  const { games, localFilter, externalFilter } = usePlayedGames()
+  const [stats, setStats] = useState()
+  const { setLoading } = useLoading()
 
-  return { games, localFilter, externalFilter }
+  useEffect(() => {
+    setLoading(true)
+    PlayedGamesApi.getStats(
+      localStorage.getItem('userid'),
+      (response) => {
+        setLoading(false)
+        setStats(response.data)
+      }
+    )
+  },[])
+
+  return { stats }
+  
 }

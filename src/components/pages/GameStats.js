@@ -1,15 +1,10 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect } from 'react'
-import { usePlayedGames } from '../../hooks/usePlayedGames'
-import { useToggle } from '../../hooks/useToggle'
 import { Chart } from 'primereact/chart'
-import FilterForm from '../utils/forms/FilterForm'
-import { Sidebar } from 'primereact/sidebar'
-import { Button } from 'primereact/button'
+import { usePlayedStats } from '../../hooks/usePlayedStats'
 
 const GameStats = () => {
-  const { games, externalFilter, resetFilter } = usePlayedGames()
-  const { toggleValue, toggle } = useToggle()
+  const { stats } = usePlayedStats()
   const [total_games, setTotalGames] = useState()
   const [avg_score, setAvgScore] = useState(0)
   const color = '#fbfaf8'
@@ -55,27 +50,15 @@ const GameStats = () => {
   })
 
   useEffect(() => {
-    setTotalGames(games?.length || 0)
-    getStats(games)
-    getCompletionStats(games.length)
-    setBarChartStats()
+    if (stats) {
+      setTotalGames(stats.totalGames)
+      getCompletionStats()
+      setBarChartStats()
+      getAvgScore()
+    }
+    
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [games])
-
-  // VARIABLES FOR DATA
-  let completed = 0
-  let dropped = 0
-  let na = 0
-  let online = 0
-  let onHold = 0
-
-  let playedYearDatasets = {}
-  let yearDatasets = {}
-  let platformDatasets = {}
-  let scoreDatasets = {}
-  let genreDatasets = {}
-  let developerDataset = {}
-  let publisherDataset = {}
+  }, [stats])
 
   const completionOptions = {
     plugins: {
@@ -156,137 +139,28 @@ const GameStats = () => {
     },
   }
 
-  const getAvgScore = (data) => {
+  const getAvgScore = () => {
     let totalScore = 0
-    Object.keys(scoreDatasets).forEach((key) => {
-      totalScore += scoreDatasets[key] * Number(key)
+    Object.keys(stats.scoreDatasets).forEach((key) => {
+      totalScore += stats.scoreDatasets[key] * Number(key)
     })
-    setAvgScore(totalScore / data.length)
+    setAvgScore(totalScore / stats.totalGames)
   }
 
-  const getStats = (data) => {
-    data.forEach((element) => {
-      // COMPLETION
-      if (element.completion) {
-        switch (element.completion.name) {
-          case 'Completed':
-            completed++
-            break;
-          case 'Replaying':
-            completed++
-            break
-          case 'Dropped':
-            dropped++
-            break
-          case 'N/A':
-            na++
-            break
-          case 'Online':
-            online++
-            break
-          case 'On Hold':
-            onHold++
-            break
-          default:
-            break;
-        }
-      }
+  const getCompletionStats = () => {
+    let total_games = stats.totalGames
+    let replaying = stats.completionDatasets.Replaying
+    let completed = stats.completionDatasets.Completed + replaying
+    let dropped = stats.completionDatasets.Dropped
+    let na = stats.completionDatasets['N/A']
+    let online = stats.completionDatasets.Online
+    let onHold = stats.completionDatasets['On Hold']
 
-      // PLATFORMS
-      if (
-        element.platform &&
-        platformDatasets[element.platform.short_name] == undefined
-      ) {
-        platformDatasets[element.platform.short_name] = 1
-      } else if (
-        element.platform &&
-        platformDatasets[element.platform.short_name] >= 1
-      ) {
-        platformDatasets[element.platform.short_name]++
-      }
-
-      // YEARS
-      if (
-        element.release_year &&
-        yearDatasets[element.release_year.toString()] == undefined
-      ) {
-        yearDatasets[element.release_year.toString()] = 1
-      } else if (
-        element.release_year &&
-        yearDatasets[element.release_year.toString()] >= 1
-      ) {
-        yearDatasets[element.release_year.toString()]++
-      }
-
-      // PLAYED YEAR
-      if (
-        element.played_year &&
-        playedYearDatasets[element.played_year.toString()] == undefined
-      ) {
-        playedYearDatasets[element.played_year.toString()] = 1
-      } else if (
-        element.played_year &&
-        playedYearDatasets[element.played_year.toString()] >= 1
-      ) {
-        playedYearDatasets[element.played_year.toString()]++
-      }
-
-      // SCORES
-      if (
-        element.score &&
-        scoreDatasets[element.score.toString()] == undefined
-      ) {
-        scoreDatasets[element.score.toString()] = 1
-      } else if (
-        element.score &&
-        scoreDatasets[element.score.toString()] >= 1
-      ) {
-        scoreDatasets[element.score.toString()]++
-      }
-
-      // GENRES
-      if (element.genres?.length) {
-        element.genres.forEach((genre) => {
-          if (genreDatasets[genre] == undefined) {
-            genreDatasets[genre] = 1
-          } else if (genreDatasets[genre] >= 1) {
-            genreDatasets[genre]++
-          }
-        })
-      }
-
-      // DEVELOPER
-      if (element.developers?.length) {
-        element.developers.forEach((developer) => {
-          if (developerDataset[developer] == undefined) {
-            developerDataset[developer] = 1
-          } else if (developerDataset[developer] >= 1) {
-            developerDataset[developer]++
-          }
-        })
-      }
-
-      // PUBLISHER
-      if (element.publishers?.length) {
-        element.publishers.forEach((publisher) => {
-          if (publisherDataset[publisher] == undefined) {
-            publisherDataset[publisher] = 1
-          } else if (publisherDataset[publisher] >= 1) {
-            publisherDataset[publisher]++
-          }
-        })
-      }
-    })
-
-    getAvgScore(data)
-  }
-
-  const getCompletionStats = (total_games) => {
     setcompletionChart({
       labels: ['Completed', 'Online', 'Dropped', 'On Hold', 'N/A'],
       datasets: [
         {
-          data: [completed, online, dropped, onHold, na],
+          data: [ completed, online, dropped, onHold, na ],
           backgroundColor: ['#12c941', '#ffff00', '#d71c2f', '#fea604', '#2196f3'],
           hoverBackgroundColor: ['#12b13a', '#d4d401', '#c51d2e', '#e39506', '#2196f3'],
         },
@@ -325,87 +199,87 @@ const GameStats = () => {
 
   const setBarChartStats = () => {
     setPlatformChart({
-      labels: Object.keys(platformDatasets),
+      labels: Object.keys(stats.platformDatasets),
       datasets: [
         {
           label: 'Games per Platform',
           backgroundColor: '#42A5F5',
-          data: Object.values(platformDatasets),
+          data: Object.values(stats.platformDatasets),
         },
       ],
     })
     setYearsChart({
-      labels: Object.keys(yearDatasets),
+      labels: Object.keys(stats.yearDatasets),
       datasets: [
         {
           type: 'bar',
           label: 'Games per Year',
           backgroundColor: '#d8e00d',
-          data: Object.values(yearDatasets),
+          data: Object.values(stats.yearDatasets),
         },
       ],
     })
     setScoresChart({
-      labels: Object.keys(scoreDatasets),
+      labels: Object.keys(stats.scoreDatasets),
       datasets: [
         {
           label: 'Games per Score',
           backgroundColor: '#13cf46',
-          data: Object.values(scoreDatasets),
+          data: Object.values(stats.scoreDatasets),
         },
       ],
     })
     setPlayedYearStats({
-      labels: Object.keys(playedYearDatasets),
+      labels: Object.keys(stats.playedYearDatasets),
       datasets: [
         {
           label: 'Games per Played Year',
           backgroundColor: '#bd0f75',
-          data: Object.values(playedYearDatasets),
+          data: Object.values(stats.playedYearDatasets),
         },
       ],
     })
     setGenreStats({
-      labels: Object.keys(genreDatasets).filter(
-        (key) => genreDatasets[key] > 1,
-      ).sort((a,b) => genreDatasets[b] - genreDatasets[a]),
+      labels: Object.keys(stats.genreDatasets).filter(
+        (key) => stats.genreDatasets[key] > 1,
+      ).sort((a,b) => stats.genreDatasets[b] - stats.genreDatasets[a]),
       datasets: [
         {
           label: 'Games per Genre (more than 1)',
           backgroundColor: '#00cbcb',
-          data: Object.values(genreDatasets).filter((value) => value > 1).sort((a,b) => b - a),
+          data: Object.values(stats.genreDatasets).filter((value) => value > 1).sort((a,b) => b - a),
         },
       ],
     })
     setDeveloperChart({
-      labels: Object.keys(developerDataset).filter(
-        (key) => developerDataset[key] > 1,
-      ).sort((a,b) => developerDataset[b] - developerDataset[a]),
+      labels: Object.keys(stats.developerDataset).filter(
+        (key) => stats.developerDataset[key] > 1,
+      ).sort((a,b) => stats.developerDataset[b] - stats.developerDataset[a]),
       datasets: [
         {
           label: 'Games per Developer (more than 1)',
           backgroundColor: '#ff0042',
-          data: Object.values(developerDataset).filter((value) => value > 1).sort((a,b) => b - a),
+          data: Object.values(stats.developerDataset).filter((value) => value > 1).sort((a,b) => b - a),
         },
       ],
     })
     setPublisherChart({
-      labels: Object.keys(publisherDataset).filter(
-        (key) => publisherDataset[key] > 1,
-      ).sort((a,b) => publisherDataset[b] - publisherDataset[a]),
+      labels: Object.keys(stats.publisherDataset).filter(
+        (key) => stats.publisherDataset[key] > 1,
+      ).sort((a,b) => stats.publisherDataset[b] - stats.publisherDataset[a]),
       datasets: [
         {
           label: 'Games per Publisher (more than 1)',
           backgroundColor: '#155495',
-          data: Object.values(publisherDataset).filter((value) => value > 1).sort((a,b) => b - a),
+          data: Object.values(stats.publisherDataset).filter((value) => value > 1).sort((a,b) => b - a),
         },
       ],
     })
   }
 
   return (
-    <div className="stats-wrapper">
-      <Sidebar
+    <div className="stats-wrapper px-3">
+      {/* <Sidebar
         visible={toggleValue}
         position="right"
         showCloseIcon={false}
@@ -414,13 +288,12 @@ const GameStats = () => {
       >
         <FilterForm
           onSubmit={(data) => {
-            externalFilter(data)
             toggle()
           }}
         />
-      </Sidebar>
+      </Sidebar> */}
       <h1>Played Games Stats</h1>
-      <div className='flex gap-4'>
+      {/* <div className='flex gap-4'>
         <Button
           icon="pi pi-filter"
           label="Advanced Filter"
@@ -433,7 +306,7 @@ const GameStats = () => {
           onMouseLeave={(e) => e.target.blur()}
           onTouchEnd={(e) => e.target.blur()}
         />
-      </div>
+      </div> */}
       
       <div className="text-center mb-5">
         <h3>Total played games: {total_games}</h3>

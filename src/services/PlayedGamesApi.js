@@ -93,6 +93,19 @@ export default {
         callback(response)
       })
   },
+  getStats(userid, callback) {
+    apiClient
+      .request({
+        method: 'get',
+        url: `PlayedGames/stats/${userid}`
+      })
+      .then((response) => {
+        callback(response)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  },
   getUserGamesInfo(userid, callback, errorFunction) {
     apiClient
       .request({
