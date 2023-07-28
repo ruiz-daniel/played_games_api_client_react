@@ -4,9 +4,7 @@ import { Chart } from 'primereact/chart'
 import { usePlayedStats } from '../../hooks/usePlayedStats'
 
 const GameStats = () => {
-  const { stats } = usePlayedStats()
-  const [total_games, setTotalGames] = useState()
-  const [avg_score, setAvgScore] = useState(0)
+  const { stats, totalGames, avgScore } = usePlayedStats()
   const color = '#fbfaf8'
   const [completionChart, setcompletionChart] = useState({
     labels: [],
@@ -51,10 +49,8 @@ const GameStats = () => {
 
   useEffect(() => {
     if (stats) {
-      setTotalGames(stats.totalGames)
       getCompletionStats()
       setBarChartStats()
-      getAvgScore()
     }
     
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -137,14 +133,6 @@ const GameStats = () => {
         },
       },
     },
-  }
-
-  const getAvgScore = () => {
-    let totalScore = 0
-    Object.keys(stats.scoreDatasets).forEach((key) => {
-      totalScore += stats.scoreDatasets[key] * Number(key)
-    })
-    setAvgScore(totalScore / stats.totalGames)
   }
 
   const getCompletionStats = () => {
@@ -309,8 +297,8 @@ const GameStats = () => {
       </div> */}
       
       <div className="text-center mb-5">
-        <h3>Total played games: {total_games}</h3>
-        <h3>Avg Score: {avg_score.toFixed(2)}</h3>
+        <h3>Total played games: {totalGames}</h3>
+        <h3>Avg Score: {avgScore.toFixed(2)}</h3>
       </div>
       <div className="flex flex-wrap justify-content-evenly stats-item stats-pie">
         <Chart type="pie" data={completionChart} options={completionOptions} />
