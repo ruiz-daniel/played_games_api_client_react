@@ -16,7 +16,7 @@ export function LoadingProvider({children}) {
     
     return (
         <LoadingContext.Provider value={{setLoading}}>
-            <BlockUI blocked={loading} template={template}>
+            <BlockUI blocked={loading} template={template} fullScreen>
                 {children}
             </BlockUI>
         </LoadingContext.Provider>
