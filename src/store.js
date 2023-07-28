@@ -21,15 +21,15 @@ const playedGamesSlice = createSlice({
         game._id === newGame._id ? newGame : game
       )
       return {
+        ...state,
         games: updatedList,
-        ...state
       }
     },
     removeGame(state, action) {
       return {
+        ...state,
         games: state.games.filter(game => game._id !== action.payload._id),
         max: state.max - 1,
-        ...state
       }
     }
   }
