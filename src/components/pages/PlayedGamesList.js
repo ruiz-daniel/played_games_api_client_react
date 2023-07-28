@@ -14,7 +14,7 @@ const PlayedGamesList = () => {
   const onScrollEnd = (e) => {
     const { clientHeight, scrollHeight, scrollTop} = e.target
     // take the integer part cause sometimes the number isn't exact
-    if ((scrollHeight - parseInt(scrollTop)) === clientHeight && games.length < max) {
+    if ((scrollHeight - parseInt(scrollTop)) <= clientHeight + 10 && games.length < max) {
       getGames(Number(page) + 1)
     }
   }

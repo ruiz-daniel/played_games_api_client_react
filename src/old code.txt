@@ -105,3 +105,9 @@ Filter Out JSX
           {...register('scoreOut')}
         />
       </div>
+
+      Debug scroll
+
+      console.log('scrollHeight', scrollHeight)
+      console.log('scrollTop', scrollTop)
+      console.log('clientHeight', clientHeight)
