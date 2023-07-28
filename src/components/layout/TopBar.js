@@ -22,10 +22,6 @@ const TopBar = () => {
 
   // var isMobile = navigator.userAgent.toLowerCase().match(/mobile/i)
 
-  const handleLogoClick = () => {
-    navigator(routes.home)
-  }
-
   const goToDashboard = () => {
     user?._id &&  navigator(routes.dashboard)
   }
@@ -62,7 +58,7 @@ const TopBar = () => {
             <i className="pi pi-bars" />
           </div>
         }
-        <h2 className="logo" onClick={handleLogoClick}>
+        <h2 className="logo">
           My Game Shelf
         </h2>
 
