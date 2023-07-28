@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable eqeqeq */
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
