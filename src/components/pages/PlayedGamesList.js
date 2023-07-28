@@ -3,7 +3,6 @@ import { useToggle } from '../../hooks/useToggle'
 
 import FilterForm from '../utils/forms/FilterForm'
 import { Sidebar } from 'primereact/sidebar'
-import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
 import GamesList from '../utils/lists/GamesList'
 
@@ -15,7 +14,7 @@ const PlayedGamesList = () => {
   const onScrollEnd = (e) => {
     const { clientHeight, scrollHeight, scrollTop} = e.target
     // take the integer part cause sometimes the number isn't exact
-    if (parseInt(scrollHeight - scrollTop) === clientHeight && games.length < max) {
+    if ((scrollHeight - parseInt(scrollTop)) === clientHeight && games.length < max) {
       getGames(Number(page) + 1)
     }
   }
