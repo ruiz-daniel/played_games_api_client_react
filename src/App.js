@@ -27,12 +27,12 @@ import { LoadingProvider } from './contexts/loading'
 function App() {
   return (
     <Router>
-      <UserProvider>
-        <TopBar />
-        <div className="content-container">
-          {
-            <MessagesProvider>
-              <LoadingProvider>
+      <LoadingProvider>
+        <UserProvider>
+          <TopBar />
+          <div className="content-container">
+            {
+              <MessagesProvider>
                 <Routes>
                   <Route path={routes.home} element={<Home />} />
                   <Route path={routes.dashboard} element={<Dashboard />} />
@@ -43,11 +43,11 @@ function App() {
                   <Route path={routes.gamedetails} element={<GameDetails />} />
                   <Route path={routes.uploadgame} element={<UploadGame />} />
                 </Routes>
-              </LoadingProvider>
-            </MessagesProvider>
-          }
-        </div>
-      </UserProvider>
+              </MessagesProvider>
+            }
+          </div>
+        </UserProvider>
+      </LoadingProvider>
     </Router>
   )
 }
