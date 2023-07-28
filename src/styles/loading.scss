@@ -1,0 +1,11 @@
+.Loading-template {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .loading-icon {
+        font-size: 40px;
+        font-weight: 600;
+        color: $text-color-silver;
+    }
+}

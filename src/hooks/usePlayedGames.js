@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useMessages } from "./useMessages";
 import api from '../services/IApi'
+import { useLoading } from "./useLoading";
 
 export function usePlayedGames() {
   const dispatch = useDispatch()
@@ -11,6 +12,7 @@ export function usePlayedGames() {
   const max = useSelector((state) => state.playedGames.max)
   const [filterData, setFilterData] = useState()
   const { message } = useMessages()
+  const { setLoading } = useLoading()
 
   // Store Actions...............................
   const setGamesAction = (data) => {
@@ -40,12 +42,14 @@ export function usePlayedGames() {
   //...............................................
 
   const getGames = (page, callback) => {
+    setLoading(true)
     api.PlayedGamesApi.getPlayedGames(
       localStorage.getItem('userid'),
       page,
       50,
       filterData,
       (response) => {
+        setLoading(false)
         setGamesAction({
           games: response.data.games,
           page: response.data.page,
