@@ -29,6 +29,14 @@
       top: 1px;
       font-size: 28px;
     }
+    .favorite-icon {
+      position: absolute;
+      left: 5px;
+      top: 10px;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 9999;
+    }
     img {
       opacity: 1;
       width: 100%;
