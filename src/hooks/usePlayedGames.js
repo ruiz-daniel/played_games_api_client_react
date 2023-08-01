@@ -58,6 +58,7 @@ export function usePlayedGames() {
         })
       },
       (error) => {
+        setLoading(false)
         if (error.response.status === 403 || error.response.status === 401) {
           message('warn', 'Session Expired. Please Login')
         } else {
