@@ -122,18 +122,3 @@ body {
     box-shadow: none !important;
   }
 }
-
-.custom-scrolltop {
-  background-color: $background-color-purple !important;
-  @include removeFocusBorder;
-}
-.custom-scrolltop:hover {
-  background-color: darken(
-    $color: $background-color-purple,
-    $amount: 20
-  ) !important;
-}
-.custom-scrolltop .p-scrolltop-icon {
-  font-size: 1rem;
-  color: white;
-}
