@@ -1,6 +1,4 @@
 .game-box-container {
-  position: relative;
-
   .game-box-img {
     &:hover {
       .game-details-panel {
@@ -9,11 +7,11 @@
       img {
         opacity: 0.5;
       }
+      .favorite-icon {
+        opacity: 1;
+      }
     }
-    cursor: pointer;
-    width: 300px !important;
-    margin-right: 5px;
-    margin-bottom: 15px;
+    width: 100%;
     position: relative;
     .status {
       position: absolute;
@@ -35,16 +33,18 @@
       top: 10px;
       font-size: 20px;
       cursor: pointer;
-      z-index: 9999;
+      transition: 0.5s ease;
+      opacity: 0;
     }
     img {
       opacity: 1;
       width: 100%;
-      height: 150px;
       transition: 0.5s ease;
       backface-visibility: hidden;
+      border-radius: 15px;
     }
     .game-details-panel {
+      cursor: pointer;
       transition: 0.5s ease;
       opacity: 0;
       position: absolute;
