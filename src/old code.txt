@@ -111,3 +111,20 @@ Filter Out JSX
       console.log('scrollHeight', scrollHeight)
       console.log('scrollTop', scrollTop)
       console.log('clientHeight', clientHeight)
+
+
+
+
+      <div className="game-details-buttons flex justify-content-end gap-3 mt-2">
+        <Button
+          icon='pi pi-pencil'
+          className="p-button-outlined p-button-rounded p-button-warning edit-button"
+          onClick={editing.toggle}
+        />
+        <Button
+          icon="pi pi-trash"
+          className="p-button-rounded p-button-outlined p-button-danger delete-button"
+          onClick={confirm}
+        />
+        <ConfirmDialog />
+      </div>
