@@ -59,8 +59,6 @@ const GameDetails = () => {
         </Dialog>
         <GameImageViewer game={game} handleImagesSubmit={handleImagesSubmit}  />
         <GameInfo game={game} />
-
-        
       </div>}
     </>
   )

@@ -49,7 +49,7 @@ function GameInfo({ game }) {
           />
         )}
       </section>
-      <section className="flex flex-column align-items-center px-4" style={{textAlign: 'center'}}>
+      <section className="flex flex-column gap-4 align-items-center px-4 mt-3" style={{textAlign: 'center'}}>
         {game.developers?.length > 0 && (
         <p>
           Developed by <span>{game.developers.join(', ')}</span>
@@ -61,9 +61,16 @@ function GameInfo({ game }) {
           </p>
         )}
         {game.genres?.length > 0 && (
-          <div className="flex flex-wrap mb-3">
+          <div className="flex flex-wrap gap-3">
             {game.genres.map((genre) => (
-              <Chip key={genre} className="mr-2" label={genre} />
+              <Chip key={genre} label={genre} />
+            ))}{' '}
+          </div>
+        )}
+        {game.tags?.length > 0 && (
+          <div className="flex flex-wrap gap-3">
+            {game.tags.map((tag) => (
+              <Chip key={tag} label={tag} />
             ))}{' '}
           </div>
         )}
