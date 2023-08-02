@@ -1,32 +1,14 @@
 .game-details-wrapper {
   @include paddingX(3%);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 
   .p-dialog,
   .p-dialog-content {
     background: none;
   }
 
-  .game-details-image {
-    width: 100%;
-
-    .p-image,
-    .game-details-buttons {
-      @include respond(tab-land) {
-        width: 100%;
-      }
-      @include respond(desktop) {
-        width: 60%;
-      }
-      @include respond(big-desktop) {
-        width: 40%;
-      }
-    }
-
-    .p-image-preview-indicator,
-    img {
-      width: 100%;
-    }
-  }
   .game-details-fields {
     text-align: start;
     p {
@@ -34,9 +16,6 @@
     }
     span {
       font-weight: 700;
-    }
-    .score {
-      font-weight: 900;
     }
     .game-details-info-box {
       width: 100%;
