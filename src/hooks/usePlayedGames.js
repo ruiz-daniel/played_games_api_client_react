@@ -153,7 +153,11 @@ export function usePlayedGames() {
     })
   }
 
-  const updateGame = (game, callback) => {
+  const updateGame = async (game, callback) => {
+    if (game.images) {
+      await handleImages(game.images, game)
+      delete game.images
+    }
     api.PlayedGamesApi.patchPlayedGame(game, (response) => {
       message('info', "Game Updated Successfully")
       updateGameAction(response.data)
