@@ -46,7 +46,7 @@ const GameDetails = () => {
   
   return (
     <>
-      {game && <div className="game-details-wrapper">
+      {game && <div className="flex flex-column gap-4 px-3">
         <Dialog
           visible={editing.toggleValue}
           showHeader={false}
