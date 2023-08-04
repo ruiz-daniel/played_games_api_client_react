@@ -27,12 +27,24 @@ const GameImageViewer = ({ game, handleImagesSubmit, style }) => {
         <h2>{game.name}</h2>
       </section>
       <section className="flex justify-content-center">
-        <Image 
-          src={game.cover || no_cover} 
-          alt={game.name} 
-          preview 
-          width={containerStyles.width} height="300" 
-        />
+        {view === 'cover' && 
+          <Image 
+            src={game.cover || no_cover} 
+            alt={game.name} 
+            preview 
+            width={containerStyles.width}
+            height={ window.matchMedia("(max-width: 600px)").matches ? 200 : 300 }
+          />
+        }
+        {view === 'cover-box' && 
+          <Image 
+            src={game.cover_box || game.cover || no_cover} 
+            alt={game.name} 
+            preview 
+            width={200}
+            height={ 400 }
+          />
+        }
       </section>
       <section className="flex justify-content-center gap-3">
         <Button
