@@ -1,18 +1,52 @@
 import { Image } from "primereact/image"
 import { Button } from "primereact/button"
 import { Dialog } from 'primereact/dialog'
+import { Galleria } from 'primereact/galleria';
 import GameImages from "../forms/GameImages"
 import  no_cover  from '../../../images/no-cover.jpg'
 import { useToggle } from "../../../hooks/useToggle"
 import { useState } from "react"
+import { usePlayedGames } from "../../../hooks/usePlayedGames";
 
-const GameImageViewer = ({ game, handleImagesSubmit, style }) => {
+const GameImageViewer = ({ game, style }) => {
+  const { updateGame } = usePlayedGames()
   const {toggle, toggleValue} = useToggle()
   const [view, setView] = useState('cover')
   const containerStyles = {
     width: '100%',
     ...style
   }
+  const galleryResponsiveOptions = [
+      {
+          breakpoint: '991px',
+          numVisible: 4
+      },
+      {
+          breakpoint: '767px',
+          numVisible: 3
+      },
+      {
+          breakpoint: '575px',
+          numVisible: 1
+      }
+  ];
+
+  const itemTemplate = (item) => {
+        return <img src={item} alt={game.name} height={window.matchMedia("(max-width: 600px)").matches ? 200 : 300} />
+  }
+
+  const thumbnailTemplate = (item) => {
+      return <img src={item} alt={game.name} width={150} height={80} />
+  }
+
+  const handleImagesSubmit = (data) => {
+    updateGame({
+      _id: game._id,
+      images: data
+    })
+  }
+
+
   return (
     <div className="flex flex-column gap-2" style={containerStyles}>
       <Dialog 
@@ -44,6 +78,10 @@ const GameImageViewer = ({ game, handleImagesSubmit, style }) => {
             width={200}
             height={ 400 }
           />
+        }
+        {view === 'gallery' &&
+          <Galleria value={game.gallery || []} responsiveOptions={galleryResponsiveOptions} numVisible={4} style={{ maxWidth: containerStyles.width }} 
+                item={itemTemplate} thumbnail={thumbnailTemplate}/>
         }
       </section>
       <section className="flex justify-content-center gap-3">
