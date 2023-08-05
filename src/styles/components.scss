@@ -49,51 +49,6 @@
   }
 }
 
-.item {
-  margin-bottom: 2rem;
-  label {
-    @include fontSizeLarge;
-  }
-  input,
-  .p-inputtext,
-  .p-dropdown,
-  .p-inputtextarea,
-  .p-chips {
-    margin-top: 5px;
-    @include darkInput();
-
-    &:focus,
-    &:hover {
-      box-shadow: none !important;
-      border-color: $text-color-silver !important;
-    }
-
-    .p-inputtext {
-      text-align: start;
-      @include darkInput();
-    }
-  }
-  .p-chips {
-    @include darkChips();
-  }
-
-  .p-fileupload {
-    .p-button {
-      margin-top: 10px;
-      @include blackButton;
-    }
-  }
-  .p-fileupload-buttonbar {
-    background-color: $background-transparent-darker;
-
-    span,
-    button {
-      background: $text-color-pink !important;
-      border-color: white;
-    }
-  }
-}
-
 .button-span {
   cursor: pointer;
   transition: all 300ms;
