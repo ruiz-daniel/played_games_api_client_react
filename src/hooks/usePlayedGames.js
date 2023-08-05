@@ -103,6 +103,7 @@ export function usePlayedGames() {
       name: data.name && { $regex: data.name },
       developers: data.developers && { $regex: data.developers },
       publishers: data.publishers && { $regex: data.publishers },
+      tags: data.tags && { $regex: data.tags },
     }
     // Handle played hours, years and score possible range for mongoose query
     handleRangeForQuery(data, filterData, 'played_hours', 'played_hours_min', 'played_hours_max')
