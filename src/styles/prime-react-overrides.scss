@@ -51,4 +51,24 @@
   .p-galleria-thumbnail-container {
     background: none;
   }
-} 
+}
+
+.p-tabview, .p-tabview-nav,
+.p-tabview-nav-link {
+  background-color: $background-color-dark !important;
+}
+.p-tabview-panels {
+  background-color: $background-color-dark !important;
+}
+.p-tabview-nav-link:focus {
+  box-shadow: none;
+  color: $text-color-pink !important;
+  border-color: $text-color-pink !important;
+}
+.p-tabview-nav-link:hover {
+  color: $text-color-pink !important;
+  border-color: $text-color-pink !important;
+}
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  color: $text-color-pink;
+}

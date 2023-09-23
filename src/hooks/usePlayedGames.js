@@ -128,11 +128,17 @@ export function usePlayedGames() {
   }
 
   const handleImages = async (images, game) => {
-    if (images?.cover) {
+    if (images?.coverURL) {
+      game.cover = images.coverURL;
+    }
+    else if (images?.cover) {
       const cover = await api.GeneralApi.uploadImage(images.cover)
       game.cover = cover.data
     }
-    if (images?.coverBox) {
+    if (images?.coverBoxURL) {
+      game.cover_box = images.coverBoxURL
+    }
+    else if (images?.coverBox) {
       const coverBox = await api.GeneralApi.uploadImage(images.coverBox)
       game.cover_box = coverBox.data
     }
