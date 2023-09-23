@@ -38,46 +38,52 @@ function GameImages({ onSubmit }) {
   }
 
   return (
-    <div className="p-4 flex flex-column gap-4">
-      <label>Cover</label>
-      <FileUpload
-        customUpload
-        mode="advanced"
-        auto
-        onRemove={() => setCover(null)}
-        multiple={false}
-        uploadHandler={coverUpload}
-        accept="image/*"
-        chooseLabel="Select File"
-      />
-      <label>Box Cover</label>
-      <FileUpload
-        customUpload
-        mode="advanced"
-        auto
-        onRemove={() => setCoverBox(null)}
-        multiple={false}
-        uploadHandler={coverBoxUpload}
-        accept="image/*"
-        chooseLabel="Select File"
-      />
-      <label>Gallery</label>
-      <FileUpload
-        customUpload
-        mode="advanced"
-        multiple={true}
-        auto
-        onRemove={removeFromGallery}
-        uploadHandler={galleryUpload}
-        accept="image/*"
-        chooseLabel="Select Files"
-      />
-
+    <div className="p-4 game-form">
+      <div className="game-form-item">
+        <label>Cover</label>
+        <FileUpload
+          customUpload
+          mode="advanced"
+          auto
+          onRemove={() => setCover(null)}
+          multiple={false}
+          uploadHandler={coverUpload}
+          accept="image/*"
+          chooseLabel="Select File"
+        />
+      </div>
+      <div className="game-form-item">
+        <label>Box Cover</label>
+        <FileUpload
+          customUpload
+          mode="advanced"
+          auto
+          onRemove={() => setCoverBox(null)}
+          multiple={false}
+          uploadHandler={coverBoxUpload}
+          accept="image/*"
+          chooseLabel="Select File"
+        />
+      </div>
+      <div className="game-form-item">
+        <label>Gallery</label>
+        <FileUpload
+          customUpload
+          mode="advanced"
+          multiple={true}
+          auto
+          onRemove={removeFromGallery}
+          uploadHandler={galleryUpload}
+          accept="image/*"
+          chooseLabel="Select Files"
+        />
+      </div>
+      <div className="game-form-item"></div>
       <div className="flex p-3">
         <Button className="pink-button" label="Submit" onClick={handleSubmit} />
       </div>
     </div>
-  )
+  );
   
 }
 

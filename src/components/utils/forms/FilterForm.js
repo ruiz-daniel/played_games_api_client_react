@@ -12,8 +12,8 @@ const FilterForm = ({ onSubmit }) => {
   const { completions } = useCompletions()
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="game-form flex flex-column gap-3" style={{height: '100%'}}>
-      <div className="game-form-item flex flex-column gap-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="game-form">
+      <div className="game-form-item">
         <h3> Filters </h3>
         <InputText
           placeholder="Name"
