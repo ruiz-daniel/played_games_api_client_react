@@ -30,11 +30,16 @@
 .p-dialog-content {
   border-radius: 0 !important;
 }
-.p-dialog-header {
+.p-dialog-header,
+.p-dialog-content,
+.p-dialog-footer,
+.p-sidebar-content {
   background-color: $background-color-dark !important;
   color: white !important;
 }
-
+.p-dialog-footer {
+  padding: 1.5rem !important;
+}
 .p-focus {
   box-shadow: none !important;
 }

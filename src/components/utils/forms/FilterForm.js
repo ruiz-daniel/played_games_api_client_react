@@ -13,7 +13,7 @@ const FilterForm = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="game-form">
-      <div className="game-form-item">
+      <div className="game-form-item gap-3">
         <h3> Filters </h3>
         <InputText
           placeholder="Name"
