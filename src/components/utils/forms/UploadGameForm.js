@@ -259,7 +259,7 @@ const UploadGameForm = ({ onSubmit }) => {
             label="Upload"
             type="submit"
             icon="pi pi-upload"
-            className="p-button-outlined edit-button"
+            className="blue-button"
           />
         </div>
       </form>

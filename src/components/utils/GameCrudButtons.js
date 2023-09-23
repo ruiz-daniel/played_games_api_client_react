@@ -44,13 +44,13 @@ const GameCrudButtons = ({game, mode = 'basic'}) => {
         <Button
           icon='pi pi-pencil'
           label="Edit Game"
-          className="p-button-outlined p-button-warning edit-button"
+          className="p-button-outlined edit-button"
           onClick={toggle}
         />
         <Button
           icon="pi pi-trash"
           label="Delete Game"
-          className=" p-button-outlined p-button-danger delete-button"
+          className=" p-button-outlined delete-button"
           onClick={confirm}
         />
         <ConfirmDialog />

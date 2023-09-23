@@ -18,11 +18,4 @@
   .p-panel-header {
     @include darkBackground();
   }
-
-  .upload-button {
-    border-radius: 5px;
-    @include purpleButton;
-    width: 30%;
-    align-self: center;
-  }
 }

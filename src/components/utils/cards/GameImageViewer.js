@@ -57,7 +57,7 @@ const GameImageViewer = ({ game, style }) => {
         >
           <GameImages onSubmit={handleImagesSubmit} />
         </Dialog>
-      <section className="flex justify-content-center">
+      <section className="flex justify-content-center text-center">
         <h2>{game.name}</h2>
       </section>
       <section className="flex justify-content-center">
@@ -87,22 +87,22 @@ const GameImageViewer = ({ game, style }) => {
       <section className="flex justify-content-center gap-3">
         <Button
           icon='pi pi-image'
-          className="p-button-outlined p-button-rounded p-button-warning edit-button"
+          className="p-button-outlined p-button-rounded edit-button"
           onClick={() => setView('cover')}
         />
         <Button
           icon='pi pi-mobile'
-          className="p-button-outlined p-button-rounded p-button-warning edit-button"
+          className="p-button-outlined p-button-rounded edit-button"
           onClick={() => setView('cover-box')}
         />
         <Button
           icon='pi pi-images'
-          className="p-button-outlined p-button-rounded p-button-warning edit-button"
+          className="p-button-outlined p-button-rounded edit-button"
           onClick={() => setView('gallery')}
         />
         <Button
           icon='pi pi-file-edit'
-          className="p-button-outlined p-button-rounded p-button-warning edit-button"
+          className="p-button-outlined p-button-rounded edit-button"
           onClick={toggle}
         />
       </section>

@@ -4,20 +4,29 @@
 }
 
 .edit-button {
+    background-color: transparent;
+    color: #FBC02D !important;
   &:hover {
     background-color: $background-color-dark-yellow !important;
     color: white !important;
+    border-color: $background-color-dark-yellow !important;
   }
 }
 .delete-button {
+  background-color: transparent;
+  color: #D32F2F !important;
   &:hover {
     background-color: $text-color-red !important;
     color: white !important;
+    border-color: $text-color-red !important;
   }
 }
 
 .pink-button {
-  @include purpleButton();
+  @include colorButton($background-color-pink);
+}
+.blue-button {
+  @include colorButton($text-color-blue);
 }
 
 .extra-large-avatar {
