@@ -17,15 +17,15 @@ body {
 ::-webkit-scrollbar { width: 8px; height: 3px;} 
 ::-webkit-scrollbar-track {  background-color: #646464;}
 ::-webkit-scrollbar-track-piece { background-color: #000;}
-::-webkit-scrollbar-thumb { height: 50px; background-color: $text-color-purple; border-radius: 3px;}
+::-webkit-scrollbar-thumb { height: 50px; background-color: $gs-colors-purple; border-radius: 3px;}
 ::-webkit-resizer { background-color: #666;}
 
 .router-view {
-  color: $text-color-gold;
+  color: $text-color-yellow;
 }
 
 .list-selected {
-  color: $text-color-gold;
+  color: $text-color-yellow;
 }
 
 .filter-sidebar {

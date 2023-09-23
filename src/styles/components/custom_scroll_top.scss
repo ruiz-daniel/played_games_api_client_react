@@ -1,10 +1,10 @@
 .custom-scrolltop {
-  background-color: $background-color-purple !important;
+  background-color: $gs-colors-purple !important;
   @include removeFocusBorder;
 }
 .custom-scrolltop:hover {
   background-color: darken(
-    $color: $background-color-purple,
+    $color: $gs-colors-purple,
     $amount: 20
   ) !important;
 }

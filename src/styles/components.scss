@@ -46,7 +46,7 @@
 }
 .score-perfect {
   font-weight: 800;
-  color: $text-color-purple !important;
+  color: $gs-colors-purple !important;
 }
 
 .status {
@@ -57,20 +57,20 @@
 }
 
 .status-completed {
-  background-color: $status-color-completed;
+  background-color: $text-color-green;
 }
 .status-incomplete {
-  background-color: $status-color-incomplete;
+  background-color: $gs-colors-dark-yellow;
 }
 .status-dropped {
-  background-color: $status-color-dropped;
+  background-color: $text-color-red;
 }
 
 .pos-1 {
-  color: $text-color-gold;
+  color: $text-color-yellow;
 }
 .pos-2 {
-  color: $text-color-silver;
+  color: $gs-colors-silver;
 }
 .pos-3 {
   color: $text-color-bronze;

@@ -9,10 +9,10 @@
   background-color: black;
   color: white;
   &:hover {
-    background-color: $background-color-purple;
+    background-color: $gs-colors-purple;
   }
   &:focus {
-    background-color: $background-color-purple;
+    background-color: $gs-colors-purple;
     box-shadow: none;
   }
 }

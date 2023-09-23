@@ -1,18 +1,18 @@
 
 .pink-button {
-  @include colorButton($background-color-pink);
+  @include colorButton($gs-colors-pink);
 }
 .blue-button {
-  @include colorButton($text-color-blue);
+  @include colorButton($gs-colors-blue);
 }
 
 .edit-button {
     background-color: transparent;
     color: #FBC02D !important;
   &:hover {
-    background-color: $background-color-dark-yellow !important;
+    background-color: $gs-colors-dark-yellow !important;
     color: white !important;
-    border-color: $background-color-dark-yellow !important;
+    border-color: $gs-colors-dark-yellow !important;
   }
 }
 .delete-button {

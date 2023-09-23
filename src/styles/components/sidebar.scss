@@ -6,7 +6,7 @@
   a {
     width: 100%;
     text-align: center;
-    color: $text-color-purple;
+    color: $gs-colors-purple;
   }
 }
 
@@ -29,7 +29,7 @@
     cursor: pointer;
 
     &:hover {
-      color: $text-color-purple;
+      color: $gs-colors-purple;
     }
   }
 }
@@ -48,7 +48,7 @@
       width: 100%;
       color: $text-color-light;
       &:hover {
-        color: $text-color-gold;
+        color: $text-color-yellow;
       }
     }
   }
