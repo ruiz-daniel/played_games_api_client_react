@@ -1,0 +1,54 @@
+.p-toolbar {
+  border: none;
+}
+
+.p-scrollpanel-bar-y {
+  background-color: $text-color-purple !important;
+}
+
+.p-dialog-titlebar-close {
+  outline: none;
+  &:focus {
+    outline: none !important;
+  }
+}
+.p-dialog-content {
+  padding: 0 !important;
+}
+
+.p-dropdown-items-wrapper,
+.p-dropdown-items,
+.p-dropdown-item {
+  background-color: $background-color-dark;
+  color: white !important;
+}
+.p-dropdown-item {
+  &:hover {
+    background-color: $background-color-purple !important;
+  }
+}
+.p-dialog-content {
+  border-radius: 0 !important;
+}
+.p-dialog-header {
+  background-color: $background-color-dark !important;
+  color: white !important;
+}
+
+.p-focus {
+  box-shadow: none !important;
+}
+.p-inputtext,
+.p-dropdown,
+.p-chips,
+.p-button {
+  &:focus {
+    box-shadow: none !important;
+  }
+}
+
+.p-galleria {
+  .p-galleria-thumbnail-container {
+    background: none;
+  }
+} 
