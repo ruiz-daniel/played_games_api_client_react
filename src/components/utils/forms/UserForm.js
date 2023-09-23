@@ -22,10 +22,8 @@ function UserForm() {
   return (
     <>
       {user && (
-        <div className="dashboard-user-details">
-          <Card>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="item flex flex-column">
+            <form onSubmit={handleSubmit(onSubmit)} className='game-form' style={{width: '100%'}}>
+              <div className="game-form-item">
                 <label>Username</label>
                 <InputText
                   defaultValue={user.username}
@@ -33,7 +31,7 @@ function UserForm() {
                   {...register('username')}
                 />
               </div>
-              <div className="item flex flex-column">
+              <div className="game-form-item">
                 <label>Display Name</label>
                 <InputText
                   defaultValue={user.display_name}
@@ -43,14 +41,14 @@ function UserForm() {
                   <div className="error-message">Display Name is required</div>
                 )}
               </div>
-              <div className="item flex flex-column">
+              <div className="game-form-item">
                 <label>Email Address</label>
                 <InputText defaultValue={user.email} {...register('email')} />
               </div>
               {errors.email && (
                 <div className="error-message">Email is required</div>
               )}
-              <div className="item flex flex-row-reverse">
+              <div className="game-form-item flex flex-row-reverse">
                 <Button
                   label="Save Changes"
                   type="submit"
@@ -58,8 +56,6 @@ function UserForm() {
                 />
               </div>
             </form>
-          </Card>
-        </div>
       )}
     </>
   )

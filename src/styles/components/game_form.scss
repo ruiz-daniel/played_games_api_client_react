@@ -3,8 +3,15 @@
   @include paddingX(5%);
   @include paddingY(2%);
   color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 
   .game-form-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
     label {
       @include fontSizeLarge;
     }
