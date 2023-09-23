@@ -14,8 +14,8 @@ function Login() {
   }
 
   return (
-    <section className='flex justify-content-center' >
-      <div className='p-4 pb-6 mt-6' style={{width: '40%', boxShadow: '0 0.5rem 1rem 0 rgba(216, 118, 192, 0.3)'}}>
+    <section className='flex justify-content-center align-items-center' >
+      <div className='mt-6' style={{boxShadow: '0 0.5rem 1rem 0 rgba(216, 118, 192, 0.3)', width: '70%'}}>
         <LoginForm onSubmit={handleLogin} />
       </div>
     </section>
