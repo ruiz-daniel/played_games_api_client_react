@@ -55,7 +55,7 @@ function UserForm() {
             <Button
               label="Save Changes"
               type="submit"
-              className="button-span text-only-button"
+              className="pink-button"
             />
           </div>
         </form>

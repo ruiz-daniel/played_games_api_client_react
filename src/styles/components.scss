@@ -3,32 +3,6 @@
   @include darkInput();
 }
 
-.edit-button {
-    background-color: transparent;
-    color: #FBC02D !important;
-  &:hover {
-    background-color: $background-color-dark-yellow !important;
-    color: white !important;
-    border-color: $background-color-dark-yellow !important;
-  }
-}
-.delete-button {
-  background-color: transparent;
-  color: #D32F2F !important;
-  &:hover {
-    background-color: $text-color-red !important;
-    color: white !important;
-    border-color: $text-color-red !important;
-  }
-}
-
-.pink-button {
-  @include colorButton($background-color-pink);
-}
-.blue-button {
-  @include colorButton($text-color-blue);
-}
-
 .extra-large-avatar {
   width: 8rem !important;
   height: 8rem !important;
@@ -55,26 +29,6 @@
     .p-button-icon {
       margin-right: 0;
     }
-  }
-}
-
-.button-span {
-  cursor: pointer;
-  transition: all 300ms;
-
-  &:hover {
-    color: $text-color-pink !important;
-  }
-}
-
-.text-only-button {
-  background: none;
-  border: none;
-  padding: 0;
-  font-family: 'Roboto';
-
-  &:hover {
-    background: none !important;
   }
 }
 
