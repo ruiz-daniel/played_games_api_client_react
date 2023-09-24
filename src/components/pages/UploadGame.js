@@ -20,7 +20,7 @@ function UploadGame() {
   return (
     <div className="flex flex-column justify-content-center align-items-center">
       <h1>Upload Game</h1>
-      <div className="shadow-6" style={{width: '50%'}}>
+      <div className="upload-game-form-wrapper">
         <UploadGameForm onSubmit={onSubmit} />
       </div>
       
