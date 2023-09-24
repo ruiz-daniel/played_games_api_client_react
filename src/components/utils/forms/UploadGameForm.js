@@ -12,9 +12,10 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Chips } from "primereact/chips";
 import { Dialog } from "primereact/dialog";
 import GameImages from "./GameImages";
+import ImportFromSteam from "../lists/ImportFromSteam";
 
 const UploadGameForm = ({ onSubmit }) => {
-  const { platforms } = usePlatforms();
+  const { platforms, getPlatform } = usePlatforms();
   const { completions } = useCompletions();
   const { message } = useMessages();
   const {
@@ -22,10 +23,12 @@ const UploadGameForm = ({ onSubmit }) => {
     handleSubmit,
     control,
     formState: { errors },
+    setValue,
   } = useForm({});
 
-  const { toggleValue, toggle } = useToggle();
+  const imagesDialogToggle = useToggle();
   const [images, setImages] = useState();
+  const steamDialogToggle = useToggle();
 
   const prepareSubmit = (data) => {
     if (images) {
@@ -36,20 +39,50 @@ const UploadGameForm = ({ onSubmit }) => {
 
   const handleImagesSubmit = (images) => {
     setImages(images);
-    toggle();
+    imagesDialogToggle.toggleOFF();
     message("info", "Saved Images");
   };
+
+  const handleImportFromSteam = (game) => {
+    setValue('name', game.title)
+    setValue('developers', [game.developer.name])
+    setValue('publishers', [game.publisher.name])
+    setValue('steam_page', game.steamURL)
+    setValue('release_year', game.released.slice(-4))
+    setValue('platform', getPlatform(null, 'PC'))
+    const image = {
+      coverURL: game.imgUrl
+    }
+    handleImagesSubmit(image)
+    steamDialogToggle.toggleOFF()
+  }
 
   return (
     <>
       <Dialog
         header="Game Images"
-        visible={toggleValue}
-        onHide={toggle}
+        visible={imagesDialogToggle.toggleValue}
+        onHide={imagesDialogToggle.toggle}
       >
         <GameImages onSubmit={handleImagesSubmit} />
       </Dialog>
+      <Dialog
+      header="Search your game on Steam"
+        onHide={steamDialogToggle.toggleOFF}
+        visible={steamDialogToggle.toggleValue}
+      >
+        <ImportFromSteam onSelect={handleImportFromSteam} />
+      </Dialog>
+
       <form onSubmit={handleSubmit(prepareSubmit)} className="game-form">
+        <Button 
+          className="black-button align-self-end" 
+          label="Import from Steam" 
+          onClick={steamDialogToggle.toggle} 
+          type="button" 
+          style={{width: 200}} 
+        />
+
         <div className="game-form-item text-center">
           <label htmlFor="gname">Name*</label>
           <InputText id="gname" {...register("name", { required: true })} />
@@ -252,7 +285,7 @@ const UploadGameForm = ({ onSubmit }) => {
             type="button"
             icon="pi pi-camera"
             className="pink-button"
-            onClick={toggle}
+            onClick={imagesDialogToggle.toggle}
           />
           <Button
             label="Upload"

@@ -5,6 +5,9 @@
 .blue-button {
   @include colorButton($gs-colors-blue);
 }
+.black-button {
+  @include blackButton()
+}
 
 .edit-button {
     background-color: transparent;
