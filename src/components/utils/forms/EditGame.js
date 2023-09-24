@@ -19,15 +19,13 @@ const EditGame = ({ game, onSubmit }) => {
   } = useForm({})
 
   return (
-    <div style={{ width: '100%' }}>
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <div
-          className="flex flex-column edit-game-form"
+          className="game-form"
           style={{ width: '100%' }}
         >
           <h2>Edit Game</h2>
-          <div className="item flex flex-column">
+          <div className="game-form-item">
             <label htmlFor="gname">Name*</label>
             <InputText
               id="gname"
@@ -38,7 +36,7 @@ const EditGame = ({ game, onSubmit }) => {
               <div className="error-message">Name is required</div>
             )}
           </div>
-          <div className="item flex flex-column">
+          <div className="game-form-item">
             <label htmlFor="gdev">Developers</label>
             <Controller
               name="developers"
@@ -55,7 +53,7 @@ const EditGame = ({ game, onSubmit }) => {
               )}
             />
           </div>
-          <div className="item flex flex-column">
+          <div className="game-form-item">
             <label htmlFor="gpub">Publisher</label>
             <Controller
               name="publishers"
@@ -72,7 +70,7 @@ const EditGame = ({ game, onSubmit }) => {
               )}
             />
           </div>
-          <div className="item flex flex-column">
+          <div className="game-form-item">
             <label htmlFor="gyear">Release Year</label>
             <InputText
               id="gyear"
@@ -85,7 +83,7 @@ const EditGame = ({ game, onSubmit }) => {
               <div className="error-message">Requires a valid year</div>
             )}
           </div>
-          <div className="item flex flex-column">
+          <div className="game-form-item">
             <label htmlFor="gplayedyear">Played Year</label>
             <InputText
               id="gplayedyear"
@@ -98,7 +96,7 @@ const EditGame = ({ game, onSubmit }) => {
               <div className="error-message">Requires a valid year</div>
             )}
           </div>
-          <div className="item flex flex-column">
+          <div className="game-form-item">
             <label htmlFor="ggenre">Genres</label>
             <Controller
               name="genres"
@@ -115,7 +113,7 @@ const EditGame = ({ game, onSubmit }) => {
               )}
             />
           </div>
-          <div className="item flex flex-column">
+          <div className="game-form-item">
             <label htmlFor="gtags">Tags</label>
             <Controller
               name="tags"
@@ -132,7 +130,7 @@ const EditGame = ({ game, onSubmit }) => {
               )}
             />
           </div>
-          <div className="item flex flex-column">
+          <div className="game-form-item">
             <label htmlFor="platform">Platform</label>
             <Controller
               name="platform"
@@ -149,7 +147,7 @@ const EditGame = ({ game, onSubmit }) => {
               )}
             />
           </div>
-          <div className="item flex flex-column">
+          <div className="game-form-item">
             <label htmlFor="status">Completion*</label>
             <Controller
               name="completion"
@@ -167,7 +165,7 @@ const EditGame = ({ game, onSubmit }) => {
               )}
             />
           </div>
-          <div className="item flex flex-column">
+          <div className="game-form-item">
             <label htmlFor="grating">Score</label>
             <InputText
               id="grating"
@@ -182,7 +180,7 @@ const EditGame = ({ game, onSubmit }) => {
               <div className="error-message">Requires a valid score</div>
             )}
           </div>
-          <div className="item flex flex-column">
+          <div className="game-form-item">
             <label htmlFor="ghours">Played Hours</label>
             <InputText
               id="ghours"
@@ -198,7 +196,7 @@ const EditGame = ({ game, onSubmit }) => {
               </div>
             )}
           </div>
-          <div className="item flex flex-column">
+          <div className="game-form-item">
             <label htmlFor="gsteam">Steam Page URL</label>
             <InputText
               id="gsteam"
@@ -206,7 +204,7 @@ const EditGame = ({ game, onSubmit }) => {
               {...register('steam_page')}
             />
           </div>
-          <div className="item flex flex-column">
+          <div className="game-form-item">
             <label htmlFor="gepic">Epic Store Page URL</label>
             <InputText
               id="gepic"
@@ -214,7 +212,7 @@ const EditGame = ({ game, onSubmit }) => {
               {...register('epic_page')}
             />
           </div>
-          <div className="item flex flex-column">
+          <div className="game-form-item">
             <label htmlFor="gdesc">Description (optional)</label>
             <InputTextarea
               id="gdesc"
@@ -225,17 +223,16 @@ const EditGame = ({ game, onSubmit }) => {
             />
           </div>
 
-          <div className="flex justify-content-end mt-2">
+          <div className="flex justify-content-end">
             <Button
               label="Upload"
               type="submit"
               icon="pi pi-upload"
-              className="p-button-outlined edit-button"
+              className="p-button-outlined"
             />
           </div>
         </div>
       </form>
-    </div>
   )
 }
 

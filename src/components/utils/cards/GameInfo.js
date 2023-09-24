@@ -4,25 +4,8 @@ import Status from '../../utils/status'
 
 function GameInfo({ game }) {
   return (
-    <div className="game-details-fields">
-      {game.developers?.length > 0 && (
-        <p>
-          Developed by <span>{game.developers.join(', ')}</span>
-        </p>
-      )}
-      {game.publishers?.length > 0 && (
-        <p>
-          Published by <span>{game.publishers.join(', ')}</span>
-        </p>
-      )}
-      {game.genres?.length > 0 && (
-        <div className="flex flex-wrap mb-3">
-          {game.genres.map((genre) => (
-            <Chip key={genre} className="mr-2" label={genre} />
-          ))}{' '}
-        </div>
-      )}
-      <div className="flex flex-wrap game-details-info-box">
+    <div className="game-info-container">
+      <section className="flex flex-wrap justify-content-center row-gap-3">
         {game?.platform && (
           <GameInfoBox
             type="platform"
@@ -65,14 +48,39 @@ function GameInfo({ game }) {
             game={game}
           />
         )}
-      </div>
-
-      {game.completion && (
+      </section>
+      <section className="flex flex-column gap-4 align-items-center px-4 mt-3" style={{textAlign: 'center'}}>
+        {game.developers?.length > 0 && (
         <p>
-          <Status status={game.completion.name} />
+          Developed by <span>{game.developers.join(', ')}</span>
         </p>
-      )}
-      {game.description && game.description !== '' && <p>{game.description}</p>}
+        )}
+        {game.publishers?.length > 0 && (
+          <p>
+            Published by <span>{game.publishers.join(', ')}</span>
+          </p>
+        )}
+        {game.genres?.length > 0 && (
+          <div className="flex flex-wrap gap-3">
+            {game.genres.map((genre) => (
+              <Chip key={genre} label={genre} />
+            ))}{' '}
+          </div>
+        )}
+        {game.tags?.length > 0 && (
+          <div className="flex flex-wrap gap-3">
+            {game.tags.map((tag) => (
+              <Chip key={tag} label={tag} />
+            ))}{' '}
+          </div>
+        )}
+        {game.completion && (
+          <p>
+            <Status status={game.completion.name} />
+          </p>
+        )}
+        {game.description && <p className='game-info-description'>{game.description}</p>}
+      </section>
     </div>
   )
 }

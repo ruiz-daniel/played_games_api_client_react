@@ -12,9 +12,9 @@ const FilterForm = ({ onSubmit }) => {
   const { completions } = useCompletions()
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="filters-container">
-      <div className="filter-in">
-        <h3> Filter In </h3>
+    <form onSubmit={handleSubmit(onSubmit)} className="game-form">
+      <div className="game-form-item gap-3">
+        <h3> Filters </h3>
         <InputText
           placeholder="Name"
           className="p-inputtext-sm"
@@ -40,11 +40,15 @@ const FilterForm = ({ onSubmit }) => {
           className="p-inputtext-sm"
           {...register('played_year')}
         />
-
         <InputText
           placeholder="Genre"
           className="p-inputtext-sm"
           {...register('genre')}
+        />
+        <InputText
+          placeholder="Tag"
+          className="p-inputtext-sm"
+          {...register('tags')}
         />
         <Controller
           name="platform"
@@ -90,9 +94,8 @@ const FilterForm = ({ onSubmit }) => {
           {...register('played_hours_max')}
         />
       </div>
-      
-      <div className="mt-2 flex flex-row-reverse">
-        <Button type="submit" className="filter-button pink-button" label="Filter" />
+      <div className="flex flex-row-reverse">
+        <Button type="submit" className="pink-button" label="Filter" />
       </div>
     </form>
   )

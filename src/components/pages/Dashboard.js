@@ -10,7 +10,7 @@ const Dashboard = () => {
     <section className='p-8'>
       <UserCard />
     </section>
-    <section className='p-4 flex justify-content-center' style={{width: '70%', margin: '0 auto'}}>
+    <section className='flex justify-content-center'>
       <UserForm />
     </section>
     

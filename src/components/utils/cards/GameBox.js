@@ -7,7 +7,7 @@ import { usePlayedGames } from '../../../hooks/usePlayedGames'
 import Score from '../score'
 import Status from '../status'
 
-const GameBox = ({ game }) => {
+const GameBox = ({ game, width = 300, imageHeight = 150 }) => {
   
   const navigator = useNavigate()
   const editEvent = () => {
@@ -23,10 +23,14 @@ const GameBox = ({ game }) => {
     })
   }
 
+  const containerStyles = {
+    width
+  }
+
   return (
-    <div className="game-box-container">
+    <div className="game-box-container" style={containerStyles}>
       <div className="game-box-img">
-        <img alt="Game Cover" src={game?.cover || no_cover} />
+        <img alt="Game Cover" src={game?.cover || no_cover} height={imageHeight} />
         <div className="game-details-panel">
           <div className="details-icon" onClick={editEvent}>
             <span className="pi pi-pencil"></span>

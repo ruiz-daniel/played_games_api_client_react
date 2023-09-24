@@ -3,23 +3,6 @@
   @include darkInput();
 }
 
-.edit-button {
-  &:hover {
-    background-color: $background-color-dark-yellow !important;
-    color: white !important;
-  }
-}
-.delete-button {
-  &:hover {
-    background-color: $text-color-red !important;
-    color: white !important;
-  }
-}
-
-.pink-button {
-  @include purpleButton();
-}
-
 .extra-large-avatar {
   width: 8rem !important;
   height: 8rem !important;
@@ -49,71 +32,6 @@
   }
 }
 
-.item {
-  margin-bottom: 2rem;
-  label {
-    @include fontSizeLarge;
-  }
-  input,
-  .p-inputtext,
-  .p-dropdown,
-  .p-inputtextarea,
-  .p-chips {
-    margin-top: 5px;
-    @include darkInput();
-
-    &:focus,
-    &:hover {
-      box-shadow: none !important;
-      border-color: $text-color-silver !important;
-    }
-
-    .p-inputtext {
-      text-align: start;
-      @include darkInput();
-    }
-  }
-  .p-chips {
-    @include darkChips();
-  }
-
-  .p-fileupload {
-    .p-button {
-      margin-top: 10px;
-      @include blackButton;
-    }
-  }
-  .p-fileupload-buttonbar {
-    background-color: $background-transparent-darker;
-
-    span,
-    button {
-      background: $text-color-pink !important;
-      border-color: white;
-    }
-  }
-}
-
-.button-span {
-  cursor: pointer;
-  transition: all 300ms;
-
-  &:hover {
-    color: $text-color-pink !important;
-  }
-}
-
-.text-only-button {
-  background: none;
-  border: none;
-  padding: 0;
-  font-family: 'Roboto';
-
-  &:hover {
-    background: none !important;
-  }
-}
-
 .score-good {
   font-weight: 800;
   color: $text-color-green !important;
@@ -128,7 +46,7 @@
 }
 .score-perfect {
   font-weight: 800;
-  color: $text-color-purple !important;
+  color: $gs-colors-purple !important;
 }
 
 .status {
@@ -139,20 +57,20 @@
 }
 
 .status-completed {
-  background-color: $status-color-completed;
+  background-color: $text-color-green;
 }
 .status-incomplete {
-  background-color: $status-color-incomplete;
+  background-color: $gs-colors-dark-yellow;
 }
 .status-dropped {
-  background-color: $status-color-dropped;
+  background-color: $text-color-red;
 }
 
 .pos-1 {
-  color: $text-color-gold;
+  color: $text-color-yellow;
 }
 .pos-2 {
-  color: $text-color-silver;
+  color: $gs-colors-silver;
 }
 .pos-3 {
   color: $text-color-bronze;

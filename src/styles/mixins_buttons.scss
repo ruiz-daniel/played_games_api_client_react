@@ -9,26 +9,18 @@
   background-color: black;
   color: white;
   &:hover {
-    background-color: $background-color-purple;
+    background-color: $gs-colors-purple;
   }
   &:focus {
-    background-color: $background-color-purple;
+    background-color: $gs-colors-purple;
     box-shadow: none;
   }
 }
 
-@mixin purpleButton {
+@mixin colorButton($color) {
   border: none;
-  background-color: $background-color-purple;
+  background-color: $color;
   &:hover {
-    background-color: darken($color: $background-color-purple, $amount: 20) !important;
-  }
-}
-
-@mixin redButton {
-  border: none;
-  background-color: $text-color-red;
-  &:hover {
-    background-color: darken($color: $text-color-red, $amount: 30);
+    background-color: darken($color: $color, $amount: 20) !important;
   }
 }

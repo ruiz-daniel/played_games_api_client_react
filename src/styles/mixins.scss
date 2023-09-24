@@ -62,15 +62,3 @@
   margin-top: $length;
   margin-bottom: $length;
 }
-
-@mixin darkBackground {
-  background-color: $background-color-dark2 !important;
-  color: white !important;
-}
-
-@mixin fontSizeMid {
-  font-size: 16px !important;
-}
-@mixin fontSizeLarge {
-  font-size: 19.3px !important;
-}

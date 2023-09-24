@@ -20,13 +20,13 @@
     }
     span {
       cursor: pointer;
-      color: $text-color-silver;
+      color: $gs-colors-silver;
     }
   }
 
   @include respond(phone) {
     height: 30vh;
-    color: $text-color-gold;
+    color: $text-color-yellow;
     padding: 1rem;
     h1 {
       display: none;

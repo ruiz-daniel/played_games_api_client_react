@@ -103,6 +103,7 @@ export function usePlayedGames() {
       name: data.name && { $regex: data.name },
       developers: data.developers && { $regex: data.developers },
       publishers: data.publishers && { $regex: data.publishers },
+      tags: data.tags && { $regex: data.tags },
     }
     // Handle played hours, years and score possible range for mongoose query
     handleRangeForQuery(data, filterData, 'played_hours', 'played_hours_min', 'played_hours_max')
@@ -127,11 +128,17 @@ export function usePlayedGames() {
   }
 
   const handleImages = async (images, game) => {
-    if (images?.cover) {
+    if (images?.coverURL) {
+      game.cover = images.coverURL;
+    }
+    else if (images?.cover) {
       const cover = await api.GeneralApi.uploadImage(images.cover)
       game.cover = cover.data
     }
-    if (images?.coverBox) {
+    if (images?.coverBoxURL) {
+      game.cover_box = images.coverBoxURL
+    }
+    else if (images?.coverBox) {
       const coverBox = await api.GeneralApi.uploadImage(images.coverBox)
       game.cover_box = coverBox.data
     }
@@ -153,7 +160,11 @@ export function usePlayedGames() {
     })
   }
 
-  const updateGame = (game, callback) => {
+  const updateGame = async (game, callback) => {
+    if (game.images) {
+      await handleImages(game.images, game)
+      delete game.images
+    }
     api.PlayedGamesApi.patchPlayedGame(game, (response) => {
       message('info', "Game Updated Successfully")
       updateGameAction(response.data)

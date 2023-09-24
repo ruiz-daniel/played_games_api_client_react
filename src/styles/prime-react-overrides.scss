@@ -1,0 +1,95 @@
+.p-toolbar {
+  border: none;
+}
+
+.p-scrollpanel-bar-y {
+  background-color: $gs-colors-purple !important;
+}
+
+.p-dialog {
+  width: 50vw;
+  @include respond(tab-land) {
+    width: 60vw;
+  }
+  @include respond(tab-port) {
+    width: 70vw;
+  }
+  @include respond(phone) {
+    width: 90vw;
+  }
+  
+ 
+}
+
+.p-dialog-titlebar-close {
+  outline: none;
+  &:focus {
+    outline: none !important;
+    box-shadow: none;
+  }
+}
+.p-dialog-content {
+  padding: 0 !important;
+}
+
+.p-dropdown-items-wrapper,
+.p-dropdown-items,
+.p-dropdown-item {
+  background-color: $background-color-dark;
+  color: white !important;
+}
+.p-dropdown-item {
+  &:hover {
+    background-color: $gs-colors-purple !important;
+  }
+}
+.p-dialog-content {
+  border-radius: 0 !important;
+}
+.p-dialog-header,
+.p-dialog-content,
+.p-dialog-footer,
+.p-sidebar-content {
+  background-color: $background-color-dark !important;
+  color: white !important;
+}
+.p-dialog-footer {
+  padding: 1.5rem !important;
+}
+.p-focus {
+  box-shadow: none !important;
+}
+.p-inputtext,
+.p-dropdown,
+.p-chips,
+.p-button {
+  &:focus {
+    box-shadow: none !important;
+  }
+}
+
+.p-galleria {
+  .p-galleria-thumbnail-container {
+    background: none;
+  }
+}
+
+.p-tabview, .p-tabview-nav,
+.p-tabview-nav-link {
+  background-color: $background-color-dark !important;
+}
+.p-tabview-panels {
+  background-color: $background-color-dark !important;
+}
+.p-tabview-nav-link:focus {
+  box-shadow: none;
+  color: $gs-colors-pink !important;
+  border-color: $gs-colors-pink !important;
+}
+.p-tabview-nav-link:hover {
+  color: $gs-colors-pink !important;
+  border-color: $gs-colors-pink !important;
+}
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  color: $gs-colors-pink;
+}

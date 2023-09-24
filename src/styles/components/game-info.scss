@@ -1,0 +1,18 @@
+.game-info-container {
+    p {
+      font-size: larger;
+      margin: 0;
+    }
+    span {
+      font-weight: 700;
+    }
+    .game-info-description {
+      max-width: 40%;
+      @include respond(tab-port) {
+        max-width: 90%;
+      }
+      @include respond(phone) {
+        max-width: 90%;
+      }
+    }
+  }

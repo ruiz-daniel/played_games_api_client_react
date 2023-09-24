@@ -1,23 +1,34 @@
 .game-info-box-container {
   text-align: center;
   background: $background-transparent-darker;
-  width: 160px;
   padding: 10px;
   border-radius: 10px;
-  i {
-    width: 100%;
+
+  .game-info-box-icon {
+    height: 60%;
     font-size: 50px;
-  }
-  .game-info-box-number {
-    font-size: larger;
+    i {
+      width: 100%;
+      font-size: 50px;
+    }
     .info-number {
       @include marginY(0);
       font-size: 50px;
     }
   }
+  .game-info-box-text {
+    height: 40%;
+    margin-top: 0.5rem;
+    font-weight: 800;
+  }
+  
+  .game-info-box-number {
+    font-size: larger;
+    
+  }
   .info-steam {
-    height: 100px;
-    align-items: center;
+    width: 100%;
+    height: 100%;
     img {
       width: 100%;
     }

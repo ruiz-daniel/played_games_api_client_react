@@ -1,5 +1,5 @@
 .topbar {
-  background-color: $background-color-dark2;
+  background-color: $background-color-darker;
   color: white;
   width: 100vw;
   padding-right: 3rem;
@@ -23,7 +23,7 @@
   }
   .logo {
     margin-right: 30px;
-    color: $text-color-purple;
+    color: $gs-colors-purple;
     cursor: pointer;
   }
   a {
@@ -58,10 +58,10 @@
 .p-menuitem,
 .p-menuitem-link {
   justify-content: center;
-  background-color: $background-color-dark2 !important;
+  background-color: $background-color-darker !important;
 }
 .p-menu {
-  border-top: solid 4px $text-color-pink !important;
+  border-top: solid 4px $gs-colors-pink !important;
 }
 .p-menuitem-link {
   &:hover {
@@ -74,5 +74,5 @@
 }
 
 .menu-sidebar {
-  background-color: $background-color-dark2;
+  background-color: $background-color-darker;
 }

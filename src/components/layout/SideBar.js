@@ -102,24 +102,6 @@ const SideBar = ({ toggleSidebar, user, goToDashboard, handleLogInOrOut }) => {
               </h3>
             </Link>
           </div>
-          <div className="menu-item">
-            <Link
-              onClick={() => {
-                toggleSidebar(false)
-              }}
-              to={routes.top10games}
-            >
-              <h3
-                className={
-                  location.pathname.includes(routes.top10games)
-                    ? 'router-view'
-                    : ''
-                }
-              >
-                <i className="pi pi-star"></i> Favorite Games
-              </h3>
-            </Link>
-          </div>
         </section>
       )}
     </div>

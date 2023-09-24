@@ -1,0 +1,26 @@
+
+.pink-button {
+  @include colorButton($gs-colors-pink);
+}
+.blue-button {
+  @include colorButton($gs-colors-blue);
+}
+
+.edit-button {
+    background-color: transparent;
+    color: #FBC02D !important;
+  &:hover {
+    background-color: $gs-colors-dark-yellow !important;
+    color: white !important;
+    border-color: $gs-colors-dark-yellow !important;
+  }
+}
+.delete-button {
+  background-color: transparent;
+  color: #D32F2F !important;
+  &:hover {
+    background-color: $text-color-red !important;
+    color: white !important;
+    border-color: $text-color-red !important;
+  }
+}

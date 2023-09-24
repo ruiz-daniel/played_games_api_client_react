@@ -1,0 +1,58 @@
+.game-form {
+  background-color: $background-color-dark;
+  @include paddingX(5%);
+  @include paddingY(2%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  @include respond(phone) {
+    width: 100%;
+  }
+
+  .game-form-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+      @include fontSizeLarge;
+    }
+    input,
+    .p-inputtext,
+    .p-dropdown,
+    .p-inputtextarea,
+    .p-chips {
+      @include darkInput();
+
+      &:focus,
+      &:hover {
+        box-shadow: none !important;
+        border-color: $gs-colors-silver !important;
+      }
+
+      .p-inputtext {
+        text-align: start;
+        @include darkInput();
+      }
+    }
+    .p-chips {
+      @include darkChips();
+    }
+
+    .p-fileupload {
+      .p-button {
+        @include blackButton;
+      }
+    }
+    .p-fileupload-buttonbar {
+      background-color: $background-transparent-darker;
+      
+      span,
+      button {
+        background: $gs-colors-pink !important;
+        border-color: white;
+      }
+    }
+}
+}
