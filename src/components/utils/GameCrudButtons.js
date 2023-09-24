@@ -34,8 +34,6 @@ const GameCrudButtons = ({game, mode = 'basic'}) => {
         showHeader={false}
         onHide={toggle}
         dismissableMask
-        breakpoints={{ '960px': '70vw', '640px': '100vw' }}
-        style={{ width: '50vw' }}
       >
         <EditGame game={game} onSubmit={onUpdate} />
       </Dialog>

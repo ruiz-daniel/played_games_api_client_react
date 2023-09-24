@@ -6,10 +6,26 @@
   background-color: $gs-colors-purple !important;
 }
 
+.p-dialog {
+  width: 50vw;
+  @include respond(tab-land) {
+    width: 60vw;
+  }
+  @include respond(tab-port) {
+    width: 70vw;
+  }
+  @include respond(phone) {
+    width: 90vw;
+  }
+  
+ 
+}
+
 .p-dialog-titlebar-close {
   outline: none;
   &:focus {
     outline: none !important;
+    box-shadow: none;
   }
 }
 .p-dialog-content {

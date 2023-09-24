@@ -49,65 +49,70 @@ const GameImageViewer = ({ game, style }) => {
 
   return (
     <div className="flex flex-column gap-2" style={containerStyles}>
-      <Dialog 
-          header="Game Images" 
-          visible={toggleValue} 
-          style={{ width: '50vw' }} 
-          onHide={toggle}
-        >
-          <GameImages onSubmit={handleImagesSubmit} />
-        </Dialog>
+      <Dialog
+        header="Game Images"
+        visible={toggleValue}
+        onHide={toggle}
+      >
+        <GameImages onSubmit={handleImagesSubmit} />
+      </Dialog>
       <section className="flex justify-content-center text-center">
         <h2>{game.name}</h2>
       </section>
       <section className="flex justify-content-center">
-        {view === 'cover' && 
-          <Image 
-            src={game.cover || no_cover} 
-            alt={game.name} 
-            preview 
+        {view === "cover" && (
+          <Image
+            src={game.cover || no_cover}
+            alt={game.name}
+            preview
             width={containerStyles.width}
-            height={ window.matchMedia("(max-width: 600px)").matches ? 200 : 300 }
+            height={window.matchMedia("(max-width: 600px)").matches ? 200 : 300}
           />
-        }
-        {view === 'cover-box' && 
-          <Image 
-            src={game.cover_box || game.cover || no_cover} 
-            alt={game.name} 
-            preview 
+        )}
+        {view === "cover-box" && (
+          <Image
+            src={game.cover_box || game.cover || no_cover}
+            alt={game.name}
+            preview
             width={200}
-            height={ 400 }
+            height={400}
           />
-        }
-        {view === 'gallery' &&
-          <Galleria value={game.gallery || []} responsiveOptions={galleryResponsiveOptions} numVisible={4} style={{ maxWidth: containerStyles.width }} 
-                item={itemTemplate} thumbnail={thumbnailTemplate}/>
-        }
+        )}
+        {view === "gallery" && (
+          <Galleria
+            value={game.gallery || []}
+            responsiveOptions={galleryResponsiveOptions}
+            numVisible={4}
+            style={{ maxWidth: containerStyles.width }}
+            item={itemTemplate}
+            thumbnail={thumbnailTemplate}
+          />
+        )}
       </section>
       <section className="flex justify-content-center gap-3">
         <Button
-          icon='pi pi-image'
+          icon="pi pi-image"
           className="p-button-outlined p-button-rounded edit-button"
-          onClick={() => setView('cover')}
+          onClick={() => setView("cover")}
         />
         <Button
-          icon='pi pi-mobile'
+          icon="pi pi-mobile"
           className="p-button-outlined p-button-rounded edit-button"
-          onClick={() => setView('cover-box')}
+          onClick={() => setView("cover-box")}
         />
         <Button
-          icon='pi pi-images'
+          icon="pi pi-images"
           className="p-button-outlined p-button-rounded edit-button"
-          onClick={() => setView('gallery')}
+          onClick={() => setView("gallery")}
         />
         <Button
-          icon='pi pi-file-edit'
+          icon="pi pi-file-edit"
           className="p-button-outlined p-button-rounded edit-button"
           onClick={toggle}
         />
       </section>
     </div>
-  )
+  );
 }
 
 export default GameImageViewer

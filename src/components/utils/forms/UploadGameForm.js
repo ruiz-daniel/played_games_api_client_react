@@ -45,7 +45,6 @@ const UploadGameForm = ({ onSubmit }) => {
       <Dialog
         header="Game Images"
         visible={toggleValue}
-        style={{ width: "50vw" }}
         onHide={toggle}
       >
         <GameImages onSubmit={handleImagesSubmit} />

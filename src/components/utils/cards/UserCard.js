@@ -24,9 +24,13 @@ function UserCard() {
 
   return (
     <div className="flex flex-column justify-content-center align-items-center">
-      <Dialog header="Change Profile Picture" visible={toggleValue} onHide={toggle}>
+      <Dialog
+        header="Change Profile Picture"
+        visible={toggleValue}
+        onHide={toggle}
+      >
         <FileUpload
-        className='m-2'
+          className="m-2"
           customUpload
           mode="advanced"
           multiple={false}
@@ -41,11 +45,11 @@ function UserCard() {
         size="xlarge"
         shape="circle"
       />
-      <h1>{user?.display_name ?? 'Guest'}</h1>
-      <h3>@{user?.username ?? 'username'}</h3>
-      <Button className='pink-button' label='Change Picture' onClick={toggle} />
+      <h1>{user?.display_name ?? "Guest"}</h1>
+      <h3>@{user?.username ?? "username"}</h3>
+      <Button className="pink-button" label="Change Picture" onClick={toggle} />
     </div>
-  )
+  );
 }
 
 export default UserCard
