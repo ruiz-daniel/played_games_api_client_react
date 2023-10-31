@@ -50,6 +50,7 @@ const UploadGameForm = ({ onSubmit }) => {
     setValue('steam_page', game.steamURL)
     setValue('release_year', game.released.slice(-4))
     setValue('platform', getPlatform(null, 'PC'))
+    setValue('description', game.description)
     const image = {
       coverURL: game.imgUrl
     }
