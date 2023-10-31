@@ -28,11 +28,11 @@ function App() {
   return (
     <Router>
       <LoadingProvider>
-        <UserProvider>
-          <TopBar />
-          <div className="content-container">
-            {
-              <MessagesProvider>
+        <MessagesProvider>
+          <UserProvider>
+            <TopBar />
+            <div className="content-container">
+              {
                 <Routes>
                   <Route path={routes.home} element={<Home />} />
                   <Route path={routes.dashboard} element={<Dashboard />} />
@@ -43,13 +43,13 @@ function App() {
                   <Route path={routes.gamedetails} element={<GameDetails />} />
                   <Route path={routes.uploadgame} element={<UploadGame />} />
                 </Routes>
-              </MessagesProvider>
-            }
-          </div>
-        </UserProvider>
+              }
+            </div>
+          </UserProvider>
+        </MessagesProvider>
       </LoadingProvider>
     </Router>
-  )
+  );
 }
 
 export default App
