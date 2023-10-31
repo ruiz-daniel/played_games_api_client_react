@@ -24,7 +24,7 @@ const GameCrudButtons = ({game, mode = 'basic'}) => {
   }
 
   const onUpdate = (data) => {
-    updateGame(data, toggle)
+    updateGame({...data, _id: game._id}, toggle)
   }
 
   return (
