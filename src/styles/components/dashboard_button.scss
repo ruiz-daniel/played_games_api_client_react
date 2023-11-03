@@ -1,0 +1,18 @@
+.dashboard-button {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  transition: 0.3s ease;
+  box-shadow: 0.1rem 0.2rem 0.8rem 0 $gs-colors-purple;
+  cursor: pointer;
+  background-color: $background-color-dark;
+
+  &:hover {
+    box-shadow: 0.2rem 0.5rem 1rem 0 $gs-colors-purple;
+  }
+  
+}

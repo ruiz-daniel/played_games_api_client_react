@@ -4,7 +4,7 @@ import { Button } from "primereact/button";
 import { useForm } from "react-hook-form";
 import { useUser } from "../../../hooks/useUser";
 
-function UserForm() {
+function UserForm({submitCallback}) {
   const {
     register,
     handleSubmit,
@@ -15,7 +15,7 @@ function UserForm() {
 
   const onSubmit = (data) => {
     data._id = user._id;
-    update(data);
+    update(data, submitCallback);
   };
 
   return (
