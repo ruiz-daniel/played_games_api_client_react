@@ -1,23 +1,39 @@
-import { usePlayedGames } from '../../hooks/usePlayedGames'
-import { useToggle } from '../../hooks/useToggle'
+import { usePlayedGames } from "../../hooks/usePlayedGames";
+import { useToggle } from "../../hooks/useToggle";
 
-import FilterForm from '../utils/forms/FilterForm'
-import { Sidebar } from 'primereact/sidebar'
-import { Button } from 'primereact/button'
-import GamesList from '../utils/lists/GamesList'
-
-
+import FilterForm from "../utils/forms/FilterForm";
+import { Sidebar } from "primereact/sidebar";
+import { Button } from "primereact/button";
+import { Chip } from "primereact/chip";
+import GamesList from "../utils/lists/GamesList";
 
 const PlayedGamesList = () => {
-  const { toggleValue, toggle } = useToggle()
-  const {games, page, max, getGames, resetFilter, externalFilter } = usePlayedGames()
+  const { toggleValue, toggle } = useToggle();
+  const {
+    games,
+    page,
+    max,
+    getGames,
+    resetFilter,
+    externalFilter,
+    filterData,
+  } = usePlayedGames();
   const onScrollEnd = (e) => {
-    const { clientHeight, scrollHeight, scrollTop} = e.target
+    const { clientHeight, scrollHeight, scrollTop } = e.target;
     // take the integer part cause sometimes the number isn't exact
-    if ((scrollHeight - parseInt(scrollTop)) <= clientHeight + 10 && games.length < max) {
-      getGames(Number(page) + 1)
+    if (
+      scrollHeight - parseInt(scrollTop) <= clientHeight + 10 &&
+      games.length < max
+    ) {
+      getGames(Number(page) + 1);
     }
+  };
+
+  const parseKeysToNames = (key) => {
+    const capitalized =  key.slice(0,1).toUpperCase() + key.substring(1)
+    return capitalized.replaceAll("_", " ")
   }
+
   return (
     <div className="played-games-list">
       <Sidebar
@@ -29,29 +45,44 @@ const PlayedGamesList = () => {
       >
         <FilterForm
           onSubmit={(data) => {
-            externalFilter(data)
-            toggle()
+            externalFilter(data);
+            toggle();
           }}
         />
       </Sidebar>
       <div className="options-container flex">
-        <Button
-          icon="pi pi-filter"
-          label="Advanced Filter"
-          onClick={toggle}
-        />
+        <Button icon="pi pi-filter" label="Filter" onClick={toggle} />
         <Button
           icon="pi pi-times"
-          label="Clear Filters"
+          label="Reset"
           onClick={resetFilter}
           onMouseLeave={(e) => e.target.blur()}
           onTouchEnd={(e) => e.target.blur()}
         />
       </div>
-      
+
+      {filterData && (
+        <div className="flex flex-wrap gap-3 my-2">
+          <h3 className="my-2">Filtering by:</h3>
+          {Object.keys(filterData).map((key) => {
+            if (filterData[key] && key !== 'played_hours') {
+              return (
+                <Chip
+                  key={key}
+                  className="dark-chip"
+                  label={`${parseKeysToNames(key)}: ${
+                    filterData[key]["$regex"] || filterData[key]
+                  }`}
+                />
+              );
+            }
+          })}
+        </div>
+      )}
+
       <GamesList games={games} onScrollEnd={onScrollEnd} />
     </div>
-  )
-}
+  );
+};
 
-export default PlayedGamesList
+export default PlayedGamesList;

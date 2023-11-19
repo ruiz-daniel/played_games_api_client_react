@@ -42,13 +42,13 @@ export function usePlayedGames() {
   }
   //...............................................
 
-  const getGames = (page, callback) => {
+  const getGames = (page, callback, forceFilter = filterData) => {
     setLoading(true)
     api.PlayedGamesApi.getPlayedGames(
       localStorage.getItem('userid'),
       page,
       50,
-      filterData,
+      forceFilter,
       (response) => {
         setLoading(false)
         setGamesAction({
@@ -116,7 +116,8 @@ export function usePlayedGames() {
 
   const resetFilter = () => {
     setFilterData(null)
-    getGames()
+  // Force get games with no filter
+    getGames(null, null, null)
   }
   //......................................................
 
@@ -197,7 +198,8 @@ export function usePlayedGames() {
     games,
     getGames,
     externalFilter, 
-    resetFilter, 
+    resetFilter,
+    filterData, 
     uploadGame,
     updateGame,
     getGame,

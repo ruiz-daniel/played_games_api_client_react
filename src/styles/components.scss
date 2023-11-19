@@ -75,3 +75,8 @@
 .pos-3 {
   color: $text-color-bronze;
 }
+
+.dark-chip {
+  @include darkChips();
+  @include darkInput();
+}
