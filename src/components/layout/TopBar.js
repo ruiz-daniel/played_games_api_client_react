@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigation } from '../../hooks/useNavigation'
 import { useUser } from '../../hooks/useUser'
 
 import { Toolbar } from 'primereact/toolbar'
@@ -15,7 +15,7 @@ import weissIcon from '../../images/KUIYU.png'
 
 const TopBar = () => {
   const menu = useRef(null)
-  const navigator = useNavigate()
+  const navigator = useNavigation()
   const [sideMenu, toggleSideMenu] = useState(false)
 
   const { user, logout } = useUser()
@@ -23,17 +23,13 @@ const TopBar = () => {
   // var isMobile = navigator.userAgent.toLowerCase().match(/mobile/i)
 
   const goToDashboard = () => {
-    user?._id &&  navigator(routes.dashboard)
+    user?._id &&  navigator.goToDashboard()
   }
   const handleLoginOrOut = () => {
     user?._id ? logout(() => {
       toggleSideMenu(false)
-      goHome()
-    }) : navigator(routes.login)
-    
-  }
-  const goHome = () => {
-    navigator(routes.home)
+      navigator.goHome()
+    }) : navigator.goToLogin()
   }
 
   const userMenuItems = [
@@ -73,9 +69,6 @@ const TopBar = () => {
             <div className="topbar-element">
               <Link to={routes.stats}>Stats</Link>
             </div>
-            {/* <div className="topbar-element">
-              <Link to={routes.top10games}>Favorites</Link>
-            </div> */}
           </div>
         )}
       </div>

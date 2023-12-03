@@ -1,19 +1,18 @@
 import { usePlayedGames } from "../../hooks/usePlayedGames";
 import { useMessages } from "../../hooks/useMessages";
-import { useNavigate } from "react-router-dom";
-import { playedgames } from "../../routes";
+import { useNavigation } from "../../hooks/useNavigation";
 
 import UploadGameForm from "../utils/forms/UploadGameForm";
 
 function UploadGame() {
   const { uploadGame } = usePlayedGames()
   const { message } = useMessages()
-  const navigator = useNavigate()
+  const navigator = useNavigation()
 
   const onSubmit = (data) => {
     uploadGame(data, () => {
       message('info', 'Game Uploaded Successfully')
-      navigator(playedgames)
+      navigator.goToPlayedGames()
     })
   }
 

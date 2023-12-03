@@ -1,6 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import * as routes from '../../../routes'
+import { useNavigation } from '../../../hooks/useNavigation'
 import  no_cover  from '../../../images/no-cover.jpg'
 import { usePlayedGames } from '../../../hooks/usePlayedGames'
 
@@ -9,9 +8,9 @@ import Status from '../status'
 
 const GameBox = ({ game, width = 300, imageHeight = 150 }) => {
   
-  const navigator = useNavigate()
+  const navigator = useNavigation()
   const editEvent = () => {
-    navigator(`${routes.gamedetails}/?id=${game._id}`)
+    navigator.goToGameDetails(game._id)
   }
 
   const { updateGame } = usePlayedGames()

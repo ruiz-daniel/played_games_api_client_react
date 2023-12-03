@@ -8,7 +8,7 @@ export const useNavigation = () => {
     navigator(route)
   }
 
-  
+
   const goToDashboard = () => {
     navigateTo(routes.dashboard);
   }
@@ -21,8 +21,8 @@ export const useNavigation = () => {
   const goToUploadGame = () => {
     navigateTo(routes.uploadgame);
   }
-  const goToGameDetails = () => {
-    navigateTo(routes.gamedetails);
+  const goToGameDetails = (gameid) => {
+    navigateTo(`${routes.gamedetails}/?id=${gameid}`);
   }
   const goToStats = () => {
     navigateTo(routes.stats);

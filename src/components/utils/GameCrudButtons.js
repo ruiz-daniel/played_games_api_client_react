@@ -1,7 +1,6 @@
 import { usePlayedGames } from "../../hooks/usePlayedGames";
 import { useToggle } from "../../hooks/useToggle";
-import { useNavigate } from "react-router-dom";
-import { playedgames } from "../../routes";
+import { useNavigation } from "../../hooks/useNavigation";
 
 import { Button } from "primereact/button";
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
@@ -11,7 +10,7 @@ import EditGame from "./forms/EditGame";
 const GameCrudButtons = ({game, mode = 'basic'}) => {
   const { updateGame, removeGame } = usePlayedGames()
   const { toggle, toggleValue } = useToggle()
-  const navigator = useNavigate()
+  const navigator = useNavigation()
 
   const confirm = () => {
     confirmDialog({
@@ -19,7 +18,7 @@ const GameCrudButtons = ({game, mode = 'basic'}) => {
       header: 'Delete Game',
       icon: 'pi pi-exclamation-triangle',
       acceptClassName: 'p-button-danger',
-      accept: () => removeGame(game._id, () => navigator(playedgames)),
+      accept: () => removeGame(game._id, () => navigator.goToPlayedGames),
     })
   }
 

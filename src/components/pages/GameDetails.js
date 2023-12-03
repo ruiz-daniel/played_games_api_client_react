@@ -1,5 +1,4 @@
 import { useGame } from '../../hooks/useGame'
-import { useToggle } from '../../hooks/useToggle'
 import { useSearchParams } from 'react-router-dom'
 
 import GameImageViewer from '../utils/cards/GameImageViewer'

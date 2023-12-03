@@ -1,15 +1,14 @@
 import { useUser } from '../../hooks/useUser'
-import { useNavigate } from 'react-router-dom'
+import { useNavigation } from '../../hooks/useNavigation'
 import LoginForm from '../utils/forms/LoginForm'
-import { dashboard } from '../../routes'
 
 function Login() {
   const { login } = useUser()
-  const navigator = useNavigate()
+  const navigator = useNavigation()
 
   const handleLogin = (credentials) => {
     login(credentials, () => {
-      navigator(dashboard)
+      navigator.goToDashboard()
     })
   }
 
