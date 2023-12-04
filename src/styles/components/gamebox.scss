@@ -10,6 +10,9 @@
       .favorite-icon {
         opacity: 1;
       }
+      .delete-icon {
+        opacity: 1;
+      }
     }
     width: 100%;
     position: relative;
@@ -35,6 +38,15 @@
       cursor: pointer;
       transition: 0.5s ease;
       opacity: 0;
+    }
+    .delete-icon {
+      position: absolute;
+      right: 5px;
+      bottom: 10px;
+      font-size: 20px;
+      cursor: pointer;
+      opacity: 0;
+      color: $text-color-red;
     }
     img {
       opacity: 1;

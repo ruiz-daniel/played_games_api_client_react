@@ -2,18 +2,19 @@ import React from 'react'
 import { useNavigation } from '../../../hooks/useNavigation'
 import  no_cover  from '../../../images/no-cover.jpg'
 import { usePlayedGames } from '../../../hooks/usePlayedGames'
+import { ConfirmDialog } from 'primereact/confirmdialog'
 
 import Score from '../score'
 import Status from '../status'
+import { useToggle } from '../../../hooks/useToggle'
 
 const GameBox = ({ game, width = 300, imageHeight = 150 }) => {
-  
   const navigator = useNavigation()
   const editEvent = () => {
     navigator.goToGameDetails(game._id)
   }
-
-  const { updateGame } = usePlayedGames()
+  const { updateGame, removeGame } = usePlayedGames()
+  const deleteConfirmToggle = useToggle()
 
   const favorite = () => {
     updateGame({
@@ -40,8 +41,17 @@ const GameBox = ({ game, width = 300, imageHeight = 150 }) => {
         )}
         {game.score && <Score score={game.score}></Score>}
         <i className={`favorite-icon pi ${game.favorite ? 'pi-star-fill' : 'pi-star'}`} onClick={favorite} />
+        <i className={`delete-icon pi pi-trash`} onClick={deleteConfirmToggle.toggle} />
       </div>
-
+      <ConfirmDialog 
+        visible={deleteConfirmToggle.toggleValue}
+        onHide={deleteConfirmToggle.toggleOFF}
+        header="Delete Game"
+        icon='pi pi-exclamation-triangle'
+        message='Are you sure you want to delete this game?'
+        accept={() => removeGame(game._id)}
+        reject={deleteConfirmToggle.toggleOFF}
+       />
       <p>{game.name}</p>
     </div>
   )
