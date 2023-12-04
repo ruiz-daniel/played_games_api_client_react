@@ -10,9 +10,9 @@ function UploadGame() {
   const navigator = useNavigation()
 
   const onSubmit = (data) => {
-    uploadGame(data, () => {
+    uploadGame(data, (data) => {
       message('info', 'Game Uploaded Successfully')
-      navigator.goToPlayedGames()
+      navigator.goToGameDetails(data._id)
     })
   }
 

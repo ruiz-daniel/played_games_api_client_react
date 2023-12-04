@@ -157,7 +157,7 @@ export function usePlayedGames() {
     api.PlayedGamesApi.postPlayedGame(game, (response) => {
       message('info', "Game Uploaded Successfully")
       addGameAction(response.data)
-      callback && callback()
+      callback && callback(response.data)
     })
   }
 
