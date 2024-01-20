@@ -5,6 +5,7 @@
   padding-right: 3rem;
 
   .sidemenu-icon {
+    cursor: pointer;
     @media (min-width: 1055px) {
       display: none !important;
     }
@@ -74,5 +75,7 @@
 }
 
 .menu-sidebar {
-  background-color: $background-color-darker;
+  .p-sidebar-content {
+    background-color: $background-color-darker !important;
+  }
 }

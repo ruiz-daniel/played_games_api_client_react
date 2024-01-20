@@ -6,12 +6,13 @@ import { Toolbar } from 'primereact/toolbar'
 import { Avatar } from 'primereact/avatar'
 import { Menu } from 'primereact/menu'
 import { Sidebar } from 'primereact/sidebar'
-import SidebarContent from './SideBar'
+import {Sidebar as GSidebar, SidebarContent, SidebarHeader, SidebarLink, SidebarItem} from './Sidebar'
 
 import { Link } from 'react-router-dom'
 import * as routes from '../../routes'
 
 import weissIcon from '../../images/KUIYU.png'
+import UserCard from '../utils/cards/UserCard'
 
 const TopBar = () => {
   const menu = useRef(null)
@@ -98,12 +99,34 @@ const TopBar = () => {
         onHide={() => toggleSideMenu(false)}
         showCloseIcon={false}
       >
-        <SidebarContent 
-          toggleSidebar={toggleSideMenu} 
-          user={user} 
-          handleLogInOrOut={handleLoginOrOut}
-          goToDashboard={goToDashboard} 
-        />
+        <GSidebar>
+          <SidebarHeader className={"flex flex-column gap-3"}>
+           <section className="logo-section">
+              <SidebarItem
+                onClick={() => {
+                  toggleSideMenu(false)
+                }}
+              >
+                <h2 className="logo">My Game Shelf</h2>
+              </SidebarItem>
+          </section>
+          <section>
+            <UserCard user={user} />
+          </section>
+          </SidebarHeader>
+          {user?._id && 
+            <SidebarContent className="menu-section">
+              <SidebarLink linkTo={routes.playedgames} onClick={e => toggleSideMenu(false)} >
+                <i className="pi pi-list"></i> Played Games
+              </SidebarLink>
+              <SidebarLink linkTo={routes.uploadgame} onClick={e => toggleSideMenu(false)} >
+                <i className="pi pi-upload"></i> Upload Games
+              </SidebarLink>
+              <SidebarLink linkTo={routes.stats} onClick={e => toggleSideMenu(false)} >
+              <i className="pi pi-chart-bar"></i> Stats
+              </SidebarLink>
+            </SidebarContent>}
+        </GSidebar>
       </Sidebar>
     </div>
   )

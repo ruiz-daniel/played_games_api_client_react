@@ -80,3 +80,8 @@
   @include darkChips();
   @include darkInput();
 }
+
+.logo {
+  color: $gs-colors-purple;
+  cursor: pointer;
+}
