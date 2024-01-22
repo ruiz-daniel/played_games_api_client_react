@@ -6,7 +6,7 @@ import { Toolbar } from 'primereact/toolbar'
 import { Avatar } from 'primereact/avatar'
 import { Menu } from 'primereact/menu'
 import { Sidebar } from 'primereact/sidebar'
-import {Sidebar as GSidebar, SidebarContent, SidebarHeader, SidebarLink, SidebarItem} from './Sidebar'
+import {Sidebar as GSidebar, SidebarContent, SidebarHeader, SidebarLink, SidebarItem} from './SideBar'
 
 import { Link } from 'react-router-dom'
 import * as routes from '../../routes'
