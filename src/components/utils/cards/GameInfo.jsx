@@ -1,6 +1,6 @@
 import GameInfoBox from './GameInfoBox'
 import { Chip } from 'primereact/chip'
-import Status from '../../utils/status'
+import Status from '../status'
 
 function GameInfo({ game }) {
   return (

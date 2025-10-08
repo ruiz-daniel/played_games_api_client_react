@@ -1,6 +1,6 @@
 import { ScrollPanel } from 'primereact/scrollpanel'
 import { ScrollTop } from 'primereact/scrolltop'
-import GameBox from '../../utils/cards/GameBox'
+import GameBox from '../cards/GameBox'
 
 
 function GamesList({games, onScrollEnd}) {

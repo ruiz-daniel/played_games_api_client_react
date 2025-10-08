@@ -2,7 +2,7 @@
 import axios from 'axios'
 import NProgress from 'nprogress'
 
-const apiURL = process.env.REACT_APP_API_HOST || "https://game-shelf-backend.onrender.com"
+const apiURL = import.meta.env.VITE_API_HOST || "https://game-shelf-backend.onrender.com"
 
 export let apiClient = axios.create({
   baseURL: apiURL,
