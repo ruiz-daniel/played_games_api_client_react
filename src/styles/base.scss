@@ -28,15 +28,14 @@ body {
 .list-selected {
   color: $text-color-yellow;
 }
-
-.filter-sidebar {
-  .p-sidebar-header {
-    padding: 0 !important;
-  }
-  .p-sidebar-content {
-    padding: 0 !important;
-  }
-}
 .error-message {
   color: $text-color-red;
 }
+
+.p-sidebar-header {
+  padding: 0 !important;
+}
+.p-sidebar-content {
+  padding: 0 !important;
+}
+

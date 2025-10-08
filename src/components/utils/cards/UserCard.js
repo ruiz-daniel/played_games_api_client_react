@@ -22,7 +22,7 @@ function UserCard({ user, update }) {
   };
 
   return (
-    <div className="flex flex-column justify-content-center align-items-center">
+    <div className="flex gap-3 justify-content-center">
       <Dialog
         header="Change Profile Picture"
         visible={toggleValue}
@@ -50,8 +50,11 @@ function UserCard({ user, update }) {
         shape="circle"
         onClick={toggle}
       />
-      <h1>{user?.display_name ?? "Guest"}</h1>
-      <h3 style={{ margin: 0 }}>@{user?.username ?? "username"}</h3>
+      <div className='flex flex-column justify-content-start'>
+        <h1>{user?.display_name ?? "Guest"}</h1>
+        <h3 style={{ margin: 0 }}>@{user?.username ?? "username"}</h3>
+      </div>
+      
     </div>
   );
 }

@@ -10,34 +10,12 @@
   }
 }
 
-.avatar-section {
-  @include paddingY(1rem);
-  display: flex;
-  justify-content: center;
-
-  .p-avatar {
-    align-self: center;
-  }
-
-  h2,
-  h3 {
-    color: white;
-    align-self: center;
-    @include marginY(10px);
-  }
-  h3 {
-    cursor: pointer;
-
-    &:hover {
-      color: $gs-colors-purple;
-    }
-  }
-}
 .menu-section {
   @include paddingY(0.5rem);
   display: flex;
   flex-direction: column;
   color: white;
+  align-items: center;
 
   .menu-item {
     width: 90%;
