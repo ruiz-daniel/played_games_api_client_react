@@ -1,14 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import type { RootState } from "../store";
+import type { PlayedGame } from "../../models/PlayedGame";
+
+type PlayedGamesSliceType = {
+  games: PlayedGame[],
+  page: number,
+  max: number
+}
+
+const initialState: PlayedGamesSliceType = {
+    games: [],
+    page: 1,
+    max: 0,
+  }
 
 const playedGamesSlice = createSlice({
   name: "playedGames",
-  initialState: {
-    games: [],
-    page: 1,
-    max: null,
-  },
+  initialState,
   reducers: {
-    addGame(state, action) {
+    addGame(state, action: PayloadAction<PlayedGame>) {
       state.games.push(action.payload);
       state.max++;
     },
@@ -36,4 +47,5 @@ const playedGamesSlice = createSlice({
 });
 
 export const { addGame, setGames, updateGame, removeGame } = playedGamesSlice.actions
+export const storedGames = (state: RootState) => state.playedGames.games
 export const playedGamesReducer = playedGamesSlice.reducer

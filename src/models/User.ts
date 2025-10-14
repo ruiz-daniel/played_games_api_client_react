@@ -1,4 +1,4 @@
-export interface User {
+export type User = {
   username: String,
   display_name: String,
   email?: String,

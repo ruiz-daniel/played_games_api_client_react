@@ -2,7 +2,7 @@ import {Completion} from "./Completion";
 import { Platform } from "./Platform";
 import { User } from "./User";
 
-export interface PlayedGame {
+export type PlayedGame = {
   name: string,
   developers?: string[],
   publishers?: string[],
@@ -25,4 +25,5 @@ export interface PlayedGame {
   completion: Completion,
   platform: Platform,
   user: User,
+  _id: string
 }
