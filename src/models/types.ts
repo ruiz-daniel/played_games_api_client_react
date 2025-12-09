@@ -68,3 +68,8 @@ export type GameImagesObject = {
   coverURL: string,
   gallery: File[]
 }
+
+export type UserCredentials = {
+    username: string,
+    password: string
+}

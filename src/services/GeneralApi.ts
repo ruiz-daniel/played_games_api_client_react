@@ -1,7 +1,10 @@
 /* eslint-disable import/no-anonymous-default-export */
-import axios from 'axios'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 import NProgress from 'nprogress'
+import { Platform } from '../models/Platform'
+import { Completion } from '../models/Completion'
 
+// @ts-ignore
 const apiURL = import.meta.env.VITE_API_HOST || "https://game-shelf-backend.onrender.com"
 
 export let apiClient = axios.create({
@@ -37,12 +40,12 @@ apiClient.interceptors.response.use(
   },
 )
 
-export const defaultErrorFunction = (error) => {
+export const defaultErrorFunction = (error: AxiosError) => {
   console.log(error)
 }
 
 export default {
-  getPlatforms(callback, errorFunction = defaultErrorFunction) {
+  getPlatforms(callback: (response: AxiosResponse<Platform[]>) => void, errorFunction = defaultErrorFunction) {
     apiClient
       .request({
         method: 'get',
@@ -55,7 +58,7 @@ export default {
         errorFunction(error)
       })
   },
-  getCompletions(callback, errorFunction = defaultErrorFunction) {
+  getCompletions(callback: (response: AxiosResponse<Completion[]>) => void, errorFunction = defaultErrorFunction) {
     apiClient
       .request({
         method: 'get',
@@ -74,7 +77,7 @@ export default {
   fetchStatuses() {
     return apiClient.get('/completions')
   },
-  uploadImage(gameImage) {
+  uploadImage(gameImage: string | Blob) {
     const formData = new FormData()
     formData.append('image', gameImage,)
 

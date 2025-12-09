@@ -4,7 +4,7 @@ import * as routes from "../routes";
 export const useNavigation = () => {
   const navigator = useNavigate()
 
-  const navigateTo = (route) => {
+  const navigateTo = (route: string) => {
     navigator(route)
   }
 
@@ -21,7 +21,7 @@ export const useNavigation = () => {
   const goToUploadGame = () => {
     navigateTo(routes.uploadgame);
   }
-  const goToGameDetails = (gameid) => {
+  const goToGameDetails = (gameid: string) => {
     navigateTo(`${routes.gamedetails}/?id=${gameid}`);
   }
   const goToStats = () => {

@@ -23,10 +23,10 @@ export function usePlayedGames() {
   const getGames = (page: number, forceFilter = filterData) => {
     setLoading(true)
     api.PlayedGamesApi.getPlayedGames(
-      localStorage.getItem('userid'),
+      localStorage.getItem('userid') as string,
       page,
       50,
-      forceFilter,
+      forceFilter as GameFilterDataQuery,
       (response: AxiosResponse) => {
         setLoading(false)
         dispatch(setGames({
@@ -105,7 +105,7 @@ export function usePlayedGames() {
     return uploadImageRecursive(gallery, files, index + 1)
   }
 
-  const handleImages = async (images: GameImagesObject, game: UploadGameData) => {
+  const handleImages = async (images: GameImagesObject, game: UploadGameData | PlayedGame) => {
     if (images?.coverURL) {
       game.cover = images.coverURL;
     }
@@ -131,7 +131,6 @@ export function usePlayedGames() {
       await handleImages(game.images, game)
       delete game.images
     }
-    return
     api.PlayedGamesApi.postPlayedGame(game, (response: AxiosResponse<PlayedGame>) => {
       message('info', "Game Uploaded Successfully")
       addGame(response.data)

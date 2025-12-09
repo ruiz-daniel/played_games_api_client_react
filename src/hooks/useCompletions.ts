@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import api from '../services/IApi'
+import { Completion } from "../models/Completion";
 
 export function useCompletions() {
-  const [completions, setCompletions] = useState([])
+  const [completions, setCompletions] = useState<Completion[]>([])
 
-  const getCompletion = (id) => {
+  const getCompletion = (id: string) => {
     return completions.find(completion => completion._id === id)
   }
 

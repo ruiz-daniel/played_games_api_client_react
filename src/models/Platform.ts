@@ -1,6 +1,6 @@
 export type Platform = {
   _id: string,
-  code: String,
-  name: String,
-  shortName: String,
+  code: string,
+  name: string,
+  shortName: string,
 }

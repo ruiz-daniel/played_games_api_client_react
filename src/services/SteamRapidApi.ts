@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 const apiClient = axios.create({
   baseURL: "https://steam2.p.rapidapi.com/",
@@ -10,7 +10,7 @@ const apiClient = axios.create({
 });
 
 export default {
-  getSteamGames(searchTerm, callback) {
+  getSteamGames(searchTerm: string, callback: (response: AxiosResponse) => void) {
     apiClient
       .request({
         method: "GET",
@@ -20,7 +20,7 @@ export default {
         callback(response);
       });
   },
-  getGameDetails(steamAppID, callback) {
+  getGameDetails(steamAppID: string, callback: (response: AxiosResponse) => void) {
     apiClient
       .request({
         method: "GET",

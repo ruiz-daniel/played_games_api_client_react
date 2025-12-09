@@ -27,9 +27,9 @@ export const sr_imagesHost = 'https://localhost:7104/'
 export const sr_images = `${sr_imagesHost}imageHost/Images/`
 export const sr_played_games_folder = 'games'
 export const sr_played_pfp_folder = 'pfp'
-export const sr_images_games = (username) => {
+export const sr_images_games = (username: string) => {
   return `${sr_imagesHost}/${username}/${sr_played_games_folder}/`
 }
-export const sr_images_pfp = (username) => {
+export const sr_images_pfp = (username: string) => {
   return `${sr_imagesHost}/${username}/${sr_played_pfp_folder}/`
 }

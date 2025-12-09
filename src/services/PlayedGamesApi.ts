@@ -1,12 +1,24 @@
 /* eslint-disable import/no-anonymous-default-export */
+import { AxiosError, AxiosResponse } from 'axios'
+import { GameFilterData, GameFilterDataQuery, UploadGameData } from '../models/types'
 import { apiClient } from './GeneralApi'
+import { PlayedGame } from '../models/PlayedGame'
 
 export default {
-  getPlayedGames(userid, page = 1, limit = 50, filterData, callback, errorFunction) {
+  getPlayedGames(
+    userid: string, 
+    page = 1, 
+    limit = 50, 
+    filterData: GameFilterDataQuery, 
+    callback: (response: AxiosResponse) => void , 
+    errorFunction: (error: AxiosError) => void
+  ) {
     // Delete falsey values from filter data so they don't affect the filter
     if (filterData) {
       Object.keys(filterData).forEach(key => {
+        // @ts-ignore
         if (!filterData[key]) {
+          // @ts-ignore
           delete filterData[key]
         }
       })
@@ -24,7 +36,11 @@ export default {
         errorFunction(error)
       })
   },
-  getPlayedGameById(gameid, callback, errorFunction) {
+  getPlayedGameById(
+    gameid: string, 
+    callback: (response: AxiosResponse<PlayedGame>) => void, 
+    errorFunction: (error: AxiosError) => void
+  ) {
     apiClient
       .request({
         method: 'get',
@@ -37,7 +53,10 @@ export default {
         errorFunction(error)
       })
   },
-  getAllPlayedGames(callback, errorFunction) {
+  getAllPlayedGames(
+    callback: (response: AxiosResponse<PlayedGame[]>) => void, 
+    errorFunction: (error: AxiosError) => void
+  ) {
     apiClient
       .request({
         method: 'get',
@@ -50,7 +69,7 @@ export default {
         errorFunction(error)
       })
   },
-  postPlayedGame(game, callback) {
+  postPlayedGame(game: UploadGameData, callback: (response: AxiosResponse<PlayedGame>) => void) {
     apiClient
       .request({
         method: 'post',
@@ -61,7 +80,7 @@ export default {
         callback(response)
       })
   },
-  patchPlayedGame(game, callback) {
+  patchPlayedGame(game: UploadGameData, callback: (response: AxiosResponse<PlayedGame>) => void) {
     apiClient
       .request({
         method: 'patch',
@@ -72,17 +91,17 @@ export default {
         callback(response)
       })
   },
-  deletePlayedGame(id, callback) {
+  deletePlayedGame(id: string, callback: () => void) {
     apiClient
       .request({
         method: 'delete',
         url: `PlayedGames/${id}`,
       })
       .then((response) => {
-        callback(response)
+        callback()
       })
   },
-  getPlayingGames(callback) {
+  getPlayingGames(callback: (response: AxiosResponse<PlayedGame>) => void) {
     apiClient
       .request({
         method: 'get',
@@ -92,7 +111,7 @@ export default {
         callback(response)
       })
   },
-  getStats(userid, callback) {
+  getStats(userid: string, callback: (response: AxiosResponse) => void ) {
     apiClient
       .request({
         method: 'get',
