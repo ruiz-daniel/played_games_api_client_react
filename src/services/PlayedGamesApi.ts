@@ -3,6 +3,7 @@ import { AxiosError, AxiosResponse } from 'axios'
 import { GameFilterData, GameFilterDataQuery, UploadGameData } from '../models/types'
 import { apiClient } from './GeneralApi'
 import { PlayedGame } from '../models/PlayedGame'
+import { PlayedGamesStats } from '../models/Stats'
 
 export default {
   getPlayedGames(
@@ -111,7 +112,7 @@ export default {
         callback(response)
       })
   },
-  getStats(userid: string, callback: (response: AxiosResponse) => void ) {
+  getStats(userid: string, callback: (response: AxiosResponse<PlayedGamesStats>) => void ) {
     apiClient
       .request({
         method: 'get',
