@@ -1,128 +1,130 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { AxiosError, AxiosResponse } from 'axios'
-import { GameFilterData, GameFilterDataQuery, UploadGameData } from '../models/types'
-import { apiClient } from './GeneralApi'
+import { GameFilterData, GameFilterDataQuery, PlayedGamesResponse, UploadGameData } from '../models/types'
+import { apiClient, handleError } from './GeneralApi'
 import { PlayedGame } from '../models/PlayedGame'
 import { PlayedGamesStats } from '../models/Stats'
 
-export default {
-  getPlayedGames(
-    userid: string, 
-    page = 1, 
-    limit = 50, 
-    filterData: GameFilterDataQuery, 
-    callback: (response: AxiosResponse) => void , 
-    errorFunction: (error: AxiosError) => void
-  ) {
-    // Delete falsey values from filter data so they don't affect the filter
-    if (filterData) {
-      Object.keys(filterData).forEach(key => {
+const removeFalseyValues = (filterData: GameFilterDataQuery) => {
+  Object.keys(filterData).forEach(key => {
         // @ts-ignore
         if (!filterData[key]) {
           // @ts-ignore
           delete filterData[key]
         }
       })
+}
+
+export default {
+  async getPlayedGames(
+    userid: string, 
+    page = 1, 
+    limit = 50, 
+    filterData?: GameFilterDataQuery
+  ) {
+    // Delete falsey values from filter data so they don't affect the filter
+    if (filterData) {
+      removeFalseyValues(filterData)
     }
-    apiClient
-      .request({
-        method: 'get',
-        url: `PlayedGames/user/${userid}?page=${page}&limit=${limit}
-          &filterData=${JSON.stringify(filterData) ?? JSON.stringify({})}`,
-      })
-      .then((response) => {
-        callback(response)
-      })
-      .catch((error) => {
-        errorFunction(error)
-      })
+    try {
+      const response = await apiClient
+        .request({
+          method: 'get',
+          url: `PlayedGames/user/${userid}?page=${page}&limit=${limit}
+            &filterData=${JSON.stringify(filterData) ?? JSON.stringify({})}`,
+        })
+      return response as AxiosResponse<PlayedGamesResponse>
+    } catch (error) {
+      return handleError(error as AxiosError)
+    }
   },
-  getPlayedGameById(
-    gameid: string, 
-    callback: (response: AxiosResponse<PlayedGame>) => void, 
-    errorFunction: (error: AxiosError) => void
+  async getPlayedGameById(
+    gameid: string,
   ) {
-    apiClient
-      .request({
-        method: 'get',
-        url: `PlayedGames/game/${gameid}`,
-      })
-      .then((response) => {
-        callback(response)
-      })
-      .catch((error) => {
-        errorFunction(error)
-      })
+    try {
+      const response = await apiClient
+        .request({
+          method: 'get',
+          url: `PlayedGames/game/${gameid}`,
+        })
+      return response as AxiosResponse<PlayedGame>
+    } catch (error) {
+      return handleError(error as AxiosError)
+    }
+    
   },
-  getAllPlayedGames(
-    callback: (response: AxiosResponse<PlayedGame[]>) => void, 
-    errorFunction: (error: AxiosError) => void
-  ) {
-    apiClient
-      .request({
-        method: 'get',
-        url: `PlayedGames`,
-      })
-      .then((response) => {
-        callback(response)
-      })
-      .catch((error) => {
-        errorFunction(error)
-      })
+  async getAllPlayedGames() {
+    try {
+      const response = await apiClient
+        .request({
+          method: 'get',
+          url: `PlayedGames`,
+        })
+      return response as AxiosResponse<PlayedGame[]>
+    } catch (error) {
+      return handleError(error as AxiosError)
+    }
   },
-  postPlayedGame(game: UploadGameData, callback: (response: AxiosResponse<PlayedGame>) => void) {
-    apiClient
-      .request({
-        method: 'post',
-        url: 'PlayedGames',
-        data: game,
-      })
-      .then((response) => {
-        callback(response)
-      })
+  async postPlayedGame(game: UploadGameData) {
+    try {
+      const response = await apiClient
+        .request({
+          method: 'post',
+          url: 'PlayedGames',
+          data: game,
+        })
+      return response as AxiosResponse<PlayedGame>
+    } catch (error) {
+      return handleError(error as AxiosError)
+    }
   },
-  patchPlayedGame(game: UploadGameData, callback: (response: AxiosResponse<PlayedGame>) => void) {
-    apiClient
-      .request({
-        method: 'patch',
-        url: 'PlayedGames/',
-        data: game,
-      })
-      .then((response) => {
-        callback(response)
-      })
+  async patchPlayedGame(game: UploadGameData) {
+    try {
+      const response = await apiClient
+        .request({
+          method: 'patch',
+          url: 'PlayedGames/',
+          data: game,
+        })
+      return response as AxiosResponse<PlayedGame>
+    } catch (error) {
+      return handleError(error as AxiosError)
+    }
   },
-  deletePlayedGame(id: string, callback: () => void) {
-    apiClient
-      .request({
-        method: 'delete',
-        url: `PlayedGames/${id}`,
-      })
-      .then((response) => {
-        callback()
-      })
+  async deletePlayedGame(id: string) {
+    try {
+      const response = await apiClient
+        .request({
+          method: 'delete',
+          url: `PlayedGames/${id}`,
+        })
+      return response
+    } catch (error) {
+      return handleError(error as AxiosError)
+    }
   },
-  getPlayingGames(callback: (response: AxiosResponse<PlayedGame>) => void) {
-    apiClient
+  async getPlayingGames() {
+    try {
+      const response = await apiClient
       .request({
         method: 'get',
         url: `PlayedGames/playing/`,
       })
-      .then((response) => {
-        callback(response)
-      })
+      return response as AxiosResponse<PlayedGame[]>
+    } catch (error) {
+      return handleError(error as AxiosError)
+    }
   },
-  getStats(userid: string, callback: (response: AxiosResponse<PlayedGamesStats>) => void ) {
-    apiClient
-      .request({
-        method: 'get',
-        url: `PlayedGames/stats/${userid}`
-      })
-      .then((response) => {
-        callback(response)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+  async getStats(userid: string) {
+    try {
+      const response = await apiClient
+        .request({
+          method: 'get',
+          url: `PlayedGames/stats/${userid}`
+        })
+      return response as AxiosResponse<PlayedGamesStats>
+    } catch (error) {
+      return handleError(error as AxiosError)
+    }
   },
 }

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import PlayedGamesApi from "../services/PlayedGamesApi";
 import { useLoading } from "./useLoading";
 import { PlayedGamesStats } from "../models/Stats";
+import { useErrorHandling } from "./useErrorHandling";
 
 export function usePlayedStats() {
 
@@ -11,6 +12,7 @@ export function usePlayedStats() {
   const [avgScore, setAvgScore] = useState(0)
 
   const { setLoading } = useLoading()
+  const { handleError } = useErrorHandling()
 
   const getAvgScore = () => {
     let totalScore = 0
@@ -20,18 +22,22 @@ export function usePlayedStats() {
       })
       setAvgScore(totalScore / stats.totalGames)
     }
+  }
+
+  const getStats = async () => {
+    setLoading(true)
+    const response = await PlayedGamesApi.getStats(localStorage.getItem('userid') as string)
+    if ("data" in response) {
+      setStats(response.data)
+    } else {
+      handleError(response)
+    }
+    setLoading(false)
     
   }
 
   useEffect(() => {
-    setLoading(true)
-    PlayedGamesApi.getStats(
-      localStorage.getItem('userid') as string,
-      (response) => {
-        setLoading(false)
-        setStats(response.data)
-      }
-    )
+    getStats()
   },[])
 
   useEffect(() => {

@@ -1,5 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { handleError } from "./GeneralApi";
 
 const apiClient = axios.create({
   baseURL: "https://steam2.p.rapidapi.com/",
@@ -10,24 +11,28 @@ const apiClient = axios.create({
 });
 
 export default {
-  getSteamGames(searchTerm: string, callback: (response: AxiosResponse) => void) {
-    apiClient
-      .request({
-        method: "GET",
-        url: `search/${searchTerm}/page/%7Bpage%7D`,
-      })
-      .then((response) => {
-        callback(response);
-      });
+  async getSteamGames(searchTerm: string) {
+    try {
+      const response = await apiClient
+        .request({
+          method: "GET",
+          url: `search/${searchTerm}/page/%7Bpage%7D`,
+        })
+      return response
+    } catch (error) {
+      return handleError(error as AxiosError)
+    }
   },
-  getGameDetails(steamAppID: string, callback: (response: AxiosResponse) => void) {
-    apiClient
+  async getGameDetails(steamAppID: string) {
+    try {
+      const response = await apiClient
       .request({
         method: "GET",
         url: `https://steam2.p.rapidapi.com/appDetail/${steamAppID}`,
       })
-      .then((response) => {
-        callback(response);
-      });
+      return response
+    } catch (error) {
+      return handleError(error as AxiosError)
+    }
   }
 };

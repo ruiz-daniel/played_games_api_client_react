@@ -1,6 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { AxiosError } from 'axios'
-import { apiClient } from './GeneralApi'
+import { AxiosError, AxiosResponse } from 'axios'
+import { apiClient, handleError } from './GeneralApi'
 import { NewSingleList, SingleList } from '../models/SingleList'
 
 const apiUrl = "singleLists"
@@ -13,9 +13,9 @@ export default {
           method: 'get',
           url: `${apiUrl}/`,
         })
-      return response
+      return response as AxiosResponse<SingleList[]>
     } catch (error: any) {
-      return error as AxiosError
+      return handleError(error)
     }
     
   },
@@ -26,9 +26,9 @@ export default {
           method: 'get',
           url: `${apiUrl}/${listId}`,
         })
-      return response
+      return response as AxiosResponse<SingleList>
     } catch (error: any) {
-      return error as AxiosError
+      return handleError(error as AxiosError)
     }
   },
   async postList(list: NewSingleList) {
@@ -39,9 +39,9 @@ export default {
           url: `${apiUrl}/`,
           data: list,
         })
-      return response
+      return response as AxiosResponse<SingleList>
     } catch (error) {
-      return error as AxiosError
+      return handleError(error as AxiosError)
     }
   },
   async patchList(list: NewSingleList) {
@@ -52,9 +52,9 @@ export default {
           url: `${apiUrl}/`,
           data: list,
         })
-      return response
+      return response as AxiosResponse<SingleList>
     } catch (error) {
-      return error as AxiosError
+      return handleError(error as AxiosError)
     }
     
   },
@@ -67,7 +67,7 @@ export default {
         })
       return response
     } catch (error) {
-      return error as AxiosError
+      return handleError(error as AxiosError)
     }
     
   },

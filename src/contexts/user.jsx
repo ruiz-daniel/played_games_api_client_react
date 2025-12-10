@@ -3,6 +3,8 @@ import api from '../services/IApi'
 import { useLoading } from '../hooks/useLoading'
 import { useMessages } from '../hooks/useMessages'
 
+
+
 export const UserContext = createContext()
 
 export function UserProvider({ children }) {
@@ -17,45 +19,25 @@ export function UserProvider({ children }) {
     })
   }, [])
 
-  const login = (data, callback) => {
+  const login = async (data, callback) => {
     setLoading(true)
-    api.UserApi.login(data, (response) => {
-      setLoading(false)
-      setUser(response.data)
-      callback && callback(response.data)
-    }, (error) => {
-      setLoading(false)
-      message("error", error.response?.data || error.message)
-    })
+    const response = await api.UserApi.login(data)
+    setLoading(false)
+    setUser(response.data)
+    callback && callback(response.data)
   }
-  const signup = (data, callback) => {
+  const signup = async (data, callback) => {
     setLoading(true)
-    api.UserApi.register(
-      data,
-      (response) => {
-        setLoading(false);
-        login(data, callback);
-      },
-      (error) => {
-        setLoading(false);
-        message("error", error.response?.data || error.message);
-      }
-    );
+    const response = await api.UserApi.register(data);
+    setLoading(false);
+    login(data, callback);
   }
-  const update = (data, callback) => {
+  const update = async (data, callback) => {
     setLoading(true)
-    api.UserApi.updateUser(
-      data,
-      (response) => {
-        setLoading(false);
-        setUser(response.data);
-        callback && callback(response.data);
-      },
-      (error) => {
-        setLoading(false);
-        message("error", error.response?.data || error.message);
-      }
-    );
+    const response = await api.UserApi.updateUser(data);
+    setLoading(false);
+    setUser(response.data);
+    callback && callback(response.data);
   }
 
   const logout = (callback) => {

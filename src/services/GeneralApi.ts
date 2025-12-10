@@ -3,6 +3,9 @@ import axios, { AxiosError, AxiosResponse } from 'axios'
 import NProgress from 'nprogress'
 import { Platform } from '../models/Platform'
 import { Completion } from '../models/Completion'
+import { useMessages } from '../hooks/useMessages'
+import { useNavigation } from '../hooks/useNavigation'
+import { useLoading } from '../hooks/useLoading'
 
 // @ts-ignore
 const apiURL = import.meta.env.VITE_API_HOST || "https://game-shelf-backend.onrender.com"
@@ -40,42 +43,36 @@ apiClient.interceptors.response.use(
   },
 )
 
-export const defaultErrorFunction = (error: AxiosError) => {
-  console.log(error)
+export const handleError = (error: AxiosError) => {
+  console.log(error.response?.data || error.message)
+  return error
 }
 
 export default {
-  getPlatforms(callback: (response: AxiosResponse<Platform[]>) => void, errorFunction = defaultErrorFunction) {
-    apiClient
-      .request({
-        method: 'get',
-        url: '/platforms',
-      })
-      .then((response) => {
-        callback(response)
-      })
-      .catch((error) => {
-        errorFunction(error)
-      })
+  async getPlatforms() {
+    try {
+      const response = await apiClient
+        .request({
+          method: 'get',
+          url: '/platforms',
+        })
+      return response as AxiosResponse<Platform[]>
+    } catch (error) {
+      return handleError(error as AxiosError)
+    }
+    
   },
-  getCompletions(callback: (response: AxiosResponse<Completion[]>) => void, errorFunction = defaultErrorFunction) {
-    apiClient
-      .request({
-        method: 'get',
-        url: '/completions',
-      })
-      .then((response) => {
-        callback(response)
-      })
-      .catch((error) => {
-        errorFunction(error)
-      })
-  },
-  fetchPlatforms() {
-    return apiClient.get('/platforms')
-  },
-  fetchStatuses() {
-    return apiClient.get('/completions')
+  async getCompletions() {
+    try {
+      const response = await apiClient
+        .request({
+          method: 'get',
+          url: '/completions',
+        })
+      return response as AxiosResponse<Completion[]>
+    } catch (error) {
+      return handleError(error as AxiosError)
+    }
   },
   uploadImage(gameImage: string | Blob) {
     const formData = new FormData()

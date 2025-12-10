@@ -1,5 +1,6 @@
 import { Platform } from "./Platform"
 import { Completion } from "./Completion"
+import { PlayedGame } from "./PlayedGame"
 
 export type UploadGameData = {
     name: string,
@@ -72,4 +73,10 @@ export type GameImagesObject = {
 export type UserCredentials = {
     username: string,
     password: string
+}
+
+export type PlayedGamesResponse = {
+    games: PlayedGame[],
+    page: number,
+    max: number
 }

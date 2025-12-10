@@ -10,6 +10,7 @@ import { addGame, setGames, updateGame as updateGameStore, removeGame as removeG
 import { AxiosError, AxiosResponse } from "axios";
 import { PlayedGame } from "../models/PlayedGame";
 import { GameFilterData, GameFilterDataQuery, GameImagesObject, UploadGameData } from "../models/types";
+import { useErrorHandling } from "./useErrorHandling";
 
 export function usePlayedGames() {
   const dispatch = useAppDispatch()
@@ -17,33 +18,27 @@ export function usePlayedGames() {
   const page = useAppSelector(state => state.playedGames.page)
   const max = useAppSelector(state => state.playedGames.max)
   const [filterData, setFilterData] = useState<GameFilterDataQuery>()
+  const { handleError } = useErrorHandling()
   const { message } = useMessages()
   const { setLoading } = useLoading()
 
-  const getGames = (page: number, forceFilter = filterData) => {
+  const getGames = async (page: number, forceFilter = filterData) => {
     setLoading(true)
-    api.PlayedGamesApi.getPlayedGames(
+    const response = await api.PlayedGamesApi.getPlayedGames(
       localStorage.getItem('userid') as string,
       page,
       50,
-      forceFilter as GameFilterDataQuery,
-      (response: AxiosResponse) => {
-        setLoading(false)
-        dispatch(setGames({
-          games: response.data.games,
-          page: response.data.page,
-          max: response.data.max
-        }))
-      },
-      (error: AxiosError) => {
-        setLoading(false)
-        if (error.response?.status === 403 || error.response?.status === 401) {
-          message('warn', 'Session Expired. Please Login')
-        } else {
-          message('error', error.message)
-        }
-      }
+      forceFilter,
     )
+    setLoading(false)
+    if (response && "data" in response) {
+      dispatch(setGames({
+        games: response.data.games,
+        page: response.data.page,
+        max: response.data.max
+      }))
+    }
+    
   }
   // Filters..................................................
 
@@ -131,11 +126,14 @@ export function usePlayedGames() {
       await handleImages(game.images, game)
       delete game.images
     }
-    api.PlayedGamesApi.postPlayedGame(game, (response: AxiosResponse<PlayedGame>) => {
+    const response = await api.PlayedGamesApi.postPlayedGame(game)
+    if (response && "data" in response) {
       message('info', "Game Uploaded Successfully")
       addGame(response.data)
       callback && callback(response.data)
-    })
+    } else {
+      handleError(response)
+    }
   }
 
   const updateGame = async (game: UploadGameData, callback: Function) => {
@@ -143,23 +141,29 @@ export function usePlayedGames() {
       await handleImages(game.images, game)
       delete game.images
     }
-    api.PlayedGamesApi.patchPlayedGame(game, (response: AxiosResponse<PlayedGame>) => {
+    const response = await api.PlayedGamesApi.patchPlayedGame(game)
+    if (response && "data" in response) {
       message('info', "Game Updated Successfully")
       updateGameStore(response.data)
       callback && callback()
-    })
+    } else {
+      handleError(response)
+    }
   }
 
   const getGame = (id: string) => {
     return games.find(game => game._id === id)
   }
 
-  const removeGame = (id: string, callback: Function) => {
-    api.PlayedGamesApi.deletePlayedGame(id, () => {
+  const removeGame = async (id: string, callback: Function) => {
+    const response = await api.PlayedGamesApi.deletePlayedGame(id)
+    if (response?.status && response.status < 300) {
       message('info', "Game Deleted Successfully")
       removeGameStore({_id: id})
       callback && callback()
-    })
+    } else {
+      handleError(response as AxiosError)
+    }
   }
 
   useEffect(() => {

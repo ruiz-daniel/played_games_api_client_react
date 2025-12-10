@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { AxiosResponse } from 'axios'
+import { AxiosError, AxiosResponse } from 'axios'
 import { UserCredentials } from '../models/types'
-import { apiClient, updateClient, defaultErrorFunction } from './GeneralApi'
+import { apiClient, updateClient, handleError } from './GeneralApi'
 import { NewUser, User, UserResponse } from '../models/User'
 
 const handleUserData = (data: UserResponse) => {
@@ -20,64 +20,59 @@ const handleUserData = (data: UserResponse) => {
 }
 
 export default {
-  login(
-    credentials: UserCredentials, 
-    callback: (response: AxiosResponse<User>) => void, 
-    errorFunction = defaultErrorFunction
+  async login(
+    credentials: UserCredentials
   ) {
-    apiClient
-      .request({
-        method: 'post',
-        url: 'users/login',
-        data: credentials,
-      })
-      .then((response) => {
-        handleUserData(response.data)
-        callback(response)
-      })
-      .catch((error) => {
-        errorFunction(error)
-      })
+    try {
+      const response = await apiClient
+        .request({
+          method: 'post',
+          url: 'users/login',
+          data: credentials,
+        })
+      handleUserData(response.data)
+      return response as AxiosResponse<User>
+    } catch (error) {
+      return handleError(error as AxiosError)
+    }
   },
-  getUser(userid: string, callback: (response: AxiosResponse<User>) => void, errorFunction = defaultErrorFunction) {
-    apiClient
-      .request({
-        method: 'get',
-        url: `users/${userid}`,
-      })
-      .then((response) => {
-        callback(response)
-      })
-      .catch(error => {
-        errorFunction(error)
-      })
+  async getUser(userid: string,) {
+    try {
+      const response = await apiClient
+        .request({
+          method: 'get',
+          url: `users/${userid}`,
+        })
+      return response as AxiosResponse<User>
+    } catch (error) {
+      return handleError(error as AxiosError)
+    }
   },
-  updateUser(user: User, callback: (response: AxiosResponse<User>) => void, errorFunction = defaultErrorFunction) {
-    apiClient
-      .request({
-        method: 'patch',
-        url: `users`,
-        data: user,
-      })
-      .then((response) => {
-        callback(response)
-      })
-      .catch(error => {
-        errorFunction(error)
-      })
+  async updateUser(user: User) {
+    try {
+      const response = await apiClient
+        .request({
+          method: 'patch',
+          url: `users`,
+          data: user,
+        })
+      return response as AxiosResponse<User>
+    } catch (error) {
+      return handleError(error as AxiosError)
+    }
+    
   },
-  register(user: NewUser, callback: (response: AxiosResponse<User>) => void, errorFunction = defaultErrorFunction) {
-    apiClient
-      .request({
-        method: 'post',
-        url: 'users',
-        data: user,
-      })
-      .then((response) => {
-        callback(response)
-      })
-      .catch((error) => {
-        errorFunction(error)
-      })
+  async register(user: NewUser) {
+    try {
+      const response = await apiClient
+        .request({
+          method: 'post',
+          url: 'users',
+          data: user,
+        })
+      return response as AxiosResponse<User>
+    } catch (error) {
+      return handleError(error as AxiosError)
+    }
   },
 }
