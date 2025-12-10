@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import PlayedGamesApi from "../services/PlayedGamesApi";
-import { useLoading } from "./useLoading";
+import { useLoading } from "./context hooks/useLoading";
 import { PlayedGamesStats } from "../models/Stats";
 import { useErrorHandling } from "./useErrorHandling";
 

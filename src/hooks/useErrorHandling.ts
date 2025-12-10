@@ -18,7 +18,7 @@ export const useErrorHandling = () => {
       return
     } else {
       setLoading(false)
-      message('error', error.response?.data || error.message)
+      message('error', error.response?.data as string || error.message)
     }
   }
 

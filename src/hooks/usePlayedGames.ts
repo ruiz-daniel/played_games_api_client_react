@@ -152,8 +152,15 @@ export function usePlayedGames() {
     }
   }
 
-  const getGame = (id: string) => {
-    return games.find(game => game._id === id)
+  const getGame = async (id: string) => {
+    const response = await api.PlayedGamesApi.getPlayedGameById(id)
+    if ('data' in response) {
+      return response.data
+    } else {
+      const localGame = games.find(game => game._id === id)
+      return localGame ?? handleError(response)
+    }
+    
   }
 
   const removeGame = async (id: string, callback: Function) => {

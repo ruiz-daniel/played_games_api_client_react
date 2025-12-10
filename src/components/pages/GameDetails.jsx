@@ -8,7 +8,7 @@ import GameCrudButtons from '../utils/GameCrudButtons'
 const GameDetails = () => {
   const [queryParams] = useSearchParams()
   const gameid = queryParams.get('id')
-  const { game } = useGame(gameid)
+  const { game } = useGame()
   
   return (
     <>

@@ -1,5 +1,5 @@
 import { usePlayedGames } from "../../hooks/usePlayedGames";
-import { useMessages } from "../../hooks/useMessages";
+import { useMessages } from "../../hooks/context hooks/useMessages";
 import { useNavigation } from "../../hooks/useNavigation";
 
 import UploadGameForm from "../utils/forms/UploadGameForm";
