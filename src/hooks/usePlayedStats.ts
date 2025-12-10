@@ -26,7 +26,7 @@ export function usePlayedStats() {
 
   const getStats = async () => {
     setLoading(true)
-    const response = await PlayedGamesApi.getStats(localStorage.getItem('userid') as string)
+    const response = await PlayedGamesApi.getStats()
     if ("data" in response) {
       setStats(response.data)
     } else {

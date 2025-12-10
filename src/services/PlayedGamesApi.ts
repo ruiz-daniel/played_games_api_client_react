@@ -115,12 +115,12 @@ export default {
       return handleError(error as AxiosError)
     }
   },
-  async getStats(userid: string) {
+  async getStats() {
     try {
       const response = await apiClient
         .request({
           method: 'get',
-          url: `PlayedGames/stats/${userid}`
+          url: `PlayedGames/stats`
         })
       return response as AxiosResponse<PlayedGamesStats>
     } catch (error) {
