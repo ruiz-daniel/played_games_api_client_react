@@ -80,3 +80,5 @@ export type PlayedGamesResponse = {
     page: number,
     max: number
 }
+
+export type MessageType = 'success' | 'info' | 'warn' | 'error'

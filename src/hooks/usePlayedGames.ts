@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable eqeqeq */
 import { useEffect, useState } from "react";
-import { useMessages } from "./useMessages";
+import { useMessages } from "./context hooks/useMessages";
 import api from '../services/IApi'
-import { useLoading } from "./useLoading";
+import { useLoading } from "./context hooks/useLoading";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { addGame, setGames, updateGame as updateGameStore, removeGame as removeGameStore } from "../store/store";
 import { AxiosError } from "axios";

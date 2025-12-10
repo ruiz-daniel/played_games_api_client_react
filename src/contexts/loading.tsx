@@ -1,8 +1,17 @@
 import { createContext, useState } from "react"
 import { BlockUI } from "primereact/blockui"
 
-export const LoadingContext = createContext()
+interface ILoadingContext  {
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+}
 
+const defaultValue: ILoadingContext = {
+  setLoading: () => {}
+}
+
+export const LoadingContext = createContext<ILoadingContext>(defaultValue)
+
+// @ts-ignore
 export function LoadingProvider({children}) {
     const [loading, setLoading] = useState(false)
 

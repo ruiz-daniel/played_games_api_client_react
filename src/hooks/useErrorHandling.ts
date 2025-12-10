@@ -1,6 +1,6 @@
 import { AxiosError } from "axios"
-import { useLoading } from "./useLoading"
-import { useMessages } from "./useMessages"
+import { useLoading } from "./context hooks/useLoading"
+import { useMessages } from "./context hooks/useMessages"
 import { useNavigation } from "./useNavigation"
 
 export const useErrorHandling = () => {

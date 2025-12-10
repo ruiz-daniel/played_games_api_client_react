@@ -3,9 +3,9 @@ import axios, { AxiosError, AxiosResponse } from 'axios'
 import NProgress from 'nprogress'
 import { Platform } from '../models/Platform'
 import { Completion } from '../models/Completion'
-import { useMessages } from '../hooks/useMessages'
+import { useMessages } from '../hooks/context hooks/useMessages'
 import { useNavigation } from '../hooks/useNavigation'
-import { useLoading } from '../hooks/useLoading'
+import { useLoading } from '../hooks/context hooks/useLoading'
 
 // @ts-ignore
 const apiURL = import.meta.env.VITE_API_HOST || "https://game-shelf-backend.onrender.com"
