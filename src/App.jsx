@@ -20,7 +20,6 @@ import './styles/main.scss'
 
 import 'nprogress/nprogress.css'
 
-import { UserProvider } from './contexts/user'
 import { MessagesProvider } from './contexts/messages'
 import { LoadingProvider } from './contexts/loading'
 
@@ -29,23 +28,21 @@ function App() {
     <Router>
       <LoadingProvider>
         <MessagesProvider>
-          <UserProvider>
-            <TopBar />
-            <div className="content-container">
-              {
-                <Routes>
-                  <Route path={routes.home} element={<Home />} />
-                  <Route path={routes.dashboard} element={<Dashboard />} />
-                  <Route path={routes.login} element={<Login />} />
-                  <Route path={routes.register} element={<SignUp />} />
-                  <Route path={routes.playedgames} element={<PlayedGames />} />
-                  <Route path={routes.stats} element={<GameStats />} />
-                  <Route path={routes.gamedetails} element={<GameDetails />} />
-                  <Route path={routes.uploadgame} element={<UploadGame />} />
-                </Routes>
-              }
-            </div>
-          </UserProvider>
+          <TopBar />
+          <div className="content-container">
+            {
+              <Routes>
+                <Route path={routes.home} element={<Home />} />
+                <Route path={routes.dashboard} element={<Dashboard />} />
+                <Route path={routes.login} element={<Login />} />
+                <Route path={routes.register} element={<SignUp />} />
+                <Route path={routes.playedgames} element={<PlayedGames />} />
+                <Route path={routes.stats} element={<GameStats />} />
+                <Route path={routes.gamedetails} element={<GameDetails />} />
+                <Route path={routes.uploadgame} element={<UploadGame />} />
+              </Routes>
+            }
+          </div>
         </MessagesProvider>
       </LoadingProvider>
     </Router>

@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable eqeqeq */
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useMessages } from "./useMessages";
 import api from '../services/IApi'
 import { useLoading } from "./useLoading";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { addGame, setGames, updateGame as updateGameStore, removeGame as removeGameStore } from "../store/store";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError } from "axios";
 import { PlayedGame } from "../models/PlayedGame";
 import { GameFilterData, GameFilterDataQuery, GameImagesObject, UploadGameData } from "../models/types";
 import { useErrorHandling } from "./useErrorHandling";
@@ -37,6 +36,8 @@ export function usePlayedGames() {
         page: response.data.page,
         max: response.data.max
       }))
+    } else {
+      handleError(response)
     }
     
   }
