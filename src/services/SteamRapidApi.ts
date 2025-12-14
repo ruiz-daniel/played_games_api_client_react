@@ -2,10 +2,13 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { handleError } from "./GeneralApi";
 
+// @ts-ignore
+const steamApiKey = import.meta.env.VITE_RAPID_API_KEY
+
 const apiClient = axios.create({
   baseURL: "https://steam2.p.rapidapi.com/",
   headers: {
-    "X-RapidAPI-Key": "dca28310b3mshfbd163116670cb2p14ade0jsn0af52adf2076",
+    "X-RapidAPI-Key": steamApiKey,
     "X-RapidAPI-Host": "steam2.p.rapidapi.com",
   },
 });

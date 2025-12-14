@@ -1,14 +1,16 @@
 import { useUser } from '../../hooks/useUser'
 import { useNavigation } from '../../hooks/useNavigation'
 import LoginForm from '../utils/forms/LoginForm'
+import { UserCredentials } from '../../models/types'
 
 function Login() {
   const { login } = useUser()
   const navigator = useNavigation()
 
-  const handleLogin = (credentials) => {
-    login(credentials, () => {
-      navigator.goToDashboard()
+  const handleLogin = (credentials: UserCredentials) => {
+    login(credentials, (response) => {
+      if (response)
+        navigator.goToDashboard()
     })
   }
 

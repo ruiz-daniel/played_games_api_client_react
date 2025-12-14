@@ -1,14 +1,16 @@
 import { useUser } from '../../hooks/useUser'
 import { useNavigation } from '../../hooks/useNavigation'
 import RegisterForm from '../utils/forms/RegisterForm'
+import { NewUser } from '../../models/User'
 
 function SignUp() {
   const { signup } = useUser()
   const navigator = useNavigation()
 
-  const handleRegister = (data) => {
-    signup(data, () => {
-      navigator.goToDashboard()
+  const handleRegister = (data: NewUser) => {
+    signup(data, (response) => {
+      if (response)
+        navigator.goToDashboard()
     })
   }
 

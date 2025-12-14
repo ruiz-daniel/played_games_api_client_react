@@ -42,15 +42,19 @@ export type GameFilterData = {
 export type GameFilterDataQuery = {
     name: "" | {
         $regex: string;
+        $options?: string;
     } | undefined;
     developers: "" | {
         $regex: string;
+        $options?: string;
     } | undefined;
     publishers: "" | {
         $regex: string;
+        $options?: string;
     } | undefined;
     tags: "" | {
         $regex: string;
+        $options?: string;
     } | undefined;
     completion?: Completion | undefined;
     genre?: string;
@@ -82,3 +86,5 @@ export type PlayedGamesResponse = {
 }
 
 export type MessageType = 'success' | 'info' | 'warn' | 'error'
+
+export type ComponentCallBackFunction = (response: boolean, error?: string) => void

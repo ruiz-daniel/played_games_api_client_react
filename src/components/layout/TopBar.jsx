@@ -27,10 +27,7 @@ const TopBar = () => {
     user?._id &&  navigator.goToDashboard()
   }
   const handleLoginOrOut = () => {
-    user?._id ? logout(() => {
-      toggleSideMenu(false)
-      navigator.goHome()
-    }) : navigator.goToLogin()
+    user?._id ? logout() : navigator.goToLogin()
   }
 
   const userMenuItems = [
