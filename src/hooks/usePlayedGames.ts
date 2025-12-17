@@ -8,26 +8,32 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { addGame, setGames, updateGame as updateGameStore, removeGame as removeGameStore } from "../store/store";
 import { AxiosError } from "axios";
 import { PlayedGame } from "../models/PlayedGame";
-import { GameFilterData, GameFilterDataQuery, GameImagesObject, UploadGameData } from "../models/types";
+import { GameFilterDataQuery, GameFilterDataUrl, GameImagesObject, UploadGameData } from "../models/types";
 import { useErrorHandling } from "./useErrorHandling";
+import { useSearchParams } from "react-router-dom";
 
 export function usePlayedGames() {
   const dispatch = useAppDispatch()
   const games = useAppSelector(state => state.playedGames.games)
   const page = useAppSelector(state => state.playedGames.page)
   const max = useAppSelector(state => state.playedGames.max)
-  const [filterData, setFilterData] = useState<GameFilterDataQuery>()
   const { handleError } = useErrorHandling()
   const { message } = useMessages()
   const { setLoading } = useLoading()
+  let [searchParams] = useSearchParams();
 
-  const getGames = async (page: number, forceFilter = filterData) => {
+  const getGames = async (page: number) => {
+    const filterData: GameFilterDataUrl = {}
+    searchParams.forEach((value, key) => {
+      filterData[key as keyof GameFilterDataUrl] = value
+    });
+    const filter = prepareFilterMongoose(filterData)
     setLoading(true)
     const response = await api.PlayedGamesApi.getPlayedGames(
       localStorage.getItem('userid') as string,
       page,
       50,
-      forceFilter,
+      filter,
     )
     setLoading(false)
     if (response && "data" in response) {
@@ -70,7 +76,7 @@ export function usePlayedGames() {
   }
 
   // Prepare filter for mongoose in the backend
-  const externalFilter = (data: GameFilterData) => {
+  const prepareFilterMongoose = (data: GameFilterDataUrl) => {
     const filterData: GameFilterDataQuery = {
       ...data,
       name: data.name && { $regex: data.name, $options: "i" },
@@ -84,13 +90,7 @@ export function usePlayedGames() {
     handleRangeForQuery(data, filterData, 'release_year', 'release_year_min', 'release_year_max')
     handleRangeForQuery(data, filterData, 'score', 'score_min', 'score_max')
 
-    setFilterData(filterData)
-  }
-
-  const resetFilter = () => {
-    setFilterData(undefined)
-  // Force get games with no filter
-    getGames(1)
+    return filterData
   }
   //......................................................
 
@@ -175,20 +175,12 @@ export function usePlayedGames() {
   }
 
   useEffect(() => {
-    if (games.length === 0)
-      getGames(1)
-  }, [])
-
-  useEffect(() => {
-    filterData && Object.keys(filterData)?.length && getGames(1)
-  }, [filterData])
+    getGames(1)
+  }, [searchParams])
 
   return {
     games,
     getGames,
-    externalFilter, 
-    resetFilter,
-    filterData, 
     uploadGame,
     updateGame,
     getGame,

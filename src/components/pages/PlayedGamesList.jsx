@@ -6,6 +6,7 @@ import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
 import { Chip } from "primereact/chip";
 import GamesList from "../utils/lists/GamesList";
+import { useFilterData } from "../../hooks/useFilterData";
 
 const PlayedGamesList = () => {
   const { toggleValue, toggle } = useToggle();
@@ -14,10 +15,14 @@ const PlayedGamesList = () => {
     page,
     max,
     getGames,
-    resetFilter,
-    externalFilter,
+    updateGame,
+    removeGame,
     filterData,
   } = usePlayedGames();
+  const {
+    resetFilter,
+    applyFilter,
+  } = useFilterData()
   const onScrollEnd = (e) => {
     const { clientHeight, scrollHeight, scrollTop } = e.target;
     // take the integer part cause sometimes the number isn't exact
@@ -45,7 +50,7 @@ const PlayedGamesList = () => {
       >
         <FilterForm
           onSubmit={(data) => {
-            externalFilter(data);
+            applyFilter(data);
             toggle();
           }}
         />
@@ -81,7 +86,7 @@ const PlayedGamesList = () => {
         </div>
       )}
 
-      <GamesList games={games} onScrollEnd={onScrollEnd} />
+      <GamesList games={games} onScrollEnd={onScrollEnd} updateGame={updateGame} removeGame={removeGame} />
     </div>
   );
 };

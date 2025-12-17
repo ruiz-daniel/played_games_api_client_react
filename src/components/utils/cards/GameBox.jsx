@@ -8,12 +8,11 @@ import Score from '../score'
 import Status from '../status'
 import { useToggle } from '../../../hooks/useToggle'
 
-const GameBox = ({ game, width = 300, imageHeight = 150 }) => {
+const GameBox = ({ game, width = 300, imageHeight = 150, updateGame, removeGame }) => {
   const navigator = useNavigation()
   const editEvent = () => {
     navigator.goToGameDetails(game._id)
   }
-  const { updateGame, removeGame } = usePlayedGames()
   const deleteConfirmToggle = useToggle()
 
   const favorite = () => {

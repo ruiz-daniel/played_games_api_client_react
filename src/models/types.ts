@@ -39,6 +39,21 @@ export type GameFilterData = {
   tags?: string
 }
 
+export type GameFilterDataUrl = {
+    completion?: string
+    developers?: string
+    genre?: string
+    name?: string
+    platform?: string
+    played_hours_max?: string
+    played_hours_min?: string
+    played_year?: string
+    publishers?: string
+    release_year?: string
+    score?: string
+    tags?: string
+}
+
 export type GameFilterDataQuery = {
     name: "" | {
         $regex: string;
@@ -56,9 +71,9 @@ export type GameFilterDataQuery = {
         $regex: string;
         $options?: string;
     } | undefined;
-    completion?: Completion | undefined;
+    completion?: string;
     genre?: string;
-    platform?: Platform;
+    platform?: string;
     played_hours_max?: string;
     played_hours_min?: string;
     played_year?: string;
