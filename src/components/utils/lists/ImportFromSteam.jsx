@@ -12,32 +12,31 @@ const ImportFromSteam = ({onSelect}) => {
   const [notFoundMessage, setnotFoundMessage] = useState('');
   const {setLoading} = useLoading()
 
-  const search = () => {
+  const search = async () => {
     setLoading(true)
-    SteamRapidApi.getSteamGames(searchTerm, (response) => {
-      setLoading(false)
-      if (response.status === 200) {
-        if(response.data.length === 0) {
-          setnotFoundMessage(`No results found for ${searchTerm}`)
-        }
-        else {
-          setnotFoundMessage(null)
-        }
-        setLimitMessage(false);
-        setSteamGames(response.data);
+    const gamesResponse = await SteamRapidApi.getSteamGames(searchTerm)
+    setLoading(false)
+    if (gamesResponse.status === 200) {
+      if(gamesResponse.data.length === 0) {
+        setnotFoundMessage(`No results found for ${searchTerm}`)
       }
-      else if (response.data.message.includes('rate limit')) {
-        setLimitMessage(true)
+      else {
+        setnotFoundMessage(null)
       }
-    })
+      setLimitMessage(false);
+      setSteamGames(gamesResponse.data);
+    }
+    else if (gamesResponse.data.message.includes('rate limit')) {
+      setLimitMessage(true)
+    }
+
   }
 
-  const handleGameSelect = (game) => {
+  const handleGameSelect = async (game) => {
     setLoading(true)
-    SteamRapidApi.getGameDetails(game.appId, (response) => {
-      setLoading(false)
-      onSelect({...response.data, steamURL: game.url});
-    })
+    const gameResponse = await SteamRapidApi.getGameDetails(game.appId)
+    setLoading(false)
+    onSelect({...gameResponse.data, steamURL: game.url});
     
   }
 
