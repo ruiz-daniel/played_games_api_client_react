@@ -27,7 +27,7 @@ export type UploadGameData = {
 export type GameFilterData = {
   completion?: Completion
   developers?: string
-  genre?: string
+  genres?: string
   name?: string
   platform?: Platform
   played_hours_max?: string
@@ -42,7 +42,7 @@ export type GameFilterData = {
 export type GameFilterDataUrl = {
     completion?: string
     developers?: string
-    genre?: string
+    genres?: string
     name?: string
     platform?: string
     played_hours_max?: string
@@ -72,7 +72,10 @@ export type GameFilterDataQuery = {
         $options?: string;
     } | undefined;
     completion?: string;
-    genre?: string;
+    genres?: "" | {
+        $regex: string;
+        $options?: string;
+    } | undefined;
     platform?: string;
     played_hours_max?: string;
     played_hours_min?: string;

@@ -4,12 +4,17 @@ import PlayedGamesApi from "../services/PlayedGamesApi";
 import { useLoading } from "./context hooks/useLoading";
 import { PlayedGamesStats } from "../models/Stats";
 import { useErrorHandling } from "./useErrorHandling";
+import { GameFilterDataUrl } from "../models/types";
+import { prepareFilterMongoose } from "../utils/Filter";
+import { useSearchParams } from "react-router-dom";
 
 export function usePlayedStats() {
 
   const [stats, setStats] = useState<PlayedGamesStats>()
   const [totalGames, setTotalGames] = useState(0)
   const [avgScore, setAvgScore] = useState(0)
+  
+  const [searchParams] = useSearchParams()
 
   const { setLoading } = useLoading()
   const { handleError } = useErrorHandling()
@@ -25,8 +30,13 @@ export function usePlayedStats() {
   }
 
   const getStats = async () => {
+    const filterData: GameFilterDataUrl = {}
+    searchParams.forEach((value, key) => {
+      filterData[key as keyof GameFilterDataUrl] = value
+    });
+    const filter = prepareFilterMongoose(filterData)
     setLoading(true)
-    const response = await PlayedGamesApi.getStats()
+    const response = await PlayedGamesApi.getStats(filter)
     if ("data" in response) {
       setStats(response.data)
     } else {
@@ -38,7 +48,7 @@ export function usePlayedStats() {
 
   useEffect(() => {
     getStats()
-  },[])
+  },[searchParams])
 
   useEffect(() => {
     if(stats) {

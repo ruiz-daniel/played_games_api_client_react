@@ -1,9 +1,20 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect } from 'react'
 import { Chart } from 'primereact/chart'
+import { Sidebar } from "primereact/sidebar";
+import { Button } from "primereact/button";
+import { Chip } from "primereact/chip";
+import FilterForm from "../utils/forms/FilterForm";
 import { usePlayedStats } from '../../hooks/usePlayedStats'
+import { useToggle } from '../../hooks/useToggle';
+import { useFilterData } from '../../hooks/useFilterData';
 
 const GameStats = () => {
+  const { toggleValue, toggle } = useToggle();
+  const {
+    resetFilter,
+    applyFilter,
+  } = useFilterData()
   const { stats, totalGames, avgScore } = usePlayedStats()
   const color = '#fbfaf8'
   const [completionChart, setcompletionChart] = useState({
@@ -138,7 +149,7 @@ const GameStats = () => {
   const getCompletionStats = () => {
     let total_games = stats.totalGames
     let replaying = stats.completionDatasets.Replaying
-    let completed = stats.completionDatasets.Completed + replaying
+    let completed = stats.completionDatasets.Completed + (replaying ?? 0)
     let dropped = stats.completionDatasets.Dropped
     let na = stats.completionDatasets['N/A']
     let online = stats.completionDatasets.Online
@@ -229,37 +240,37 @@ const GameStats = () => {
     })
     setGenreStats({
       labels: Object.keys(stats.genreDatasets).filter(
-        (key) => stats.genreDatasets[key] > 1,
+        (key) => Object.keys(stats.genreDatasets).length > 30 ? stats.genreDatasets[key] > 1: stats.genreDatasets[key],
       ).sort((a,b) => stats.genreDatasets[b] - stats.genreDatasets[a]),
       datasets: [
         {
-          label: 'Games per Genre (more than 1)',
+          label: 'Games per Genre',
           backgroundColor: '#00cbcb',
-          data: Object.values(stats.genreDatasets).filter((value) => value > 1).sort((a,b) => b - a),
+          data: Object.values(stats.genreDatasets).filter((value) => Object.keys(stats.genreDatasets).length > 30 ? value > 1 : value).sort((a,b) => b - a),
         },
       ],
     })
     setDeveloperChart({
       labels: Object.keys(stats.developerDataset).filter(
-        (key) => stats.developerDataset[key] > 1,
+        (key) => Object.keys(stats.developerDataset).length > 30 ? stats.developerDataset[key] > 1: stats.developerDataset[key],
       ).sort((a,b) => stats.developerDataset[b] - stats.developerDataset[a]),
       datasets: [
         {
-          label: 'Games per Developer (more than 1)',
+          label: 'Games per Developer',
           backgroundColor: '#ff0042',
-          data: Object.values(stats.developerDataset).filter((value) => value > 1).sort((a,b) => b - a),
+          data: Object.values(stats.developerDataset).filter((value) => Object.keys(stats.developerDataset).length > 30 ? value > 1 : value).sort((a,b) => b - a),
         },
       ],
     })
     setPublisherChart({
       labels: Object.keys(stats.publisherDataset).filter(
-        (key) => stats.publisherDataset[key] > 1,
+        (key) => Object.keys(stats.publisherDataset).length > 30 ? stats.publisherDataset[key] > 1 : stats.publisherDataset[key],
       ).sort((a,b) => stats.publisherDataset[b] - stats.publisherDataset[a]),
       datasets: [
         {
-          label: 'Games per Publisher (more than 1)',
+          label: 'Games per Publisher',
           backgroundColor: '#155495',
-          data: Object.values(stats.publisherDataset).filter((value) => value > 1).sort((a,b) => b - a),
+          data: Object.values(stats.publisherDataset).filter((value) => Object.keys(stats.publisherDataset).length > 30 ? value > 1 : value).sort((a,b) => b - a),
         },
       ],
     })
@@ -267,7 +278,7 @@ const GameStats = () => {
 
   return (
     <div className="stats-wrapper px-3">
-      {/* <Sidebar
+      <Sidebar
         visible={toggleValue}
         position="right"
         showCloseIcon={false}
@@ -276,12 +287,13 @@ const GameStats = () => {
       >
         <FilterForm
           onSubmit={(data) => {
+            applyFilter(data)
             toggle()
           }}
         />
-      </Sidebar> */}
+      </Sidebar>
       <h1>Played Games Stats</h1>
-      {/* <div className='flex gap-4'>
+      <div className='flex gap-4'>
         <Button
           icon="pi pi-filter"
           label="Advanced Filter"
@@ -294,7 +306,7 @@ const GameStats = () => {
           onMouseLeave={(e) => e.target.blur()}
           onTouchEnd={(e) => e.target.blur()}
         />
-      </div> */}
+      </div>
       
       <div className="text-center mb-5">
         <h3>Total played games: {totalGames}</h3>

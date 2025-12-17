@@ -43,7 +43,7 @@ const FilterForm = ({ onSubmit }) => {
         <InputText
           placeholder="Genre"
           className="p-inputtext-sm"
-          {...register('genre')}
+          {...register('genres')}
         />
         <InputText
           placeholder="Tag"

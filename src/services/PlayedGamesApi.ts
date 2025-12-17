@@ -115,12 +115,12 @@ export default {
       return handleError(error as AxiosError)
     }
   },
-  async getStats() {
+  async getStats(filterData?: GameFilterDataQuery) {
     try {
       const response = await apiClient
         .request({
           method: 'get',
-          url: `PlayedGames/stats`
+          url: `PlayedGames/stats?filterData=${JSON.stringify(filterData) ?? JSON.stringify({})}`
         })
       return response as AxiosResponse<PlayedGamesStats>
     } catch (error) {
