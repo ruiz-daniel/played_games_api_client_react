@@ -7,6 +7,7 @@ import { Button } from "primereact/button";
 import { Chip } from "primereact/chip";
 import GamesList from "../utils/lists/GamesList";
 import { useFilterData } from "../../hooks/useFilterData";
+import { useMemo } from "react";
 
 const PlayedGamesList = () => {
   const { toggleValue, toggle } = useToggle();
@@ -17,11 +18,11 @@ const PlayedGamesList = () => {
     getGames,
     updateGame,
     removeGame,
-    filterData,
   } = usePlayedGames();
   const {
     resetFilter,
     applyFilter,
+    searchParams
   } = useFilterData()
   const onScrollEnd = (e) => {
     const { clientHeight, scrollHeight, scrollTop } = e.target;
@@ -38,6 +39,16 @@ const PlayedGamesList = () => {
     const capitalized =  key.slice(0,1).toUpperCase() + key.substring(1)
     return capitalized.replaceAll("_", " ")
   }
+
+  const filteringValues = useMemo(() => {
+    const values = {}
+    searchParams.forEach((value, key) => {
+      if (key !== 'played_hours') {
+        values[key] = value
+      }
+    })
+    return values
+  }, [searchParams])
 
   return (
     <div className="played-games-list">
@@ -66,23 +77,19 @@ const PlayedGamesList = () => {
         />
       </div>
 
-      {filterData && (
+      {searchParams.size > 0 && (
         <div className="flex flex-wrap gap-3 my-2">
           <h3 className="my-2">Filtering by:</h3>
-          {Object.keys(filterData).map((key) => {
-            if (filterData[key] && key !== 'played_hours') {
-              return (
-                <Chip
-                  key={key}
-                  className="dark-chip"
-                  label={`${parseKeysToNames(key)}: ${
-                    filterData[key]["$regex"] || filterData[key]
-                  }`}
-                />
-              );
-            }
-            return null
+          {Object.keys(filteringValues).map((key) => {
+            return (
+              <Chip
+                key={key}
+                className="dark-chip"
+                label={`${parseKeysToNames(key)}: ${filteringValues[key]}`}
+              />
+            );
           })}
+
         </div>
       )}
 

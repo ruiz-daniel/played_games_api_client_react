@@ -10,7 +10,7 @@ export const useFilterData = () => {
         delete data[key]
       }
     });
-    const dataUrl: GameFilterDataUrl = {...data, completion: data.completion?._id, platform: data.platform?._id}
+    const dataUrl: GameFilterDataUrl = {...data, completion: data.completion?.name, platform: data.platform?.name}
     if (!dataUrl.completion) delete dataUrl.completion
     if (!dataUrl.platform) delete dataUrl.platform
     setSearchParams(dataUrl)
@@ -27,6 +27,7 @@ export const useFilterData = () => {
 
   return {
     applyFilter,
-    resetFilter
+    resetFilter,
+    searchParams
   }
 }
