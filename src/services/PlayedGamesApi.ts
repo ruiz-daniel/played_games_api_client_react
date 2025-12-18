@@ -17,7 +17,6 @@ const removeFalseyValues = (filterData: GameFilterDataQuery) => {
 
 export default {
   async getPlayedGames(
-    userid: string, 
     page = 1, 
     limit = 50, 
     filterData?: GameFilterDataQuery
@@ -30,7 +29,7 @@ export default {
       const response = await apiClient
         .request({
           method: 'get',
-          url: `PlayedGames/user/${userid}?page=${page}&limit=${limit}
+          url: `playedGames?page=${page}&limit=${limit}
             &filterData=${JSON.stringify(filterData) ?? JSON.stringify({})}`,
         })
       return response as AxiosResponse<PlayedGamesResponse>
@@ -45,7 +44,7 @@ export default {
       const response = await apiClient
         .request({
           method: 'get',
-          url: `PlayedGames/game/${gameid}`,
+          url: `playedGames/game/${gameid}`,
         })
       return response as AxiosResponse<PlayedGame>
     } catch (error) {
@@ -58,7 +57,7 @@ export default {
       const response = await apiClient
         .request({
           method: 'get',
-          url: `PlayedGames`,
+          url: `playedGames`,
         })
       return response as AxiosResponse<PlayedGame[]>
     } catch (error) {
@@ -70,7 +69,7 @@ export default {
       const response = await apiClient
         .request({
           method: 'post',
-          url: 'PlayedGames',
+          url: 'playedGames',
           data: game,
         })
       return response as AxiosResponse<PlayedGame>
@@ -83,7 +82,7 @@ export default {
       const response = await apiClient
         .request({
           method: 'patch',
-          url: 'PlayedGames/',
+          url: 'playedGames/',
           data: game,
         })
       return response as AxiosResponse<PlayedGame>
@@ -96,7 +95,7 @@ export default {
       const response = await apiClient
         .request({
           method: 'delete',
-          url: `PlayedGames/${id}`,
+          url: `playedGames/${id}`,
         })
       return response
     } catch (error) {
@@ -108,7 +107,7 @@ export default {
       const response = await apiClient
       .request({
         method: 'get',
-        url: `PlayedGames/playing/`,
+        url: `playedGames/playing/`,
       })
       return response as AxiosResponse<PlayedGame[]>
     } catch (error) {
@@ -120,7 +119,7 @@ export default {
       const response = await apiClient
         .request({
           method: 'get',
-          url: `PlayedGames/stats?filterData=${JSON.stringify(filterData) ?? JSON.stringify({})}`
+          url: `playedGames/stats?filterData=${JSON.stringify(filterData) ?? JSON.stringify({})}`
         })
       return response as AxiosResponse<PlayedGamesStats>
     } catch (error) {

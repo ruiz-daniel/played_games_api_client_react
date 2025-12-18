@@ -31,7 +31,6 @@ export function usePlayedGames() {
     const filter = prepareFilterMongoose(filterData)
     setLoading(true)
     const response = await api.PlayedGamesApi.getPlayedGames(
-      localStorage.getItem('userid') as string,
       page,
       50,
       filter,
