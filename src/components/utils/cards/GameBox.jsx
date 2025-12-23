@@ -8,7 +8,7 @@ import Score from '../score'
 import Status from '../status'
 import { useToggle } from '../../../hooks/useToggle'
 
-const GameBox = ({ game, width = 300, imageHeight = 150, updateGame, removeGame }) => {
+const GameBox = ({ game, width = 350, imageHeight = 170, updateGame, removeGame }) => {
   const navigator = useNavigation()
   const editEvent = () => {
     navigator.goToGameDetails(game._id)
@@ -28,19 +28,23 @@ const GameBox = ({ game, width = 300, imageHeight = 150, updateGame, removeGame 
 
   return (
     <div className="game-box-container" style={containerStyles}>
+      <div className='game-box-header'>
+        <i className={`favorite-icon pi ${game.favorite ? 'pi-star-fill' : 'pi-star'}`} onClick={favorite} />
+        <p>{`${game.name.substring(0,30)}${game.name.length > 30 ? '...' : ''}`}</p>
+        {game.score && <Score score={game.score}></Score>}
+      </div>
       <div className="game-box-img">
         <img alt="Game Cover" src={game?.cover || no_cover} height={imageHeight} />
-        <div className="game-details-panel">
-          <div className="details-icon" onClick={editEvent}>
-            <span className="pi pi-pencil"></span>
-          </div>
-        </div>
+      </div>
+      <div className='game-box-footer'>
         {game.completion && (
           <Status status={game.completion.name}></Status>
         )}
-        {game.score && <Score score={game.score}></Score>}
-        <i className={`favorite-icon pi ${game.favorite ? 'pi-star-fill' : 'pi-star'}`} onClick={favorite} />
-        <i className={`delete-icon pi pi-trash`} onClick={deleteConfirmToggle.toggle} />
+        <div className='flex gap-3'>
+          <i className='details-icon pi pi-pencil' onClick={editEvent} />
+          <i className={`delete-icon pi pi-trash`} onClick={deleteConfirmToggle.toggle} />
+        </div>
+        
       </div>
       <ConfirmDialog 
         visible={deleteConfirmToggle.toggleValue}
@@ -51,7 +55,7 @@ const GameBox = ({ game, width = 300, imageHeight = 150, updateGame, removeGame 
         accept={() => removeGame(game._id)}
         reject={deleteConfirmToggle.toggleOFF}
        />
-      <p>{game.name}</p>
+      
     </div>
   )
 }

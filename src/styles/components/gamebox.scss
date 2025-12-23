@@ -1,74 +1,67 @@
 .game-box-container {
-  .game-box-img {
-    &:hover {
-      .game-details-panel {
-        opacity: 1;
-      }
-      img {
-        opacity: 0.5;
-      }
-      .favorite-icon {
-        opacity: 1;
-      }
-      .delete-icon {
-        opacity: 1;
-      }
-    }
+  background-color: $background-color-darker;
+  border-radius: 15px;
+  padding: 5px 8px;
+  .game-box-header {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
     position: relative;
-    .status {
-      position: absolute;
-      left: 5px;
-      bottom: 5px;
-      font-size: small;
-      @include paddingX(5px);
-      border-radius: 7px;
-    }
+    padding-bottom: 5px;
+    align-items: center;
     .score {
-      position: absolute;
-      right: 5px;
-      top: 1px;
       font-size: 28px;
     }
     .favorite-icon {
-      position: absolute;
-      left: 5px;
-      top: 10px;
       font-size: 20px;
       cursor: pointer;
       transition: 0.5s ease;
       opacity: 0;
+      &:hover {
+        opacity: 1;
+      }
+    }
+    p {
+      max-width: 240px;
+      margin: 0;
+    }
+  }
+  .game-box-footer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+    padding-top: 5px;
+    align-items: center;
+    .status {
+      font-size: small;
+      @include paddingX(5px);
+      border-radius: 7px;
+    }
+    .details-icon {
+      cursor: pointer;
+      font-size: 18px;
     }
     .delete-icon {
-      position: absolute;
-      right: 5px;
-      bottom: 10px;
-      font-size: 20px;
+      font-size: 18px;
       cursor: pointer;
-      opacity: 0;
       color: $text-color-red;
     }
+  }
+}
+  .game-box-img {
+    width: 100%;
+    @include paddingX(10px);
+    border-radius: 15px;
     img {
       opacity: 1;
       width: 100%;
       transition: 0.5s ease;
       backface-visibility: hidden;
       border-radius: 15px;
-    }
-    .game-details-panel {
-      cursor: pointer;
-      transition: 0.5s ease;
-      opacity: 0;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      padding: 20%;
+      border: 1px solid $gs-colors-silver;
     }
   }
-  p {
-    max-width: 300px;
-  }
-}
+
+
+  
