@@ -2,3 +2,23 @@
   padding: 15px;
   @include centerContent($width: 95%);
 }
+
+.list-handler-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  h3 {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    width: 100%;
+
+    i {
+      cursor: pointer;
+      background-color: rgba($color: gray, $alpha: 0.2);
+      padding: 8px;
+      border-radius: 50%;
+    }
+  }
+}

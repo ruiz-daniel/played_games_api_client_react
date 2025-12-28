@@ -11,6 +11,7 @@ export const managetop10games = '/managetop10games'
 export const top10characters = '/top10characters'
 export const login = '/login'
 export const register = '/signup'
+export const singleLists = '/lists'
 export const loggedRoutes = [
   playedgames,
   tableview,
@@ -20,6 +21,7 @@ export const loggedRoutes = [
   top10games,
   managetop10games,
   top10characters,
+  singleLists
 ]
 
 //server routes

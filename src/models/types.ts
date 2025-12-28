@@ -3,25 +3,27 @@ import { Completion } from "./Completion"
 import { PlayedGame } from "./PlayedGame"
 
 export type UploadGameData = {
-    name: string,
-    release_year: string,
-    played_year: string,
-    score: string,
-    played_hours: string
-    steam_page: string,
-    epic_page: string,
-    description: string,
-    developers: string[],
-    publishers: string[],
-    genres: string[],
-    tags: string[],
-    platform: Platform,
-    completion: Completion,
-    other_stores: string[],
-    images: any,
-    cover: string,
-    cover_box: string,
-    gallery: string[]
+    _id?: string,
+    name?: string,
+    release_year?: string,
+    played_year?: string,
+    score?: string,
+    played_hours?: string
+    steam_page?: string,
+    epic_page?: string,
+    description?: string,
+    developers?: string[],
+    publishers?: string[],
+    genres?: string[],
+    tags?: string[],
+    platform?: Platform,
+    completion?: Completion,
+    other_stores?: string[],
+    images?: any,
+    cover?: string,
+    cover_box?: string,
+    gallery?: string[],
+    favorite?: boolean
 }
 
 export type GameFilterData = {
@@ -55,19 +57,19 @@ export type GameFilterDataUrl = {
 }
 
 export type GameFilterDataQuery = {
-    name: "" | {
+    name?: "" | {
         $regex: string;
         $options?: string;
     } | undefined;
-    developers: "" | {
+    developers?: "" | {
         $regex: string;
         $options?: string;
     } | undefined;
-    publishers: "" | {
+    publishers?: "" | {
         $regex: string;
         $options?: string;
     } | undefined;
-    tags: "" | {
+    tags?: "" | {
         $regex: string;
         $options?: string;
     } | undefined;

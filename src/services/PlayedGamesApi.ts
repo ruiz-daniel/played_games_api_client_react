@@ -57,9 +57,9 @@ export default {
       const response = await apiClient
         .request({
           method: 'get',
-          url: `playedGames`,
+          url: `playedGames?page=1&limit=500`,
         })
-      return response as AxiosResponse<PlayedGame[]>
+      return response as AxiosResponse<PlayedGamesResponse>
     } catch (error) {
       return handleError(error as AxiosError)
     }

@@ -49,19 +49,33 @@
     }
   }
 }
-  .game-box-img {
+.game-box-img {
+  width: 100%;
+  @include paddingX(10px);
+  border-radius: 15px;
+  img {
+    opacity: 1;
     width: 100%;
-    @include paddingX(10px);
+    transition: 0.5s ease;
+    backface-visibility: hidden;
     border-radius: 15px;
-    img {
-      opacity: 1;
-      width: 100%;
-      transition: 0.5s ease;
-      backface-visibility: hidden;
-      border-radius: 15px;
-      border: 1px solid $gs-colors-silver;
-    }
+    border: 1px solid $gs-colors-silver;
   }
+}
+
+.add-box {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  border: 1px dashed gray;
+  cursor: pointer;
+  &:hover {
+    color: $gs-colors-silver;
+    border-color: $gs-colors-silver;
+  }
+}
 
 
   

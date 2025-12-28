@@ -67,6 +67,9 @@ const TopBar = () => {
             <div className="topbar-element">
               <Link to={routes.stats}>Stats</Link>
             </div>
+            <div className="topbar-element">
+              <Link to={routes.singleLists}>Lists</Link>
+            </div>
           </div>
         )}
       </div>

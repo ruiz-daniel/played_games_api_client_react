@@ -22,6 +22,7 @@ import 'nprogress/nprogress.css'
 
 import { MessagesProvider } from './contexts/messages'
 import { LoadingProvider } from './contexts/loading'
+import GameSingleLists from './components/pages/GameSingleLists'
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
                 <Route path={routes.stats} element={<GameStats />} />
                 <Route path={routes.gamedetails} element={<GameDetails />} />
                 <Route path={routes.uploadgame} element={<UploadGame />} />
+                <Route path={routes.singleLists} element={<GameSingleLists/>} />
               </Routes>
             }
           </div>
