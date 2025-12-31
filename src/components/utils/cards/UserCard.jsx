@@ -24,35 +24,31 @@ function UserCard({ user, update }) {
   return (
     <div className="flex gap-3 justify-content-center">
       <Dialog
+        className='bg-white py-2 px-3'
         header="Change Profile Picture"
+        headerClassName="flex justify-between cursor-pointer"
         visible={toggleValue}
         onHide={toggle}
       >
-        <div className="game-form">
-          <div className="game-form-item">
+        <div className="flex flex-col gap-3 px-2 py-3">
+          <div className='flex justify-center'>
+            <img src={user?.profile_picture} width={150} className='rounded-full'/>
+          </div>
             <FileUpload
-              className="m-2"
+              className="flex flex-col justify-center items-center bg-amber-300 text-white cursor-pointer rounded-2xl file-uploader"
               customUpload
-              mode="advanced"
+              mode="basic"
               auto
               multiple={false}
               uploadHandler={onUpload}
               accept="image/*"
-              chooseLabel="Change Picture"
             />
           </div>
-        </div>
       </Dialog>
-      <Avatar
-        image={user?.profile_picture || weissIcon}
-        className="extra-large-avatar"
-        size="xlarge"
-        shape="circle"
-        onClick={toggle}
-      />
-      <div className='flex flex-column justify-content-start'>
-        <h1>{user?.display_name ?? "Guest"}</h1>
-        <h3 style={{ margin: 0 }}>@{user?.username ?? "username"}</h3>
+      <img src={user?.profile_picture} width={170} className='rounded-full cursor-pointer hover:w-[190px] transition-all' onClick={toggle} />
+      <div className='flex flex-col gap-6 justify-center'>
+        <h1 className='text-4xl'>{user?.display_name ?? "Guest"}</h1>
+        <h3 className='text-2xl' style={{ margin: 0 }}>@{user?.username ?? "username"}</h3>
       </div>
       
     </div>

@@ -11,3 +11,25 @@
 .content-container > .home-container {
   min-height: calc(100vh - 72px);
 }
+
+.file-uploader > span {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 1rem;
+  cursor: pointer !important;
+}
+
+.file-uploader > span > span {
+  display: none;
+}
+
+.file-uploader > span > input {
+  text-align: center;
+  cursor: pointer;
+}
+
+.file-uploader > span > svg {
+  display: none;
+}
