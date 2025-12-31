@@ -33,8 +33,8 @@ function App() {
               <Routes>
                 <Route path={routes.home} element={<Home />} />
                 <Route path={routes.dashboard} element={<Dashboard />} />
-                <Route path={routes.login} element={<Login />} />
-                <Route path={routes.register} element={<SignUp />} />
+                <Route path={routes.login} element={<Home />} />
+                <Route path={routes.register} element={<Home />} />
                 <Route path={routes.playedgames} element={<PlayedGames />} />
                 <Route path={routes.stats} element={<GameStats />} />
                 <Route path={routes.gamedetails} element={<GameDetails />} />

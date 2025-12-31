@@ -74,15 +74,12 @@ export const useUser = () => {
     goHome()
   }
 
-  useEffect(() => {
-    getUserData()
-  }, [])
-
   return {
     user,
     login,
     signup,
     update,
-    logout
+    logout,
+    getUserData
   }
 }

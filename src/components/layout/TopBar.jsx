@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useNavigation } from '../../hooks/useNavigation'
 import { useUser } from '../../hooks/useUser'
 
@@ -19,7 +19,11 @@ const TopBar = () => {
   const navigator = useNavigation()
   const [sideMenu, toggleSideMenu] = useState(false)
 
-  const { user, logout } = useUser()
+  const { user, logout, getUserData } = useUser()
+
+  useEffect(() => {
+    getUserData()
+  }, [])
 
   // var isMobile = navigator.userAgent.toLowerCase().match(/mobile/i)
 
@@ -94,37 +98,32 @@ const TopBar = () => {
     <div className='sticky top-0 z-1 bg-white px-1 py-3 flex items-center w-full shadow'>
       {user?._id && <div className='flex gap-3 flex-1'>
         <div
-          className="p-3"
-          // onClick={() => toggleSideMenu(true)}
+          className="p-3 cursor-pointer"
+          onClick={() => toggleSideMenu(true)}
         >
           <i className="pi pi-bars" />
         </div>
-        <div className='p-3 rounded-md bg-amber-300'>
+        <div className='p-3 rounded-md bg-amber-300 w-[82px] flex justify-center'>
           <Link to={routes.playedgames}>Games</Link>
         </div>
-        <div className='p-3 rounded-md bg-amber-300'>
+        <div className='p-3 rounded-md bg-amber-300 w-[82px] flex justify-center'>
           <Link to={routes.uploadgame}>Upload</Link>
         </div>
-        <div className='p-3 rounded-md bg-amber-300'>
+        <div className='p-3 rounded-md bg-amber-300 w-[82px] flex justify-center'>
           <Link to={routes.stats}>Stats</Link>
         </div>
-        <div className='p-3 rounded-md bg-amber-300'>
+        <div className='p-3 rounded-md bg-amber-300 w-[82px] flex justify-center'>
           <Link to={routes.singleLists}>Lists</Link>
         </div>
       </div>}
-      {!user?._id &&<div className='flex gap-3 flex-1'>
+      {!user?._id &&<div className='flex gap-3 flex-1 items-center'>
         <div
-          className="p-3"
-          // onClick={() => toggleSideMenu(true)}
+          className="p-3 cursor-pointer"
+          onClick={() => toggleSideMenu(true)}
         >
           <i className="pi pi-bars" />
         </div>
-        <div className='p-3 rounded-md bg-amber-300'>
-          <Link to={routes.login}>Login</Link>
-        </div>
-        <div className='p-3 rounded-md bg-amber-300'>
-          <Link to={routes.register}>Sign Up</Link>
-        </div>
+        <h1 className="font-serif font-bold text-4xl text-amber-700">VG Shelf</h1>
       </div>}
       <div className='mr-3'>
         {!sideMenu && (
