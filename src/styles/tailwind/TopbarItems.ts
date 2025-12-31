@@ -1,0 +1,1 @@
+export const STYLE_TOP_BAR_ITEM = ""

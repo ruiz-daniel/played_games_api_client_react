@@ -47,7 +47,7 @@ const TopBar = () => {
         {
           <div
             className="topbar-element sidemenu-icon mr-4"
-            onClick={() => toggleSideMenu(true)}
+            // onClick={() => toggleSideMenu(true)}
           >
             <i className="pi pi-bars" />
           </div>
@@ -91,8 +91,50 @@ const TopBar = () => {
   )
 
   return (
-    <div className="sticky-section">
-      <Toolbar left={leftContents} right={rightContents} className="topbar" />
+    <div className='sticky top-0 z-1 bg-white px-1 py-3 flex items-center w-full shadow'>
+      {user?._id && <div className='flex gap-3 flex-1'>
+        <div
+          className="p-3"
+          // onClick={() => toggleSideMenu(true)}
+        >
+          <i className="pi pi-bars" />
+        </div>
+        <div className='p-3 rounded-md bg-amber-300'>
+          <Link to={routes.playedgames}>Games</Link>
+        </div>
+        <div className='p-3 rounded-md bg-amber-300'>
+          <Link to={routes.uploadgame}>Upload</Link>
+        </div>
+        <div className='p-3 rounded-md bg-amber-300'>
+          <Link to={routes.stats}>Stats</Link>
+        </div>
+        <div className='p-3 rounded-md bg-amber-300'>
+          <Link to={routes.singleLists}>Lists</Link>
+        </div>
+      </div>}
+      {!user?._id &&<div className='flex gap-3 flex-1'>
+        <div
+          className="p-3"
+          // onClick={() => toggleSideMenu(true)}
+        >
+          <i className="pi pi-bars" />
+        </div>
+        <div className='p-3 rounded-md bg-amber-300'>
+          <Link to={routes.login}>Login</Link>
+        </div>
+        <div className='p-3 rounded-md bg-amber-300'>
+          <Link to={routes.register}>Sign Up</Link>
+        </div>
+      </div>}
+      <div className='mr-3'>
+        {!sideMenu && (
+          user?._id ? <img width={60} height={60} className='rounded-full cursor-pointer' src={user?.profile_picture} onClick={(e) => menu.current.toggle(e)} />
+          : <div className='bg-gray-200 p-3 rounded-full cursor-pointer'>
+            <i className='pi pi-user' onClick={(e) => menu.current.toggle(e)}  />
+          </div>
+        )}
+        <Menu model={userMenuItems} popup ref={menu} className='right-12 left-auto! shadow-2xl w-28 flex flex-col items-center transition-all' />
+      </div>
       <Sidebar
         className="menu-sidebar"
         visible={sideMenu}
