@@ -1,8 +1,7 @@
 import React from 'react'
-import 'primereact/resources/primereact.min.css'
+// import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
-import 'primereact/resources/themes/saga-blue/theme.css'
-import 'primeflex/primeflex.css'
+// import 'primeflex/primeflex.css'
 
 import TopBar from './components/layout/TopBar'
 import PlayedGames from './components/pages/PlayedGamesList'
@@ -16,7 +15,6 @@ import SignUp from './components/pages/SignUp'
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import * as routes from './routes'
-import './styles/main.scss'
 
 import 'nprogress/nprogress.css'
 
