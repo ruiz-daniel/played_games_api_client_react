@@ -2,11 +2,12 @@ import React from "react";
 
 const status = (props) => {
   const getStatus = () => {
-    if (props.status === "Completed" || props.status === "Replaying")
-      return "status status-completed";
-    else if (props.status === "Dropped") return " status status-dropped";
+    if (props.status === "Completed")
+      return "px-2 rounded-xl bg-green-500";
+    else if (props.status === "Playing" || props.status === "Replaying") return "px-2 rounded-xl bg-blue-500"
+    else if (props.status === "Dropped") return "px-2 rounded-xl bg-red-500";
     else 
-      return "status status-incomplete";
+      return "px-2 rounded-xl bg-yellow-500";
   };
   return <span className={getStatus()}>{props.status}</span>;
 };
