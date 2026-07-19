@@ -42,9 +42,9 @@ const LoginForm = ({ onSubmit, onSignUp }) => {
         </div>
       </div>
       <div></div>
-      <Button className="border-none py-1! hover:text-amber-500 hover:text-2xl transition-all" label="Login" type="submit" />
+      <Button className="border-none bg-transparent py-1! text-black! hover:text-amber-500! hover:text-2xl transition-all" label="Login" type="submit" />
       <p>Or</p>
-      <Button className="border-none py-1! hover:text-blue-500" label="Sign Up" type="button" onClick={loginMode.toggleOFF} />
+      <Button className="border-none bg-transparent py-1! text-black! hover:text-blue-500!" label="Sign Up" type="button" onClick={loginMode.toggleOFF} />
     </form>
   ) : (
     <form onSubmit={handleSubmit(onSignUp)} className="flex flex-col items-center gap-4">

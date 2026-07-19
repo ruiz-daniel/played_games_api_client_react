@@ -10,6 +10,8 @@ import { useToggle } from '../../../hooks/useToggle'
 import { PlayedGame } from '../../../models/PlayedGame'
 import { UploadGameData } from '../../../models/types'
 import { Chip } from 'primereact/chip'
+import { Dialog } from 'primereact/dialog'
+import GameDetailsModal from '../modals/GameDetailsModal'
 
 export type GameBoxProps = {
   game: PlayedGame,
@@ -24,8 +26,10 @@ const GameBox = ({ game, width = 250, imageHeight = 130, updateGame, removeGame,
   const navigator = useNavigation()
   const showInfo = useToggle()
   const editEvent = () => {
-    navigator.goToGameDetails(game._id)
+    gameDetailsDialog.toggleON()
   }
+
+  const gameDetailsDialog = useToggle()
   const deleteConfirmToggle = useToggle()
 
   const gameHeaderAllowedLength = useMemo(() => {
@@ -65,8 +69,10 @@ const GameBox = ({ game, width = 250, imageHeight = 130, updateGame, removeGame,
           {removeGame && <i className={`text-red-500 cursor-pointer hover:text-red-700 pi pi-trash`} onClick={deleteConfirmToggle.toggle} />}
         </div>
       </div>
-      <div className='flex  flex-col items-center justify-center pb-1 px-3'>
-        <i className={`pi pi-angle-${showInfo.toggleValue ? 'up' : 'down'} cursor-pointer`} onClick={showInfo.toggle} />
+      <div className='flex  flex-col pb-1 px-3'>
+        <div className='flex justify-center'>
+          <i className={`pi pi-angle-${showInfo.toggleValue ? 'up' : 'down'} cursor-pointer`} onClick={showInfo.toggle} />
+        </div>
         {<div className={`flex flex-col gap-2 transition-all transition-discrete duration-700 ease-in ${showInfo.toggleValue ? 'opacity-100' : 'opacity-0'}`} >
           <p>Developed by {game.developers?.map(d => d.substring(0,14) + " ")}</p>
           <p>Published by {game.publishers?.map(p => p.substring(0,14) + " ")}</p>
@@ -84,6 +90,10 @@ const GameBox = ({ game, width = 250, imageHeight = 130, updateGame, removeGame,
           </div>
         </div>}
       </div>
+
+      <Dialog className='h-40 my-0' visible={gameDetailsDialog.toggleValue} onHide={gameDetailsDialog.toggleOFF}>
+        <GameDetailsModal game={game} />
+      </Dialog>
       
       {removeGame && <ConfirmDialog 
         visible={deleteConfirmToggle.toggleValue}
