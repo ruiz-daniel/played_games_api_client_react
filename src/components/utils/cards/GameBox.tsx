@@ -67,15 +67,19 @@ const GameBox = ({
     case "wide":
       return (
         <div className="bg-white rounded-md shadow-2xl px-3 py-2">
-          <div className="header w-full mb-2">
+          <div className="header w-full flex justify-between items-center mb-2">
             <p className="font-bold">{game.name}</p>
+            <i
+              className={`text-yellow-500 cursor-pointer pi ${game.favorite ? "pi-star-fill" : "pi-star"} ml-4`}
+              onClick={favorite}
+            />
           </div>
           <div className="content w-full flex gap-4">
             <div className="">
               <img
                 alt="Game Cover"
                 src={game?.cover || no_cover}
-                className={`w-48 h-40! shadow-2xl`}
+                className={`w-48 h-40! shadow-2xl rounded`}
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -98,28 +102,31 @@ const GameBox = ({
           </div>
           <div className="footer w-full mt-4">
             <div className="flex gap-2 flex-wrap">
-              {game.genres?.map((g) => (
+              {game.genres?.map((g, index) => (
                 <Chip
-                  key={game._id}
+                  key={`${game._id}_${index}`}
                   className="bg-amber-200! flex items-center justify-center rounded-2xl "
                   label={g}
                 />
               ))}
             </div>
-            <div className="flex flex-row-reverse w-full gap-3 py-2 mt-3 items-center">
-              {game.completion && <Status status={game.completion.name} />}
-              {children}
-              <div className="flex gap-3">
-                <i
-                  className="pi pi-eye font-bold cursor-pointer hover:font-extrabold hover:text-lg duration-500 ease-in-out"
-                  onClick={editEvent}
-                />
-                {removeGame && (
+            <div className="flex justify-between py-2">
+              <div className="flex gap-3">{children}</div>
+              <div className="flex flex-row-reverse w-full gap-3 items-center">
+                {game.score && <Score score={game.score}></Score>}
+                {game.completion && <Status status={game.completion.name} />}
+                <div className="flex gap-3">
                   <i
-                    className={`text-red-500 font-bold cursor-pointer hover:text-red-700 hover:font-extrabold hover:text-lg pi pi-trash duration-500 ease-in-out`}
-                    onClick={deleteConfirmToggle.toggle}
+                    className="pi pi-eye font-bold cursor-pointer hover:font-extrabold hover:text-lg duration-500 ease-in-out"
+                    onClick={editEvent}
                   />
-                )}
+                  {removeGame && (
+                    <i
+                      className={`text-red-500 font-bold cursor-pointer hover:text-red-700 hover:font-extrabold hover:text-lg pi pi-trash duration-500 ease-in-out`}
+                      onClick={deleteConfirmToggle.toggle}
+                    />
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -183,9 +190,9 @@ const GameBox = ({
             {game.played_year && <p>Played in {game.played_year} </p>}
             <p>Played on {game.platform.short_name ?? game.platform.name} </p>
             <div className="flex gap-2 flex-wrap">
-              {game.genres?.map((g) => (
+              {game.genres?.map((g, index) => (
                 <Chip
-                  key={game._id}
+                  key={`${game._id}_${index}`}
                   className="bg-amber-200! flex items-center justify-center rounded-2xl "
                   label={g}
                 />
