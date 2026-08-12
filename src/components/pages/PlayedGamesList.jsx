@@ -59,10 +59,26 @@ const PlayedGamesList = () => {
           }}
         />
       </Sidebar>
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col gap-3 justify-center items-center">
+        <div className="flex flex-row-reverse justify-center w-full gap-3">
+          <Button
+            className="flex gap-2 bg-gray-800 border-none"
+            icon="pi pi-filter"
+            label="Filter"
+            onClick={toggle}
+          />
+          <Button
+            className="flex gap-2 bg-gray-800 border-none"
+            icon="pi pi-times"
+            label="Reset"
+            onClick={resetFilter}
+            onMouseLeave={(e) => e.target.blur()}
+            onTouchEnd={(e) => e.target.blur()}
+          />
+        </div>
         {searchParams.size > 0 && (
           <div className="flex flex-wrap gap-3 my-2">
-            <h3 className="my-2">Filtering by:</h3>
+            <h3 className="font-semibold text-xl">Filtering by:</h3>
             {Object.keys(filteringValues).map((key) => {
               return (
                 <Chip
@@ -74,22 +90,6 @@ const PlayedGamesList = () => {
             })}
           </div>
         )}
-        <div className="flex flex-row-reverse justify-center w-full gap-3">
-          <Button
-            className="flex gap-2 bg-amber-300! border-none"
-            icon="pi pi-filter"
-            label="Filter"
-            onClick={toggle}
-          />
-          <Button
-            className="flex gap-2 bg-amber-300! border-none"
-            icon="pi pi-times"
-            label="Reset"
-            onClick={resetFilter}
-            onMouseLeave={(e) => e.target.blur()}
-            onTouchEnd={(e) => e.target.blur()}
-          />
-        </div>
       </div>
 
       <GamesList
