@@ -62,13 +62,13 @@ const PlayedGamesList = () => {
       <div className="flex flex-col gap-3 justify-center items-center">
         <div className="flex flex-row-reverse justify-center w-full gap-3">
           <Button
-            className="flex gap-2 bg-gray-800 border-none"
+            className="flex gap-2 bg-cyan-400 border-none"
             icon="pi pi-filter"
             label="Filter"
             onClick={toggle}
           />
           <Button
-            className="flex gap-2 bg-gray-800 border-none"
+            className="flex gap-2 bg-cyan-400 border-none"
             icon="pi pi-times"
             label="Reset"
             onClick={resetFilter}
