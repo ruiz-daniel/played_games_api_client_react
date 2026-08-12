@@ -7,23 +7,13 @@ import { Button } from "primereact/button";
 import { Chip } from "primereact/chip";
 import GamesList from "../utils/lists/GamesList";
 import { useFilterData } from "../../hooks/useFilterData";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 const PlayedGamesList = () => {
   const { toggleValue, toggle } = useToggle();
-  const {
-    games,
-    page,
-    max,
-    getGames,
-    updateGame,
-    removeGame,
-  } = usePlayedGames();
-  const {
-    resetFilter,
-    applyFilter,
-    searchParams
-  } = useFilterData()
+  const { games, page, max, getGames, updateGame, removeGame } =
+    usePlayedGames();
+  const { resetFilter, applyFilter, searchParams } = useFilterData();
   const onScrollEnd = (e) => {
     const { clientHeight, scrollHeight, scrollTop } = e.target;
     // take the integer part cause sometimes the number isn't exact
@@ -36,22 +26,25 @@ const PlayedGamesList = () => {
   };
 
   const parseKeysToNames = (key) => {
-    const capitalized =  key.slice(0,1).toUpperCase() + key.substring(1)
-    return capitalized.replaceAll("_", " ")
-  }
+    const capitalized = key.slice(0, 1).toUpperCase() + key.substring(1);
+    return capitalized.replaceAll("_", " ");
+  };
 
   const filteringValues = useMemo(() => {
-    const values = {}
+    const values = {};
     searchParams.forEach((value, key) => {
-      if (key !== 'played_hours') {
-        values[key] = value
+      if (key !== "played_hours") {
+        values[key] = value;
       }
-    })
-    return values
-  }, [searchParams])
+    });
+    return values;
+  }, [searchParams]);
 
   return (
-    <div className="py-6 px-4 flex flex-col gap-4">
+    <div
+      className="py-6 px-4 flex flex-col gap-4 h-[90vh] overflow-y-auto ease-in-out"
+      onScrollCapture={onScrollEnd}
+    >
       <Sidebar
         visible={toggleValue}
         position="right"
@@ -79,13 +72,17 @@ const PlayedGamesList = () => {
                 />
               );
             })}
-
           </div>
         )}
         <div className="flex flex-row-reverse gap-3">
-          <Button className="flex gap-2 bg-amber-300! border-none" icon="pi pi-filter" label="Filter" onClick={toggle} />
           <Button
-            className="flex gap-2 bg-amber-300! border-none" 
+            className="flex gap-2 bg-amber-300! border-none"
+            icon="pi pi-filter"
+            label="Filter"
+            onClick={toggle}
+          />
+          <Button
+            className="flex gap-2 bg-amber-300! border-none"
             icon="pi pi-times"
             label="Reset"
             onClick={resetFilter}
@@ -94,9 +91,13 @@ const PlayedGamesList = () => {
           />
         </div>
       </div>
-      
 
-      <GamesList games={games} onScrollEnd={onScrollEnd} updateGame={updateGame} removeGame={removeGame} />
+      <GamesList
+        games={games}
+        onScrollEnd={onScrollEnd}
+        updateGame={updateGame}
+        removeGame={removeGame}
+      />
     </div>
   );
 };

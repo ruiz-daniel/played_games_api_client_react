@@ -1,26 +1,22 @@
-import React from 'react'
+import React from "react";
 // import 'primereact/resources/primereact.min.css'
-import 'primeicons/primeicons.css'
+import "primeicons/primeicons.css";
 // import 'primeflex/primeflex.css'
 
-import TopBar from './components/layout/TopBar'
-import PlayedGames from './components/pages/PlayedGamesList'
-import UploadGame from './components/pages/UploadGame'
-import GameDetails from './components/pages/GameDetails'
-import GameStats from './components/pages/GameStats'
-import Home from './components/pages/Home'
-import Dashboard from './components/pages/Dashboard'
-import Login from './components/pages/Login'
-import SignUp from './components/pages/SignUp'
+import TopBar from "./components/layout/TopBar";
+import PlayedGames from "./components/pages/PlayedGamesList";
+import UploadGame from "./components/pages/UploadGame";
+import GameDetails from "./components/pages/GameDetails";
+import GameStats from "./components/pages/GameStats";
+import Home from "./components/pages/Home";
+import Dashboard from "./components/pages/Dashboard";
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import * as routes from './routes'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import * as routes from "./routes";
 
-import 'nprogress/nprogress.css'
-
-import { MessagesProvider } from './contexts/messages'
-import { LoadingProvider } from './contexts/loading'
-import GameSingleLists from './components/pages/GameSingleLists'
+import { MessagesProvider } from "./contexts/messages";
+import { LoadingProvider } from "./contexts/loading";
+import GameSingleLists from "./components/pages/GameSingleLists";
 
 function App() {
   return (
@@ -28,25 +24,23 @@ function App() {
       <LoadingProvider>
         <MessagesProvider>
           <TopBar />
-          <div className="content-container">
-            {
-              <Routes>
-                <Route path={routes.home} element={<Home />} />
-                <Route path={routes.dashboard} element={<Dashboard />} />
-                <Route path={routes.login} element={<Home />} />
-                <Route path={routes.register} element={<Home />} />
-                <Route path={routes.playedgames} element={<PlayedGames />} />
-                <Route path={routes.stats} element={<GameStats />} />
-                <Route path={routes.gamedetails} element={<GameDetails />} />
-                <Route path={routes.uploadgame} element={<UploadGame />} />
-                <Route path={routes.singleLists} element={<GameSingleLists/>} />
-              </Routes>
-            }
-          </div>
+          {
+            <Routes>
+              <Route path={routes.home} element={<Home />} />
+              <Route path={routes.dashboard} element={<Dashboard />} />
+              <Route path={routes.login} element={<Home />} />
+              <Route path={routes.register} element={<Home />} />
+              <Route path={routes.playedgames} element={<PlayedGames />} />
+              <Route path={routes.stats} element={<GameStats />} />
+              <Route path={routes.gamedetails} element={<GameDetails />} />
+              <Route path={routes.uploadgame} element={<UploadGame />} />
+              <Route path={routes.singleLists} element={<GameSingleLists />} />
+            </Routes>
+          }
         </MessagesProvider>
       </LoadingProvider>
     </Router>
   );
 }
 
-export default App
+export default App;
