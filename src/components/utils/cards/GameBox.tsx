@@ -1,112 +1,221 @@
-import React, { ReactNode, useMemo } from 'react'
-import { useNavigation } from '../../../hooks/useNavigation'
+import React, { ReactNode, useMemo } from "react";
+import { useNavigation } from "../../../hooks/useNavigation";
 // @ts-ignore
-import  no_cover  from '../../../images/no-cover.jpg'
-import { ConfirmDialog } from 'primereact/confirmdialog'
+import no_cover from "../../../images/no-cover.jpg";
+import { ConfirmDialog } from "primereact/confirmdialog";
 
-import Score from '../score'
-import Status from '../status'
-import { useToggle } from '../../../hooks/useToggle'
-import { PlayedGame } from '../../../models/PlayedGame'
-import { UploadGameData } from '../../../models/types'
-import { Chip } from 'primereact/chip'
-import { Dialog } from 'primereact/dialog'
-import GameDetailsModal from '../modals/GameDetailsModal'
+import Score from "../score";
+import Status from "../status";
+import { useToggle } from "../../../hooks/useToggle";
+import { PlayedGame } from "../../../models/PlayedGame";
+import { UploadGameData } from "../../../models/types";
+import { Chip } from "primereact/chip";
+import { Dialog } from "primereact/dialog";
+import GameDetailsModal from "../modals/GameDetailsModal";
 
 export type GameBoxProps = {
-  game: PlayedGame,
-  width?: number,
-  imageHeight?: number,
-  updateGame?: (game: UploadGameData) => void,
-  removeGame?: (gameId: string) => void,
-  children?: ReactNode
-}
+  game: PlayedGame;
+  width?: number;
+  imageHeight?: number;
+  updateGame?: (game: UploadGameData) => void;
+  removeGame?: (gameId: string) => void;
+  children?: ReactNode;
+  mode?: "small" | "medium" | "wide" | "vertical";
+};
 
-const GameBox = ({ game, width = 250, imageHeight = 130, updateGame, removeGame, children }: GameBoxProps) => {
-  const navigator = useNavigation()
-  const showInfo = useToggle()
+const GameBox = ({
+  game,
+  width = 250,
+  imageHeight = 130,
+  updateGame,
+  removeGame,
+  children,
+  mode = "medium",
+}: GameBoxProps) => {
+  const showInfo = useToggle();
   const editEvent = () => {
-    gameDetailsDialog.toggleON()
-  }
+    gameDetailsDialog.toggleON();
+  };
 
-  const gameDetailsDialog = useToggle()
-  const deleteConfirmToggle = useToggle()
+  const gameDetailsDialog = useToggle();
+  const deleteConfirmToggle = useToggle();
 
   const gameHeaderAllowedLength = useMemo(() => {
-    return width < 300 ? 20 : 30
-  }, [width])
+    return width < 300 ? 20 : 30;
+  }, [width]);
 
   const favorite = () => {
     updateGame?.({
       _id: game._id,
-      favorite: !game.favorite
-    })
-  }
+      favorite: !game.favorite,
+    });
+  };
 
   const containerStyles = {
     width,
     minWidth: width,
-    height: showInfo.toggleValue ? '475px' : '230px'
+    height: showInfo.toggleValue ? "475px" : "250px",
+  };
+
+  const handleCompanyListing = (list: string[]) => {
+    return list.map((element, index) => {
+      return `${element}${index === list.length - 1 ? "" : ", "}`;
+    });
+  };
+
+  switch (mode) {
+    case "wide":
+      return (
+        <div className="bg-white rounded-md shadow-2xl px-3 py-2">
+          <div className="header w-full mb-2">
+            <p className="font-bold">{game.name}</p>
+          </div>
+          <div className="content w-full flex gap-4">
+            <div className="">
+              <img
+                alt="Game Cover"
+                src={game?.cover || no_cover}
+                className={`w-48 h-40! shadow-2xl`}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <p>
+                Developed by{" "}
+                <span className="font-semibold">
+                  {game.developers && handleCompanyListing(game.developers)}
+                </span>
+              </p>
+              <p>
+                Published by{" "}
+                <span className="font-semibold">
+                  {game.publishers && handleCompanyListing(game.publishers)}
+                </span>
+              </p>
+              <p>Released in {game.release_year}</p>
+              {game.played_year && <p>Played in {game.played_year} </p>}
+              <p>Played on {game.platform.short_name ?? game.platform.name} </p>
+            </div>
+          </div>
+          <div className="footer w-full mt-4">
+            <div className="flex gap-2 flex-wrap">
+              {game.genres?.map((g) => (
+                <Chip
+                  key={game._id}
+                  className="bg-amber-200! flex items-center justify-center rounded-2xl "
+                  label={g}
+                />
+              ))}
+            </div>
+            <div className="flex flex-row-reverse w-full gap-3 py-2 mt-3 items-center">
+              {game.completion && <Status status={game.completion.name} />}
+              {children}
+              <div className="flex gap-3">
+                <i
+                  className="pi pi-eye font-bold cursor-pointer hover:font-extrabold hover:text-lg duration-500 ease-in-out"
+                  onClick={editEvent}
+                />
+                {removeGame && (
+                  <i
+                    className={`text-red-500 font-bold cursor-pointer hover:text-red-700 hover:font-extrabold hover:text-lg pi pi-trash duration-500 ease-in-out`}
+                    onClick={deleteConfirmToggle.toggle}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
   }
 
   return (
-    <div className="bg-amber-300/75 rounded-t-md transition-[height] duration-500 ease-in-out shadow-2xl" style={containerStyles}>
-      <div className='flex gap-2 justify-between items-center py-2 px-2'>
-        <i className={`text-white cursor-pointer pi ${game.favorite ? 'pi-star-fill' : 'pi-star'}`} onClick={favorite} />
-        <p>{`${game.name.substring(0,gameHeaderAllowedLength)}${game.name.length > gameHeaderAllowedLength ? '...' : ''}`}</p>
+    <div
+      className="bg-white rounded-md transition-[height] duration-500 ease-in-out shadow-2xl"
+      style={containerStyles}
+    >
+      <div className="flex gap-2 justify-between items-center py-2 px-2">
+        <i
+          className={`text-yellow-500 cursor-pointer pi ${game.favorite ? "pi-star-fill" : "pi-star"}`}
+          onClick={favorite}
+        />
+        <p className="">{`${game.name.substring(0, gameHeaderAllowedLength)}${game.name.length > gameHeaderAllowedLength ? "..." : ""}`}</p>
         {game.score && <Score score={game.score}></Score>}
       </div>
-      <div className="game-box-img">
-        <img alt="Game Cover" src={game?.cover || no_cover}  className={`w-full h-[130px]!`} />
+      <div className="px-2">
+        <img
+          alt="Game Cover"
+          src={game?.cover || no_cover}
+          className={`w-full h-36!`}
+        />
       </div>
-      <div className='flex justify-between items-center py-2 px-2'>
-        {game.completion && (
-          <Status status={game.completion.name} />
-        )}
+      <div className="flex justify-between items-center py-2 px-2">
+        {game.completion && <Status status={game.completion.name} />}
         {children}
-        <div className='flex gap-3'>
-          <i className='text-white pi pi-eye' onClick={editEvent} />
-          {removeGame && <i className={`text-red-500 cursor-pointer hover:text-red-700 pi pi-trash`} onClick={deleteConfirmToggle.toggle} />}
+        <div className="flex gap-3">
+          <i className="text-white pi pi-eye" onClick={editEvent} />
+          {removeGame && (
+            <i
+              className={`text-red-500 cursor-pointer hover:text-red-700 pi pi-trash`}
+              onClick={deleteConfirmToggle.toggle}
+            />
+          )}
         </div>
       </div>
-      <div className='flex  flex-col pb-1 px-3'>
-        <div className='flex justify-center'>
-          <i className={`pi pi-angle-${showInfo.toggleValue ? 'up' : 'down'} cursor-pointer`} onClick={showInfo.toggle} />
+      <div className="flex  flex-col pb-1 px-3">
+        <div className="flex justify-center">
+          <i
+            className={`pi pi-angle-${showInfo.toggleValue ? "up" : "down"} cursor-pointer`}
+            onClick={showInfo.toggle}
+          />
         </div>
-        {<div className={`flex flex-col gap-2 transition-all transition-discrete duration-700 ease-in ${showInfo.toggleValue ? 'opacity-100' : 'opacity-0'}`} >
-          <p>Developed by {game.developers?.map(d => d.substring(0,14) + " ")}</p>
-          <p>Published by {game.publishers?.map(p => p.substring(0,14) + " ")}</p>
-          <p>Released in {game.release_year}</p>
-          {game.played_year && <p>Played in {game.played_year} </p>}
-          <p>Played on {game.platform.short_name ?? game.platform.name} </p>
-          <div className='flex gap-2 flex-wrap'>
-            {game.genres?.map(g => 
-              <Chip
-                key={game._id}
-                className="bg-amber-200! flex items-center justify-center rounded-2xl "
-                label={g}
-              />
-            )}
+        {
+          <div
+            className={`flex flex-col gap-2 transition-all transition-discrete duration-700 ease-in ${showInfo.toggleValue ? "opacity-100" : "opacity-0"}`}
+          >
+            <p>
+              Developed by{" "}
+              {game.developers?.map((d) => d.substring(0, 14) + " ")}
+            </p>
+            <p>
+              Published by{" "}
+              {game.publishers?.map((p) => p.substring(0, 14) + " ")}
+            </p>
+            <p>Released in {game.release_year}</p>
+            {game.played_year && <p>Played in {game.played_year} </p>}
+            <p>Played on {game.platform.short_name ?? game.platform.name} </p>
+            <div className="flex gap-2 flex-wrap">
+              {game.genres?.map((g) => (
+                <Chip
+                  key={game._id}
+                  className="bg-amber-200! flex items-center justify-center rounded-2xl "
+                  label={g}
+                />
+              ))}
+            </div>
           </div>
-        </div>}
+        }
       </div>
 
-      <Dialog className='h-40 my-0' visible={gameDetailsDialog.toggleValue} onHide={gameDetailsDialog.toggleOFF}>
+      <Dialog
+        className="h-40 my-0"
+        visible={gameDetailsDialog.toggleValue}
+        onHide={gameDetailsDialog.toggleOFF}
+      >
         <GameDetailsModal game={game} />
       </Dialog>
-      
-      {removeGame && <ConfirmDialog 
-        visible={deleteConfirmToggle.toggleValue}
-        onHide={deleteConfirmToggle.toggleOFF}
-        header="Delete Game"
-        icon='pi pi-exclamation-triangle'
-        message='Are you sure you want to delete this game?'
-        accept={() => removeGame(game._id)}
-        reject={deleteConfirmToggle.toggleOFF}
-       />}
-      
-    </div>
-  )
-}
 
-export default GameBox
+      {removeGame && (
+        <ConfirmDialog
+          visible={deleteConfirmToggle.toggleValue}
+          onHide={deleteConfirmToggle.toggleOFF}
+          header="Delete Game"
+          icon="pi pi-exclamation-triangle"
+          message="Are you sure you want to delete this game?"
+          accept={() => removeGame(game._id)}
+          reject={deleteConfirmToggle.toggleOFF}
+        />
+      )}
+    </div>
+  );
+};
+
+export default GameBox;

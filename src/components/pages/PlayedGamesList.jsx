@@ -42,7 +42,7 @@ const PlayedGamesList = () => {
 
   return (
     <div
-      className="py-6 px-4 flex flex-col gap-4 h-[90vh] overflow-y-auto ease-in-out"
+      className="py-6 px-14 flex flex-col gap-4 h-[90vh] overflow-y-auto ease-in-out"
       onScrollCapture={onScrollEnd}
     >
       <Sidebar
@@ -74,7 +74,7 @@ const PlayedGamesList = () => {
             })}
           </div>
         )}
-        <div className="flex flex-row-reverse gap-3">
+        <div className="flex flex-row-reverse justify-center w-full gap-3">
           <Button
             className="flex gap-2 bg-amber-300! border-none"
             icon="pi pi-filter"
