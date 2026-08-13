@@ -51,6 +51,11 @@ const GameBox = ({
     });
   };
 
+  const handleUpdateGame = async (data: UploadGameData) => {
+    const response = await updateGame?.(data);
+    gameDetailsDialog.toggleOFF();
+  };
+
   const containerStyles = {
     width,
     minWidth: width,
@@ -65,33 +70,35 @@ const GameBox = ({
 
   const dialogsContent = () => (
     <>
-      <Dialog
-        pt={{
-          root: {
-            className: "h-[70%] w-[30%] shadow-2xl rounded-2xl",
-          },
-          mask: {
-            className: "bg-gray-400/50",
-          },
-          content: {
-            className: "py-4 h-full w-full",
-          },
-          header: {
-            className: "h-6 pt-3",
-          },
-          headerIcons: {
-            className: "px-4",
-          },
-          closeButtonIcon: {
-            className:
-              "w-6 h-6 cursor-pointer hover:text-red-400 hover:animate-ping",
-          },
-        }}
-        visible={gameDetailsDialog.toggleValue}
-        onHide={gameDetailsDialog.toggleOFF}
-      >
-        <GameDetailsModal game={game} />
-      </Dialog>
+      {updateGame && (
+        <Dialog
+          pt={{
+            root: {
+              className: "h-[70%] w-[30%] shadow-2xl rounded-2xl",
+            },
+            mask: {
+              className: "bg-gray-400/50",
+            },
+            content: {
+              className: "py-4 h-full w-full",
+            },
+            header: {
+              className: "h-6 pt-3",
+            },
+            headerIcons: {
+              className: "px-4",
+            },
+            closeButtonIcon: {
+              className:
+                "w-6 h-6 cursor-pointer hover:text-red-400 hover:animate-ping",
+            },
+          }}
+          visible={gameDetailsDialog.toggleValue}
+          onHide={gameDetailsDialog.toggleOFF}
+        >
+          <GameDetailsModal game={game} handleUpdateGame={handleUpdateGame} />
+        </Dialog>
+      )}
 
       {removeGame && (
         <ConfirmDialog

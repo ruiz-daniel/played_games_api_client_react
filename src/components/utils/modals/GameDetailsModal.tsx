@@ -3,14 +3,17 @@ import { PlayedGame } from "../../../models/PlayedGame";
 // @ts-ignore
 import no_cover from "../../../images/no-cover.jpg";
 import EditGame from "../forms/EditGame";
+import { UploadGameData } from "../../../models/types";
 
 export type GameDetailsModalProps = {
   game: PlayedGame;
+  handleUpdateGame: (data: UploadGameData) => void;
 };
 
-const GameDetailsModal = ({ game }: GameDetailsModalProps) => {
-  const handleUpdateGame = () => {};
-
+const GameDetailsModal = ({
+  game,
+  handleUpdateGame,
+}: GameDetailsModalProps) => {
   return (
     <div className="flex flex-col gap-4 w-full">
       <div className="flex flex-col gap-2 relative">

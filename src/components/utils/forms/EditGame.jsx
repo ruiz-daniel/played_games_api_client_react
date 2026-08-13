@@ -40,8 +40,12 @@ const EditGame = ({ game, onSubmit }) => {
     formState: { errors },
   } = useForm({});
 
+  const handleOnSubmit = (data) => {
+    onSubmit({ ...data, _id: game._id });
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(handleOnSubmit)}>
       <div className="flex flex-col gap-3 py-2 px-6">
         <div className="flex flex-col gap-2">
           <label htmlFor="gname">Name*</label>
