@@ -62,26 +62,28 @@ const TopBar = () => {
           >
             <i className="pi pi-bars" />
           </div>
-          <TopBarNavElement
-            navigationLink={routes.playedgames}
-            text="Games"
-            iconClassName="database"
-          />
-          <TopBarNavElement
-            navigationLink={routes.uploadgame}
-            text="Upload"
-            iconClassName="upload"
-          />
-          <TopBarNavElement
-            navigationLink={routes.stats}
-            text="Stats"
-            iconClassName="chart-bar"
-          />
-          <TopBarNavElement
-            navigationLink={routes.singleLists}
-            text="Lists"
-            iconClassName="list"
-          />
+          <div className="flex gap-8 items-center">
+            <TopBarNavElement
+              navigationLink={routes.playedgames}
+              text="Games"
+              iconClassName="database"
+            />
+            <TopBarNavElement
+              navigationLink={routes.uploadgame}
+              text="Upload"
+              iconClassName="upload"
+            />
+            <TopBarNavElement
+              navigationLink={routes.stats}
+              text="Stats"
+              iconClassName="chart-bar"
+            />
+            <TopBarNavElement
+              navigationLink={routes.singleLists}
+              text="Lists"
+              iconClassName="list"
+            />
+          </div>
         </div>
       )}
       {!user?._id && (
@@ -123,24 +125,15 @@ const TopBar = () => {
         />
       </div>
       <Sidebar
-        className="menu-sidebar"
+        className="md:w-[20%] w-[70%]"
         visible={sideMenu}
         onHide={() => toggleSideMenu(false)}
         showCloseIcon={false}
       >
-        <GSidebar>
+        <GSidebar className={""}>
           <SidebarHeader className={"flex flex-column gap-3"}>
-            <section className="logo-section">
-              <SidebarItem
-                onClick={() => {
-                  toggleSideMenu(false);
-                }}
-              >
-                <h2 className="logo">My Game Shelf</h2>
-              </SidebarItem>
-            </section>
             <section>
-              <UserCard user={user} />
+              <UserCard user={user} className={"h-20 py-2"} />
             </section>
           </SidebarHeader>
           {user?._id && (
@@ -149,7 +142,7 @@ const TopBar = () => {
                 linkTo={routes.playedgames}
                 onClick={(e) => toggleSideMenu(false)}
               >
-                <i className="pi pi-list"></i> Played Games
+                <i className="pi pi-database"></i> Played Games
               </SidebarLink>
               <SidebarLink
                 linkTo={routes.uploadgame}
@@ -162,6 +155,12 @@ const TopBar = () => {
                 onClick={(e) => toggleSideMenu(false)}
               >
                 <i className="pi pi-chart-bar"></i> Stats
+              </SidebarLink>
+              <SidebarLink
+                linkTo={routes.singleLists}
+                onClick={(e) => toggleSideMenu(false)}
+              >
+                <i className="pi pi-chart-list"></i> Lists
               </SidebarLink>
             </SidebarContent>
           )}

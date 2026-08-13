@@ -17,10 +17,11 @@ const TopBarNavElement = ({
     <Link
       to={navigationLink}
       className={classNames(
+        "md:flex hidden",
         "px-4 py-2 w-20.5 flex justify-center items-center gap-3 ease-in-out",
         "border-b-5 border-transparent",
         isCurrentUrl
-          ? "border-b-5 border-b-cyan-300!"
+          ? "border-b-5 border-b-cyan-300! flex!"
           : "hover:border-b-cyan-100",
       )}
     >
