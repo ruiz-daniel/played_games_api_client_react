@@ -12,7 +12,6 @@ function GamesList({ games, updateGame, removeGame }) {
             game={game}
             updateGame={updateGame}
             removeGame={removeGame}
-            width={320}
             mode="wide"
           />
         ))}

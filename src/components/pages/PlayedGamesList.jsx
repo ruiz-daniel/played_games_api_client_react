@@ -8,6 +8,7 @@ import { Chip } from "primereact/chip";
 import GamesList from "../utils/lists/GamesList";
 import { useFilterData } from "../../hooks/useFilterData";
 import { useEffect, useMemo } from "react";
+import BaseButton from "../utils/BaseButton";
 
 const PlayedGamesList = () => {
   const { toggleValue, toggle } = useToggle();
@@ -50,7 +51,11 @@ const PlayedGamesList = () => {
         position="right"
         showCloseIcon={false}
         onHide={toggle}
-        className="filter-sidebar"
+        className="shadow-lg"
+        pt={{
+          root: "w-[30%]! px-32 py-6 rounded-2xl transition transform! duration-700! ease-in-out!",
+          mask: "bg-gray-600/25",
+        }}
       >
         <FilterForm
           onSubmit={(data) => {
@@ -61,15 +66,13 @@ const PlayedGamesList = () => {
       </Sidebar>
       <div className="flex flex-col gap-3 justify-center items-center">
         <div className="flex flex-row-reverse justify-center w-full gap-3">
-          <Button
-            className="flex gap-2 bg-cyan-400 border-none"
-            icon="pi pi-filter"
+          <BaseButton
+            iconClassName={"filter"}
             label="Filter"
             onClick={toggle}
           />
-          <Button
-            className="flex gap-2 bg-cyan-400 border-none"
-            icon="pi pi-times"
+          <BaseButton
+            iconClassName={"times"}
             label="Reset"
             onClick={resetFilter}
             onMouseLeave={(e) => e.target.blur()}
@@ -94,7 +97,6 @@ const PlayedGamesList = () => {
 
       <GamesList
         games={games}
-        onScrollEnd={onScrollEnd}
         updateGame={updateGame}
         removeGame={removeGame}
       />

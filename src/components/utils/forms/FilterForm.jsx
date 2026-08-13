@@ -1,54 +1,59 @@
-import { useForm, Controller } from 'react-hook-form'
+import { useForm, Controller } from "react-hook-form";
 
-import { InputText } from 'primereact/inputtext'
-import { Dropdown } from 'primereact/dropdown'
-import { Button } from 'primereact/button'
-import { usePlatforms } from '../../../hooks/usePlatforms'
-import { useCompletions } from '../../../hooks/useCompletions'
+import { InputText } from "primereact/inputtext";
+import { Dropdown } from "primereact/dropdown";
+import { Button } from "primereact/button";
+import { usePlatforms } from "../../../hooks/usePlatforms";
+import { useCompletions } from "../../../hooks/useCompletions";
+import { classNames } from "primereact/utils";
+import BaseButton from "../BaseButton";
+
+const inputClassNames =
+  "focus:border focus:border-cyan-400 focus:outline-cyan-600 bg-gray-100!";
 
 const FilterForm = ({ onSubmit }) => {
-  const { register, handleSubmit, control } = useForm()
-  const { platforms } = usePlatforms()
-  const { completions } = useCompletions()
+  const { register, handleSubmit, control } = useForm();
+  const { platforms } = usePlatforms();
+  const { completions } = useCompletions();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="game-form">
-      <div className="game-form-item gap-3">
-        <h3> Filters </h3>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex flex-col gap-4">
+        <h3 className="font-extrabold text-2xl"> Filters </h3>
         <InputText
           placeholder="Name"
-          className="p-inputtext-sm"
-          {...register('name')}
+          className={classNames(inputClassNames, "border")}
+          {...register("name")}
         />
         <InputText
           placeholder="Developer"
-          className="p-inputtext-sm"
-          {...register('developers')}
+          className={classNames(inputClassNames)}
+          {...register("developers")}
         />
         <InputText
           placeholder="Publisher"
-          className="p-inputtext-sm"
-          {...register('publishers')}
+          className={classNames(inputClassNames)}
+          {...register("publishers")}
         />
         <InputText
           placeholder="Released Year"
-          className="p-inputtext-sm"
-          {...register('release_year')}
+          className={classNames(inputClassNames)}
+          {...register("release_year")}
         />
         <InputText
           placeholder="Played Year"
-          className="p-inputtext-sm"
-          {...register('played_year')}
+          className={classNames(inputClassNames)}
+          {...register("played_year")}
         />
         <InputText
           placeholder="Genre"
-          className="p-inputtext-sm"
-          {...register('genres')}
+          className={classNames(inputClassNames)}
+          {...register("genres")}
         />
         <InputText
           placeholder="Tag"
-          className="p-inputtext-sm"
-          {...register('tags')}
+          className={classNames(inputClassNames)}
+          {...register("tags")}
         />
         <Controller
           name="platform"
@@ -61,6 +66,10 @@ const FilterForm = ({ onSubmit }) => {
               onChange={(e) => field.onChange(e.value)}
               options={platforms}
               optionLabel="name"
+              className="flex justify-between pr-4 bg-gray-100!"
+              pt={{
+                list: "max-h-[200px] flex flex-col gap-3 overflow-y-auto",
+              }}
             />
           )}
         />
@@ -75,30 +84,34 @@ const FilterForm = ({ onSubmit }) => {
               onChange={(e) => field.onChange(e.value)}
               options={completions}
               optionLabel="name"
+              className="flex justify-between pr-4 bg-gray-100!"
+              pt={{
+                list: "max-h-[200px] flex flex-col gap-3 overflow-y-auto",
+              }}
             />
           )}
         />
         <InputText
           placeholder="Score"
-          className="p-inputtext-sm"
-          {...register('score')}
+          className={classNames(inputClassNames)}
+          {...register("score")}
         />
         <InputText
           placeholder="Played Hours (min)"
-          className="p-inputtext-sm"
-          {...register('played_hours_min')}
+          className={classNames(inputClassNames)}
+          {...register("played_hours_min")}
         />
         <InputText
           placeholder="Played Hours (max)"
-          className="p-inputtext-sm"
-          {...register('played_hours_max')}
+          className={classNames(inputClassNames)}
+          {...register("played_hours_max")}
         />
       </div>
-      <div className="flex flex-row-reverse">
-        <Button type="submit" className="pink-button" label="Filter" />
+      <div className="flex flex-row-reverse mt-3">
+        <BaseButton type="submit" label="Filter" />
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default FilterForm
+export default FilterForm;

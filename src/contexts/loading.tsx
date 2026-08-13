@@ -17,8 +17,8 @@ export function LoadingProvider({ children }) {
 
   const template = () => {
     return (
-      <div className="w-full h-full items-center justify-center flex z-10 bg-gray-500 opacity-25">
-        <i className="pi pi-spin pi-spinner text-6xl font-extrabold text-cyan-500" />
+      <div className="w-full h-full items-center justify-center flex z-10 bg-gray-500/25">
+        <i className="pi pi-spin pi-spinner text-6xl font-extrabold text-cyan-300" />
       </div>
     );
   };
