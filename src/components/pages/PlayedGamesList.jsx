@@ -57,7 +57,7 @@ const PlayedGamesList = () => {
         onHide={toggle}
         className="shadow-lg"
         pt={{
-          root: "w-[30%]! px-32 py-6 rounded-2xl transition transform! duration-700! ease-in-out!",
+          root: "w-[30%]! px-12 py-6 rounded-2xl transition transform! duration-700! ease-in-out!",
           mask: "bg-gray-600/25",
         }}
       >

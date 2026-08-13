@@ -24,7 +24,7 @@ const FilterForm = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col w-full gap-4 px-4">
         <h3 className="font-extrabold text-2xl"> Filters </h3>
         <InputText
           placeholder="Name"
