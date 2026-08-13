@@ -16,6 +16,9 @@ const PlayedGamesList = () => {
     usePlayedGames();
   const { resetFilter, applyFilter, searchParams } = useFilterData();
   const onScrollEnd = (e) => {
+    if (e.target.id !== "played_games_list_container") {
+      return;
+    }
     const { clientHeight, scrollHeight, scrollTop } = e.target;
     // take the integer part cause sometimes the number isn't exact
     if (
@@ -43,6 +46,7 @@ const PlayedGamesList = () => {
 
   return (
     <div
+      id="played_games_list_container"
       className="py-6 px-14 flex flex-col gap-4 h-[90vh] overflow-y-auto ease-in-out"
       onScrollCapture={onScrollEnd}
     >

@@ -8,8 +8,14 @@ import { useCompletions } from "../../../hooks/useCompletions";
 import { classNames } from "primereact/utils";
 import BaseButton from "../BaseButton";
 
-const inputClassNames =
+export const inputClassNames =
   "focus:border focus:border-cyan-400 focus:outline-cyan-600 bg-gray-100!";
+
+export const dropDownClassNames = "flex justify-between pr-4 bg-gray-100!";
+
+export const dropDownComponentOptions = {
+  list: "max-h-[200px] flex flex-col gap-3 overflow-y-auto",
+};
 
 const FilterForm = ({ onSubmit }) => {
   const { register, handleSubmit, control } = useForm();
@@ -66,10 +72,8 @@ const FilterForm = ({ onSubmit }) => {
               onChange={(e) => field.onChange(e.value)}
               options={platforms}
               optionLabel="name"
-              className="flex justify-between pr-4 bg-gray-100!"
-              pt={{
-                list: "max-h-[200px] flex flex-col gap-3 overflow-y-auto",
-              }}
+              className={dropDownClassNames}
+              pt={dropDownComponentOptions}
             />
           )}
         />
@@ -84,10 +88,8 @@ const FilterForm = ({ onSubmit }) => {
               onChange={(e) => field.onChange(e.value)}
               options={completions}
               optionLabel="name"
-              className="flex justify-between pr-4 bg-gray-100!"
-              pt={{
-                list: "max-h-[200px] flex flex-col gap-3 overflow-y-auto",
-              }}
+              className={dropDownClassNames}
+              pt={dropDownComponentOptions}
             />
           )}
         />

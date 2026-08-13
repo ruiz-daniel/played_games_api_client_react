@@ -63,6 +63,50 @@ const GameBox = ({
     });
   };
 
+  const dialogsContent = () => (
+    <>
+      <Dialog
+        pt={{
+          root: {
+            className: "h-[70%] w-[30%] shadow-2xl rounded-2xl",
+          },
+          mask: {
+            className: "bg-gray-400/50",
+          },
+          content: {
+            className: "py-4 h-full w-full",
+          },
+          header: {
+            className: "h-6 pt-3",
+          },
+          headerIcons: {
+            className: "px-4",
+          },
+          closeButtonIcon: {
+            className:
+              "w-6 h-6 cursor-pointer hover:text-red-400 hover:animate-ping",
+          },
+        }}
+        visible={gameDetailsDialog.toggleValue}
+        onHide={gameDetailsDialog.toggleOFF}
+      >
+        <GameDetailsModal game={game} />
+      </Dialog>
+
+      {removeGame && (
+        <ConfirmDialog
+          visible={deleteConfirmToggle.toggleValue}
+          onHide={deleteConfirmToggle.toggleOFF}
+          header="Delete Game"
+          icon="pi pi-exclamation-triangle"
+          message="Are you sure you want to delete this game?"
+          accept={() => removeGame(game._id)}
+          reject={deleteConfirmToggle.toggleOFF}
+        />
+      )}
+    </>
+  );
+
   switch (mode) {
     case "wide":
       return (
@@ -112,17 +156,17 @@ const GameBox = ({
             </div>
             <div className="flex justify-between py-2">
               <div className="flex gap-3">{children}</div>
-              <div className="flex flex-row-reverse w-full gap-3 items-center">
+              <div className="flex flex-row-reverse w-full gap-4 items-center">
                 {game.score && <Score score={game.score}></Score>}
                 {game.completion && <Status status={game.completion.name} />}
-                <div className="flex gap-3">
+                <div className="flex gap-6">
                   <i
-                    className="pi pi-eye font-bold cursor-pointer hover:font-extrabold hover:text-lg duration-500 ease-in-out"
+                    className="pi pi-pencil font-bold cursor-pointer hover:font-extrabold hover:text-lg hover:animate-bounce duration-500 ease-in-out"
                     onClick={editEvent}
                   />
                   {removeGame && (
                     <i
-                      className={`text-red-500 font-bold cursor-pointer hover:text-red-700 hover:font-extrabold hover:text-lg pi pi-trash duration-500 ease-in-out`}
+                      className={`text-red-500 font-bold cursor-pointer hover:text-red-700 hover:font-extrabold hover:text-lg hover:animate-ping pi pi-trash duration-500 ease-in-out`}
                       onClick={deleteConfirmToggle.toggle}
                     />
                   )}
@@ -130,6 +174,7 @@ const GameBox = ({
               </div>
             </div>
           </div>
+          {dialogsContent()}
         </div>
       );
   }
@@ -201,26 +246,6 @@ const GameBox = ({
           </div>
         }
       </div>
-
-      <Dialog
-        className="h-40 my-0"
-        visible={gameDetailsDialog.toggleValue}
-        onHide={gameDetailsDialog.toggleOFF}
-      >
-        <GameDetailsModal game={game} />
-      </Dialog>
-
-      {removeGame && (
-        <ConfirmDialog
-          visible={deleteConfirmToggle.toggleValue}
-          onHide={deleteConfirmToggle.toggleOFF}
-          header="Delete Game"
-          icon="pi pi-exclamation-triangle"
-          message="Are you sure you want to delete this game?"
-          accept={() => removeGame(game._id)}
-          reject={deleteConfirmToggle.toggleOFF}
-        />
-      )}
     </div>
   );
 };
