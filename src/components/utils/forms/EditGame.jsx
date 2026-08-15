@@ -30,7 +30,7 @@ export const chipsComponentOptions = {
   },
 };
 
-const EditGame = ({ game, onSubmit }) => {
+const EditGame = ({ game, onSubmit, className }) => {
   const { platforms } = usePlatforms();
   const { completions } = useCompletions();
   const {
@@ -46,13 +46,13 @@ const EditGame = ({ game, onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit(handleOnSubmit)}>
-      <div className="flex flex-col gap-3 py-2 px-6">
+      <div className={classNames("flex flex-col gap-3 py-2 px-6", className)}>
         <div className="flex flex-col gap-2">
           <label htmlFor="gname">Name*</label>
           <InputText
             id="gname"
             className={classNames(inputClassNames)}
-            defaultValue={game.name}
+            defaultValue={game?.name}
             {...register("name", { required: true })}
           />
           {errors.name && <div className="error-message">Name is required</div>}
@@ -61,7 +61,7 @@ const EditGame = ({ game, onSubmit }) => {
           <label htmlFor="gdev">Developers</label>
           <Controller
             name="developers"
-            defaultValue={game.developers || []}
+            defaultValue={game?.developers || []}
             control={control}
             render={({ field, fieldState }) => (
               <Chips
@@ -79,7 +79,7 @@ const EditGame = ({ game, onSubmit }) => {
           <label htmlFor="gpub">Publisher</label>
           <Controller
             name="publishers"
-            defaultValue={game.publishers || []}
+            defaultValue={game?.publishers || []}
             control={control}
             render={({ field, fieldState }) => (
               <Chips
@@ -103,7 +103,7 @@ const EditGame = ({ game, onSubmit }) => {
             onWheel={(e) => {
               e.target.blur();
             }}
-            defaultValue={game.release_year}
+            defaultValue={game?.release_year}
             {...register("release_year", { min: 1970, max: 2030 })}
           />
           {errors.release_year && (
@@ -119,7 +119,7 @@ const EditGame = ({ game, onSubmit }) => {
             onWheel={(e) => {
               e.target.blur();
             }}
-            defaultValue={game.played_year}
+            defaultValue={game?.played_year}
             {...register("played_year", { min: 1970, max: 2030 })}
           />
           {errors.played_year && (
@@ -130,7 +130,7 @@ const EditGame = ({ game, onSubmit }) => {
           <label htmlFor="ggenre">Genres</label>
           <Controller
             name="genres"
-            defaultValue={game.genres || []}
+            defaultValue={game?.genres || []}
             control={control}
             render={({ field, fieldState }) => (
               <Chips
@@ -148,7 +148,7 @@ const EditGame = ({ game, onSubmit }) => {
           <label htmlFor="gtags">Tags</label>
           <Controller
             name="tags"
-            defaultValue={game.tags || []}
+            defaultValue={game?.tags || []}
             control={control}
             render={({ field, fieldState }) => (
               <Chips
@@ -166,7 +166,7 @@ const EditGame = ({ game, onSubmit }) => {
           <label htmlFor="platform">Platform</label>
           <Controller
             name="platform"
-            defaultValue={game.platform}
+            defaultValue={game?.platform}
             control={control}
             render={({ field, fieldState }) => (
               <Dropdown
@@ -186,7 +186,7 @@ const EditGame = ({ game, onSubmit }) => {
           <Controller
             name="completion"
             control={control}
-            defaultValue={game.completion}
+            defaultValue={game?.completion}
             rules={{ required: "Completion is required" }}
             render={({ field, fieldState }) => (
               <Dropdown
@@ -210,7 +210,7 @@ const EditGame = ({ game, onSubmit }) => {
             onWheel={(e) => {
               e.target.blur();
             }}
-            defaultValue={game.score}
+            defaultValue={game?.score}
             min={1}
             max={10}
             {...register("score", { min: 1, max: 10 })}
@@ -225,7 +225,7 @@ const EditGame = ({ game, onSubmit }) => {
             id="ghours"
             className={classNames(inputClassNames)}
             type="number"
-            defaultValue={game.played_hours}
+            defaultValue={game?.played_hours}
             min={0}
             onWheel={(e) => {
               e.target.blur();
@@ -243,7 +243,7 @@ const EditGame = ({ game, onSubmit }) => {
           <InputText
             id="gsteam"
             className={classNames(inputClassNames)}
-            defaultValue={game.steam_page}
+            defaultValue={game?.steam_page}
             {...register("steam_page")}
           />
         </div>
@@ -252,7 +252,7 @@ const EditGame = ({ game, onSubmit }) => {
           <InputText
             id="gepic"
             className={classNames(inputClassNames)}
-            defaultValue={game.epic_page}
+            defaultValue={game?.epic_page}
             {...register("epic_page")}
           />
         </div>
@@ -261,7 +261,7 @@ const EditGame = ({ game, onSubmit }) => {
           <InputTextarea
             id="gdesc"
             className={classNames(inputClassNames)}
-            defaultValue={game.description}
+            defaultValue={game?.description}
             rows={5}
             {...register("description")}
             autoResize
