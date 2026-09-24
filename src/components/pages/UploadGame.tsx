@@ -25,7 +25,8 @@ function UploadGame() {
 
   const onSubmit = (data: UploadGameData) => {
     uploadGame(data, () => {
-      message("info", "Game Uploaded Successfully");
+      setImportedIgdbGame(undefined);
+      setViewMode(undefined);
     });
   };
 
@@ -61,7 +62,11 @@ function UploadGame() {
       </div>
       {viewMode === "manual" && (
         <div className="w-240">
-          <UploadGameForm onSubmit={onSubmit} importData={importedIgdbGame} />
+          <UploadGameForm
+            onSubmit={onSubmit}
+            importData={importedIgdbGame}
+            resetOnSubmit={true}
+          />
         </div>
       )}
       {viewMode === "igdb" && (

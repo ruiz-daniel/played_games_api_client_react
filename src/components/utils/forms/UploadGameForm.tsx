@@ -10,9 +10,14 @@ import { UploadGameData } from "../../../models/types";
 type UploadGameFormProps = {
   onSubmit: (data: UploadGameData) => void;
   importData?: any;
+  resetOnSubmit?: boolean;
 };
 
-const UploadGameForm = ({ onSubmit, importData }: UploadGameFormProps) => {
+const UploadGameForm = ({
+  onSubmit,
+  importData,
+  resetOnSubmit = false,
+}: UploadGameFormProps) => {
   const { getGameCoverImg, getGameArtworks } = useIgdbGames();
 
   const imagesDialogToggle = useToggle();
@@ -42,9 +47,13 @@ const UploadGameForm = ({ onSubmit, importData }: UploadGameFormProps) => {
   };
 
   const handleSubmit = (data: UploadGameData) => {
-    data.cover = artworks[0];
+    data.gallery = artworks;
     data.cover_box = covers[0];
     onSubmit(data);
+    if (resetOnSubmit) {
+      setCovers([]);
+      setArtworks([]);
+    }
   };
 
   useEffect(() => {
@@ -65,6 +74,7 @@ const UploadGameForm = ({ onSubmit, importData }: UploadGameFormProps) => {
         onSubmit={handleSubmit}
         className={"w-full"}
         importedGameData={importData}
+        resetOnSubmit={resetOnSubmit}
       />
 
       {/* <div className="flex flex-row-reverse gap-4">

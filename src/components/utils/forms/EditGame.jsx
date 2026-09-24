@@ -32,7 +32,13 @@ export const chipsComponentOptions = {
   },
 };
 
-const EditGame = ({ game, onSubmit, className, importedGameData }) => {
+const EditGame = ({
+  game,
+  onSubmit,
+  className,
+  importedGameData,
+  resetOnSubmit = false,
+}) => {
   const { platforms } = usePlatforms();
   const { completions } = useCompletions();
   const {
@@ -41,12 +47,16 @@ const EditGame = ({ game, onSubmit, className, importedGameData }) => {
     control,
     formState: { errors },
     setValues,
+    reset,
   } = useForm({});
 
   const { getGameCoverImg } = useIgdbGames();
 
   const handleOnSubmit = (data) => {
     onSubmit({ ...data, _id: game?._id });
+    if (resetOnSubmit) {
+      reset();
+    }
   };
 
   const parseIgdbGame = async (igdbGame) => {
@@ -60,6 +70,7 @@ const EditGame = ({ game, onSubmit, className, importedGameData }) => {
     const release_year = igdbGame.release_dates?.[0].y;
     const genres = igdbGame.genres?.map((genre) => genre.name);
     const description = igdbGame.summary;
+    const cover = igdbGame.cover ? igdbGame.cover.url : undefined;
 
     setValues({
       name,
@@ -68,6 +79,7 @@ const EditGame = ({ game, onSubmit, className, importedGameData }) => {
       release_year,
       genres,
       description,
+      cover,
     });
   };
 
@@ -152,7 +164,7 @@ const EditGame = ({ game, onSubmit, className, importedGameData }) => {
             onWheel={(e) => {
               e.target.blur();
             }}
-            defaultValue={game?.played_year}
+            defaultValue={game?.played_year || new Date().getFullYear()}
             {...register("played_year", { min: 1970, max: 2030 })}
           />
           {errors.played_year && (
