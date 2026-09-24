@@ -23,6 +23,27 @@ export type GameBoxProps = {
   mode?: "small" | "medium" | "wide" | "vertical";
 };
 
+export const dialogProps = {
+  root: {
+    className: "h-[70%] w-[30%] shadow-2xl rounded-2xl",
+  },
+  mask: {
+    className: "bg-gray-400/50",
+  },
+  content: {
+    className: "py-4 h-full w-full",
+  },
+  header: {
+    className: "h-6 pt-3",
+  },
+  headerIcons: {
+    className: "px-4",
+  },
+  closeButtonIcon: {
+    className: "w-6 h-6 cursor-pointer hover:text-red-400 hover:animate-ping",
+  },
+};
+
 const GameBox = ({
   game,
   width = 250,
@@ -72,27 +93,7 @@ const GameBox = ({
     <>
       {updateGame && (
         <Dialog
-          pt={{
-            root: {
-              className: "h-[70%] w-[30%] shadow-2xl rounded-2xl",
-            },
-            mask: {
-              className: "bg-gray-400/50",
-            },
-            content: {
-              className: "py-4 h-full w-full",
-            },
-            header: {
-              className: "h-6 pt-3",
-            },
-            headerIcons: {
-              className: "px-4",
-            },
-            closeButtonIcon: {
-              className:
-                "w-6 h-6 cursor-pointer hover:text-red-400 hover:animate-ping",
-            },
-          }}
+          pt={dialogProps}
           visible={gameDetailsDialog.toggleValue}
           onHide={gameDetailsDialog.toggleOFF}
         >

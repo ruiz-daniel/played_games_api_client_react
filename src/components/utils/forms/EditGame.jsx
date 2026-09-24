@@ -14,6 +14,8 @@ import {
   inputClassNames,
 } from "./FilterForm";
 import BaseButton from "../BaseButton";
+import { useEffect } from "react";
+import { useIgdbGames } from "../../../hooks/useIgdbGames";
 
 export const chipsComponentOptions = {
   container: {
@@ -30,7 +32,7 @@ export const chipsComponentOptions = {
   },
 };
 
-const EditGame = ({ game, onSubmit, className }) => {
+const EditGame = ({ game, onSubmit, className, importedGameData }) => {
   const { platforms } = usePlatforms();
   const { completions } = useCompletions();
   const {
@@ -38,11 +40,42 @@ const EditGame = ({ game, onSubmit, className }) => {
     handleSubmit,
     control,
     formState: { errors },
+    setValues,
   } = useForm({});
 
+  const { getGameCoverImg } = useIgdbGames();
+
   const handleOnSubmit = (data) => {
-    onSubmit({ ...data, _id: game._id });
+    onSubmit({ ...data, _id: game?._id });
   };
+
+  const parseIgdbGame = async (igdbGame) => {
+    const name = igdbGame.name;
+    const developers = igdbGame.involved_companies
+      ?.filter((company) => company.developer)
+      .map((company) => company.company?.name);
+    const publishers = igdbGame.involved_companies
+      ?.filter((company) => company.publisher)
+      .map((company) => company.company?.name);
+    const release_year = igdbGame.release_dates?.[0].y;
+    const genres = igdbGame.genres?.map((genre) => genre.name);
+    const description = igdbGame.summary;
+
+    setValues({
+      name,
+      developers,
+      publishers,
+      release_year,
+      genres,
+      description,
+    });
+  };
+
+  useEffect(() => {
+    if (importedGameData) {
+      parseIgdbGame(importedGameData);
+    }
+  }, [importedGameData]);
 
   return (
     <form onSubmit={handleSubmit(handleOnSubmit)}>

@@ -8,12 +8,20 @@ import { useState } from "react";
 import { UploadGameData } from "../../models/types";
 import { PlayedGame } from "../../models/PlayedGame";
 import { classNames } from "primereact/utils";
+import IgdbSearch from "../utils/forms/IgdbSearch";
+import { IgdbGameData } from "../../models/IgdbGameData";
 
 function UploadGame() {
   const { uploadGame } = usePlayedGames();
   const { message } = useMessages();
   const navigator = useNavigation();
   const [viewMode, setViewMode] = useState<"manual" | "igdb" | undefined>();
+  const [importedIgdbGame, setImportedIgdbGame] = useState<IgdbGameData>();
+
+  const onIgdbSubmit = (data: IgdbGameData) => {
+    setViewMode("manual");
+    setImportedIgdbGame(data);
+  };
 
   const onSubmit = (data: UploadGameData) => {
     uploadGame(data, () => {
@@ -53,7 +61,12 @@ function UploadGame() {
       </div>
       {viewMode === "manual" && (
         <div className="w-240">
-          <UploadGameForm onSubmit={onSubmit} />
+          <UploadGameForm onSubmit={onSubmit} importData={importedIgdbGame} />
+        </div>
+      )}
+      {viewMode === "igdb" && (
+        <div className="px-12 w-[80%] flex justify-center">
+          <IgdbSearch onSelect={onIgdbSubmit} />
         </div>
       )}
     </div>
