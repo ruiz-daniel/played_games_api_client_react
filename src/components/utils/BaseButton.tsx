@@ -18,7 +18,7 @@ const BaseButton = ({
   return (
     <Button
       className={classNames(
-        "bg-cyan-500 hover:bg-cyan-700 cursor-pointer",
+        "bg-cyan-500 hover:bg-cyan-700 cursor-pointer min-w-20 h-10",
         className,
       )}
       onClick={onClick}

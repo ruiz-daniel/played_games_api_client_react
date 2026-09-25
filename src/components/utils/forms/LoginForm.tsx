@@ -54,7 +54,14 @@ const LoginForm = ({ onSubmit, onSignUp }: LoginFormProps) => {
   return loginMode.toggleValue ? (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Login</CardTitle>
+        <CardTitle className="flex justify-between">
+          <div className="flex-1 text-2xl font-bold">Login</div>
+          <BaseButton
+            label="Sign Up"
+            onClick={loginMode.toggleOFF}
+            className="bg-amber-400 hover:bg-amber-500 transition-all duration-150"
+          />
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <form
@@ -100,19 +107,7 @@ const LoginForm = ({ onSubmit, onSignUp }: LoginFormProps) => {
             />
           </FieldGroup>
           <Field orientation="horizontal" className="flex gap-3 justify-center">
-            <BaseButton
-              label="Login"
-              className="cursor-pointer"
-              form="form-login"
-              type="submit"
-            />
-            <p>Or</p>
-            <BaseButton
-              label="Sign Up"
-              className=""
-              type="button"
-              onClick={loginMode.toggleOFF}
-            />
+            <BaseButton label="Login" form="form-login" type="submit" />
           </Field>
         </form>
       </CardContent>
@@ -120,7 +115,14 @@ const LoginForm = ({ onSubmit, onSignUp }: LoginFormProps) => {
   ) : (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Sign Up</CardTitle>
+        <CardTitle className="flex justify-between">
+          <div className="flex-1 text-2xl font-bold">Sign Up</div>
+          <BaseButton
+            label="Login"
+            onClick={loginMode.toggleON}
+            className="bg-amber-400 hover:bg-amber-500 transition-all duration-150"
+          />
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <form
@@ -183,27 +185,11 @@ const LoginForm = ({ onSubmit, onSignUp }: LoginFormProps) => {
               )}
             />
           </FieldGroup>
+          <Field orientation="horizontal" className="flex gap-3 justify-center">
+            <BaseButton form="form-signup" type="submit" label="Sign Up" />
+          </Field>
         </form>
       </CardContent>
-      <CardFooter>
-        <Field orientation="horizontal" className="flex flex-col gap-3">
-          <Button
-            className="border-none bg-transparent py-1! text-black! hover:text-amber-500! hover:text-2xl transition-all"
-            form="form-signup"
-            type="submit"
-          >
-            Sign Up
-          </Button>
-          <p>Or</p>
-          <Button
-            className="border-none bg-transparent py-1! text-black! hover:text-blue-500!"
-            type="button"
-            onClick={loginMode.toggleON}
-          >
-            Login
-          </Button>
-        </Field>
-      </CardFooter>
     </Card>
   );
 };
