@@ -23,7 +23,7 @@ import { useErrorHandling } from "./useErrorHandling";
 import { useSearchParams } from "react-router-dom";
 import { prepareFilterMongoose } from "../utils/Filter";
 
-export function usePlayedGames() {
+export function usePlayedGames(mode: "default" | "latest" = "default") {
   const dispatch = useAppDispatch();
   const games = useAppSelector((state) => state.playedGames.games);
   const page = useAppSelector((state) => state.playedGames.page);
@@ -55,6 +55,25 @@ export function usePlayedGames() {
     }
   };
   // Filters..................................................
+
+  const getLatestPlayedGames = async () => {
+    setLoading(true);
+    const response = await api.PlayedGamesApi.getPlayedGames(1, 5, {
+      played_year: new Date().getFullYear().toString(),
+    });
+    setLoading(false);
+    if (response && "data" in response) {
+      dispatch(
+        setGames({
+          games: response.data.games,
+          page: response.data.page,
+          max: response.data.max,
+        }),
+      );
+    } else {
+      handleError(response);
+    }
+  };
 
   const uploadImageRecursive = async (
     gallery: string[],
@@ -111,12 +130,13 @@ export function usePlayedGames() {
   };
 
   useEffect(() => {
-    getGames(1);
+    mode === "latest" ? getLatestPlayedGames() : getGames(1);
   }, [searchParams]);
 
   return {
     games,
     getGames,
+    getLatestPlayedGames,
     uploadGame,
     updateGame,
     getGame,

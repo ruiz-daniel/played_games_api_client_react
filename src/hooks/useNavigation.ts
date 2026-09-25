@@ -2,37 +2,36 @@ import { useNavigate } from "react-router-dom";
 import * as routes from "../routes";
 
 export const useNavigation = () => {
-  const navigator = useNavigate()
+  const navigator = useNavigate();
 
   const navigateTo = (route: string) => {
-    navigator(route)
-  }
-
+    navigator(route);
+  };
 
   const goToDashboard = () => {
     navigateTo(routes.dashboard);
-  }
+  };
   const goHome = () => {
     navigateTo(routes.home);
-  }
+  };
   const goToPlayedGames = () => {
     navigateTo(routes.playedgames);
-  }
+  };
   const goToUploadGame = () => {
     navigateTo(routes.uploadgame);
-  }
+  };
   const goToGameDetails = (gameid: string) => {
     navigateTo(`${routes.gamedetails}/?id=${gameid}`);
-  }
+  };
   const goToStats = () => {
     navigateTo(routes.stats);
-  }
+  };
   const goToLogin = () => {
-    navigateTo(routes.login);
-  }
+    navigateTo(routes.home);
+  };
   const goToRegister = () => {
-    navigateTo(routes.register);
-  }
+    navigateTo(routes.home);
+  };
 
   return {
     navigateTo,
@@ -43,6 +42,6 @@ export const useNavigation = () => {
     goToGameDetails,
     goToStats,
     goToLogin,
-    goToRegister
-  }
-}
+    goToRegister,
+  };
+};

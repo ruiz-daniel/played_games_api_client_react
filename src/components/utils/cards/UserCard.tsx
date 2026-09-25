@@ -26,8 +26,8 @@ function UserCard({ user, update, className }: UserCardProps) {
   };
 
   return (
-    <div className={classNames("flex gap-3 justify-content-center", className)}>
-      <div className="w-1/2 hover:w-[70%] p-2">
+    <div className={classNames("flex gap-3 justify-start", className)}>
+      <div className="p-2">
         <img
           src={user?.profile_picture}
           className="rounded-full cursor-pointer transition-all h-[90%]!"
@@ -35,7 +35,7 @@ function UserCard({ user, update, className }: UserCardProps) {
         />
       </div>
 
-      <div className="flex gap-3 items-center justify-end w-1/2">
+      <div className="flex gap-3 items-center justify-end">
         <h1 className="text-2xl font-bold pb-1">
           {user?.display_name ?? "Guest"}
         </h1>

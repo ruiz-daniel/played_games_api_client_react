@@ -1,4 +1,5 @@
-import { classNames } from "primereact/utils";
+import React from "react";
+import classNames from "classnames";
 import { CSSProperties } from "react";
 
 type DashboardButtonProps = {

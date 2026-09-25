@@ -1,17 +1,26 @@
 import React, { ReactNode, useMemo } from "react";
-import { useNavigation } from "../../../hooks/useNavigation";
 // @ts-ignore
 import no_cover from "../../../images/no-cover.jpg";
-import { ConfirmDialog } from "primereact/confirmdialog";
 
-import Score from "../score";
-import Status from "../status";
+import Score from "../Score";
+import Status from "../Status";
 import { useToggle } from "../../../hooks/useToggle";
 import { PlayedGame } from "../../../models/PlayedGame";
 import { UploadGameData } from "../../../models/types";
-import { Chip } from "primereact/chip";
-import { Dialog } from "primereact/dialog";
 import GameDetailsModal from "../modals/GameDetailsModal";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import Chip from "@/components/Chip";
 
 export type GameBoxProps = {
   game: PlayedGame;
@@ -91,7 +100,7 @@ const GameBox = ({
 
   const dialogsContent = () => (
     <>
-      {updateGame && (
+      {/* {updateGame && (
         <Dialog
           pt={dialogProps}
           visible={gameDetailsDialog.toggleValue}
@@ -99,18 +108,36 @@ const GameBox = ({
         >
           <GameDetailsModal game={game} handleUpdateGame={handleUpdateGame} />
         </Dialog>
-      )}
+      )} */}
 
       {removeGame && (
-        <ConfirmDialog
-          visible={deleteConfirmToggle.toggleValue}
-          onHide={deleteConfirmToggle.toggleOFF}
-          header="Delete Game"
-          icon="pi pi-exclamation-triangle"
-          message="Are you sure you want to delete this game?"
-          accept={() => removeGame(game._id)}
-          reject={deleteConfirmToggle.toggleOFF}
-        />
+        <AlertDialog
+          open={deleteConfirmToggle.toggleValue}
+          onOpenChange={deleteConfirmToggle.toggle}
+        >
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete Game</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to delete this game? This action cannot be
+                undone
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={deleteConfirmToggle.toggleOFF}>
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => {
+                  removeGame(game._id);
+                  deleteConfirmToggle.toggleOFF();
+                }}
+              >
+                Continue
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       )}
     </>
   );
@@ -134,7 +161,7 @@ const GameBox = ({
                 className={`w-48 h-40! shadow-2xl rounded`}
               />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col flex-1 items-center gap-2">
               <p>
                 Developed by{" "}
                 <span className="font-semibold">
@@ -153,13 +180,9 @@ const GameBox = ({
             </div>
           </div>
           <div className="footer w-full mt-4">
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex gap-2 flex-wrap max-w-140">
               {game.genres?.map((g, index) => (
-                <Chip
-                  key={`${game._id}_${index}`}
-                  className="bg-amber-200! flex items-center justify-center rounded-2xl "
-                  label={g}
-                />
+                <Chip key={`${game._id}_${index}`} text={g} />
               ))}
             </div>
             <div className="flex justify-between py-2">
@@ -244,11 +267,7 @@ const GameBox = ({
             <p>Played on {game.platform.short_name ?? game.platform.name} </p>
             <div className="flex gap-2 flex-wrap">
               {game.genres?.map((g, index) => (
-                <Chip
-                  key={`${game._id}_${index}`}
-                  className="bg-amber-200! flex items-center justify-center rounded-2xl "
-                  label={g}
-                />
+                <Chip key={`${game._id}_${index}`} text={g} />
               ))}
             </div>
           </div>

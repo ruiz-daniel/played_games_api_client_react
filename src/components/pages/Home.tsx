@@ -5,6 +5,7 @@ import { UserCredentials } from "../../models/types";
 import { NewUser } from "../../models/User";
 import { useNavigation } from "../../hooks/useNavigation";
 import LoginForm from "../utils/forms/LoginForm";
+import Dashboard from "./Dashboard";
 
 const Home = () => {
   const { login, signup, user } = useUser();
@@ -47,11 +48,17 @@ const Home = () => {
     });
   };
 
-  return (
-    <div className="flex flex-col gap-12 w-full h-full items-center justify-center home-container">
+  return !user ? (
+    <div className="flex flex-col gap-12 w-full h-full items-center justify-center">
       <h1 className="font-serif font-bold text-7xl">VG Shelf</h1>
       <div className="md:w-1/2 w-[90%] flex justify-center">
         <LoginForm onSubmit={handleLogin} onSignUp={handleSignUp} />
+      </div>
+    </div>
+  ) : (
+    <div className="flex justify-center w-full h-full pt-8">
+      <div className="w-3/4 ">
+        <Dashboard />
       </div>
     </div>
   );

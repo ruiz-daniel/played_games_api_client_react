@@ -1,23 +1,23 @@
 /* eslint-disable eqeqeq */
-import React, { useState, useEffect } from 'react'
-import api from '../../../services/IApi'
-import { useHistory } from 'react-router'
+import React, { useState, useEffect } from "react";
+import api from "../../../services/IApi";
+import { useHistory } from "react-router";
 
-import { Carousel } from 'primereact/carousel'
+import { Carousel } from "primereact/carousel";
 
-import Score from '../score'
-import * as routes from '../../../routes'
+import Score from "../Score";
+import * as routes from "../../../routes";
 
 const PlayingGames = () => {
-  const history = useHistory()
-  const [games, setGames] = useState([])
-  const [details, showDetails] = useState(true)
+  const history = useHistory();
+  const [games, setGames] = useState([]);
+  const [details, showDetails] = useState(true);
 
   useEffect(() => {
     api.PlayedGamesApi.getPlayingGames((data) => {
-      setGames(data)
-    })
-  }, [])
+      setGames(data);
+    });
+  }, []);
 
   const editEvent = (game) => {
     history.push({
@@ -26,21 +26,21 @@ const PlayingGames = () => {
         // location state
         gameid: game._id,
       },
-    })
-  }
+    });
+  };
 
   const template = (game) => {
     return (
       <div
         className="content"
         onClick={() => {
-          editEvent(game)
+          editEvent(game);
         }}
         onMouseEnter={() => {
-          showDetails(false)
+          showDetails(false);
         }}
         onMouseLeave={() => {
-          showDetails(true)
+          showDetails(true);
         }}
       >
         {details && (
@@ -55,23 +55,25 @@ const PlayingGames = () => {
         )}
         <img src={game.cover} alt="Game Cover"></img>
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div className="playing-carrousel">
-      {games.length > 0 && <Carousel
-        value={games}
-        numVisible={1}
-        numScroll={1}
-        className="custom-carousel"
-        circular
-        showNavigators={false}
-        autoplayInterval={3000}
-        itemTemplate={template}
-      />}
+      {games.length > 0 && (
+        <Carousel
+          value={games}
+          numVisible={1}
+          numScroll={1}
+          className="custom-carousel"
+          circular
+          showNavigators={false}
+          autoplayInterval={3000}
+          itemTemplate={template}
+        />
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default PlayingGames
+export default PlayingGames;

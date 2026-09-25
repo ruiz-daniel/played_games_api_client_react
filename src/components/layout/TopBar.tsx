@@ -58,7 +58,7 @@ const TopBar = () => {
       {user?._id && (
         <div className="flex gap-8 items-center flex-1">
           <div
-            className="p-3 cursor-pointer mr-3"
+            className="p-2 pb-4 cursor-pointer"
             onClick={() => toggleSideMenu(true)}
           >
             <HamburgerMenu />
@@ -67,22 +67,15 @@ const TopBar = () => {
             <TopBarNavElement
               navigationLink={routes.playedgames}
               text="Games"
-              iconClassName="database"
             />
             <TopBarNavElement
               navigationLink={routes.uploadgame}
               text="Upload"
-              iconClassName="upload"
             />
-            <TopBarNavElement
-              navigationLink={routes.stats}
-              text="Stats"
-              iconClassName="chart-bar"
-            />
+            <TopBarNavElement navigationLink={routes.stats} text="Stats" />
             <TopBarNavElement
               navigationLink={routes.singleLists}
               text="Lists"
-              iconClassName="list"
             />
           </div>
         </div>
