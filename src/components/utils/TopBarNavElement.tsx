@@ -1,4 +1,5 @@
-import { classNames } from "primereact/utils";
+import React from "react";
+import classNames from "classnames";
 import { Link, useNavigation } from "react-router-dom";
 
 type TopBarNavElementProps = {

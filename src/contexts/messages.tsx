@@ -1,5 +1,6 @@
+import React from "react";
 import { useRef, createContext } from "react";
-import { Toast, ToastMessage } from "primereact/toast";
+import { toast } from "@/components/ui/toast";
 import { MessageType } from "../models/types";
 
 interface IMessagesContext {
@@ -14,19 +15,14 @@ export const MessagesContext = createContext<IMessagesContext>(defaultValue);
 
 // @ts-ignore
 export function MessagesProvider({ children }) {
-  const toast = useRef<Toast>(null);
-
   const message: IMessagesContext["message"] = (type, title) => {
-    toast?.current?.show({
-      severity: type,
-      summary: title,
-      life: 3000,
+    toast.add({
+      title,
     });
   };
 
   return (
     <MessagesContext.Provider value={{ message }}>
-      <Toast ref={toast} pt={{}} />
       {children}
     </MessagesContext.Provider>
   );

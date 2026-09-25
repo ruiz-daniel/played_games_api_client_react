@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { useUser } from "../../hooks/useUser";
-import LoginForm from "../utils/forms/LoginForm";
+// import LoginForm from "../utils/forms/LoginForm";
 import { UserCredentials } from "../../models/types";
 import { NewUser } from "../../models/User";
 import { useNavigation } from "../../hooks/useNavigation";
+import LoginForm from "../utils/forms/LoginForm";
 
 const Home = () => {
-  const {login, signup} = useUser()
-  const navigator = useNavigation()
+  const { login, signup, user } = useUser();
+  const navigator = useNavigation();
   // useEffect(() => {
   //   var sections = document.querySelectorAll("section");
   //   var options = {
@@ -33,23 +34,25 @@ const Home = () => {
   const handleLogin = (data: UserCredentials) => {
     login(data, (response) => {
       if (response) {
-        navigator.goToDashboard()
+        navigator.goToDashboard();
       }
-    })
-  }
+    });
+  };
 
   const handleSignUp = (data: NewUser) => {
     signup(data, (response) => {
       if (response) {
-        navigator.goToDashboard()
+        navigator.goToDashboard();
       }
-    })
-  }
+    });
+  };
 
   return (
     <div className="flex flex-col gap-12 w-full h-full items-center justify-center home-container">
       <h1 className="font-serif font-bold text-7xl">VG Shelf</h1>
-      <LoginForm onSubmit={handleLogin} onSignUp={handleLogin} />
+      <div className="md:w-1/2 w-[90%] flex justify-center">
+        <LoginForm onSubmit={handleLogin} onSignUp={handleSignUp} />
+      </div>
     </div>
   );
 };

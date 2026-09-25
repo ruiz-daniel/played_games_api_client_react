@@ -1,11 +1,13 @@
 import { createContext, useState } from "react";
-import { BlockUI } from "primereact/blockui";
+import React from "react";
 
 interface ILoadingContext {
+  loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const defaultValue: ILoadingContext = {
+  loading: false,
   setLoading: () => {},
 };
 
@@ -24,10 +26,8 @@ export function LoadingProvider({ children }) {
   };
 
   return (
-    <LoadingContext.Provider value={{ setLoading }}>
-      <BlockUI blocked={loading} template={template} fullScreen>
-        {children}
-      </BlockUI>
+    <LoadingContext.Provider value={{ loading, setLoading }}>
+      {children}
     </LoadingContext.Provider>
   );
 }
